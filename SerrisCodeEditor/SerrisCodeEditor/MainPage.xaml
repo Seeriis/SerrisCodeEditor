@@ -8,6 +8,15 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListView x:Name="list_ids" HorizontalAlignment="Left" Width="300" Background="#FF065D02"/>
+        <TextBlock x:Name="count" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" HorizontalAlignment="Right" />
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button x:Name="NewTab" Click="NewTab_Click" Content="New tab" Background="#FFDADADA" Foreground="#FF191919" Margin="0,0,20,0" BorderBrush="#FF8D8D8D"/>
+            <TextBox x:Name="id_box" Width="200" PlaceholderText="ID of the tab"/>
+            <Button x:Name="DeleteTab" Click="DeleteTab_Click" Content="Delete tab" Background="#FFDADADA" Foreground="#FF191919" BorderBrush="#FF8D8D8D"/>
+        </StackPanel>
+
+        <Button x:Name="NewWindow" Click="NewWindow_Click" Content="New window" Background="#FFDADADA" Foreground="#FF191919" Margin="0,20,20,0" BorderBrush="#FF8D8D8D" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>

@@ -20,20 +20,20 @@ quoi doit être ouverte que quand c'est nécessaire (sinon, utilisation de la RAM 
 => Pour "InfosTab":
    -> ID [int]: permet d'identifier un onglet pour ensuite, le retrouver facilement dans le fichier JSON;
    -> PathContent [string]: permet de retrouver le fichier JSON contenant le code "temporaire" de l'onglet;
-   -> TabContentMode [int / enum]: permet de savoir si cet onglet est un dossier ou bien un fichier seul (0 = fichier & 1 = dossier abritant plusieurs onglets);
+   -> TabContentType [int / enum]: permet de savoir si cet onglet est un dossier ou bien un fichier seul (0 = fichier & 1 = dossier abritant plusieurs onglets);
 
    --- Si "TabContentMode" = 1 ---
    -> FolderContent [List<InfosTab>]: permet de connaître les onglets fils de cet onglet (qui est un onglet père car c'est un onglet dossier);
 
    --- Si "TabContentMode" = 0 ---
    -> TabAccessOriginalContent [string]: permet de savoir le chemin d'accès du fichier original, l'ID du fichier original sur OneDrive...;
-   -> TabAccessMode [int / enum]: permet de savoir le "mode" de l'onglet (ex: mode OneDrive, fichiers local etc...) -- 0 = Non enregistré, 1 = Local, 2 = Réseau local, 3 = OneDrive;
+   -> TabStorageMode [int / enum]: permet de savoir le "mode" de l'onglet (ex: mode OneDrive, fichiers local etc...) -- 0 = Non enregistré, 1 = Local, 2 = Réseau local, 3 = OneDrive;
    -> TabType [string]: permet de savoir le type de fichier de l'onglet (HTML, CSS, JavaScript, fichier txt...);
    -> TabName [string]: permet de savoir le nom du fichier de l'onglet (avec extension, ex: "toothless.css");
    -> TabEncoding [int]: permet de savoir le type d'encodage du fichier de l'onglet;
    -> TabNewModifications [bool]: permet de savoir si des modifications de l'onglet ont eu lieu;
    -> TabDateModified [string]: permet de savoir la date de modification de l'onglet;
-   -> TabCursorPosition [THE_Engine_Position]: permet de connaître la dernière position du curseur dans l'éditeur;
+   -> TabCursorPosition [CursorPosition]: permet de connaître la dernière position du curseur dans l'éditeur;
 
    -> TabContentTemporary [string(tempo) -> null par défaut]: permet de stocker temporairement le contenu de l'onglet (variable qui ne sera pas enregistré dans le fichier JSON);
    -> TabThumbnailTemporary [BitmapImage(tempo) -> null par défaut]: permet de stocker temporairement l'image d'illustration de l'onglet (variable qui ne sera pas enregistré dans le fichier JSON);
