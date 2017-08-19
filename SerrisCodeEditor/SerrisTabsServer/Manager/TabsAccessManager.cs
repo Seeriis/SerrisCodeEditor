@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace SerrisTabsServer.TabsIndexer
+namespace SerrisTabsServer.Manager
 {
     public class TabsAccessManager
     {
@@ -17,12 +17,7 @@ namespace SerrisTabsServer.TabsIndexer
 
         public TabsAccessManager()
         {
-            SetFileVar();
-        }
-
-        async void SetFileVar()
-        {
-            file = await ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists);
+            file = AsyncHelpers.RunSync<StorageFile>(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
         }
 
         public async Task<List<InfosTab>> GetTabsAsync(int id)
@@ -116,23 +111,20 @@ namespace SerrisTabsServer.TabsIndexer
 
         }
 
-        public async Task<InfosTab> GetTabViaIDAsync(int id)
+        public async Task<InfosTab> GetTabViaIDAsync(TabID id)
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
                 {
-                    JObject tabs = JObject.Parse(reader.ReadToEnd()), 
-                        tab = tabs.Values<JObject>().Where(m => m["ID"].Value<int>() == id).FirstOrDefault();
+                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
 
-                    if(tab != null)
+                    if (list != null)
                     {
-                        return tab.Value<InfosTab>();
-                    }
-                    else
-                    {
-                        return null;
+                        if (list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs != null)
+                            return list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
                     }
                 }
                 catch
@@ -141,13 +133,15 @@ namespace SerrisTabsServer.TabsIndexer
                 }
             }
 
+            return null;
         }
 
         public async Task<string> GetTabContentViaIDAsync(TabID id)
         {
             try
             {
-                StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).GetResults().GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json");
+                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists);
+                StorageFile file_content = await folder_content.GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json");
 
                 using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
                 using (JsonReader JsonReader = new JsonTextReader(reader))

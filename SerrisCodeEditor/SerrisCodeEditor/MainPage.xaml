@@ -8,10 +8,17 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView x:Name="list_ids" HorizontalAlignment="Left" Width="300" Background="#FF065D02"/>
-        <TextBlock x:Name="count" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" HorizontalAlignment="Right" />
+        <ListView x:Name="list_ids" HorizontalAlignment="Left" Width="300" Background="LightGray" SelectionChanged="list_ids_SelectionChanged"/>
+        <TextBlock x:Name="ContentViewer" Margin="300,0,0,0" />
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#B2000000" Margin="0,20,0,0" CornerRadius="5">
+            <TextBlock x:Name="TabName" FontSize="24" Foreground="White" Margin="0,0,15,0" />
+            <TextBlock x:Name="TabEncoding" FontSize="24" Foreground="White" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button x:Name="NewTab" Click="NewTab_Click" Content="New tab" Background="#FFDADADA" Foreground="#FF191919" Margin="0,0,20,0" BorderBrush="#FF8D8D8D"/>
+            <Button x:Name="CreateFile" Click="CreateFile_Click" Content="New tab" Background="#FFDADADA" Foreground="#FF191919" BorderBrush="#FF8D8D8D"/>
+            <Button x:Name="CreateFileViaTab" Click="CreateFileViaTab_Click" Content="Create file via tab" Background="#FFDADADA" Foreground="#FF191919" Margin="0,0,20,0" BorderBrush="#FF8D8D8D"/>
+            <Button x:Name="OpenFiles" Click="OpenFiles_Click" Content="Open files" Background="#FFDADADA" Foreground="#FF191919" Margin="0,0,20,0" BorderBrush="#FF8D8D8D"/>
+            <!--<Button x:Name="NewTab" Click="NewTab_Click" Content="New tab" Background="#FFDADADA" Foreground="#FF191919" Margin="0,0,20,0" BorderBrush="#FF8D8D8D"/>-->
             <TextBox x:Name="id_box" Width="200" PlaceholderText="ID of the tab"/>
             <Button x:Name="DeleteTab" Click="DeleteTab_Click" Content="Delete tab" Background="#FFDADADA" Foreground="#FF191919" BorderBrush="#FF8D8D8D"/>
         </StackPanel>

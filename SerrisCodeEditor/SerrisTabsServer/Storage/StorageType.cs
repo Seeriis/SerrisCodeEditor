@@ -1,4 +1,5 @@
 ﻿using SerrisTabsServer.Items;
+using SerrisTabsServer.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace SerrisTabsServer.Storage
 {
-    abstract class StorageType
+    public class StorageType
     {
-        public InfosTab tab;
-        public StorageType(InfosTab _tab)
-        {
-            tab = _tab;
-        }
 
-        public abstract void CreateFile();
-        public abstract void WriteFile();
-        public abstract string ReadFile();
+        public StorageType(InfosTab tab, int _ListTabsID) { }
+
+        public InfosTab Tab { get; set; }
+        public int ListTabsID { get; set; }
+        public TabsAccessManager TabsReader = new TabsAccessManager();
+        public TabsWriteManager TabsWriter = new TabsWriteManager();
+        public FileTypesManager FileTypes = new FileTypesManager();
+
     }
 }

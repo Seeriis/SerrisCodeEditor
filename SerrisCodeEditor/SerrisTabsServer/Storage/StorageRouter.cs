@@ -1,4 +1,5 @@
 ﻿using SerrisTabsServer.Items;
+using SerrisTabsServer.Storage.StorageTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SerrisTabsServer.Storage
 {
-    public enum StorageTypes
+    public enum StorageListTypes
     {
         Nothing,
         LocalStorage,
@@ -17,57 +18,93 @@ namespace SerrisTabsServer.Storage
 
     public class StorageRouter
     {
-        public InfosTab tab;
-        public StorageRouter(InfosTab _tab)
+        public InfosTab tab; public int IdList;
+        public StorageRouter(InfosTab _tab, int id_list)
         {
-            tab = _tab;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            tab = _tab; IdList = id_list;
         }
 
-        public void CreateFile()
+        public async Task CreateFile()
         {
             switch (tab.TabStorageMode)
             {
-                case StorageTypes.LocalStorage:
+                case StorageListTypes.LocalStorage:
+                    await new LocalStorage(tab, IdList).CreateFile();
                     break;
 
-                case StorageTypes.Network:
+                case StorageListTypes.Network:
                     break;
 
-                case StorageTypes.OneDrive:
+                case StorageListTypes.OneDrive:
                     break;
             }
         }
 
-        public void WriteFile()
+        public void DeleteFile()
+        {
+            switch (tab.TabStorageMode)
+            {
+                case StorageListTypes.LocalStorage:
+                    new LocalStorage(tab, IdList).DeleteFile();
+                    break;
+
+                case StorageListTypes.Network:
+                    break;
+
+                case StorageListTypes.OneDrive:
+                    break;
+            }
+        }
+
+        public void ReadFile(bool ReplaceEncoding)
+        {
+            switch (tab.TabStorageMode)
+            {
+                case StorageListTypes.LocalStorage:
+                    new LocalStorage(tab, IdList).ReadFile(ReplaceEncoding);
+                    break;
+
+                case StorageListTypes.Network:
+                    break;
+
+                case StorageListTypes.OneDrive:
+                    break;
+            }
+        }
+
+        public async Task<String> ReadFileAndGetContent()
+        {
+            switch (tab.TabStorageMode)
+            {
+                case StorageListTypes.LocalStorage:
+                    return await new LocalStorage(tab, IdList).ReadFileAndGetContent();
+
+                case StorageListTypes.Network:
+                    return "";
+
+                case StorageListTypes.OneDrive:
+                    return "";
+
+                default:
+                    return "";
+            }
+        }
+
+        public async Task WriteFile()
         {
             switch(tab.TabStorageMode)
             {
-                case StorageTypes.LocalStorage:
+                case StorageListTypes.LocalStorage:
+                    await new LocalStorage(tab, IdList).WriteFile();
                     break;
 
-                case StorageTypes.Network:
+                case StorageListTypes.Network:
                     break;
 
-                case StorageTypes.OneDrive:
-                    break;
-            }
-        }
-
-        public string ReadFile()
-        {
-            switch (tab.TabStorageMode)
-            {
-                case StorageTypes.LocalStorage:
-                    break;
-
-                case StorageTypes.Network:
-                    break;
-
-                case StorageTypes.OneDrive:
+                case StorageListTypes.OneDrive:
                     break;
             }
-
-            return "";
         }
 
     }

@@ -1,11 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using SerrisTabsServer.Items;
-using SerrisTabsServer.TabsIndexer;
+using SerrisTabsServer.Manager;
+using SerrisTabsServer.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,9 +27,9 @@ namespace SerrisCodeEditor
     public sealed partial class MainPage : Page
     {
         TabsAccessManager manager_access = new TabsAccessManager(); TabsWriteManager manager_writer = new TabsWriteManager();
-        int current_list;
+        int current_list, current_tab;
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        /*protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if(e.Parameter != null)
             {
@@ -43,11 +45,13 @@ namespace SerrisCodeEditor
             {
                 lel();
             }
-        }
+        }*/
 
         public MainPage()
         {
             this.InitializeComponent();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            lel();
         }
 
         public async void lel()
@@ -82,14 +86,12 @@ namespace SerrisCodeEditor
                 current_list = await manager_writer.CreateTabsListAsync("Liste des onglets - test");
                 List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
                 AddTabs(list_ids);
-                count.Text = "" + list_ids.Count;
             }
             else
             {
                 current_list = sts_initialize[0];
                 List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
                 AddTabs(list_ids);
-                count.Text = "" + list_ids.Count;
             }
         }
 
@@ -119,13 +121,45 @@ namespace SerrisCodeEditor
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Frame frame = new Frame();
-                frame.Navigate(typeof(MainPage), new Tuple<TabsAccessManager, TabsWriteManager>(manager_access, manager_writer));
+                //frame.Navigate(typeof(MainPage), new Tuple<TabsAccessManager, TabsWriteManager>(manager_access, manager_writer));
+                frame.Navigate(typeof(MainPage), null);
                 Window.Current.Content = frame;
                 Window.Current.Activate();
 
                 newViewId = ApplicationView.GetForCurrentView().Id;
             });
             bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+        }
+
+        private async void OpenFiles_Click(object sender, RoutedEventArgs e)
+        {
+            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            await creator.OpenFilesAndCreateNewTabsFiles(current_list, StorageListTypes.LocalStorage);
+        }
+
+        private async void list_ids_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(list_ids.SelectedItem != null)
+            {
+                current_tab = (int)list_ids.SelectedItem;
+                InfosTab tab = await manager_access.GetTabViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+                TabName.Text = "Nom: " + tab.TabName;
+                TabEncoding.Text = "Encoding: " + Encoding.GetEncoding(tab.TabEncoding).EncodingName;
+
+                ContentViewer.Text = await manager_access.GetTabContentViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+            }
+        }
+
+        private async void CreateFile_Click(object sender, RoutedEventArgs e)
+        {
+            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            await creator.CreateNewTab(current_list, "test.json", Encoding.ASCII, StorageListTypes.LocalStorage, "Je suis une patate !");
+        }
+
+        private async void CreateFileViaTab_Click(object sender, RoutedEventArgs e)
+        {
+            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            creator.CreateNewFileViaTab(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
         }
     }
 

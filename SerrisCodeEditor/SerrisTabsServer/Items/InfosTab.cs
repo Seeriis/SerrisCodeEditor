@@ -32,7 +32,7 @@ namespace SerrisTabsServer.Items
 
         //If "TabContentType" == 0
         public string TabAccessOriginalContent { get; set; }
-        public StorageTypes TabStorageMode { get; set; }
+        public StorageListTypes TabStorageMode { get; set; }
         public string TabType { get; set; }
         public string TabName { get; set; }
         public int TabEncoding { get; set; }
