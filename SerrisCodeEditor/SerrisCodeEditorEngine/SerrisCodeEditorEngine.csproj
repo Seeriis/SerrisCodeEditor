@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Items\ContactSCEE.cs" />
     <Compile Include="Items\Languages.cs" />
+    <Compile Include="Items\ToolsSCEE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SerrisCodeEditorEngine.rd.xml" />
   </ItemGroup>

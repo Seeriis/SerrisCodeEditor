@@ -42,7 +42,7 @@ namespace SerrisTabsServer.Manager
             {
                 await new StorageRouter(await AccessManager.GetTabViaIDAsync(ids), ids.ID_TabsList).CreateFile().ContinueWith(async (e) =>
                 {
-                    new StorageRouter(await AccessManager.GetTabViaIDAsync(ids), ids.ID_TabsList).WriteFile();
+                    await new StorageRouter(await AccessManager.GetTabViaIDAsync(ids), ids.ID_TabsList).WriteFile();
                 });
                 return true;
             }

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<UserControl x:Name="userControl"
     x:Class="SerrisCodeEditorEngine.EditorView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,14 +10,14 @@
     d:DesignWidth="1366">
 
     <Grid>
-        
-        <!-- LOADING GRID -->
-        <Grid x:Name="LoadingScreen" Background="{Binding BackgroundWait, ElementName=userControl}">
-            <ProgressRing x:Name="loading_ring" IsActive="False" Height="50" Width="50" Foreground="{Binding ForegroundWait, ElementName=userControl}"/>
-        </Grid>
 
         <!-- EDITOR VIEW -->
         <WebView x:Name="editor_view" Visibility="Visible" NavigationFailed="editor_view_NavigationFailed" ScriptNotify="editor_view_ScriptNotify" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
 
+        <!-- LOADING GRID -->
+        <Grid x:Name="LoadingScreen" Background="{Binding BackgroundWait, ElementName=userControl}">
+            <ProgressRing x:Name="loading_ring" IsActive="False" Height="50" Width="50" Foreground="{Binding ForegroundWait, ElementName=userControl}"/>
+        </Grid>
+        
     </Grid>
 </UserControl>

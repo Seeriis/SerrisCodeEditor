@@ -1,14 +1,20 @@
-﻿using SerrisCodeEditorEngine.Items;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SerrisCodeEditorEngine.Items;
+using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -70,6 +76,8 @@ namespace SerrisCodeEditorEngine
         }
         public static readonly DependencyProperty CodeLanguageProperty = DependencyProperty.Register("CodeLanguage", typeof(string), typeof(EditorView), null);
 
+        public TabID IDs { get; set; }
+
         public Brush BackgroundWait
         {
             get { return (Brush)GetValue(BackgroundWaitProperty); }
@@ -91,20 +99,20 @@ namespace SerrisCodeEditorEngine
         }
         public static readonly DependencyProperty isReadOnlyProperty = DependencyProperty.Register("isReadOnly", typeof(bool), typeof(EditorView), null);
 
-        private bool Initialized = false;
+        private bool Initialized = false, isWindowsPhone = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
 
 
 
 
-        /*=====================
-         ------FUNCTIONS-------
-        =======================*/
+        /*=============================
+         ------PRIVATE FUNCTIONS-------
+        ===============================*/
 
 
 
 
         //Convert C# String to JS String (HttpUtility doesn't exist in WinRT) - this function has been fund here: http://joonhachu.blogspot.fr/2010/01/c-javascript-encoder.html
-        public static string JavaScriptEncode(string s)
+        private static string JavaScriptEncode(string s)
         {
             if (s == null || s.Length == 0)
             {
@@ -150,10 +158,24 @@ namespace SerrisCodeEditorEngine
         }
 
 
-        public void InitializeEditor()
+        private void InitializeEditor()
         {
             editor_view.Navigate(new Uri("ms-appx-web:///SerrisCodeEditorEngine/Pages/editor.html"));
             editor_view.LoadCompleted += (a, b) => { };
+
+            Messenger.Default.Register<ContactSCEE>(this, (notification) =>
+            {
+                try
+                {
+                    if (notification.ContactType == ContactTypeSCEE.SetCodeForEditor)
+                    {
+                        IDs = notification.IDs;
+                        Code = notification.Code;
+                    }
+                }
+                catch { }
+            });
+
             Initialized = true;
         }
 
@@ -175,7 +197,19 @@ namespace SerrisCodeEditorEngine
             {
                 await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.session.setValue('" + JavaScriptEncode(code) + "', -1);" });
 
+                if (!isWindowsPhone)
+                {
+                    string[] desktop_string = { @"editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true }); document.getElementById('editor').style.fontSize = '14px'; document.getElementById('tab-button').style.display = 'none';" };
+                    await editor_view.InvokeScriptAsync("eval", desktop_string);
+                }
+                else
+                {
+                    string[] mobile_string = { @"document.getElementById('editor').style.fontSize = '18px'; document.getElementById('tab-button').style.display = 'block';" };
+                    await editor_view.InvokeScriptAsync("eval", mobile_string);
+                }
+
                 IsLoading(false);
+                if (EditorLoaded != null) EditorLoaded(this, new EventArgs());
             }
         }
 
@@ -187,14 +221,357 @@ namespace SerrisCodeEditorEngine
                 return "";
         }
 
-        private void editor_view_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
+        private void editor_view_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e) { InitializeEditor(); }
+
+
+
+
+        /*=====================
+         ------FUNCTIONS-------
+        =======================*/
+
+
+
+
+        public void PushCodeViaIDs()
         {
+            Messenger.Default.Send(new ContactSCEE { IDs = IDs, Code = Code, ContactType = ContactTypeSCEE.GetCodeForTab });
+        }
+
+        ///<summary>
+        ///Enable or not auto completation in the editor - ex: component_name.EnableAutoCompletation(true);
+        ///</summary>
+        public async void EnableAutoCompletation(bool enable)
+        {
+            if (Initialized)
+            {
+                if (enable)
+                {
+                    string[] set_code = { @"editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true });" };
+                    await editor_view.InvokeScriptAsync("eval", set_code);
+                }
+                else
+                {
+                    string[] set_code = { @"editor.setOptions({ enableBasicAutocompletion: false, enableLiveAutocompletion: false, enableSnippets: false });" };
+                    await editor_view.InvokeScriptAsync("eval", set_code);
+                }
+            }
+        }
+
+        ///<summary>
+        ///Set the code on the document, but he didn't clear undo/redo history - ex: component_name.SetCodeButNoClearHistory("Toothless say hi !");
+        ///</summary>
+        public async void SetCodeButNoClearHistory(string setcode)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.setValue('" + JavaScriptEncode(setcode) + "', -1)" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Insert code at the cursor - ex: component_name.InsertCodeAtCursor("Toothless say hi !");
+        ///</summary>
+        public async void InsertCodeAtCursor(string setcode)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.insert('" + JavaScriptEncode(setcode) + "')" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Get the lines count of the document - ex: int test = await component_name.GetLinesCount();
+        ///</summary>
+        public async Task<int> GetLinesCount()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @" '' + editor.session.getLength();" };
+                return int.Parse(await editor_view.InvokeScriptAsync("eval", set_code));
+            }
+            else
+            { return 0; }
+        }
+
+        ///<summary>
+        ///Set the cursor position to the last line on the document - ex: component_name.GoToLastLine();
+        ///</summary>
+        public async void GoToLastLine()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @" '' + editor.gotoLine(editor.session.getLength());" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Clear the editor and the undo/redo history of the document - ex: component_name.ClearEditor();
+        ///</summary>
+        public async void ClearEditor()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.session.setValue('');" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Get text range of the document - ex: string test = await component_name.GetTextRange();
+        ///</summary>
+        public async Task<string> GetTextRange(RangeSCEE range)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"var Range = require('ace/range').Range; editor.getTextRange(new Range(" + range.from_column + ", " + range.from_row + ", " + range.to_column + ", " + range.to_row + "))" };
+                return await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+            else
+            { return null; }
+        }
+
+        ///<summary>
+        ///Replace text range on the document - ex: component_name.ReplaceTextRange();
+        ///</summary>
+        public async void ReplaceTextRange(RangeSCEE range, string replace)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"var Range = require('ace/range').Range; editor.replace(new Range(" + range.from_column + ", " + range.from_row + ", " + range.to_column + ", " + range.to_row + "), '" + JavaScriptEncode(replace) + "')" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Get selected text of the document - ex: string test = await component_name.GetSelectedText();
+        ///</summary>
+        public async Task<string> GetSelectedText()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.getSelectedText()" };
+                return await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+            else
+            { return null; }
+        }
+
+        ///<summary>
+        ///Replace actual selected text of the document - ex: component_name.ReplaceTextSelection("toothless have replaced this selection !");
+        ///</summary>
+        public async void ReplaceTextSelection(string replacement)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.session.replace(editor.selection.getRange(), '" + JavaScriptEncode(replacement) + "')" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Get the cursor position of the document - ex: PositionSCEE pos = await component_name.GetCursorPosition();
+        ///</summary>
+        public async Task<PositionSCEE> GetCursorPosition()
+        {
+            if (Initialized)
+            {
+                string[] row = { @"'' + editor.getCursorPosition().row" }; string[] column = { @"'' + editor.getCursorPosition().column" };
+                return new PositionSCEE { row = int.Parse(await editor_view.InvokeScriptAsync("eval", row)), column = int.Parse(await editor_view.InvokeScriptAsync("eval", column)) };
+            }
+            else
+            { return new PositionSCEE(); }
+        }
+
+        ///<summary>
+        ///Set the cursor position on the document - ex: component_name.SetCursorPosition(new PositionSCEE {row = 1, column = 1});
+        ///</summary>
+        public async void SetCursorPosition(PositionSCEE pos)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.moveCursorTo(" + pos.row + "," + pos.column + ");" }, anim_code = { "$('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
+                await editor_view.InvokeScriptAsync("eval", set_code); await editor_view.InvokeScriptAsync("eval", anim_code);
+            }
+        }
+
+        ///<summary>
+        ///Undo an action of the document - ex: component_name.UndoAction();
+        ///</summary>
+        public async void UndoAction()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.session.getUndoManager().undo()" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Redo an action of the document - ex: component_name.RedoAction();
+        ///</summary>
+        public async void RedoAction()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.session.getUndoManager().redo()" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Clear the undo/redo history of the document - ex: component_name.ClearUndoRedoHistory();
+        ///</summary>
+        public async void ClearUndoRedoHistory()
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.session.getUndoManager().reset()" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Find and select string in actual document - ex: component_name.FindText("i like trains");
+        ///</summary>
+        public async void FindText(string find)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.find('" + JavaScriptEncode(find) + "'); $('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Find and replace string in actual document - ex: component_name.FindAndReplaceText("i like trains", "i like french fries");
+        ///</summary>
+        public async void FindAndReplaceText(string find, string replace)
+        {
+            if (Initialized)
+            {
+                string[] set_code = { @"editor.replace('" + JavaScriptEncode(find) + "', '" + JavaScriptEncode(replace) + "'); $('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
+            }
+        }
+
+        ///<summary>
+        ///Send javascript command to the editor - ex: component_name.SendAndExecuteJavaScript("");
+        ///</summary>
+        public async void SendAndExecuteJavaScript(string command)
+        {
+            if (Initialized)
+            {
+                try
+                {
+                    string[] js_command = { command };
+                    await editor_view.InvokeScriptAsync("eval", js_command);
+                }
+                catch { }
+            }
+        }
+
+
+
+
+        /*==================
+         ------EVENTS-------
+        ====================*/
+
+
+
+
+        public event EventHandler EditorTextChanged, EditorLoaded;
+        public event EventHandler<EventSCEE> EditorCommands, EditorTextShortcutTabs;
+
+        private async void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            if (e.Value.Contains("command://"))
+                if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = e.Value });
+
+            if (e.Value.Contains("console://"))
+                Debug.WriteLine(e.Value.Replace("console://", ""));
+
+            switch (e.Value)
+            {
+                case "click":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "click" });
+                    break;
+
+                case "change":
+                    if (EditorTextChanged != null) EditorTextChanged(this, new EventArgs());
+                    break;
+
+                case "big_change":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "big_change" });
+                    break;
+
+                case "cursor_change":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "cursor_change" });
+                    break;
+
+                case "save":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "save" });
+                    break;
+
+                case "open":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "open" });
+                    break;
+
+                case "new":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "new" });
+                    break;
+
+                case "find":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "find" });
+                    break;
+
+                case "find_line":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "find_line" });
+                    break;
+
+                case "replace":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "replace" });
+                    break;
+
+                case "stackoverflow_overlay":
+                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "stackoverflow_overlay" });
+                    break;
+
+                case "enable_selection":
+                    /*if (EditorSelection != null) EditorSelection(this, new EventArgs());
+
+                    if (isWindowsPhone)
+                    {
+                        InputPane.GetForCurrentView().TryHide();
+                        grid_copy.Visibility = Visibility.Visible;
+                    }*/
+                    break;
+
+
+                //Events for context menu
+
+                case "copy":
+                    DataPackage dataPackage = new DataPackage(); dataPackage.SetText(await GetSelectedText()); Clipboard.SetContent(dataPackage);
+                    break;
+
+                case "paste":
+                    DataPackageView dataPackageView = Clipboard.GetContent(); try { InsertCodeAtCursor(await dataPackageView.GetTextAsync()); } catch { }
+                    break;
+
+                case "cut":
+                    dataPackage = new DataPackage(); dataPackage.SetText(await GetSelectedText()); Clipboard.SetContent(dataPackage); InsertCodeAtCursor("");
+                    break;
+            }
+
+            if (e.Value.Contains("tab_select:///"))
+                if (EditorTextShortcutTabs != null)
+                    EditorTextShortcutTabs(this, new EventSCEE { message = e.Value.Replace("tab_select:///", "") });
 
         }
 
-        private void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
-        {
-
-        }
     }
 }

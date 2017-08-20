@@ -20,7 +20,7 @@
             <ListView x:Name="list_ids_list"  Background="#FFC5C5C5" SelectionChanged="list_ids_list_SelectionChanged" Grid.Row="1"/>
         </Grid>
 
-        <engine:EditorView x:Name="ContentViewer" Margin="300,0,0,0"/>
+        <engine:EditorView x:Name="ContentViewer" Margin="300,0,0,0" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#B2000000" Margin="300,20,0,0" CornerRadius="5">
             <TextBlock x:Name="TabName" FontSize="24" Foreground="White" Margin="0,0,15,0" />
             <TextBlock x:Name="TabEncoding" FontSize="24" Foreground="White" />
