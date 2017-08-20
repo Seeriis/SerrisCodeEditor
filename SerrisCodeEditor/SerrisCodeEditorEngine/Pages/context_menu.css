@@ -1,0 +1,59 @@
+﻿.show_context-menu
+{
+    z-index:1000;
+    position: absolute;
+    background-color: #323232;
+    padding: 0px;
+    display: block;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+    box-shadow: 0px 0px 45px -6px rgba(0,0,0,0.8);
+    border-radius: 5px;
+
+    animation-duration: 0.2s; animation-fill-mode: both; animation-name: fadeIn;
+}
+
+.context-menu_item
+{
+    padding: 5px;
+    background: none;
+    height: 25px;
+}
+
+.context-menu_separator
+{
+    color: white;
+    height: 2px; width: 200px;
+    margin-left: 5px; margin-right: 5px;
+}
+
+.context-menu_item:hover { animation-duration: 0.2s; animation-fill-mode: both; animation-name: fadeInBG; cursor: pointer; }
+
+.context-menu_item p { color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select:none; -ms-user-select: none; }
+
+.show_context-menu li{ list-style: none; }
+.show_context-menu a { border: 0 !important; text-decoration: none; color: white; }
+.show_context-menu a:hover { text-decoration: none; }
+
+.hide_context-menu { display: none; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInBG {
+  from {
+    background: none;
+  }
+
+  to {
+    background: rgba(0,0,0,0.5);
+  }
+}

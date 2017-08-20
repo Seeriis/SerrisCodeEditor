@@ -43,8 +43,16 @@ namespace SerrisTabsServer.Manager
                     if (list == null)
                         list = new List<TabsList>();
 
-                    list.Add(new TabsList { ID = id, name = new_name });
+                    list.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
+
+                    foreach (CoreApplicationView view in CoreApplication.Views)
+                    {
+                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.NewList, ID = new TabID { ID_TabsList = id } });
+                        });
+                    }
 
                     return id;
                 }
@@ -82,6 +90,14 @@ namespace SerrisTabsServer.Manager
 
                     list.Remove(list_tabs);
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
+
+                    foreach (CoreApplicationView view in CoreApplication.Views)
+                    {
+                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.ListDeleted, ID = new TabID { ID_TabsList = id } });
+                        });
+                    }
 
                     return true;
                 }

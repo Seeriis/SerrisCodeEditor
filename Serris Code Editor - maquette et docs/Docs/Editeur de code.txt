@@ -1,0 +1,32 @@
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-
+
+
+
+L'éditeur de code fonctionnera sous un fork de Ace Editor - afin de mieux fonctionner sous WinRT - et sera sous forme d'un composant utilisable facilement.
+
+=> L'éditeur de code permettra donc d'écrire et de visualiser du code d'un onglet précis. L'onglet pourra facilement controler l'éditeur de code via MvvM Light Messenger afin de pouvoir envoyer du
+code, ou bien demander à en recevoir.
+
+
+
+---------- Architecture des objets "ContactSCEE" et "EditorView" ----------
+
+
+
+=> Pour "ContactSCEE":
+   -> IDs [TabID]: permet de savoir pour qui ou d'où provient cette notification;
+   -> ContactType [ "ContactTypeSCEE" enum]: permet de signifier l'utilité de cette notification (ex: 0 => GetCodeForTab, 1 => SetCodeForEditor);
+   -> Code [string]: le code de la notification;
+
+=> Pour "EditorView":
+   -> Code [string]: permet de récupérer/mettre du code directement dans l'éditeur (au lieu de "ContactSCEE");
+   -> LISTE DE FONCTIONS
+
+
+
+
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-
+
+
+
+

@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../Themes/theme-crimson_editor.js"> <!--ACE CSS//JS - Default theme-->
+    <link rel="stylesheet" href="../Themes/theme-chaos.js"> <!--ACE CSS//JS - Dark theme-->
+    <link rel="stylesheet" href="context_menu.css" type="text/css" charset="utf-8" />  <!-- CONTEXT MENU CSS -->
+    <!--<link rel="stylesheet" href="../fonts/mdl2.css" type="text/css" charset="utf-8" />   MDL2 ASSETS -->
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+            -ms-touch-action: none;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body id="body" style="height: 100%; width: 100%; background-color: #121212; -ms-touch-action: none; touch-action: none;">
+    <script src="../Scripts/jquery.js" type="text/javascript" charset="utf-8"></script> <!-- JQUERY-->
+    <script src="../Scripts/ace.js" type="text/javascript" charset="utf-8"></script> <!--ACE JS-->
+
+    <!--SNIPPETS TO LOAD-->
+    <script src="../Snippets/javascript.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/html.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/csharp.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/c_cpp.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/css.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/perl.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/php.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/ruby.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/python.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/tex.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/coffee.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/java.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/sql.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/actionscript.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Snippets/lua.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--ADDONS TO LOAD-->
+    <script src="../Addons/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../Addons/ext-error_marker.js" type="text/javascript" charset="utf-8"></script>
+
+    <pre id="editor" name="code" style="height: 100%; width: 100%; -ms-touch-action: none; touch-action: none;">
+    </pre>
+
+    <div class="hide_context-menu" id="context-menu">
+        <ul>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('copy');">
+                    <div class="mdl2-copy" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Copy </p>
+                    <p style="float:left; font-size: 12px; margin-left: 5px; font-style: italic;">(Ctrl+C)</p>
+                </div>
+            </li>
+            <li><div class="context-menu_separator"></div></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('paste');">
+                    <div class="mdl2-paste" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Paste </p>
+                    <p style="float:left; font-size: 12px; margin-left: 5px; font-style: italic;">(Ctrl+V)</p>
+                </div>
+            </li>
+            <li><div class="context-menu_separator"></div></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('cut');">
+                    <div class="mdl2-cut" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Cut </p>
+                    <p style="float:left; font-size: 12px; margin-left: 5px; font-style: italic;">(Ctrl+X)</p>
+                </div>
+            </li>
+            <li><div class="context-menu_separator"></div></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('find');">
+                    <div class="mdl2-find-legacy" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Find </p>
+                    <p style="float:left; font-size: 12px; margin-left: 5px; font-style: italic;">(Ctrl+F)</p>
+                </div>
+            </li>
+            <li><div class="context-menu_separator"></div></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('replace');">
+                    <div class="mdl2-show-BCC" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Find and replace... </p>
+                    <p style="float:left; font-size: 12px; margin-left: 5px; font-style: italic;">(Ctrl+H)</p>
+                </div>
+            </li>
+            <li><svg height="2" width="80"><rect x="0" y="0" width="80" height="2" style="fill: white;" /></svg></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('command://web-browser:///{url}http://www.google.com/search?q=' + editor.getSelectedText());">
+                    <div class="mdl2-globe" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p id="search-internet" style="float:left;">Search on internet...</p>
+                </div>
+            </li>
+            <li><div class="context-menu_separator"></div></li>
+            <li>
+                <div class="context-menu_item" onclick="document.getElementById('context-menu').className = 'hide_context-menu'; window.external.notify('command://stackoverflow_overlay');">
+                    <div class="mdl2-library" style="float:left; margin-right: 5px; user-select:none; -ms-user-select: none;"></div>
+                    <p style="float:left;">Open StackOverflow search</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div id="tab-button" style="display: none; position: absolute; z-index:1000; bottom: 15px; left: 0; height: 40px; width:50px; background: #121212; cursor: pointer; box-shadow: 0px 0px 45px -6px rgba(0,0,0,1); border-radius: 90px;" onclick="editor.insert('    ')">
+        <div class="mdl2-switch" style="font-size: 2.0pc; margin-left: 15px;"></div>
+    </div>
+
+    <script>
+        function Utils() {
+
+        }
+
+        Utils.prototype = {
+            constructor: Utils,
+            isElementInView: function (element, fullyInView) {
+                var pageTop = $(window).scrollTop();
+                var pageBottom = pageTop + $(window).height();
+                var elementTop = $(element).offset().top;
+                var elementBottom = elementTop + $(element).height();
+
+                if (fullyInView === true) {
+                    return ((pageTop < elementTop) && (pageBottom > elementBottom));
+                } else {
+                    return ((elementTop <= pageBottom) && (elementBottom >= pageTop));
+                }
+            }
+        };
+
+        var Utils = new Utils();
+
+        var editor = ace.edit("editor"), change = 0, enable_autoscroll = true, enhancedscroll_enabled = false, fontsize = 14;
+
+        ace.config.set("workerPath", "../Addons/");
+        ace.config.set("modePath", "../Languages/");
+
+        editor.setTheme("ace/theme/crimson_editor");
+        editor.commands.bindKey("Return", null);
+        editor.execCommand("space");
+
+        editor.getSession().on('change', function (e) {
+            window.external.notify("big_change");
+        });
+        
+        editor.on("input", function () {
+            if (change != 0) {
+                window.external.notify("change");
+            }
+            else
+                change++;
+        });
+
+        editor.getSession().selection.on('changeCursor', function (e) {
+            window.external.notify("cursor_change");
+        });
+
+        //FOR WINDOWS PHONE (RETURN BUTTON)
+        var first = 0;
+        editor.keyBinding.addKeyboardHandler(function ($data, hashId, keyString, keyCode, e) {
+
+            if (Utils.isElementInView($('.ace_text-input'), false) == false)
+                $('html, body').animate({ scrollTop: $('.ace_text-input').offset().top - 10 }, 1);
+
+            switch (keyCode)
+            {
+                case 13:
+                    editor.insert("\n");
+                    return { command: "null" }
+                    break;
+            }
+            //editor.insert(" ");
+
+        });
+
+        editor.commands.addCommand({
+            name: 'save',
+            bindKey: { win: "Ctrl-S", "mac": "Cmd-S" },
+            exec: function (editor) {
+                window.external.notify("save");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'open',
+            bindKey: { win: "Ctrl-O", "mac": "Cmd-O" },
+            exec: function (editor) {
+                window.external.notify("open");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'new',
+            bindKey: { win: "Ctrl-N", "mac": "Cmd-N" },
+            exec: function (editor) {
+                window.external.notify("new");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'find',
+            bindKey: { win: "Ctrl-F", "mac": "Cmd-F" },
+            exec: function (editor) {
+                window.external.notify("find");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'replace',
+            bindKey: { win: "Ctrl-H", "mac": "Cmd-H" },
+            exec: function (editor) {
+                window.external.notify("replace");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'find_line',
+            bindKey: { win: "Ctrl-G", "mac": "Cmd-G" },
+            exec: function (editor) {
+                window.external.notify("find_line");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'stackoverflow_overlay',
+            bindKey: { win: "Shift-Tab", "mac": "Cmd-E" },
+            exec: function (editor) {
+                window.external.notify("stackoverflow_overlay");
+            }
+        });
+
+        /*
+        *   NUMERIC KEYS
+        */
+        editor.commands.addCommand({
+            name: 'tab_select1',
+            bindKey: { win: "Ctrl-1", "mac": "Cmd-1" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///1");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select2',
+            bindKey: { win: "Ctrl-2", "mac": "Cmd-2" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///2");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select3',
+            bindKey: { win: "Ctrl-3", "mac": "Cmd-3" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///3");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select4',
+            bindKey: { win: "Ctrl-4", "mac": "Cmd-4" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///4");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select5',
+            bindKey: { win: "Ctrl-5", "mac": "Cmd-5" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///5");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select6',
+            bindKey: { win: "Ctrl-6", "mac": "Cmd-6" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///6");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select7',
+            bindKey: { win: "Ctrl-7", "mac": "Cmd-7" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///7");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select8',
+            bindKey: { win: "Ctrl-8", "mac": "Cmd-8" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///8");
+            }
+        });
+
+        editor.commands.addCommand({
+            name: 'tab_select9',
+            bindKey: { win: "Ctrl-9", "mac": "Cmd-9" },
+            exec: function (editor) {
+                window.external.notify("tab_select:///9");
+            }
+        });
+
+        function resizeAce() {
+            /*if (enhancedscroll_enabled)
+                editor.setOptions({ maxLines: Infinity, minLines: ($(window).height() / fontsize) });*/
+
+            $('#editor').height($(window).height());
+            editor.resize();
+        };
+
+        /*
+        *   === RIGHT CLICK MENU ===
+        */
+
+        editor.container.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+
+            if (editor.getSelectedText() != "")
+                document.getElementById("search-internet").textContent = 'Search "' + editor.getSelectedText().substr(0, 100) + '" on internet';
+            else
+                document.getElementById("search-internet").textContent = 'Open web browser';
+
+            document.getElementById("context-menu").className = "show_context-menu";
+
+            if ($('#context-menu').height() + e.y > $(window).height())
+                document.getElementById("context-menu").style.top = (e.y - $('#context-menu').height()) + 'px';
+            else
+                document.getElementById("context-menu").style.top = e.y + 'px';
+
+            if ($('#context-menu').width() + e.x > $(window).width())
+                document.getElementById("context-menu").style.left = (e.x - $('#context-menu').width()) + 'px';
+            else
+                document.getElementById("context-menu").style.left = e.x + 'px';
+
+            return false;
+        }, false);
+
+        editor.container.addEventListener("click", function (e) {
+            window.external.notify("click");
+            document.getElementById("context-menu").className = "hide_context-menu"; enable_autoscroll = false;
+            return false;
+        }, false);
+
+        editor.container.addEventListener("mousedown", function (e) {
+            enable_autoscroll = false;
+        }, false);
+
+        $(window).on('resize', function () {
+            /*if (enhancedscroll_enabled)
+                editor.setOptions({ maxLines: Infinity, minLines: ($(window).height() / fontsize) });*/
+
+            editor.resize();
+        });
+    </script>
+
+</body>
+
+</html>

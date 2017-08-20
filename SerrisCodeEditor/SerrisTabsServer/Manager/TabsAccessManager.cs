@@ -136,6 +136,31 @@ namespace SerrisTabsServer.Manager
             return null;
         }
 
+        public async Task<TabsList> GetTabsListViaIDAsync(int id)
+        {
+
+            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+
+                    if (list != null)
+                    {
+                        if (list.Where(m => m.ID == id).FirstOrDefault().tabs != null)
+                            return list.Where(m => m.ID == id).FirstOrDefault();
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
         public async Task<string> GetTabContentViaIDAsync(TabID id)
         {
             try

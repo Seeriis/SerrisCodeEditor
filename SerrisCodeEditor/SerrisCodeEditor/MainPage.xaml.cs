@@ -72,9 +72,28 @@ namespace SerrisCodeEditor
                             case TypeUpdate.TabDeleted:
                                 list_ids.Items.Remove(notification.ID.ID_Tab);
                                 break;
+
+                            case TypeUpdate.NewList:
+                                list_ids_list.Items.Add(notification.ID.ID_TabsList);
+                                break;
+
+                            case TypeUpdate.ListDeleted:
+                                list_ids_list.Items.Remove(notification.ID.ID_TabsList);
+                                break;
                         }
 
                     }
+                    else
+                        switch (notification.Type)
+                        {
+                            case TypeUpdate.NewList:
+                                list_ids_list.Items.Add(notification.ID.ID_TabsList);
+                                break;
+
+                            case TypeUpdate.ListDeleted:
+                                list_ids_list.Items.Remove(notification.ID.ID_TabsList);
+                                break;
+                        }
                 }
                 catch { }
             });
@@ -92,6 +111,12 @@ namespace SerrisCodeEditor
                 current_list = sts_initialize[0];
                 List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
                 AddTabs(list_ids);
+            }
+
+            list_ids_list.Items.Clear();
+            foreach(int id in sts_initialize)
+            {
+                list_ids_list.Items.Add(id);
             }
         }
 
@@ -121,7 +146,6 @@ namespace SerrisCodeEditor
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Frame frame = new Frame();
-                //frame.Navigate(typeof(MainPage), new Tuple<TabsAccessManager, TabsWriteManager>(manager_access, manager_writer));
                 frame.Navigate(typeof(MainPage), null);
                 Window.Current.Content = frame;
                 Window.Current.Activate();
@@ -146,7 +170,8 @@ namespace SerrisCodeEditor
                 TabName.Text = "Nom: " + tab.TabName;
                 TabEncoding.Text = "Encoding: " + Encoding.GetEncoding(tab.TabEncoding).EncodingName;
 
-                ContentViewer.Text = await manager_access.GetTabContentViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+                ContentViewer.CodeLanguage = tab.TabType.ToUpper();
+                ContentViewer.Code = await manager_access.GetTabContentViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
             }
         }
 
@@ -156,10 +181,35 @@ namespace SerrisCodeEditor
             await creator.CreateNewTab(current_list, "test.json", Encoding.ASCII, StorageListTypes.LocalStorage, "Je suis une patate !");
         }
 
+        private async void DeleteList_Click(object sender, RoutedEventArgs e)
+        {
+            await manager_writer.DeleteTabsListAsync(current_list);
+        }
+
+        private async void NewList_Click(object sender, RoutedEventArgs e)
+        {
+            await manager_writer.CreateTabsListAsync(name_box.Text);
+        }
+
+        private async void list_ids_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (list_ids_list.SelectedItem != null)
+            {
+                current_list = (int)list_ids_list.SelectedItem; TabsList tabslist = await manager_access.GetTabsListViaIDAsync(current_list);
+
+                if(tabslist != null)
+                    name_box.Text = tabslist.name;
+
+                List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
+                AddTabs(list_ids);
+            }
+
+        }
+
         private async void CreateFileViaTab_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            creator.CreateNewFileViaTab(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+            await creator.CreateNewFileViaTab(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
         }
     }
 

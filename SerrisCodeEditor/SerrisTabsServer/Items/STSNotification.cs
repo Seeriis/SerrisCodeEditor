@@ -10,7 +10,9 @@ namespace SerrisTabsServer.Items
     {
         TabUpdated,
         NewTab,
-        TabDeleted
+        TabDeleted,
+        NewList,
+        ListDeleted
     }
 
     public class STSNotification

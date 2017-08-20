@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2e194bb9-5ef0-41d8-a994-a9d258772637}</ProjectGuid>
+    <ProjectGuid>{2E194BB9-5EF0-41D8-A994-A9D258772637}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SerrisCodeEditorEngine</RootNamespace>
@@ -102,16 +102,104 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
   </ItemGroup>
-
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ContactSCEE.cs" />
+    <Compile Include="Items\Languages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SerrisCodeEditorEngine.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Addons\ext-error_marker.js" />
+    <Content Include="Addons\ext-language_tools.js" />
+    <Content Include="Addons\worker-coffee.js" />
+    <Content Include="Addons\worker-css.js" />
+    <Content Include="Addons\worker-html.js" />
+    <Content Include="Addons\worker-javascript.js" />
+    <Content Include="Addons\worker-json.js" />
+    <Content Include="Addons\worker-lua.js" />
+    <Content Include="Addons\worker-php.js" />
+    <Content Include="Addons\worker-xml.js" />
+    <Content Include="Languages\mode-actionscript.js" />
+    <Content Include="Languages\mode-assembly_x86.js" />
+    <Content Include="Languages\mode-batchfile.js" />
+    <Content Include="Languages\mode-cobol.js" />
+    <Content Include="Languages\mode-coffee.js" />
+    <Content Include="Languages\mode-coldfusion.js" />
+    <Content Include="Languages\mode-csharp.js" />
+    <Content Include="Languages\mode-css.js" />
+    <Content Include="Languages\mode-c_cpp.js" />
+    <Content Include="Languages\mode-eiffel.js" />
+    <Content Include="Languages\mode-elixir.js" />
+    <Content Include="Languages\mode-groovy.js" />
+    <Content Include="Languages\mode-haml.js" />
+    <Content Include="Languages\mode-haxe.js" />
+    <Content Include="Languages\mode-html.js" />
+    <Content Include="Languages\mode-java.js" />
+    <Content Include="Languages\mode-javascript.js" />
+    <Content Include="Languages\mode-json.js" />
+    <Content Include="Languages\mode-jsp.js" />
+    <Content Include="Languages\mode-latex.js" />
+    <Content Include="Languages\mode-lua.js" />
+    <Content Include="Languages\mode-objectivec.js" />
+    <Content Include="Languages\mode-ocaml.js" />
+    <Content Include="Languages\mode-pascal.js" />
+    <Content Include="Languages\mode-perl.js" />
+    <Content Include="Languages\mode-php.js" />
+    <Content Include="Languages\mode-plain_text.js" />
+    <Content Include="Languages\mode-powershell.js" />
+    <Content Include="Languages\mode-python.js" />
+    <Content Include="Languages\mode-razor.js" />
+    <Content Include="Languages\mode-ruby.js" />
+    <Content Include="Languages\mode-sass.js" />
+    <Content Include="Languages\mode-scss.js" />
+    <Content Include="Languages\mode-sh.js" />
+    <Content Include="Languages\mode-sql.js" />
+    <Content Include="Languages\mode-swift.js" />
+    <Content Include="Languages\mode-typescript.js" />
+    <Content Include="Languages\mode-vbnet.js" />
+    <Content Include="Languages\mode-vbscript.js" />
+    <Content Include="Languages\mode-xml.js" />
+    <Content Include="Languages\mode-yaml.js" />
+    <Content Include="Pages\context_menu.css" />
+    <Content Include="Pages\editor.html" />
+    <Content Include="Scripts\ace.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Snippets\actionscript.js" />
+    <Content Include="Snippets\coffee.js" />
+    <Content Include="Snippets\csharp.js" />
+    <Content Include="Snippets\css.js" />
+    <Content Include="Snippets\c_cpp.js" />
+    <Content Include="Snippets\html.js" />
+    <Content Include="Snippets\java.js" />
+    <Content Include="Snippets\javascript.js" />
+    <Content Include="Snippets\lua.js" />
+    <Content Include="Snippets\perl.js" />
+    <Content Include="Snippets\php.js" />
+    <Content Include="Snippets\python.js" />
+    <Content Include="Snippets\ruby.js" />
+    <Content Include="Snippets\sql.js" />
+    <Content Include="Snippets\tex.js" />
+    <Content Include="Themes\theme-chaos.js" />
+    <Content Include="Themes\theme-crimson_editor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SerrisTabsServer\SerrisTabsServer.csproj">
+      <Project>{86e734b6-e5bb-439b-bbe5-c0920715b85c}</Project>
+      <Name>SerrisTabsServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
