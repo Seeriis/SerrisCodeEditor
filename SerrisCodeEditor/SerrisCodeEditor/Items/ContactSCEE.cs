@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SerrisCodeEditorEngine.Items
+namespace SerrisCodeEditor.Items
 {
     public enum ContactTypeSCEE
     {
@@ -18,5 +18,6 @@ namespace SerrisCodeEditorEngine.Items
         public TabID IDs { get; set; }
         public ContactTypeSCEE ContactType { get; set; }
         public string Code { get; set; }
+        public string TypeCode { get; set; }
     }
 }

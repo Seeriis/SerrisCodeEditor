@@ -1,0 +1,15 @@
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-
+
+
+
+
+Le système de modules va fonctionner avec 1 fichier JSON et 1 groupe de dossiers.
+
+=> Le fichier JSON solitaira sera le fichier JSON mère du projet: il va contenir les ID et les informations nécessaires aux modules pour pouvoir être initialiser dans l'interface de l'éditeur.
+Il permettra ainsi donc de trouver quel dossier dans le groupe de dossiers correspond aux fichiers du module.
+
+=> Le groupe de dossiers correspond tout simplement aux fichiers de chaques modules (ex: le contenu d'un thème, les pages HTML d'un module...).
+
+
+
+---------- Architecture des objets "InfosModule" et "ParametersModule" ----------

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using SerrisCodeEditor.Items;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
@@ -27,7 +28,7 @@ namespace SerrisCodeEditor
     public sealed partial class MainPage : Page
     {
         TabsAccessManager manager_access = new TabsAccessManager(); TabsWriteManager manager_writer = new TabsWriteManager();
-        int current_list, current_tab;
+        TabID IDs = new TabID();
 
         /*protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -54,13 +55,18 @@ namespace SerrisCodeEditor
             lel();
         }
 
+        public void PushCodeViaIDs()
+        {
+            Messenger.Default.Send(new ContactSCEE { IDs = IDs, Code = ContentViewer.Code, ContactType = ContactTypeSCEE.GetCodeForTab });
+        }
+
         public async void lel()
         {
             Messenger.Default.Register<STSNotification>(this, (notification) =>
             {
                 try
                 {
-                    if (current_list == notification.ID.ID_TabsList)
+                    if (IDs.ID_TabsList == notification.ID.ID_TabsList)
                     {
 
                         switch (notification.Type)
@@ -98,18 +104,31 @@ namespace SerrisCodeEditor
                 catch { }
             });
 
+            Messenger.Default.Register<ContactSCEE>(this, (notification) =>
+            {
+                try
+                {
+                    if (notification.ContactType == ContactTypeSCEE.SetCodeForEditor)
+                    {
+                        IDs = notification.IDs;
+                        ContentViewer.CodeLanguage = notification.TypeCode; ContentViewer.Code = notification.Code;
+                    }
+                }
+                catch { }
+            });
+
             var sts_initialize = await manager_access.GetTabsListIDAsync();
             
             if(sts_initialize.Count == 0)
             {
-                current_list = await manager_writer.CreateTabsListAsync("Liste des onglets - test");
-                List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
+                IDs.ID_TabsList = await manager_writer.CreateTabsListAsync("Liste des onglets - test");
+                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
             else
             {
-                current_list = sts_initialize[0];
-                List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
+                IDs.ID_TabsList = sts_initialize[0];
+                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
 
@@ -131,12 +150,12 @@ namespace SerrisCodeEditor
 
         private async void NewTab_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.CreateTabAsync(new InfosTab { }, current_list);
+            await manager_writer.CreateTabAsync(new InfosTab { }, IDs.ID_TabsList);
         }
 
         private async void DeleteTab_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.DeleteTabAsync(new TabID { ID_Tab = int.Parse(id_box.Text), ID_TabsList = current_list });
+            await manager_writer.DeleteTabAsync(new TabID { ID_Tab = int.Parse(id_box.Text), ID_TabsList = IDs.ID_TabsList });
         }
 
         private async void NewWindow_Click(object sender, RoutedEventArgs e)
@@ -158,32 +177,32 @@ namespace SerrisCodeEditor
         private async void OpenFiles_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.OpenFilesAndCreateNewTabsFiles(current_list, StorageListTypes.LocalStorage);
+            await creator.OpenFilesAndCreateNewTabsFiles(IDs.ID_TabsList, StorageListTypes.LocalStorage);
         }
 
         private async void list_ids_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(list_ids.SelectedItem != null)
             {
-                current_tab = (int)list_ids.SelectedItem;
-                InfosTab tab = await manager_access.GetTabViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+                IDs.ID_Tab = (int)list_ids.SelectedItem;
+                InfosTab tab = await manager_access.GetTabViaIDAsync(IDs);
                 TabName.Text = "Nom: " + tab.TabName;
                 TabEncoding.Text = "Encoding: " + Encoding.GetEncoding(tab.TabEncoding).EncodingName;
 
                 ContentViewer.CodeLanguage = tab.TabType.ToUpper();
-                ContentViewer.Code = await manager_access.GetTabContentViaIDAsync(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+                ContentViewer.Code = await manager_access.GetTabContentViaIDAsync(IDs);
             }
         }
 
         private async void CreateFile_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.CreateNewTab(current_list, "test.json", Encoding.ASCII, StorageListTypes.LocalStorage, "Je suis une patate !");
+            await creator.CreateNewTab(IDs.ID_TabsList, "test.json", Encoding.ASCII, StorageListTypes.LocalStorage, "Je suis une patate !");
         }
 
         private async void DeleteList_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.DeleteTabsListAsync(current_list);
+            await manager_writer.DeleteTabsListAsync(IDs.ID_TabsList);
         }
 
         private async void NewList_Click(object sender, RoutedEventArgs e)
@@ -195,12 +214,12 @@ namespace SerrisCodeEditor
         {
             if (list_ids_list.SelectedItem != null)
             {
-                current_list = (int)list_ids_list.SelectedItem; TabsList tabslist = await manager_access.GetTabsListViaIDAsync(current_list);
+                IDs.ID_TabsList = (int)list_ids_list.SelectedItem; TabsList tabslist = await manager_access.GetTabsListViaIDAsync(IDs.ID_TabsList);
 
                 if(tabslist != null)
                     name_box.Text = tabslist.name;
 
-                List<int> list_ids = await manager_access.GetTabsIDAsync(current_list);
+                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
 
@@ -209,7 +228,7 @@ namespace SerrisCodeEditor
         private async void CreateFileViaTab_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.CreateNewFileViaTab(new TabID { ID_Tab = current_tab, ID_TabsList = current_list });
+            await creator.CreateNewFileViaTab(IDs);
         }
     }
 

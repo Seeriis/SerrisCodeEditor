@@ -1,7 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using SerrisCodeEditorEngine.Items;
-using SerrisTabsServer.Items;
-using SerrisTabsServer.Manager;
+﻿using SerrisCodeEditorEngine.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -75,8 +72,6 @@ namespace SerrisCodeEditorEngine
             set { SetValue(CodeLanguageProperty, value); }
         }
         public static readonly DependencyProperty CodeLanguageProperty = DependencyProperty.Register("CodeLanguage", typeof(string), typeof(EditorView), null);
-
-        public TabID IDs { get; set; }
 
         public Brush BackgroundWait
         {
@@ -163,19 +158,6 @@ namespace SerrisCodeEditorEngine
             editor_view.Navigate(new Uri("ms-appx-web:///SerrisCodeEditorEngine/Pages/editor.html"));
             editor_view.LoadCompleted += (a, b) => { };
 
-            Messenger.Default.Register<ContactSCEE>(this, (notification) =>
-            {
-                try
-                {
-                    if (notification.ContactType == ContactTypeSCEE.SetCodeForEditor)
-                    {
-                        IDs = notification.IDs;
-                        Code = notification.Code;
-                    }
-                }
-                catch { }
-            });
-
             Initialized = true;
         }
 
@@ -196,6 +178,12 @@ namespace SerrisCodeEditorEngine
             if(Initialized)
             {
                 await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.session.setValue('" + JavaScriptEncode(code) + "', -1);" });
+
+                if (isReadOnly)
+                {
+                    string[] set_read = { @"editor.setReadOnly(true)" };
+                    await editor_view.InvokeScriptAsync("eval", set_read);
+                }
 
                 if (!isWindowsPhone)
                 {
@@ -232,11 +220,6 @@ namespace SerrisCodeEditorEngine
 
 
 
-
-        public void PushCodeViaIDs()
-        {
-            Messenger.Default.Send(new ContactSCEE { IDs = IDs, Code = Code, ContactType = ContactTypeSCEE.GetCodeForTab });
-        }
 
         ///<summary>
         ///Enable or not auto completation in the editor - ex: component_name.EnableAutoCompletation(true);

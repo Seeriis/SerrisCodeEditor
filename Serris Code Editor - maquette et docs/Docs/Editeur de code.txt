@@ -5,7 +5,7 @@
 L'éditeur de code fonctionnera sous un fork de Ace Editor - afin de mieux fonctionner sous WinRT - et sera sous forme d'un composant utilisable facilement.
 
 => L'éditeur de code permettra donc d'écrire et de visualiser du code d'un onglet précis. L'onglet pourra facilement controler l'éditeur de code via MvvM Light Messenger afin de pouvoir envoyer du
-code, ou bien demander à en recevoir.
+code, ou bien demander à en recevoir (devra être implementer dans le client et non dans SCEE).
 
 
 

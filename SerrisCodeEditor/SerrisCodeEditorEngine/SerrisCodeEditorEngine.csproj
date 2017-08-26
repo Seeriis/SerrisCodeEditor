@@ -110,7 +110,6 @@
     <Compile Include="EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Items\ContactSCEE.cs" />
     <Compile Include="Items\Languages.cs" />
     <Compile Include="Items\ToolsSCEE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,12 +194,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SerrisTabsServer\SerrisTabsServer.csproj">
-      <Project>{86e734b6-e5bb-439b-bbe5-c0920715b85c}</Project>
-      <Name>SerrisTabsServer</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
