@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SerrisTabsServer.Items
 {
-    public enum TypeUpdate
+    public enum TypeUpdateTab
     {
         TabUpdated,
         NewTab,
@@ -17,7 +17,7 @@ namespace SerrisTabsServer.Items
 
     public class STSNotification
     {
-        public TypeUpdate Type { get; set; }
+        public TypeUpdateTab Type { get; set; }
         public TabID ID { get; set; }
     }
 }

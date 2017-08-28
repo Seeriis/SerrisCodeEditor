@@ -50,7 +50,7 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.NewList, ID = new TabID { ID_TabsList = id } });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewList, ID = new TabID { ID_TabsList = id } });
                         });
                     }
 
@@ -95,7 +95,7 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.ListDeleted, ID = new TabID { ID_TabsList = id } });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.ListDeleted, ID = new TabID { ID_TabsList = id } });
                         });
                     }
 
@@ -138,7 +138,7 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
                         });
                     }
                     return tab.ID;
@@ -174,7 +174,7 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.TabDeleted, ID = new TabID { ID_Tab = ids.ID_Tab, ID_TabsList = ids.ID_TabsList } });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabDeleted, ID = new TabID { ID_Tab = ids.ID_Tab, ID_TabsList = ids.ID_TabsList } });
                         });
                     }
                     return true;
@@ -256,7 +256,7 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdate.TabUpdated, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
                         });
                     }
                     return true;

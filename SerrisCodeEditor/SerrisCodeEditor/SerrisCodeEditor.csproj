@@ -133,6 +133,10 @@
       <Project>{2e194bb9-5ef0-41d8-a994-a9d258772637}</Project>
       <Name>SerrisCodeEditorEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SerrisModulesServer\SerrisModulesServer.csproj">
+      <Project>{214e3692-f44a-4d67-a34e-6492f0850f19}</Project>
+      <Name>SerrisModulesServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SerrisTabsServer\SerrisTabsServer.csproj">
       <Project>{86e734b6-e5bb-439b-bbe5-c0920715b85c}</Project>
       <Name>SerrisTabsServer</Name>

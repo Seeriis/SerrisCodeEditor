@@ -71,19 +71,19 @@ namespace SerrisCodeEditor
 
                         switch (notification.Type)
                         {
-                            case TypeUpdate.NewTab:
+                            case TypeUpdateTab.NewTab:
                                 list_ids.Items.Add(notification.ID.ID_Tab);
                                 break;
 
-                            case TypeUpdate.TabDeleted:
+                            case TypeUpdateTab.TabDeleted:
                                 list_ids.Items.Remove(notification.ID.ID_Tab);
                                 break;
 
-                            case TypeUpdate.NewList:
+                            case TypeUpdateTab.NewList:
                                 list_ids_list.Items.Add(notification.ID.ID_TabsList);
                                 break;
 
-                            case TypeUpdate.ListDeleted:
+                            case TypeUpdateTab.ListDeleted:
                                 list_ids_list.Items.Remove(notification.ID.ID_TabsList);
                                 break;
                         }
@@ -92,11 +92,11 @@ namespace SerrisCodeEditor
                     else
                         switch (notification.Type)
                         {
-                            case TypeUpdate.NewList:
+                            case TypeUpdateTab.NewList:
                                 list_ids_list.Items.Add(notification.ID.ID_TabsList);
                                 break;
 
-                            case TypeUpdate.ListDeleted:
+                            case TypeUpdateTab.ListDeleted:
                                 list_ids_list.Items.Remove(notification.ID.ID_TabsList);
                                 break;
                         }

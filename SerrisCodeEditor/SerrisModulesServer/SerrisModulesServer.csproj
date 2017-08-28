@@ -108,6 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Items\InfosModule.cs" />
+    <Compile Include="Items\ModulesList.cs" />
+    <Compile Include="Items\SMSNotification.cs" />
+    <Compile Include="Items\ThemeModule.cs" />
+    <Compile Include="Manager\ModulesAccessManager.cs" />
+    <Compile Include="Manager\ModulesCreatorAssistant.cs" />
+    <Compile Include="Manager\ModulesWriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
@@ -116,6 +123,7 @@
       <HintPath>..\..\..\JsBridge\dist\ChakraBridge.winmd</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

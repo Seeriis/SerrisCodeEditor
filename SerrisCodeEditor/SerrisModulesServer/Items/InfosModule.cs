@@ -1,0 +1,36 @@
+﻿namespace SerrisModulesServer.Items
+{
+    public enum ModuleTypesList
+    {
+        addon,
+        theme
+    }
+
+    public struct ModuleVersion
+    {
+        public int Major { get; set; } //Major revision (new UI, lots of new features, conceptual change, etc.)
+        public int Minor { get; set; } //Minor revision (maybe a change to a search box, 1 feature added, collection of bug fixes)
+        public int Revision { get; set; } //Bug fix release
+
+        public string GetVersionInString()
+        {
+            return string.Format("{0}.{1}.{2}", Major, Minor, Revision);
+        }
+    }
+
+    public class InfosModule
+    {
+        public int ID { get; set; }
+
+        public ModuleVersion ModuleVersion { get; set; }
+        public string ModuleName { get; set; }
+        public ModuleTypesList ModuleType { get; set; }
+        public string ModuleAuthor { get; set; }
+        public string ModuleWebsiteLink { get; set; }
+        public string ModuleDefaultLogoPath { get; set; }
+
+        public float SceMinimalVersionRequired { get; set; }
+        public bool ContainAceEditorTheme { get; set; }
+        public bool ModuleSystem { get; set; }
+    }
+}

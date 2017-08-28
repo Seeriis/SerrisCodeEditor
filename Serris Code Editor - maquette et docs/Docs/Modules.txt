@@ -10,6 +10,69 @@ Il permettra ainsi donc de trouver quel dossier dans le groupe de dossiers corre
 
 => Le groupe de dossiers correspond tout simplement aux fichiers de chaques modules (ex: le contenu d'un thème, les pages HTML d'un module...).
 
+Les modules devront être écrit en JavaScript (avec un fichier JSON qui possède la configuration du module).
 
 
----------- Architecture des objets "InfosModule" et "ParametersModule" ----------
+---------- Architecture des objets "InfosModule", "ThemeModule" et "SMSNotification" ----------
+
+
+
+=> Pour "InfosModule":
+   X-> ID [int]: L'ID du module (qui permet nottament de retrouver le dossier qui contient le contenu du module);
+   
+   -> ModuleVersion [ModuleVersion]: Version du module (utile nottament pour mettre à jour le module);
+   -> ModuleName [string]: Nom du module;
+   -> ModuleType [enum]: Type de module (0 = module "addon", 1 = module "theme");
+   -> ModuleAuthor [string]: Auteur du module;
+   -> ModuleWebsiteLink [string]: Lien vers un site en rapport avec le module;
+   -> ModuleDefaultLogoPath [string]: Chemin d'accès jusqu'au logo du module;
+
+   -> SceMinimalVersionRequired [float]: Version minimal requis de Serris Code Editor afin que l'addon fonctionne correctement;
+   X-> ContainAceEditorTheme [bool]: Permet de savoir si le module possède un thème pour Ace Editor;
+   X-> ModuleSystem [bool]: Permet de savoir si c'est un module système ou non;
+
+
+=> Pour "ThemeModule":
+   -> BackgroundImagePath [string]: Chemin d'accès vers l'image d'arrière-plan du thème;
+
+   -> MainColor [RGBA]: Couleur principal de l'interface;
+   -> MainColorFont [RGBA]: Couleur de la police qui est sur des objets qui ont la couleur principal;
+
+   -> SecondaryColor [RGBA]: Couleur secondaire de l'interface;
+   -> SecondaryColorFont [RGBA]: Couleur de la police qui est sur des objets qui ont la couleur secondaire;
+
+   -> ToolbarColor [RGBA]: Couleur de la barre d'outil (doit être transparent);
+   -> ToolbarColorFont [RGBA]: Couleur de la police qui est sur la barre d'outil;
+
+   -> ToolbarRoundButtonColor [RGBA]: Couleur des boutons ronds sur la barre d'outils;
+   -> ToolbarRoundButtonColorFont [RGBA]: Couleur de la police qui est sur les boutons ronds de la barre d'outils;
+
+   -> AddonDefaultColor [RGBA]: Couleur par défaut des addons;
+   -> AddonDefaultFontColor [RGBA]: Couleur de la police par défaut sur les addons;
+
+   -> RoundNotificationColor [RGBA]: Couleur des notifications;
+
+
+=> Pour "SMSNotification":
+   -> Type [TypeUpdateModule]: Permet de savoir le but de cette notification (0 = UpdateModule, 1 = NewModule, 2 = ModuleDeleted, 3 = CurrentThemeUpdated, 4 = NewTheme);
+   -> ID [int]: L'ID du module en question;
+
+
+[RGBA] = class avec 4 paramètres (r, g, b et a) de type "byte"
+X = paramètres qui seront créé par l'éditeur (ces paramètres ne devront pas être renseigné dans "infos.json")
+
+
+
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-
+
+
+
+Pour faire fonctionner le module, il faudra nécessairement créer un fichier "infos.json" et si le module est un addon, créer un fichier "main.js", et si le module est un thème, créer un fichier 
+"theme.json" + "theme_ace.js".
+
+=> Dans le fichier "main.js", il y aura obligatoirement une fonction nommé Main() qui sera la fonction d'initialisation de l'addon (ex: spécier dans Main() de créer une vue pour le module etc...).
+Il sera possible aussi de mettre les fonctions OnEditorStart() (fonction qui est exécuté au lancement d'une nouvelle fenêtre de l'éditeur) et OnEdtiorViewStart() (fonction qui est exécuté lorsque la
+vue de l'éditeur de code est prête, ce qui est idéal pour implanter du code dans Ace editor).
+
+=> Dans le fichier "theme.json", il y aura les paramètres de votre thème qui sera dans la forme de la class "ThemeModule". Et sur le fichier "theme_ace.js", il y aura le contenu du thème pour la vue
+de l'éditeur de code qui fonctionne sous Ace Editor.
