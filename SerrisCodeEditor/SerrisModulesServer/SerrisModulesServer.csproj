@@ -116,6 +116,7 @@
     <Compile Include="Manager\ModulesCreatorAssistant.cs" />
     <Compile Include="Manager\ModulesWriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemModules\SystemModulesList.cs" />
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +124,12 @@
       <HintPath>..\..\..\JsBridge\dist\ChakraBridge.winmd</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="XamlViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SystemModules\0\infos.js" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

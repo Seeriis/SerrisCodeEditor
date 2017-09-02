@@ -9,7 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -191,6 +193,10 @@ namespace SerrisCodeEditor
 
                 ContentViewer.CodeLanguage = tab.TabType.ToUpper();
                 ContentViewer.Code = await manager_access.GetTabContentViaIDAsync(IDs);
+                
+                /*var dataPackage = new DataPackage();
+                dataPackage.SetText(Package.Current.InstalledLocation.Path);
+                Clipboard.SetContent(dataPackage);*/
             }
         }
 

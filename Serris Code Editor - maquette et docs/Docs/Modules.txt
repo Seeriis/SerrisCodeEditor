@@ -26,10 +26,12 @@ Les modules devront être écrit en JavaScript (avec un fichier JSON qui possède l
    -> ModuleAuthor [string]: Auteur du module;
    -> ModuleWebsiteLink [string]: Lien vers un site en rapport avec le module;
    -> ModuleDefaultLogoPath [string]: Chemin d'accès jusqu'au logo du module;
+   -> ModuleAceThemeName [string]: Nom du thème Ace Editor a initialiser dans le composant Ace (ex: "ace/theme/crimson_editor", "ace/theme/chaos"...);
 
    -> SceMinimalVersionRequired [float]: Version minimal requis de Serris Code Editor afin que l'addon fonctionne correctement;
    X-> ContainAceEditorTheme [bool]: Permet de savoir si le module possède un thème pour Ace Editor;
    X-> ModuleSystem [bool]: Permet de savoir si c'est un module système ou non;
+   -> JSFilesPathList [List<string]: Liste des chemins d'accès vers les différents fichiers JavaScript du module;
 
 
 => Pour "ThemeModule":

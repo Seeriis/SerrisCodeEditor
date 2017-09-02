@@ -1,4 +1,6 @@
-﻿namespace SerrisModulesServer.Items
+﻿using System.Collections.Generic;
+
+namespace SerrisModulesServer.Items
 {
     public enum ModuleTypesList
     {
@@ -27,10 +29,16 @@
         public ModuleTypesList ModuleType { get; set; }
         public string ModuleAuthor { get; set; }
         public string ModuleWebsiteLink { get; set; }
+        public string ModuleDescription { get; set; }
         public string ModuleDefaultLogoPath { get; set; }
+        public string ModuleAddonIconPath { get; set; }
+        public string ModuleAceThemeName { get; set; }
+        public List<string> JSFilesPathList { get; set; }
 
         public float SceMinimalVersionRequired { get; set; }
         public bool ContainAceEditorTheme { get; set; }
         public bool ModuleSystem { get; set; }
+        public bool IsPinnedToToolBar { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

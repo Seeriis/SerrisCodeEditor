@@ -11,30 +11,30 @@ namespace SerrisCodeEditorEngine.Items
         *       =========
         */
 
-        string[] plain_text = { "editor.getSession().setMode('ace/mode/plain_text'); change = 0;" };
-        string[] html = { "editor.getSession().setMode('ace/mode/html'); change = 0;" };
-        string[] php = { "editor.getSession().setMode('ace/mode/php'); change = 0;" };
-        string[] css = { "editor.getSession().setMode('ace/mode/css'); change = 0;" };
-        string[] js = { "editor.getSession().setMode('ace/mode/javascript'); change = 0;" };
-        string[] scss = { "editor.getSession().setMode('ace/mode/scss'); change = 0;" };
-        string[] xml = { "editor.getSession().setMode('ace/mode/xml'); change = 0;" };
-        string[] aspnet = { "editor.getSession().setMode('ace/mode/razor'); change = 0;" };
-        string[] python = { "editor.getSession().setMode('ace/mode/python'); change = 0;" };
+        string[] plain_text = { "monaco.editor.setModelLanguage(editor.getModel(), 'plaintext');" };
+        string[] html = { "monaco.editor.setModelLanguage(editor.getModel(), 'html');" };
+        string[] php = { "monaco.editor.setModelLanguage(editor.getModel(), 'php');" };
+        string[] css = { "monaco.editor.setModelLanguage(editor.getModel(), 'css');" };
+        string[] js = { "monaco.editor.setModelLanguage(editor.getModel(), 'javascript');" };
+        string[] scss = { "monaco.editor.setModelLanguage(editor.getModel(), 'scss');" };
+        string[] xml = { "monaco.editor.setModelLanguage(editor.getModel(), 'xml');" };
+        string[] aspnet = { "monaco.editor.setModelLanguage(editor.getModel(), 'razor');" };
+        string[] python = { "monaco.editor.setModelLanguage(editor.getModel(), 'python');" };
         string[] actionscript = { "editor.getSession().setMode('ace/mode/actionscript'); change = 0;" };
-        string[] java = { "editor.getSession().setMode('ace/mode/java'); change = 0;" };
-        string[] csharp = { "editor.getSession().setMode('ace/mode/csharp'); change = 0;" };
-        string[] lua = { "editor.getSession().setMode('ace/mode/lua'); change = 0;" };
-        string[] json = { "editor.getSession().setMode('ace/mode/json'); change = 0;" };
-        string[] c_cpp = { "editor.getSession().setMode('ace/mode/c_cpp'); change = 0;" };
+        string[] java = { "monaco.editor.setModelLanguage(editor.getModel(), 'java');" };
+        string[] csharp = { "monaco.editor.setModelLanguage(editor.getModel(), 'csharp');" };
+        string[] lua = { "monaco.editor.setModelLanguage(editor.getModel(), 'lua');" };
+        string[] json = { "monaco.editor.setModelLanguage(editor.getModel(), 'json');" };
+        string[] c_cpp = { "monaco.editor.setModelLanguage(editor.getModel(), 'cpp');" };
         string[] assembly = { "editor.getSession().setMode('ace/mode/assembly_x86'); change = 0;" };
-        string[] objective_c = { "editor.getSession().setMode('ace/mode/objectivec'); change = 0;" };
-        string[] coffee = { "editor.getSession().setMode('ace/mode/coffee'); change = 0;" };
-        string[] perl = { "editor.getSession().setMode('ace/mode/perl'); change = 0;" };
+        string[] objective_c = { "monaco.editor.setModelLanguage(editor.getModel(), 'objective-c');" };
+        string[] coffee = { "monaco.editor.setModelLanguage(editor.getModel(), 'coffee');" };
+        string[] perl = { "monaco.editor.setModelLanguage(editor.getModel(), 'json');" };
         string[] pascal = { "editor.getSession().setMode('ace/mode/pascal'); change = 0;" };
         string[] ruby = { "editor.getSession().setMode('ace/mode/ruby'); change = 0;" };
         string[] typescript = { "editor.getSession().setMode('ace/mode/typescript'); change = 0;" };
-        string[] yaml = { "editor.getSession().setMode('ace/mode/yaml'); change = 0;" };
-        string[] swift = { "editor.getSession().setMode('ace/mode/swift'); change = 0;" };
+        string[] yaml = { "monaco.editor.setModelLanguage(editor.getModel(), 'yaml');" };
+        string[] swift = { "monaco.editor.setModelLanguage(editor.getModel(), 'swift');" };
         string[] vbscript = { "editor.getSession().setMode('ace/mode/vbscript'); change = 0;" };
         string[] haxe = { "editor.getSession().setMode('ace/mode/haxe'); change = 0;" };
         string[] haml = { "editor.getSession().setMode('ace/mode/haml'); change = 0;" };
@@ -44,13 +44,13 @@ namespace SerrisCodeEditorEngine.Items
         string[] latex = { "editor.getSession().setMode('ace/mode/latex'); change = 0;" };
         string[] groovy = { "editor.getSession().setMode('ace/mode/groovy'); change = 0;" };
         string[] shell = { "editor.getSession().setMode('ace/mode/sh'); change = 0;" };
-        string[] powershell = { "editor.getSession().setMode('ace/mode/powershell'); change = 0;" };
+        string[] powershell = { "monaco.editor.setModelLanguage(editor.getModel(), 'powershell');" };
         string[] elixir = { "editor.getSession().setMode('ace/mode/elixir'); change = 0;" };
         string[] cfml = { "editor.getSession().setMode('ace/mode/coldfusion'); change = 0;" };
         string[] jsp = { "editor.getSession().setMode('ace/mode/jsp'); change = 0;" };
-        string[] batch = { "editor.getSession().setMode('ace/mode/batchfile'); change = 0;" };
+        string[] batch = { "monaco.editor.setModelLanguage(editor.getModel(), 'bat');" };
         string[] eiffel = { "editor.getSession().setMode('ace/mode/eiffel'); change = 0;" };
-        string[] sql = { "editor.getSession().setMode('ace/mode/sql'); change = 0;" };
+        string[] sql = { "monaco.editor.setModelLanguage(editor.getModel(), 'sql');" };
 
 
 
@@ -226,7 +226,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "VB":
-                    await editor.InvokeScriptAsync("eval", new string[] { "editor.getSession().setMode('ace/mode/vbnet'); change = 0;" });
+                    await editor.InvokeScriptAsync("eval", new string[] { "monaco.editor.setModelLanguage(editor.getModel(), 'vb');" });
                     break;
 
                 default:

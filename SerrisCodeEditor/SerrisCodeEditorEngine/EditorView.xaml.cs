@@ -16,6 +16,8 @@ namespace SerrisCodeEditorEngine
         {
             this.InitializeComponent();
             InitializeEditor();
+
+            this.SizeChanged += EditorView_SizeChanged;
         }
 
 
@@ -145,8 +147,6 @@ namespace SerrisCodeEditorEngine
         {
             editor_view.Navigate(new Uri("ms-appx-web:///SerrisCodeEditorEngine/Pages/editor.html"));
             editor_view.LoadCompleted += (a, b) => { };
-
-            Initialized = true;
         }
 
         private void IsLoading(bool enabled)
@@ -165,15 +165,20 @@ namespace SerrisCodeEditorEngine
         {
             if(Initialized)
             {
-                await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.session.setValue('" + JavaScriptEncode(code) + "', -1);" });
+                await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.setValue('" + JavaScriptEncode(code) + "');" });
 
                 if (isReadOnly)
                 {
-                    string[] set_read = { @"editor.setReadOnly(true)" };
+                    string[] set_read = { @"editor.updateOptions({ readOnly: true});" };
+                    await editor_view.InvokeScriptAsync("eval", set_read);
+                }
+                else
+                {
+                    string[] set_read = { @"editor.updateOptions({ readOnly: false});" };
                     await editor_view.InvokeScriptAsync("eval", set_read);
                 }
 
-                if (!isWindowsPhone)
+                /*if (!isWindowsPhone)
                 {
                     string[] desktop_string = { @"editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true }); document.getElementById('editor').style.fontSize = '14px'; document.getElementById('tab-button').style.display = 'none';" };
                     await editor_view.InvokeScriptAsync("eval", desktop_string);
@@ -182,7 +187,7 @@ namespace SerrisCodeEditorEngine
                 {
                     string[] mobile_string = { @"document.getElementById('editor').style.fontSize = '18px'; document.getElementById('tab-button').style.display = 'block';" };
                     await editor_view.InvokeScriptAsync("eval", mobile_string);
-                }
+                }*/
 
                 IsLoading(false);
                 if (EditorLoaded != null) EditorLoaded(this, new EventArgs());
@@ -260,7 +265,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @" '' + editor.session.getLength();" };
+                string[] set_code = { @" '' + editor.getModel().getLineCount();" };
                 return int.Parse(await editor_view.InvokeScriptAsync("eval", set_code));
             }
             else
@@ -274,7 +279,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @" '' + editor.gotoLine(editor.session.getLength());" };
+                string[] set_code = { @"editor.setPosition(new monaco.Position(editor.getModel().getLineCount(), 1));" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -286,7 +291,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.session.setValue('');" };
+                string[] set_code = { @"editor.setValue('');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -364,8 +369,8 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.moveCursorTo(" + pos.row + "," + pos.column + ");" }, anim_code = { "$('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
-                await editor_view.InvokeScriptAsync("eval", set_code); await editor_view.InvokeScriptAsync("eval", anim_code);
+                string[] set_code = { @"editor.setPosition(new monaco.Position(" + pos.row + "," + pos.column + "));" };
+                await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
 
@@ -376,7 +381,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.session.getUndoManager().undo()" };
+                string[] set_code = { @"editor.trigger('editor', 'undo');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -388,7 +393,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.session.getUndoManager().redo()" };
+                string[] set_code = { @"editor.trigger('editor', 'redo');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -457,6 +462,12 @@ namespace SerrisCodeEditorEngine
 
         public event EventHandler EditorTextChanged, EditorLoaded;
         public event EventHandler<EventSCEE> EditorCommands, EditorTextShortcutTabs;
+
+        private async void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if(Initialized)
+            await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.layout();" });
+        }
 
         private async void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
         {
@@ -535,6 +546,13 @@ namespace SerrisCodeEditorEngine
 
                 case "cut":
                     dataPackage = new DataPackage(); dataPackage.SetText(await GetSelectedText()); Clipboard.SetContent(dataPackage); InsertCodeAtCursor("");
+                    break;
+
+
+
+
+                case "loaded":
+                    Initialized = true;
                     break;
             }
 
