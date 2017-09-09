@@ -16,7 +16,11 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="list_ids"  Background="LightGray" SelectionChanged="list_ids_SelectionChanged"/>
+            <ListView x:Name="list_ids" SelectionChanged="list_ids_SelectionChanged">
+                <ListView.Background>
+                    <ImageBrush x:Name="image_bg" Stretch="Fill"/>
+                </ListView.Background>
+            </ListView>
             <ListView x:Name="list_ids_list"  Background="#FFC5C5C5" SelectionChanged="list_ids_list_SelectionChanged" Grid.Row="1"/>
         </Grid>
 

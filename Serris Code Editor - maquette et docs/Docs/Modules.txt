@@ -78,3 +78,5 @@ vue de l'éditeur de code est prête, ce qui est idéal pour implanter du code dans
 
 => Dans le fichier "theme.json", il y aura les paramètres de votre thème qui sera dans la forme de la class "ThemeModule". Et sur le fichier "theme_ace.js", il y aura le contenu du thème pour la vue
 de l'éditeur de code qui fonctionne sous Ace Editor.
+
+Il y aura aussi un fichier "icon.png" et "logo.png" à la racine du module.

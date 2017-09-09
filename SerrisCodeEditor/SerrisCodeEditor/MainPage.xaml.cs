@@ -1,5 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
 using SerrisCodeEditor.Items;
+using SerrisModulesServer.Items;
+using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.Theme;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
@@ -15,6 +19,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,7 +34,8 @@ namespace SerrisCodeEditor
 
     public sealed partial class MainPage : Page
     {
-        TabsAccessManager manager_access = new TabsAccessManager(); TabsWriteManager manager_writer = new TabsWriteManager();
+        TabsAccessManager Tabs_manager_access = new TabsAccessManager(); TabsWriteManager Tabs_manager_writer = new TabsWriteManager();
+        ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         TabID IDs = new TabID();
 
         /*protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -119,18 +125,18 @@ namespace SerrisCodeEditor
                 catch { }
             });
 
-            var sts_initialize = await manager_access.GetTabsListIDAsync();
+            var sts_initialize = await Tabs_manager_access.GetTabsListIDAsync();
             
             if(sts_initialize.Count == 0)
             {
-                IDs.ID_TabsList = await manager_writer.CreateTabsListAsync("Liste des onglets - test");
-                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
+                IDs.ID_TabsList = await Tabs_manager_writer.CreateTabsListAsync("Liste des onglets - test");
+                List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
             else
             {
                 IDs.ID_TabsList = sts_initialize[0];
-                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
+                List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
 
@@ -139,6 +145,39 @@ namespace SerrisCodeEditor
             {
                 list_ids_list.Items.Add(id);
             }
+
+            //var list_modules = await Modules_manager_access.GetModulesAsync(true);
+            //new MessageDialog("Nombre de modules: " + list_modules.Count + ";\n " + list_modules[0].ModuleName + " par " + list_modules[0].ModuleAuthor).ShowAsync();
+
+            /*ThemeModule theme = new ThemeModule
+            {
+                AddonDefaultColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+                AddonDefaultFontColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                MainColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+                MainColorFont = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                RoundNotificationColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                SecondaryColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+                SecondaryColorFont = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                ToolbarColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+                ToolbarColorFont = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                ToolbarRoundButtonColor = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+                ToolbarRoundButtonColorFont = new RGBA { A = 1, B = 255, G = 255, R = 255 },
+
+                BackgroundImagePath = "lol.png"
+            };
+
+            var dataPackage = new DataPackage();
+            //dataPackage.SetText(Package.Current.InstalledLocation.Path);
+            dataPackage.SetText(JsonConvert.SerializeObject(theme, Formatting.Indented));
+            Clipboard.SetContent(dataPackage);*/
+
+            ThemeModuleBrush brushs_theme = await new ThemeReader(await Modules_manager_access.GetCurrentThemeID()).GetThemeBrushsContent();
+            image_bg.ImageSource = brushs_theme.BackgroundImage;
         }
 
         public void AddTabs(List<int> tabs)
@@ -152,12 +191,12 @@ namespace SerrisCodeEditor
 
         private async void NewTab_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.CreateTabAsync(new InfosTab { }, IDs.ID_TabsList);
+            await Tabs_manager_writer.CreateTabAsync(new InfosTab { }, IDs.ID_TabsList);
         }
 
         private async void DeleteTab_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.DeleteTabAsync(new TabID { ID_Tab = int.Parse(id_box.Text), ID_TabsList = IDs.ID_TabsList });
+            await Tabs_manager_writer.DeleteTabAsync(new TabID { ID_Tab = int.Parse(id_box.Text), ID_TabsList = IDs.ID_TabsList });
         }
 
         private async void NewWindow_Click(object sender, RoutedEventArgs e)
@@ -187,13 +226,13 @@ namespace SerrisCodeEditor
             if(list_ids.SelectedItem != null)
             {
                 IDs.ID_Tab = (int)list_ids.SelectedItem;
-                InfosTab tab = await manager_access.GetTabViaIDAsync(IDs);
+                InfosTab tab = await Tabs_manager_access.GetTabViaIDAsync(IDs);
                 TabName.Text = "Nom: " + tab.TabName;
                 TabEncoding.Text = "Encoding: " + Encoding.GetEncoding(tab.TabEncoding).EncodingName;
 
                 ContentViewer.CodeLanguage = tab.TabType.ToUpper();
-                ContentViewer.Code = await manager_access.GetTabContentViaIDAsync(IDs);
-                
+                ContentViewer.Code = await Tabs_manager_access.GetTabContentViaIDAsync(IDs);
+
                 /*var dataPackage = new DataPackage();
                 dataPackage.SetText(Package.Current.InstalledLocation.Path);
                 Clipboard.SetContent(dataPackage);*/
@@ -208,24 +247,24 @@ namespace SerrisCodeEditor
 
         private async void DeleteList_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.DeleteTabsListAsync(IDs.ID_TabsList);
+            await Tabs_manager_writer.DeleteTabsListAsync(IDs.ID_TabsList);
         }
 
         private async void NewList_Click(object sender, RoutedEventArgs e)
         {
-            await manager_writer.CreateTabsListAsync(name_box.Text);
+            await Tabs_manager_writer.CreateTabsListAsync(name_box.Text);
         }
 
         private async void list_ids_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (list_ids_list.SelectedItem != null)
             {
-                IDs.ID_TabsList = (int)list_ids_list.SelectedItem; TabsList tabslist = await manager_access.GetTabsListViaIDAsync(IDs.ID_TabsList);
+                IDs.ID_TabsList = (int)list_ids_list.SelectedItem; TabsList tabslist = await Tabs_manager_access.GetTabsListViaIDAsync(IDs.ID_TabsList);
 
                 if(tabslist != null)
                     name_box.Text = tabslist.name;
 
-                List<int> list_ids = await manager_access.GetTabsIDAsync(IDs.ID_TabsList);
+                List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
             }
 

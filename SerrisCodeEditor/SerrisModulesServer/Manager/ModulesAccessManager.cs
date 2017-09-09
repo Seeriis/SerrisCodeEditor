@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.SystemModules;
+using SerrisModulesServer.Type.Theme;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SerrisModulesServer.Manager
 {
@@ -106,72 +109,6 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public async Task<ThemeModule> GetCurrentThemeContent(bool IsSystemModule)
-        {
-            StorageFolder folder_module;
-
-            if(IsSystemModule)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"), folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("theme.json");
-
-            using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
-            {
-                try
-                {
-                    ThemeModule content = new JsonSerializer().Deserialize<ThemeModule>(JsonReader);
-
-                    if (content != null)
-                    {
-                        return content;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
-        public async Task<string> GetCurrentThemeAceEditorContent(bool IsSystemModule)
-        {
-            StorageFolder folder_module;
-
-            if (IsSystemModule)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"), folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("theme_ace.js");
-
-            try
-            {
-                using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
-                {
-                    return await reader.ReadToEndAsync();
-                }
-            }
-            catch { return null; }
-
-        }
-
         public async Task<ThemeModule> GetCurrentThemeTempContent()
         {
             StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("theme_temp.json", CreationCollisionOption.OpenIfExists);
@@ -241,7 +178,7 @@ namespace SerrisModulesServer.Manager
             return null;
         }
 
-        public async Task<string> GetModuleMainJsViaIDAsync(int id, bool IsSystemModule)
+        public async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(int id, bool IsSystemModule)
         {
             StorageFolder folder_module;
 
@@ -256,21 +193,25 @@ namespace SerrisModulesServer.Manager
                 folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
             }
 
-            StorageFile file_content = await folder_module.GetFileAsync("main.js");
+            StorageFile file_content = await folder_module.GetFileAsync("logo.png");
 
             try
             {
-                using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
+                using (FileRandomAccessStream reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
                 {
-                    return await reader.ReadToEndAsync();
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.SetSource(reader);
+
+                    return bitmapImage;
                 }
             }
             catch
             {
-                return "";
+                return null;
             }
 
         }
+
 
     }
 }

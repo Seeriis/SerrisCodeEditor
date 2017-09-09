@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.3",
     "MvvmLightLibs": "5.3.0",
+    "Newtonsoft.Json": "10.0.3",
     "System.Text.Encoding.CodePages": "4.4.0"
   },
   "frameworks": {

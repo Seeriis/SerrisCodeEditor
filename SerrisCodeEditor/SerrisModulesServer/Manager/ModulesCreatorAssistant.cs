@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SerrisModulesServer.Items;
+using SerrisModulesServer.Type;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,7 @@ namespace SerrisModulesServer.Manager
 
         public PackageVerificationCode VerifyPackageAsync()
         {
-            string path_image = "", icon_path = ""; ModuleTypesList type; float MinimalVersion;
+            ModuleTypesList type; float MinimalVersion;
             using (ZipArchive zip_content = ZipFile.OpenRead(Package.Path))
             {
 
@@ -50,10 +51,8 @@ namespace SerrisModulesServer.Manager
                             InfosModule module = new JsonSerializer().Deserialize<InfosModule>(JsonReader);
                             if (module != null)
                             {
-                                path_image = module.ModuleDefaultLogoPath;
                                 type = module.ModuleType;
                                 MinimalVersion = module.SceMinimalVersionRequired;
-                                icon_path = module.ModuleAddonIconPath;
                             }
                             else
                             {
@@ -69,7 +68,7 @@ namespace SerrisModulesServer.Manager
                 //Verify if the logo exist or not
                 try
                 {
-                    if (zip_content.GetEntry(path_image) == null)
+                    if (zip_content.GetEntry("logo.png") == null)
                         return PackageVerificationCode.LogoNotFound;
                 }
                 catch { return PackageVerificationCode.LogoNotFound; }
@@ -77,11 +76,11 @@ namespace SerrisModulesServer.Manager
 
                 switch(type)
                 {
-                    case ModuleTypesList.addon:
+                    case ModuleTypesList.Addon:
                         //Verify if the toolbar icon of the addon exist or not
                         try
                         {
-                            if (zip_content.GetEntry(icon_path) == null)
+                            if (zip_content.GetEntry("icon.png") == null)
                                 return PackageVerificationCode.LogoNotFound;
                         }
                         catch { return PackageVerificationCode.LogoNotFound; }
@@ -96,7 +95,7 @@ namespace SerrisModulesServer.Manager
 
                         break;
 
-                    case ModuleTypesList.theme:
+                    case ModuleTypesList.Theme:
                         //Verify if the "theme.js" or "theme_ace.js" exist or not
                         bool themejs = true, themeacejs = true;
 

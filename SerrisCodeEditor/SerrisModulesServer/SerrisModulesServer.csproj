@@ -105,18 +105,25 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <Content Include="SystemModules\0\lol.jpg" />
+    <Content Include="SystemModules\0\theme.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="SMSInitialize.cs" />
     <Compile Include="Items\InfosModule.cs" />
     <Compile Include="Items\ModulesList.cs" />
     <Compile Include="Items\SMSNotification.cs" />
-    <Compile Include="Items\ThemeModule.cs" />
     <Compile Include="Manager\ModulesAccessManager.cs" />
     <Compile Include="Manager\ModulesCreatorAssistant.cs" />
     <Compile Include="Manager\ModulesWriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemModules\SystemModulesList.cs" />
+    <Compile Include="Type\Addon\AddonExecutor.cs" />
+    <Compile Include="Type\Addon\AddonReader.cs" />
+    <Compile Include="Type\ModuleTypesList.cs" />
+    <Compile Include="Type\Theme\ThemeModule.cs" />
+    <Compile Include="Type\Theme\ThemeReader.cs" />
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -125,10 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="XamlViews\" />
+    <Folder Include="Type\Language\" />
+    <Folder Include="Xaml\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SystemModules\0\infos.js" />
+    <Content Include="SystemModules\0\logo.png" />
+    <Content Include="SystemModules\0\icon.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

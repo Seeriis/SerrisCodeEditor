@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SerrisModulesServer;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,6 +41,9 @@ namespace SerrisCodeEditor
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+
+            //Serris Modules Server !
+            new SMSInitialize().InitializeSMSJson();
 
             // Ne répétez pas l'initialisation de l'application lorsque la fenêtre comporte déjà du contenu,
             // assurez-vous juste que la fenêtre est active

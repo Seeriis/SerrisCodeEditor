@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using SerrisModulesServer.Items;
+using SerrisModulesServer.Type;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,17 +47,21 @@ namespace SerrisModulesServer.Manager
                         content.ID = id; content.ModuleSystem = false; content.IsEnabled = true;
 
                         if (await folder_addon.TryGetItemAsync("theme_ace.js") != null)
-                            content.ContainAceEditorTheme = true;
+                            content.ContainMonacoTheme = true;
                         else
-                            content.ContainAceEditorTheme = false;
+                            content.ContainMonacoTheme = false;
 
                         switch(content.ModuleType)
                         {
-                            case ModuleTypesList.addon:
+                            case ModuleTypesList.Addon:
                                 content.IsPinnedToToolBar = true;
                                 break;
 
-                            case ModuleTypesList.theme:
+                            case ModuleTypesList.Theme:
+                                content.IsPinnedToToolBar = false;
+                                break;
+
+                            case ModuleTypesList.Language:
                                 content.IsPinnedToToolBar = false;
                                 break;
                         }
