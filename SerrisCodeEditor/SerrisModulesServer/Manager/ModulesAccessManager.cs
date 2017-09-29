@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ChakraBridge;
+using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.SystemModules;
 using SerrisModulesServer.Type.Theme;
@@ -15,7 +16,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace SerrisModulesServer.Manager
 {
-    public class ModulesAccessManager
+    public sealed class ModulesAccessManager
     {
         StorageFile file;
 

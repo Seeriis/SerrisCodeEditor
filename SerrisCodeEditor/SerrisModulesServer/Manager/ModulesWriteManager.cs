@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Type;
+using SerrisModulesServer.Type.Theme;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -239,7 +240,7 @@ namespace SerrisModulesServer.Manager
                 var module = await AccessManager.GetModuleViaIDAsync(await AccessManager.GetCurrentThemeAceEditorID());
                 
                 StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
-                await FileIO.WriteTextAsync(file_content, await AccessManager.GetCurrentThemeAceEditorContent(module.ModuleSystem));
+                await FileIO.WriteTextAsync(file_content, await new ThemeReader(module.ID).GetThemeJSContentAsync());
 
                 return true;
             }

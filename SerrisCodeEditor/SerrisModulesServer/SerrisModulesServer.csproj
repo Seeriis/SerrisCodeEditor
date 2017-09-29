@@ -104,23 +104,30 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="SystemModules\1\icon.png" />
+    <Content Include="SystemModules\1\logo.png" />
+    <Content Include="SystemModules\1\main.js" />
+    <Content Include="SystemModules\2\icon.png" />
+    <Content Include="SystemModules\2\libs\test.js" />
+    <Content Include="SystemModules\2\logo.png" />
+    <Content Include="SystemModules\2\main.js" />
     <None Include="project.json" />
     <Content Include="SystemModules\0\lol.jpg" />
     <Content Include="SystemModules\0\theme.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="SMSInitialize.cs" />
     <Compile Include="Items\InfosModule.cs" />
     <Compile Include="Items\ModulesList.cs" />
     <Compile Include="Items\SMSNotification.cs" />
     <Compile Include="Manager\ModulesAccessManager.cs" />
-    <Compile Include="Manager\ModulesCreatorAssistant.cs" />
+    <Compile Include="Manager\ModulesVerifyAssistant.cs" />
     <Compile Include="Manager\ModulesWriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemModules\SystemModulesList.cs" />
     <Compile Include="Type\Addon\AddonExecutor.cs" />
     <Compile Include="Type\Addon\AddonReader.cs" />
+    <Compile Include="Type\Addon\ChakraSMS.cs" />
     <Compile Include="Type\ModuleTypesList.cs" />
     <Compile Include="Type\Theme\ThemeModule.cs" />
     <Compile Include="Type\Theme\ThemeReader.cs" />
@@ -133,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Type\Language\" />
-    <Folder Include="Xaml\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SystemModules\0\logo.png" />
@@ -141,6 +147,9 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

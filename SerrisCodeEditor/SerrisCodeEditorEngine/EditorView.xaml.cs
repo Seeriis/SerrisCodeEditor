@@ -12,10 +12,11 @@ namespace SerrisCodeEditorEngine
 {
     public sealed partial class EditorView : UserControl
     {
+        private WebView editor_view;
+
         public EditorView()
         {
             this.InitializeComponent();
-            InitializeEditor();
 
             this.SizeChanged += EditorView_SizeChanged;
         }
@@ -462,6 +463,19 @@ namespace SerrisCodeEditorEngine
 
         public event EventHandler EditorTextChanged, EditorLoaded;
         public event EventHandler<EventSCEE> EditorCommands, EditorTextShortcutTabs;
+
+        private void userControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            editor_view = new WebView(WebViewExecutionMode.SeparateThread);
+            editor_view.NavigationFailed += editor_view_NavigationFailed;
+            editor_view.ScriptNotify += editor_view_ScriptNotify;
+
+            editor_view.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Visible);
+
+            MasterGrid.Children.Insert(0, editor_view);
+            
+            InitializeEditor();
+        }
 
         private async void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)
         {

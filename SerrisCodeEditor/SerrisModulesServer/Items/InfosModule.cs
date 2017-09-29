@@ -1,5 +1,8 @@
-﻿using SerrisModulesServer.Type;
+﻿using System;
+using SerrisModulesServer.Type;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Media.Imaging;
+using System.Diagnostics;
 
 namespace SerrisModulesServer.Items
 {
@@ -16,7 +19,7 @@ namespace SerrisModulesServer.Items
         }
     }
 
-    public class InfosModule
+    public sealed class InfosModule
     {
         public int ID { get; set; }
 
@@ -34,5 +37,24 @@ namespace SerrisModulesServer.Items
         public bool ModuleSystem { get; set; }
         public bool IsPinnedToToolBar { get; set; }
         public bool IsEnabled { get; set; }
+    }
+
+    public sealed class Lol
+    {
+        public void send(string text)
+        {
+            Debug.WriteLine("lol");
+            //await new Windows.UI.Popups.MessageDialog(text).ShowAsync();
+        }
+    }
+
+    public sealed class PinnedModule
+    {
+        public int ID { get; set; }
+
+        public string ModuleName { get; set; }
+        public ModuleTypesList ModuleType { get; set; }
+
+        public BitmapImage Image { get; set; }
     }
 }

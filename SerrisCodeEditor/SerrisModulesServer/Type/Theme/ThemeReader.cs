@@ -72,7 +72,7 @@ namespace SerrisModulesServer.Type.Theme
         }
 
         /// <summary>
-        /// Get all RGBA parameters of the theme
+        /// Get all RGBA parameters and images path of the theme
         /// </summary>
         /// <returns></returns>
         public async Task<ThemeModule> GetThemeContentAsync()

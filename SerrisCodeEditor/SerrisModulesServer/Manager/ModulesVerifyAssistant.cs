@@ -22,11 +22,11 @@ namespace SerrisModulesServer.Manager
         OldSceClient
     }
 
-    public class ModulesCreatorAssistant
+    public class ModulesVerifyAssistant
     {
         StorageFile Package;
 
-        public ModulesCreatorAssistant(StorageFile ZipPackage)
+        public ModulesVerifyAssistant(StorageFile ZipPackage)
         { Package = ZipPackage; }
 
         public PackageVerificationCode VerifyPackageAsync()

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SerrisCodeEditor.Items;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.Addon;
 using SerrisModulesServer.Type.Theme;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
@@ -59,6 +60,8 @@ namespace SerrisCodeEditor
         public MainPage()
         {
             this.InitializeComponent();
+            ChakraSMS sms = new ChakraSMS(); //Initialize Chakra Engine (important)
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lel();
         }
@@ -144,6 +147,18 @@ namespace SerrisCodeEditor
             foreach(int id in sts_initialize)
             {
                 list_ids_list.Items.Add(id);
+            }
+
+            var sms_initialize = await Modules_manager_access.GetModulesAsync(true);
+            foreach(InfosModule module in sms_initialize)
+            {
+                if(module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                {
+                    PinnedModule pinned = new PinnedModule { ID = module.ID, ModuleName = module.ModuleName, ModuleType = module.ModuleType };
+                    pinned.Image = await new AddonReader(module.ID).GetAddonIconViaIDAsync();
+
+                    ModulesList.Items.Add(pinned);
+                }
             }
 
             //var list_modules = await Modules_manager_access.GetModulesAsync(true);
@@ -274,6 +289,13 @@ namespace SerrisCodeEditor
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
             await creator.CreateNewFileViaTab(IDs);
+        }
+
+        private void PinnedModuleButton_Click(object sender, RoutedEventArgs e)
+        {
+            PinnedModule module = (sender as Button).DataContext as PinnedModule;
+            Flyout osef = new Flyout(); Frame osef_b = new Frame();
+            AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
         }
     }
 
