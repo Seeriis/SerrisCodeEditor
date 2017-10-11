@@ -29,7 +29,7 @@ namespace SerrisTabsServer.Manager
                     List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
                     if (list != null)
                     {
-                        return list.Where(m => m.ID == id).FirstOrDefault().tabs;
+                        return list.Where(m => m.ID == id).FirstOrDefault().tabs.Where(n => n.TabInvisibleByDefault == false).ToList();
                     }
                     else
                     {
@@ -92,7 +92,8 @@ namespace SerrisTabsServer.Manager
                         if(list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
                             foreach (InfosTab tab in list.Where(m => m.ID == id_list).FirstOrDefault().tabs)
                             {
-                                list_ids.Add(tab.ID);
+                                if(!tab.TabInvisibleByDefault)
+                                    list_ids.Add(tab.ID);
                             }
 
                         return list_ids;

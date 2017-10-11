@@ -39,15 +39,6 @@ namespace SerrisModulesServer.Items
         public bool IsEnabled { get; set; }
     }
 
-    public sealed class Lol
-    {
-        public void send(string text)
-        {
-            Debug.WriteLine("lol");
-            //await new Windows.UI.Popups.MessageDialog(text).ShowAsync();
-        }
-    }
-
     public sealed class PinnedModule
     {
         public int ID { get; set; }

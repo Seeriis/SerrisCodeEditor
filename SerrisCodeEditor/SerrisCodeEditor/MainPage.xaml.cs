@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
-using SerrisCodeEditor.Items;
+using SCEELibs.Editor.Notifications;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Addon;
@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
@@ -60,69 +61,67 @@ namespace SerrisCodeEditor
         public MainPage()
         {
             this.InitializeComponent();
-            ChakraSMS sms = new ChakraSMS(); //Initialize Chakra Engine (important)
+            //ChakraSMS sms = new ChakraSMS(); //Initialize Chakra Engine (important)
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lel();
         }
 
-        public void PushCodeViaIDs()
+        public async void PushCodeViaIDs()
         {
-            Messenger.Default.Send(new ContactSCEE { IDs = IDs, Code = ContentViewer.Code, ContactType = ContactTypeSCEE.GetCodeForTab });
+            Messenger.Default.Send(new TabSelectedNotification { tabID = IDs.ID_Tab, tabsListID = IDs.ID_TabsList, code = await ContentViewer.GetCode(), contactType = ContactTypeSCEE.GetCodeForTab });
+        }
+
+        List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>(); bool CanManageQueue = true;
+        public async void ManageQueueTabs()
+        {
+            while (!CanManageQueue)
+                await Task.Delay(20);
+
+            if (CanManageQueue)
+            {
+                CanManageQueue = false;
+
+                try
+                {
+                    string content = await ContentViewer.GetCode();
+                    SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => Tabs_manager_writer.PushTabContentViaIDAsync(IDs, content, false));
+                }
+                catch { }
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
+                {
+                    if (this.Dispatcher != view.Dispatcher)
+                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = IDs });
+                        });
+                }
+
+                IDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
+                ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage; ContentViewer.Code = Queue_Tabs[0].code;
+
+                Queue_Tabs.RemoveAt(0);
+                CanManageQueue = true;
+            }
         }
 
         public async void lel()
         {
-            Messenger.Default.Register<STSNotification>(this, (notification) =>
+            Messenger.Default.Register<TabSelectedNotification>(this, (notification) =>
             {
                 try
                 {
-                    if (IDs.ID_TabsList == notification.ID.ID_TabsList)
+                    switch(notification.contactType)
                     {
+                        case ContactTypeSCEE.SetCodeForEditor:
+                            Queue_Tabs.Add(notification);
+                            ManageQueueTabs();
+                            break;
 
-                        switch (notification.Type)
-                        {
-                            case TypeUpdateTab.NewTab:
-                                list_ids.Items.Add(notification.ID.ID_Tab);
-                                break;
-
-                            case TypeUpdateTab.TabDeleted:
-                                list_ids.Items.Remove(notification.ID.ID_Tab);
-                                break;
-
-                            case TypeUpdateTab.NewList:
-                                list_ids_list.Items.Add(notification.ID.ID_TabsList);
-                                break;
-
-                            case TypeUpdateTab.ListDeleted:
-                                list_ids_list.Items.Remove(notification.ID.ID_TabsList);
-                                break;
-                        }
-
-                    }
-                    else
-                        switch (notification.Type)
-                        {
-                            case TypeUpdateTab.NewList:
-                                list_ids_list.Items.Add(notification.ID.ID_TabsList);
-                                break;
-
-                            case TypeUpdateTab.ListDeleted:
-                                list_ids_list.Items.Remove(notification.ID.ID_TabsList);
-                                break;
-                        }
-                }
-                catch { }
-            });
-
-            Messenger.Default.Register<ContactSCEE>(this, (notification) =>
-            {
-                try
-                {
-                    if (notification.ContactType == ContactTypeSCEE.SetCodeForEditor)
-                    {
-                        IDs = notification.IDs;
-                        ContentViewer.CodeLanguage = notification.TypeCode; ContentViewer.Code = notification.Code;
+                        case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
+                            ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
+                            break;
                     }
                 }
                 catch { }
@@ -130,7 +129,7 @@ namespace SerrisCodeEditor
 
             var sts_initialize = await Tabs_manager_access.GetTabsListIDAsync();
             
-            if(sts_initialize.Count == 0)
+            /*if(sts_initialize.Count == 0)
             {
                 IDs.ID_TabsList = await Tabs_manager_writer.CreateTabsListAsync("Liste des onglets - test");
                 List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
@@ -141,7 +140,7 @@ namespace SerrisCodeEditor
                 IDs.ID_TabsList = sts_initialize[0];
                 List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
-            }
+            }*/
 
             list_ids_list.Items.Clear();
             foreach(int id in sts_initialize)
@@ -233,7 +232,7 @@ namespace SerrisCodeEditor
         private async void OpenFiles_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.OpenFilesAndCreateNewTabsFiles(IDs.ID_TabsList, StorageListTypes.LocalStorage);
+            await creator.OpenFilesAndCreateNewTabsFiles(TabsView.CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
         }
 
         private async void list_ids_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -296,6 +295,8 @@ namespace SerrisCodeEditor
             PinnedModule module = (sender as Button).DataContext as PinnedModule;
             Flyout osef = new Flyout(); Frame osef_b = new Frame();
             AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+
+            var test = new SCEELibs.Modules.Manager().getThemesAvailable(true);
         }
     }
 

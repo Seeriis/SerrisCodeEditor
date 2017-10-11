@@ -23,9 +23,10 @@ namespace SerrisTabsServer.Items
         public ContentType TabContentType { get; set; }
 
         //If "TabContentType" == 1
-        public List<InfosTab> FolderContent { get; set; }
+        public List<int> FolderContent { get; set; }
 
         //If "TabContentType" == 0
+        public bool TabInvisibleByDefault { get; set; }
         public string TabAccessOriginalContent { get; set; }
         public StorageListTypes TabStorageMode { get; set; }
         public string TabType { get; set; }

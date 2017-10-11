@@ -62,6 +62,44 @@ namespace SerrisModulesServer.Manager
 
         }
 
+        public List<InfosModule> GetModules(bool GetSystemModules)
+        {
+            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync() )))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
+                    List<InfosModule> ModulesList = new List<InfosModule>();
+                    if (list != null)
+                    {
+                        foreach (InfosModule module in list.Modules)
+                        { ModulesList.Add(module); }
+
+                        if (GetSystemModules)
+                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            { ModulesList.Add(module); }
+
+                        return ModulesList;
+                    }
+                    else
+                    {
+                        if (GetSystemModules)
+                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            { ModulesList.Add(module); }
+
+                        return ModulesList;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+        }
+
+
         public async Task<int> GetCurrentThemeID()
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -153,6 +191,35 @@ namespace SerrisModulesServer.Manager
         public async Task<InfosModule> GetModuleViaIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
+
+                    if (list != null)
+                    {
+                        foreach (InfosModule _module in new SystemModulesList().Modules)
+                        { list.Modules.Add(_module); }
+
+                        InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
+
+                        if (module != null)
+                            return module;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        public InfosModule GetModuleViaID(int id)
+        {
+            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync()) ))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try

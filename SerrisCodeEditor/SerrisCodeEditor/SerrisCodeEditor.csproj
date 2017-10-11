@@ -96,11 +96,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Items\ContactSCEE.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xaml\Components\Tab.xaml.cs">
+      <DependentUpon>Tab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Components\TabsViewer.xaml.cs">
+      <DependentUpon>TabsViewer.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -127,8 +132,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Xaml\Components\Tab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Components\TabsViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SCEELibs\SCEELibs.csproj">
+      <Project>{c850053a-719d-4a4f-a4c0-fe6efe2f0755}</Project>
+      <Name>SCEELibs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SerrisCodeEditorEngine\SerrisCodeEditorEngine.csproj">
       <Project>{2e194bb9-5ef0-41d8-a994-a9d258772637}</Project>
       <Name>SerrisCodeEditorEngine</Name>
@@ -141,6 +158,10 @@
       <Project>{86e734b6-e5bb-439b-bbe5-c0920715b85c}</Project>
       <Name>SerrisTabsServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Functions\" />
+    <Folder Include="Xaml\Views\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

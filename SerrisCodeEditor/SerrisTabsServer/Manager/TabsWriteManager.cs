@@ -190,12 +190,13 @@ namespace SerrisTabsServer.Manager
         /// </summary>
         /// <param name="id">ID of the tab and tabs list where is the tab</param>
         /// <param name="content">Content you want to push in the tab</param>
+        /// <param name="sendnotification">Send (or not) a notification about the updated content with MVVMLight</param>
         /// <returns></returns>
-        public async Task<bool> PushTabContentViaIDAsync(TabID id, string content)
+        public async Task<bool> PushTabContentViaIDAsync(TabID id, string content, bool sendnotification)
         {
             try
             {
-                StorageFile file_content = await folder_tabs.GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json");
+                StorageFile file_content = await folder_tabs.CreateFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json", CreationCollisionOption.OpenIfExists);
 
                 using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
                 using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -208,6 +209,16 @@ namespace SerrisTabsServer.Manager
                         {
                             _content.Content = content;
                             await FileIO.WriteTextAsync(file_content, JsonConvert.SerializeObject(_content, Formatting.Indented));
+
+                            if(sendnotification)
+                                foreach (CoreApplicationView view in CoreApplication.Views)
+                                {
+                                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                    {
+                                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = id });
+                                    });
+                                }
+
                             return true;
                         }
                     }

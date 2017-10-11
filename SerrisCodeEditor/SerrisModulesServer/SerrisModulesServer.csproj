@@ -116,6 +116,7 @@
     <Content Include="SystemModules\0\theme.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SMSInfos.cs" />
     <Compile Include="SMSInitialize.cs" />
     <Compile Include="Items\InfosModule.cs" />
     <Compile Include="Items\ModulesList.cs" />

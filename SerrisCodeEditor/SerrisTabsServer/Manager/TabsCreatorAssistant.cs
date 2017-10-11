@@ -29,9 +29,9 @@ namespace SerrisTabsServer.Manager
                 }
                 else continue;
             }
-            InfosTab newtab = new InfosTab { TabName = FileName, TabStorageMode = type, TabEncoding = encoding.CodePage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabType = extension };
+            InfosTab newtab = new InfosTab { TabName = FileName, TabStorageMode = type, TabEncoding = encoding.CodePage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabType = extension, TabInvisibleByDefault = false };
             int id_tab = await WriteManager.CreateTabAsync(newtab, IDList);
-            await WriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content);
+            await WriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false);
             return id_tab;
         }
 
@@ -63,26 +63,30 @@ namespace SerrisTabsServer.Manager
             var files = await opener.PickMultipleFilesAsync();
             foreach (StorageFile file in files)
             {
-                if (file != null)
+                await Task.Run(async () => 
                 {
-                    StorageApplicationPermissions.FutureAccessList.Add(file);
-                    InfosTab tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path };
-
-                    foreach (string _type in FileTypes.List_Type_extensions)
+                    if (file != null)
                     {
-                        if (tab.TabName.Contains(_type))
+                        StorageApplicationPermissions.FutureAccessList.Add(file);
+                        InfosTab tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false };
+
+                        foreach (string _type in FileTypes.List_Type_extensions)
                         {
-                            tab.TabType = FileTypes.GetExtensionType(file.FileType);
-                            break;
+                            if (tab.TabName.Contains(_type))
+                            {
+                                tab.TabType = FileTypes.GetExtensionType(file.FileType);
+                                break;
+                            }
+                            else continue;
                         }
-                        else continue;
+
+
+                        int id_tab = await WriteManager.CreateTabAsync(tab, IDList);
+                        new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+                        list_ids.Add(id_tab);
                     }
 
-
-                    int id_tab = await WriteManager.CreateTabAsync(tab, IDList);
-                    new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
-                    list_ids.Add(id_tab);
-                }
+                });
             }
 
             return list_ids;

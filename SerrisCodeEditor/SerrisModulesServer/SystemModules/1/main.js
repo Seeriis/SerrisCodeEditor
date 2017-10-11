@@ -4,10 +4,15 @@
     {
         //Manager = SerrisModulesServer.Items.Lol;
         //Test = Windows.UI.Popups.MessageDialog("test");
-        var uri = new Windows.UI.Popups.MessageDialog("Bonjour !");
+
+        /*var uri = new Windows.UI.Popups.MessageDialog("Bonjour !");
         uri.title = "Ceci est un titre c:";
-        uri.showAsync();
-        var Manager = new SerrisModulesServer.Items.Lol();
+        uri.showAsync();*/
+
+        var Manager = new SCEELibs.Modules.Manager();
+
+        Manager.deleteModule(1);
+
         //global = JavaScriptValue.GlobalObject;
 
        /* var U = 0, m; //Définition des variables

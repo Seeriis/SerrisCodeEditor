@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerrisCodeEditorEngine", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerrisModulesServer", "SerrisModulesServer\SerrisModulesServer.csproj", "{214E3692-F44A-4D67-A34E-6492F0850F19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCEELibs", "SCEELibs\SCEELibs.csproj", "{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,22 @@ Global
 		{214E3692-F44A-4D67-A34E-6492F0850F19}.Release|x64.Build.0 = Release|x64
 		{214E3692-F44A-4D67-A34E-6492F0850F19}.Release|x86.ActiveCfg = Release|x86
 		{214E3692-F44A-4D67-A34E-6492F0850F19}.Release|x86.Build.0 = Release|x86
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|ARM.Build.0 = Debug|ARM
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|x64.ActiveCfg = Debug|x64
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|x64.Build.0 = Debug|x64
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|x86.ActiveCfg = Debug|x86
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Debug|x86.Build.0 = Debug|x86
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|ARM.ActiveCfg = Release|ARM
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|ARM.Build.0 = Release|ARM
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|x64.ActiveCfg = Release|x64
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|x64.Build.0 = Release|x64
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|x86.ActiveCfg = Release|x86
+		{C850053A-719D-4A4F-A4C0-FE6EFE2F0755}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
