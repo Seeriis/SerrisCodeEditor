@@ -2,6 +2,16 @@
 {
     try
     {
+        var Manager_b = new SCEELibs.Editor.ConsoleManager();
+
+        var p = 0, n = 5, u_result = 2;
+
+        for (var k = p; k <= n; k++)
+        {
+            u_result = u_result + (u_result + 2);
+        }
+        Manager_b.sendConsoleInformationNotification("Résultat: " + u_result);
+
         //Manager = SerrisModulesServer.Items.Lol;
         //Test = Windows.UI.Popups.MessageDialog("test");
 
@@ -9,9 +19,12 @@
         uri.title = "Ceci est un titre c:";
         uri.showAsync();*/
 
-        var Manager = new SCEELibs.Modules.Manager();
+        var Manager = new SCEELibs.Editor.SheetManager();
+        //var button = new Windows.UI.Xaml.Controls.Button(); button.content = "coucou !";
 
-        Manager.deleteModule(1);
+        Manager.createNewSheet("Bouton test", "HTML/content.html", currentID);
+
+        //Manager.deleteModule(1);
 
         //global = JavaScriptValue.GlobalObject;
 

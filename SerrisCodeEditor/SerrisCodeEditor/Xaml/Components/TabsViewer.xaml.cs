@@ -56,19 +56,24 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void Lists_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(int id in await access_manager.GetTabsListIDAsync())
+            if(!isLoaded)
             {
-                var list = await access_manager.GetTabsListViaIDAsync(id);
-                Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
-            }
+                foreach (int id in await access_manager.GetTabsListIDAsync())
+                {
+                    var list = await access_manager.GetTabsListViaIDAsync(id);
+                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                }
 
-            if (Lists.Items.Count == 0)
-            {
-                await write_manager.CreateTabsListAsync("Default list");
-                Lists.SelectedIndex = 0;
+                if (Lists.Items.Count == 0)
+                {
+                    await write_manager.CreateTabsListAsync("Default list");
+                    Lists.SelectedIndex = 0;
+                }
+                else
+                    Lists.SelectedIndex = 0;
+
+                isLoaded = true;
             }
-            else
-                Lists.SelectedIndex = 0;
 
         }
 
@@ -164,7 +169,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
 
-        public TabID CurrentSelectedIDs;
+        public TabID CurrentSelectedIDs; bool isLoaded = false;
         TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager();
 
     }

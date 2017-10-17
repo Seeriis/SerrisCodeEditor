@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>JavaScript can Change HTML</h2>
+
+    <p id="p1">Hello World!</p>
+
+    <script>
+        SCEELibs.modulesManager;
+        var list = SCEELibs.modulesManager.getAddonsAvailable(true);
+        document.getElementById("p1").innerHTML = "Il y a " + list.length + " addon(s) de dispo !";
+    </script>
+
+    <p>The paragraph above was changed by a script.</p>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +17,7 @@ namespace SCEELibs.Modules.Type
         onEditorViewReady
     }
 
+    [AllowForWeb]
     public sealed class Addon
     {
         public async void executeAddonViaID(int ID, AddonFunction typefunc)

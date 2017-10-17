@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace SCEELibs.Modules
 {
+    [AllowForWeb]
     public sealed class ModuleInfoVersion
     {
         public int major { get; set; }
@@ -20,6 +22,7 @@ namespace SCEELibs.Modules
         public int revision { get; set; }
     }
 
+    [AllowForWeb]
     public sealed class ModuleInfo
     {
         public int ID { get; set; }
@@ -37,6 +40,7 @@ namespace SCEELibs.Modules
 
     }
 
+    [AllowForWeb]
     public sealed class Manager
     {
 

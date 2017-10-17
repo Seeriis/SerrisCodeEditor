@@ -100,6 +100,21 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xaml\Components\Console.xaml.cs">
+      <DependentUpon>Console.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Components\ModuleSheet.xaml.cs">
+      <DependentUpon>ModuleSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Components\ModuleSheetView.xaml.cs">
+      <DependentUpon>ModuleSheetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Components\ModulesSheetManager.xaml.cs">
+      <DependentUpon>ModulesSheetManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Components\ModulesToolbar.xaml.cs">
+      <DependentUpon>ModulesToolbar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\Components\Tab.xaml.cs">
       <DependentUpon>Tab.xaml</DependentUpon>
     </Compile>
@@ -132,6 +147,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Xaml\Components\Console.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Components\ModuleSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Components\ModuleSheetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Components\ModulesSheetManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Components\ModulesToolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Xaml\Components\Tab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +197,9 @@
   <ItemGroup>
     <Folder Include="Functions\" />
     <Folder Include="Xaml\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

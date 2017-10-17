@@ -24,9 +24,9 @@
             <ListView x:Name="list_ids_list"  Background="#FFC5C5C5" SelectionChanged="list_ids_list_SelectionChanged" Grid.Row="1"/>
         </Grid>
 
-        <my:TabsViewer x:Name="TabsView" HorizontalAlignment="Left" Width="300"/>
-        
-        <engine:EditorView x:Name="ContentViewer" Margin="300,30,0,0" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White"/>
+        <my:ModuleSheetView HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="300" Margin="0,60,0,0"/>
+
+        <engine:EditorView x:Name="ContentViewer" Margin="300,60,0,0" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#B2000000" Margin="300,80,0,0" CornerRadius="5">
             <TextBlock x:Name="TabName" FontSize="24" Foreground="White" Margin="0,0,15,0" />
             <TextBlock x:Name="TabEncoding" FontSize="24" Foreground="White" />
@@ -70,5 +70,9 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+
+        <my:ModulesToolbar Height="30" VerticalAlignment="Top"/>
+        <my:ModulesSheetManager HorizontalAlignment="Left" Width="300" Margin="300,60,0,0"/>
+        <my:Console Height="240" VerticalAlignment="Top" Margin="0,30,0,0"/>
     </Grid>
 </Page>

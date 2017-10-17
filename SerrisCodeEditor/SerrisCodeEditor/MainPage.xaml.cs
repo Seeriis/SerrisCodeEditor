@@ -84,8 +84,11 @@ namespace SerrisCodeEditor
 
                 try
                 {
-                    string content = await ContentViewer.GetCode();
-                    SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => Tabs_manager_writer.PushTabContentViaIDAsync(IDs, content, false));
+                    if(IDs.ID_Tab != 0)
+                    {
+                        string content = await ContentViewer.GetCode();
+                        SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => Tabs_manager_writer.PushTabContentViaIDAsync(IDs, content, false));
+                    }
                 }
                 catch { }
 
@@ -232,7 +235,7 @@ namespace SerrisCodeEditor
         private async void OpenFiles_Click(object sender, RoutedEventArgs e)
         {
             TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.OpenFilesAndCreateNewTabsFiles(TabsView.CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            await creator.OpenFilesAndCreateNewTabsFiles(IDs.ID_TabsList, StorageListTypes.LocalStorage);
         }
 
         private async void list_ids_SelectionChanged(object sender, SelectionChangedEventArgs e)

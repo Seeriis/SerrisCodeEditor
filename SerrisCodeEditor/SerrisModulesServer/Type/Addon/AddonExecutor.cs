@@ -51,6 +51,7 @@ namespace SerrisModulesServer.Type.Addon
              */
             host.Chakra.ProjectObjectToGlobal(current_flyout, "FlyoutView");
             host.Chakra.ProjectObjectToGlobal(current_frame, "BigView");
+            host.Chakra.ProjectObjectToGlobal(_id, "currentID");
 
 
             InfosModule ModuleAccess = AsyncHelpers.RunSync<InfosModule>(async () => await AccessManager.GetModuleViaIDAsync(_id));

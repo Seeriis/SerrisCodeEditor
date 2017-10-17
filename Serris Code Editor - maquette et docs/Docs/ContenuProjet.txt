@@ -1,15 +1,14 @@
 -> XAML
   => Components
-     * ModulesSheetManager
-     * ModuleSheet
-     * ModulesToolbar
-     * ModuleTool
+     * ModulesSheetManager X
+     * ModuleSheet X
+     * ModulesToolbar X
      * Console
-     * TabsViewer
-     * Tab
+     * TabsViewer X
+     * Tab X
      * Button
+     * ModuleSheetView X
   => Views
      * EditorView
-     * ModuleSheetView
 -> Assets
 -> Functions

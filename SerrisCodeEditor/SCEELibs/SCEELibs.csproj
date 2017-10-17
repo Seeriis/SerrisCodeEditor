@@ -108,12 +108,19 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Editor\Components\ModuleHTMLView.xaml.cs">
+      <DependentUpon>ModuleHTMLView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ConsoleManager.cs" />
+    <Compile Include="Editor\Notifications\ConsoleNotification.cs" />
+    <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
     <Compile Include="Editor\Notifications\TabSelectedNotification.cs" />
+    <Compile Include="Editor\SheetManager.cs" />
     <Compile Include="Modules\Manager.cs" />
     <Compile Include="Modules\Type\Addon.cs" />
     <Compile Include="Modules\Type\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SCEELibs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SerrisCodeEditorEngine\SerrisCodeEditorEngine.csproj">
@@ -131,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tabs\Manager\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Editor\Components\ModuleHTMLView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

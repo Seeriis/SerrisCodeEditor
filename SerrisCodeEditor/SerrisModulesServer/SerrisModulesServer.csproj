@@ -104,6 +104,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="SystemModules\1\HTML\content.html" />
     <Content Include="SystemModules\1\icon.png" />
     <Content Include="SystemModules\1\logo.png" />
     <Content Include="SystemModules\1\main.js" />
