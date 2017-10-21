@@ -90,6 +90,9 @@ namespace SerrisCodeEditor.Xaml.Components
             ModulesSheetContent.Children.Add(button);
         }
 
+        public void SelectTabsListSheet()
+        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.TriggerSheet, sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true }); }
+
         private void RemoveModule(int ID)
         { ModulesSheetContent.Children.Remove((UIElement)ModulesSheetContent.FindName("" + ID)); }
 

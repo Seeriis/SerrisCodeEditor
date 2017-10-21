@@ -1,0 +1,16 @@
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-
+
+
+
+
+L'interface est divisée en 3 parties:
+ -> 1ere couche: l'éditeur de code en lui même (monaco editor) avec un petit décalage à gauche - à cause des onglets -;
+ -> 2eme couche: la splitview qui va contenir le ModuleSheetView et aussi le ModulesSheetManager;
+ -> 3eme couche: la bare du haut avec la console, le ModulesToolbar etc...;
+
+Le tout sera emboité dans une grid principal !
+
+
+
+
+=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-

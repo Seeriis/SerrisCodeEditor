@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Functions\TempContent.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -120,6 +121,9 @@
     </Compile>
     <Compile Include="Xaml\Components\TabsViewer.xaml.cs">
       <DependentUpon>TabsViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Views\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Xaml\Views\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SCEELibs\SCEELibs.csproj">
@@ -194,10 +202,7 @@
       <Name>SerrisTabsServer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Functions\" />
-    <Folder Include="Xaml\Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>

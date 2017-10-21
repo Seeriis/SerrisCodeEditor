@@ -113,6 +113,14 @@ namespace SerrisCodeEditor.Xaml.Components
                             if (notification.id == current_sheet.id)
                                 current_sheet = notification;
                             break;
+
+                        case ModuleSheetNotificationType.TriggerSheet:
+                            if (notification.id == current_sheet.id)
+                            {
+                                current_sheet.type = ModuleSheetNotificationType.SelectSheet;
+                                Messenger.Default.Send(current_sheet);
+                            }
+                            break;
                     }
                 }
                 catch { }

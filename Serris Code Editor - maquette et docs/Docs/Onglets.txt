@@ -34,6 +34,7 @@ quoi doit être ouverte que quand c'est nécessaire (sinon, utilisation de la RAM 
    -> TabName [string]: permet de savoir le nom du fichier de l'onglet (avec extension, ex: "toothless.css");
    -> TabEncoding [int]: permet de savoir le type d'encodage du fichier de l'onglet;
    -> TabNewModifications [bool]: permet de savoir si des modifications de l'onglet ont eu lieu;
+   -> DateTabContentUpdated [DateTimeOffset]: permet de savoir quand a été mis à jour le contenu de l'onglet (et non le fichier);
    -> TabDateModified [string]: permet de savoir la date de modification de l'onglet;
    -> TabCursorPosition [CursorPosition]: permet de connaître la dernière position du curseur dans l'éditeur;
 

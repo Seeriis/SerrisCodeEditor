@@ -3,7 +3,7 @@
      * ModulesSheetManager X
      * ModuleSheet X
      * ModulesToolbar X
-     * Console
+     * Console X
      * TabsViewer X
      * Tab X
      * Button

@@ -11,7 +11,7 @@
     d:DesignWidth="400"
     Loaded="Toolbar_Loaded">
 
-    <ScrollViewer MinHeight="30" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" Background="#FF4B4B4B">
+    <ScrollViewer MinHeight="30" Background="Black" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
         <StackPanel x:Name="ToolbarContent" Orientation="Horizontal" Loaded="ToolbarContent_Loaded">
             
         </StackPanel>

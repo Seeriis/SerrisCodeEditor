@@ -14,7 +14,8 @@ namespace SCEELibs.Editor.Notifications
         RemoveSheet,
         SelectSheet,
         UpdatedSheet,
-        InitalizedSheet
+        InitalizedSheet,
+        TriggerSheet
     }
 
     public sealed class ModuleSheetNotification

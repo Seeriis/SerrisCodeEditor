@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SerrisTabsServer.Storage;
+using System;
 using System.Collections.Generic;
 
 namespace SerrisTabsServer.Items
@@ -33,6 +34,7 @@ namespace SerrisTabsServer.Items
         public string TabName { get; set; }
         public int TabEncoding { get; set; }
         public bool TabNewModifications { get; set; }
+        public DateTimeOffset DateTabContentUpdated { get; set; }
         public string TabDateModified { get; set; }
         public CursorPosition TabCursorPosition { get; set; }
 

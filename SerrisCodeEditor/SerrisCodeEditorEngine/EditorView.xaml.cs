@@ -476,7 +476,7 @@ namespace SerrisCodeEditorEngine
             await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.layout();" });
         }
 
-        private async void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
+        private void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
         {
             if (e.Value.Contains("command://"))
                 if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = e.Value });
@@ -490,77 +490,10 @@ namespace SerrisCodeEditorEngine
                     if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "click" });
                     break;
 
-                case "change":
-                    if (EditorTextChanged != null) EditorTextChanged(this, new EventArgs());
-                    break;
-
-                case "big_change":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "big_change" });
-                    break;
-
-                case "cursor_change":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "cursor_change" });
-                    break;
-
-                case "save":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "save" });
-                    break;
-
-                case "open":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "open" });
-                    break;
-
-                case "new":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "new" });
-                    break;
-
-                case "find":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "find" });
-                    break;
-
-                case "find_line":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "find_line" });
-                    break;
-
-                case "replace":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "replace" });
-                    break;
-
-                case "stackoverflow_overlay":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "stackoverflow_overlay" });
-                    break;
-
-                case "enable_selection":
-                    /*if (EditorSelection != null) EditorSelection(this, new EventArgs());
-
-                    if (isWindowsPhone)
-                    {
-                        InputPane.GetForCurrentView().TryHide();
-                        grid_copy.Visibility = Visibility.Visible;
-                    }*/
-                    break;
-
-
-                //Events for context menu
-
-                case "copy":
-                    DataPackage dataPackage = new DataPackage(); dataPackage.SetText(await GetSelectedText()); Clipboard.SetContent(dataPackage);
-                    break;
-
-                case "paste":
-                    DataPackageView dataPackageView = Clipboard.GetContent(); try { InsertCodeAtCursor(await dataPackageView.GetTextAsync()); } catch { }
-                    break;
-
-                case "cut":
-                    dataPackage = new DataPackage(); dataPackage.SetText(await GetSelectedText()); Clipboard.SetContent(dataPackage); InsertCodeAtCursor("");
-                    break;
-
-
-
-
                 case "loaded":
                     Initialized = true;
                     break;
+
             }
 
             if (e.Value.Contains("tab_select:///"))
