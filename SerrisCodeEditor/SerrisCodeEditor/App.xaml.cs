@@ -1,5 +1,11 @@
-﻿using SerrisCodeEditor.Xaml.Views;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
+using SerrisCodeEditor.Xaml.Views;
 using SerrisModulesServer;
+using SerrisModulesServer.Items;
+using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.Theme;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,12 +45,28 @@ namespace SerrisCodeEditor
         /// seront utilisés par exemple au moment du lancement de l'application pour l'ouverture d'un fichier spécifique.
         /// </summary>
         /// <param name="e">Détails concernant la requête et le processus de lancement.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
             //Serris Modules Server !
             new SMSInitialize().InitializeSMSJson();
+            new TempContent().CurrentTheme = await new ThemeReader(await new ModulesAccessManager().GetCurrentThemeID()).GetThemeBrushsContent();
+
+            Messenger.Default.Register<SMSNotification>(this, async (notification) =>
+            {
+                try
+                {
+                    switch (notification.Type)
+                    {
+                        case TypeUpdateModule.CurrentThemeUpdated:
+                            new TempContent().CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushsContent();
+                            Messenger.Default.Send(new EditorViewNotification { ID = 0, type = EditorViewNotificationType.UpdateUI });
+                            break;
+                    }
+                }
+                catch { }
+            });
 
             // Ne répétez pas l'initialisation de l'application lorsque la fenêtre comporte déjà du contenu,
             // assurez-vous juste que la fenêtre est active

@@ -1,4 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
+using SerrisCodeEditor.Xaml.Views;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Addon;
@@ -22,6 +25,7 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class ModulesToolbar : UserControl
     {
         ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
+        TempContent temp_variables = new TempContent();
 
         public ModulesToolbar()
         {
@@ -83,6 +87,14 @@ namespace SerrisCodeEditor.Xaml.Components
                 catch { }
             });
 
+            Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>
+            {
+                try
+                {
+                    
+                }
+                catch { }
+            });
         }
 
         private async void AddModule(int ID)
@@ -109,5 +121,8 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void RemoveModule(int ID)
         { ToolbarContent.Children.Remove((UIElement)ToolbarContent.FindName("" + ID)); }
+
+        private void ButtonListModules_Click(object sender, RoutedEventArgs e)
+        { FrameListModules.Navigate(typeof(ModulesManager)); }
     }
 }

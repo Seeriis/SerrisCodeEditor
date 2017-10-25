@@ -1,0 +1,82 @@
+﻿<Page
+    x:Name="ModulesManagerUI"
+    x:Class="SerrisCodeEditor.Xaml.Views.ModulesManager"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SerrisCodeEditor.Xaml.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    Loaded="ModulesManagerUI_Loaded">
+    <Page.Resources>
+        <DataTemplate x:Key="ItemModule">
+            <Grid Height="50" Width="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Margin="0,0,10,0">
+                    <Ellipse.Fill>
+                        <ImageBrush Stretch="Uniform" ImageSource="{Binding Thumbnail}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Module.ModuleName}" Foreground="White" TextTrimming="CharacterEllipsis"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button x:Name="ModuleOptions" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#CCFFFFFF" BorderBrush="#CCFFFFFF" Click="ModuleOptions_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
+                    <Button x:Name="ModulePin" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#CCFFFFFF" BorderBrush="#CCFFFFFF" Click="ModuleOptions_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
+                    <Button x:Name="ModuleDelete" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF343434" Visibility="Visible" Grid.Column="2" Background="#CCFFFFFF" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="#CC000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView x:Name="ListModules" SelectionChanged="ListModules_SelectionChanged" Padding="0,10,0,0" ItemTemplate="{StaticResource ItemModule}">
+
+            </ListView>
+        </Grid>
+
+        <Grid Height="60" MinWidth="320" Background="#FF4B4B4B">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="AddonsButton" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="#FFF7F7F7" Text="" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FFF7F7F7" Text="Addons" FontSize="15" Grid.Column="1"/>
+                </StackPanel>
+            </Grid>
+
+            <Rectangle Grid.Column="1" Fill="White" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
+
+            <Grid x:Name="ThemesButton" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="#FFF7F7F7" Text="" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FFF7F7F7" Text="Themes" FontSize="15" Grid.Column="1"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

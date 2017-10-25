@@ -114,6 +114,7 @@
     <Compile Include="Editor\ConsoleManager.cs" />
     <Compile Include="Editor\CurrentDevice.cs" />
     <Compile Include="Editor\Notifications\ConsoleNotification.cs" />
+    <Compile Include="Editor\Notifications\EditorViewNotification.cs" />
     <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
     <Compile Include="Editor\Notifications\TabSelectedNotification.cs" />
     <Compile Include="Editor\SheetManager.cs" />

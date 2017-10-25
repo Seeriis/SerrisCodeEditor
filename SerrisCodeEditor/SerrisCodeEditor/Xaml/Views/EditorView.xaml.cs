@@ -15,7 +15,9 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,7 +37,7 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private void EditorViewUI_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); SetInterface(); }
+        { SetMessenger(); SetTheme(); SetInterface(); }
 
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -83,6 +85,14 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
                 catch { }
             });
+
+            Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>
+            {
+                try
+                {
+                    SetTheme();
+                } catch { }
+            });
         }
 
         private void DeployUIDetector_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -106,6 +116,22 @@ namespace SerrisCodeEditor.Xaml.Views
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
 
                 SheetsManager.SelectTabsListSheet();
+            }
+        }
+
+        private void SetTheme()
+        {
+            BackgroundPrinciapalUI.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
+            ColorPrincipalUI.Fill = temp_variables.CurrentTheme.MainColor;
+
+            BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
+            ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
+
+            if(temp_variables.CurrentDevice == CurrentDevice.Desktop)
+            {
+                var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                TitleBar.ButtonBackgroundColor = Colors.Transparent;
+                TitleBar.ButtonForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
             }
         }
 
@@ -205,6 +231,11 @@ namespace SerrisCodeEditor.Xaml.Views
         TempContent temp_variables = new TempContent();
         bool isUIDeployed = false;
 
+        private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (!isUIDeployed)
+                SheetViewSplit.IsPaneOpen = false;
+        }
     }
 
 }

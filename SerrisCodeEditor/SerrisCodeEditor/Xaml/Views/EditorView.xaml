@@ -16,7 +16,9 @@
     <Grid x:Name="MasterGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         
         <!-- FIRST LAYER -->
-        <engine:EditorView x:Name="ContentViewer" Margin="62,0,0,0" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands"/>
+        <Grid x:Name="ContentViewerGrid" Margin="65,0,0,0" PointerEntered="ContentViewerGrid_PointerEntered">
+            <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands"/>
+        </Grid>
     
         <!-- SECOND LAYER -->
         <Grid>
@@ -25,8 +27,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
-            <StackPanel VerticalAlignment="Top" Width="62" HorizontalAlignment="Left">
-                <Grid x:Name="DeployUIDetector" Height="62" Background="DarkGray" PointerEntered="DeployUIDetector_PointerEntered">
+            <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
+                <Grid x:Name="DeployUIDetector" Height="65" Background="DarkGray" PointerEntered="DeployUIDetector_PointerEntered">
                     <TextBlock Text="" Foreground="White" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
 
@@ -35,27 +37,44 @@
                 </Grid>
             </StackPanel>
 
-            <SplitView x:Name="SheetViewSplit" Grid.Row="1" DisplayMode="CompactInline" CompactPaneLength="62">
+            <SplitView x:Name="SheetViewSplit" Grid.Row="1" DisplayMode="CompactInline" CompactPaneLength="65">
                 <SplitView.Content>
                     <my:ModulesSheetManager x:Name="SheetsManager" HorizontalAlignment="Left" Width="300"/>
                 </SplitView.Content>
 
                 <SplitView.Pane>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Rectangle.Fill>
+                                <ImageBrush x:Name="BackgroundSheetView" Stretch="UniformToFill"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle x:Name="ColorSheetView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Gray"/>
+
                         <my:ModuleSheetView x:Name="SheetView" PointerEntered="ModuleSheetView_PointerEntered" PointerExited="ModuleSheetView_PointerExited" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                        <Rectangle Grid.Column="1" Width="2" Fill="White"/>
                     </Grid>
                 </SplitView.Pane>
             </SplitView>
         </Grid>
         
         <!-- THIRD LAYER -->
-        <Grid x:Name="PrincipalUI" VerticalAlignment="Top" MinHeight="62" Visibility="Visible">
+        <Grid x:Name="PrincipalUI" VerticalAlignment="Top" MinHeight="65" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.RowSpan="2" Height="60" VerticalAlignment="Top" Fill="Gray"/>
+            <Rectangle Grid.RowSpan="2" Height="65" VerticalAlignment="Top">
+                <Rectangle.Fill>
+                    <ImageBrush x:Name="BackgroundPrinciapalUI" Stretch="UniformToFill"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Height="65" VerticalAlignment="Top" Fill="Gray"/>
 
             <!-- Toolbar + Grid windows focus-->
             <Grid Grid.Row="0" x:Name="FirstBar">
@@ -69,7 +88,7 @@
             </Grid>
 
             <!-- Console + others buttons -->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,3,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>

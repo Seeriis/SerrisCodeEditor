@@ -11,9 +11,22 @@
     d:DesignWidth="400"
     Loaded="Toolbar_Loaded">
 
-    <ScrollViewer MinHeight="30" Background="Black" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+    <ScrollViewer MinHeight="30" Background="Transparent" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
         <StackPanel x:Name="ToolbarContent" Orientation="Horizontal" Loaded="ToolbarContent_Loaded">
-            
+            <Button x:Name="ButtonListModules" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="Black" Click="ButtonListModules_Click" Visibility="Visible" Grid.Column="1" Background="White" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="15" Margin="10,0,10,0">
+                <Button.Flyout>
+                    <Flyout Placement="Bottom">
+                        <Frame x:Name="FrameListModules"/>
+
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

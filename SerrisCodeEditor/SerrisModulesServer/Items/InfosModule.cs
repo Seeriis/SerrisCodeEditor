@@ -19,7 +19,7 @@ namespace SerrisModulesServer.Items
         }
     }
 
-    public sealed class InfosModule
+    public class InfosModule
     {
         public int ID { get; set; }
 

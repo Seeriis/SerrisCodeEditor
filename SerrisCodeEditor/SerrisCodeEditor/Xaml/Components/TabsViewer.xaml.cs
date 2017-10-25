@@ -2,6 +2,7 @@
 using SCEELibs.Editor.Notifications;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
+using SerrisTabsServer.Storage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,14 +31,10 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class TabsViewer : UserControl
     {
         public TabsViewer()
-        {
-            this.InitializeComponent();
-        }
+        { this.InitializeComponent(); }
 
         private void TabsView_Loaded(object sender, RoutedEventArgs e)
-        {
-            SetMessenger();
-        }
+        { SetMessenger(); }
 
 
 
@@ -48,10 +45,17 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
 
-        private void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListItem selected_list = Lists.SelectedItem as ListItem;
-            ChangeSelectedList(selected_list.ListID);
+
+            if(selected_list != null)
+                ChangeSelectedList(selected_list.ListID);
+            else if(Lists.Items.Count > 0)
+                Lists.SelectedIndex = 0;
+            else
+                await write_manager.CreateTabsListAsync("Default list");
+
         }
 
         private async void Lists_Loaded(object sender, RoutedEventArgs e)
@@ -67,7 +71,6 @@ namespace SerrisCodeEditor.Xaml.Components
                 if (Lists.Items.Count == 0)
                 {
                     await write_manager.CreateTabsListAsync("Default list");
-                    Lists.SelectedIndex = 0;
                 }
                 else
                     Lists.SelectedIndex = 0;
@@ -121,6 +124,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             case TypeUpdateTab.NewList:
                                 var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
                                 Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                Lists.SelectedIndex = Lists.Items.Count - 1;
                                 break;
 
                             case TypeUpdateTab.ListDeleted:
@@ -135,6 +139,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             case TypeUpdateTab.NewList:
                                 var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
                                 Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                Lists.SelectedIndex = Lists.Items.Count - 1;
                                 break;
 
                             case TypeUpdateTab.ListDeleted:
@@ -159,6 +164,28 @@ namespace SerrisCodeEditor.Xaml.Components
             }
 
         }
+
+        private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private async void OpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            await creator.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+        }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        { await write_manager.DeleteTabsListAsync(CurrentSelectedIDs.ID_TabsList); FlyoutDeleteList.Hide(); }
+
+        private async void NewList_Click(object sender, RoutedEventArgs e)
+        { await write_manager.CreateTabsListAsync(TextBoxNewList.Text); TextBoxNewList.Text = ""; FlyoutNewList.Hide(); }
 
 
 

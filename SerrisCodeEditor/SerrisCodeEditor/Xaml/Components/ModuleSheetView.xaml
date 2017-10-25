@@ -11,7 +11,7 @@
     d:DesignWidth="400"
     Loaded="SheetView_Loaded">
 
-    <Frame x:Name="FrameView">
+    <Frame x:Name="FrameView" Background="Transparent">
 
     </Frame>
 </UserControl>

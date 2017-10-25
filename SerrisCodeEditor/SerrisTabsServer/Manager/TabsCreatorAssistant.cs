@@ -80,9 +80,12 @@ namespace SerrisTabsServer.Manager
                             else continue;
                         }
 
-
-                        int id_tab = await WriteManager.CreateTabAsync(tab, IDList);
-                        new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+                        int id_tab = 0;
+                        await Task.Run(async () => 
+                        {
+                            id_tab = await WriteManager.CreateTabAsync(tab, IDList);
+                            new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+                        });
                         list_ids.Add(id_tab);
                     }
 
