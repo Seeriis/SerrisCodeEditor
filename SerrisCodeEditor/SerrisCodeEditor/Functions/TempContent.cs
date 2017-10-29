@@ -2,11 +2,6 @@
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Theme;
 using SerrisTabsServer.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.System.Profile;
 
 namespace SerrisCodeEditor.Functions

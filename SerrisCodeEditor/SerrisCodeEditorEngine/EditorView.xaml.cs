@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -18,9 +17,9 @@ namespace SerrisCodeEditorEngine
 
         public EditorView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.SizeChanged += EditorView_SizeChanged;
+            SizeChanged += EditorView_SizeChanged;
         }
 
 
@@ -38,11 +37,7 @@ namespace SerrisCodeEditorEngine
             set
             {
                 IsLoading(true);
-                while (!Initialized)
-                {
-                    if (Initialized)
-                        break;
-                }
+                while (!Initialized) ;
 
                 new Languages().GetActualLanguage(CodeLanguage, editor_view);
                 SetCode(value);
@@ -100,37 +95,45 @@ namespace SerrisCodeEditorEngine
             char c;
             int i;
             int len = s.Length;
-            StringBuilder sb = new StringBuilder(len + 4);
+            var sb = new StringBuilder(len + 4);
 
 
-            for (i = 0; i < len; i += 1)
+            for (i = 0; i < len; ++i)
             {
                 c = s[i];
-                if ((c == '\\') || (c == '"') || (c == '>') || (c == '\''))
+                switch (c)
                 {
-                    sb.Append('\\');
-                    sb.Append(c);
-                }
-                else if (c == '\b')
-                    sb.Append("\\b");
-                else if (c == '\t')
-                    sb.Append("\\t");
-                else if (c == '\n')
-                    sb.Append("\\n");
-                else if (c == '\f')
-                    sb.Append("\\f");
-                else if (c == '\r')
-                    sb.Append("\\r");
-                else
-                {
-                    if (c < ' ')
-                    {
+                    case '\\':
+                    case '"':
+                    case '>':
+                    case '\'':
+                        sb.Append('\\');
                         sb.Append(c);
-                    }
-                    else
-                    {
+                        break;
+
+                    case '\b':
+                        sb.Append("\\b");
+                        break;
+
+                    case '\t':
+                        sb.Append("\\t");
+                        break;
+
+                    case '\n':
+                        sb.Append("\\n");
+                        break;
+
+                    case '\f':
+                        sb.Append("\\f");
+                        break;
+
+                    case '\r':
+                        sb.Append("\\r");
+                        break;
+
+                    default:
                         sb.Append(c);
-                    }
+                        break;
                 }
             }
             return sb.ToString();
@@ -145,19 +148,21 @@ namespace SerrisCodeEditorEngine
 
         private void IsLoading(bool enabled)
         {
-            if(enabled)
+            if (enabled)
             {
-                LoadingScreen.Visibility = Visibility.Visible; loading_ring.IsActive = true;
+                LoadingScreen.Visibility = Visibility.Visible;
+                loading_ring.IsActive = true;
             }
             else
             {
-                LoadingScreen.Visibility = Visibility.Collapsed; loading_ring.IsActive = false;
+                LoadingScreen.Visibility = Visibility.Collapsed;
+                loading_ring.IsActive = false;
             }
         }
 
         private async void SetCode(string code)
         {
-            if(Initialized)
+            if (Initialized)
             {
                 await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.setValue('" + JavaScriptEncode(code) + "');" });
 
@@ -184,16 +189,20 @@ namespace SerrisCodeEditorEngine
                 }*/
 
                 IsLoading(false);
-                if (EditorLoaded != null) EditorLoaded(this, new EventArgs());
+                EditorLoaded?.Invoke(this, new EventArgs());
             }
         }
 
         public async Task<string> GetCode()
         {
             if (Initialized)
+            {
                 return await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.getValue()" });
+            }
             else
+            {
                 return "";
+            }
         }
 
         private void editor_view_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e) { InitializeEditor(); }
@@ -217,12 +226,12 @@ namespace SerrisCodeEditorEngine
             {
                 if (enable)
                 {
-                    string[] set_code = { @"editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true });" };
+                    string[] set_code = { "editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true });" };
                     await editor_view.InvokeScriptAsync("eval", set_code);
                 }
                 else
                 {
-                    string[] set_code = { @"editor.setOptions({ enableBasicAutocompletion: false, enableLiveAutocompletion: false, enableSnippets: false });" };
+                    string[] set_code = { "editor.setOptions({ enableBasicAutocompletion: false, enableLiveAutocompletion: false, enableSnippets: false });" };
                     await editor_view.InvokeScriptAsync("eval", set_code);
                 }
             }
@@ -235,7 +244,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.setValue('" + JavaScriptEncode(setcode) + "', -1)" };
+                string[] set_code = { $"editor.setValue('{JavaScriptEncode(setcode)}', -1)" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -247,7 +256,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.insert('" + JavaScriptEncode(setcode) + "')" };
+                string[] set_code = { $"editor.insert('{JavaScriptEncode(setcode)}')" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -259,11 +268,10 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @" '' + editor.getModel().getLineCount();" };
+                string[] set_code = { " '' + editor.getModel().getLineCount();" };
                 return int.Parse(await editor_view.InvokeScriptAsync("eval", set_code));
             }
-            else
-            { return 0; }
+            return 0;
         }
 
         ///<summary>
@@ -273,7 +281,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.setPosition(new monaco.Position(editor.getModel().getLineCount(), 1));" };
+                string[] set_code = { "editor.setPosition(new monaco.Position(editor.getModel().getLineCount(), 1));" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -285,7 +293,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.setValue('');" };
+                string[] set_code = { "editor.setValue('');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -297,11 +305,10 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"var Range = require('ace/range').Range; editor.getTextRange(new Range(" + range.from_column + ", " + range.from_row + ", " + range.to_column + ", " + range.to_row + "))" };
+                string[] set_code = { $"var Range = require('ace/range').Range; editor.getTextRange(new Range({range.from_column}, {range.from_row}, {range.to_column}, {range.to_row}))" };
                 return await editor_view.InvokeScriptAsync("eval", set_code);
             }
-            else
-            { return null; }
+            return null;
         }
 
         ///<summary>
@@ -311,7 +318,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"var Range = require('ace/range').Range; editor.replace(new Range(" + range.from_column + ", " + range.from_row + ", " + range.to_column + ", " + range.to_row + "), '" + JavaScriptEncode(replace) + "')" };
+                string[] set_code = { $"var Range = require('ace/range').Range; editor.replace(new Range({range.from_column}, {range.from_row}, {range.to_column}, {range.to_row}), '{JavaScriptEncode(replace)}')" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -323,11 +330,10 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.getSelectedText()" };
+                string[] set_code = { "editor.getSelectedText()" };
                 return await editor_view.InvokeScriptAsync("eval", set_code);
             }
-            else
-            { return null; }
+            return null;
         }
 
         ///<summary>
@@ -337,7 +343,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.session.replace(editor.selection.getRange(), '" + JavaScriptEncode(replacement) + "')" };
+                string[] set_code = { $"editor.session.replace(editor.selection.getRange(), '{JavaScriptEncode(replacement)}')" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -349,11 +355,14 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] row = { @"'' + editor.getCursorPosition().row" }; string[] column = { @"'' + editor.getCursorPosition().column" };
-                return new PositionSCEE { row = int.Parse(await editor_view.InvokeScriptAsync("eval", row)), column = int.Parse(await editor_view.InvokeScriptAsync("eval", column)) };
+                string[] row = { "'' + editor.getCursorPosition().row" };
+                string[] column = { "'' + editor.getCursorPosition().column" };
+                return new PositionSCEE {
+                    row = int.Parse(await editor_view.InvokeScriptAsync("eval", row)),
+                    column = int.Parse(await editor_view.InvokeScriptAsync("eval", column))
+                };
             }
-            else
-            { return new PositionSCEE(); }
+            return new PositionSCEE();
         }
 
         ///<summary>
@@ -363,7 +372,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.setPosition(new monaco.Position(" + pos.row + "," + pos.column + "));" };
+                string[] set_code = { $"editor.setPosition(new monaco.Position({pos.row},{pos.column}));" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -375,7 +384,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.trigger('editor', 'undo');" };
+                string[] set_code = { "editor.trigger('editor', 'undo');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -387,7 +396,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.trigger('editor', 'redo');" };
+                string[] set_code = { "editor.trigger('editor', 'redo');" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -399,7 +408,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.session.getUndoManager().reset()" };
+                string[] set_code = { "editor.session.getUndoManager().reset()" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -411,7 +420,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.find('" + JavaScriptEncode(find) + "'); $('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
+                string[] set_code = { $"editor.find('{JavaScriptEncode(find)}'); $('html, body').animate({{ scrollTop: $('.ace_text-input').offset().top }}, 500);" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -423,7 +432,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { @"editor.replace('" + JavaScriptEncode(find) + "', '" + JavaScriptEncode(replace) + "'); $('html, body').animate({ scrollTop: $('.ace_text-input').offset().top }, 500);" };
+                string[] set_code = { $"editor.replace('{JavaScriptEncode(find)}', '{JavaScriptEncode(replace)}'); $('html, body').animate({{ scrollTop: $('.ace_text-input').offset().top }}, 500);" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
@@ -466,28 +475,34 @@ namespace SerrisCodeEditorEngine
             editor_view.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Visible);
 
             MasterGrid.Children.Insert(0, editor_view);
-            
+
             InitializeEditor();
         }
 
         private async void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(Initialized)
-            await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.layout();" });
+            if (Initialized)
+            {
+                await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.layout();" });
+            }
         }
 
         private void editor_view_ScriptNotify(object sender, NotifyEventArgs e)
         {
             if (e.Value.Contains("command://"))
-                if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = e.Value });
+            {
+                EditorCommands?.Invoke(this, new EventSCEE { message = e.Value });
+            }
 
             if (e.Value.Contains("console://"))
+            {
                 Debug.WriteLine(e.Value.Replace("console://", ""));
+            }
 
             switch (e.Value)
             {
                 case "click":
-                    if (EditorCommands != null) EditorCommands(this, new EventSCEE { message = "click" });
+                    EditorCommands?.Invoke(this, new EventSCEE { message = "click" });
                     break;
 
                 case "loaded":
@@ -497,9 +512,9 @@ namespace SerrisCodeEditorEngine
             }
 
             if (e.Value.Contains("tab_select:///"))
-                if (EditorTextShortcutTabs != null)
-                    EditorTextShortcutTabs(this, new EventSCEE { message = e.Value.Replace("tab_select:///", "") });
-
+            {
+                EditorTextShortcutTabs?.Invoke(this, new EventSCEE { message = e.Value.Replace("tab_select:///", "") });
+            }
         }
 
     }
@@ -512,7 +527,7 @@ namespace SerrisCodeEditorEngine
         /// <param name="task">Task<T> method to execute</param>
         public static void RunSync(Func<Task> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
             synch.Post(async _ =>
@@ -544,10 +559,10 @@ namespace SerrisCodeEditorEngine
         /// <returns></returns>
         public static T RunSync<T>(Func<Task<T>> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
-            T ret = default(T);
+            var ret = default(T);
             synch.Post(async _ =>
             {
                 try

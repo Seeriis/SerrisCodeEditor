@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SerrisTabsServer.Items;
+using SerrisTabsServer.Manager;
+using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using SerrisTabsServer.Items;
 using Windows.Storage;
-using System.IO;
-using Windows.System.Profile;
 using Windows.Storage.Pickers;
-using System.Diagnostics;
-using SerrisTabsServer.Manager;
-using Windows.UI.Core;
 
 namespace SerrisTabsServer.Storage.StorageTypes
 {
@@ -23,18 +18,21 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task CreateFile()
         {
-            FolderPicker folderPicker = new FolderPicker(); StorageFolder folder;
+            var folderPicker = new FolderPicker();
+            StorageFolder folder;
             folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
 
             foreach (string ext in FileTypes.List_Type_extensions)
-            { folderPicker.FileTypeFilter.Add(ext); }
+            {
+                folderPicker.FileTypeFilter.Add(ext);
+            }
 
             folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                var file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
+                StorageFile file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
                 Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
-                var date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
+                Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
 
                 foreach (string type in FileTypes.List_Type_extensions)
                 {
@@ -43,7 +41,10 @@ namespace SerrisTabsServer.Storage.StorageTypes
                         Tab.TabType = FileTypes.GetExtensionType(file.FileType);
                         break;
                     }
-                    else continue;
+                    else
+                    {
+                        continue;
+                    }
                 }
                 Tab.PathContent = file.Path;
                 await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
@@ -53,7 +54,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async void DeleteFile()
         {
-            StorageFile file = AsyncHelpers.RunSync<StorageFile>(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
             await file.DeleteAsync();
             Tab.TabStorageMode = StorageListTypes.Nothing;
             Tab.PathContent = "";
@@ -62,26 +63,28 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async void ReadFile(bool ReplaceEncoding)
         {
-            StorageFile file = AsyncHelpers.RunSync<StorageFile>(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
             string encode_type = "";
 
             await Task.Run(() =>
             {
                 using (FileStream fs = File.OpenRead(Tab.PathContent))
                 {
-                    Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+                    var cdet = new Ude.CharsetDetector();
                     cdet.Feed(fs);
                     cdet.DataEnd();
                     if (cdet.Charset != null)
+                    {
                         encode_type = cdet.Charset;
+                    }
                 }
             });
 
-            using (StreamReader st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
+            using (var st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
             {
                 await TabsWriter.PushTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }, st.ReadToEnd(), true);
 
-                if(ReplaceEncoding)
+                if (ReplaceEncoding)
                 {
                     Tab.TabEncoding = Encoding.GetEncoding(encode_type).CodePage;
                     await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
@@ -100,15 +103,17 @@ namespace SerrisTabsServer.Storage.StorageTypes
             {
                 using (FileStream fs = File.OpenRead(Tab.PathContent))
                 {
-                    Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+                    var cdet = new Ude.CharsetDetector();
                     cdet.Feed(fs);
                     cdet.DataEnd();
                     if (cdet.Charset != null)
+                    {
                         encode_type = cdet.Charset;
+                    }
                 }
             });
 
-            using (StreamReader st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
+            using (var st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
             {
                 content = st.ReadToEnd();
                 st.Dispose();
@@ -118,12 +123,12 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task WriteFile()
         {
-            StorageFile file = AsyncHelpers.RunSync<StorageFile>(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
 
             if (file != null)
             {
-                await FileIO.WriteTextAsync(file, String.Empty);
-                using (StreamWriter rd = new StreamWriter(await file.OpenStreamForWriteAsync(), Encoding.GetEncoding(Tab.TabEncoding)))
+                await FileIO.WriteTextAsync(file, string.Empty);
+                using (var rd = new StreamWriter(await file.OpenStreamForWriteAsync(), Encoding.GetEncoding(Tab.TabEncoding)))
                 {
                     rd.Write(await TabsReader.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
                     rd.Flush(); rd.Dispose();

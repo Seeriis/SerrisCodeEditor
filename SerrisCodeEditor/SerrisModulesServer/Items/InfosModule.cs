@@ -1,8 +1,6 @@
-﻿using System;
-using SerrisModulesServer.Type;
+﻿using SerrisModulesServer.Type;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Media.Imaging;
-using System.Diagnostics;
 
 namespace SerrisModulesServer.Items
 {

@@ -1,5 +1,4 @@
-﻿using ChakraBridge;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.SystemModules;
 using SerrisModulesServer.Type.Theme;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
@@ -22,7 +20,7 @@ namespace SerrisModulesServer.Manager
 
         public ModulesAccessManager()
         {
-            file = AsyncHelpers.RunSync<StorageFile>(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
         }
 
         public async Task<List<InfosModule>> GetModulesAsync(bool GetSystemModules)
@@ -33,23 +31,31 @@ namespace SerrisModulesServer.Manager
                 try
                 {
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    List<InfosModule> ModulesList = new List<InfosModule>();
+                    var ModulesList = new List<InfosModule>();
                     if (list != null)
                     {
-                        foreach(InfosModule module in list.Modules)
-                        { ModulesList.Add(module); }
+                        foreach (InfosModule module in list.Modules)
+                        {
+                            ModulesList.Add(module);
+                        }
 
-                        if(GetSystemModules)
+                        if (GetSystemModules)
+                        {
                             foreach (InfosModule module in new SystemModulesList().Modules)
                             { ModulesList.Add(module); }
+                        }
 
                         return ModulesList;
                     }
                     else
                     {
                         if (GetSystemModules)
+                        {
                             foreach (InfosModule module in new SystemModulesList().Modules)
-                            { ModulesList.Add(module); }
+                            {
+                                ModulesList.Add(module);
+                            }
+                        }
 
                         return ModulesList;
                     }
@@ -64,29 +70,37 @@ namespace SerrisModulesServer.Manager
 
         public List<InfosModule> GetModules(bool GetSystemModules)
         {
-            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync() )))
+            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
                 {
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    List<InfosModule> ModulesList = new List<InfosModule>();
+                    var ModulesList = new List<InfosModule>();
                     if (list != null)
                     {
                         foreach (InfosModule module in list.Modules)
                         { ModulesList.Add(module); }
 
                         if (GetSystemModules)
+                        {
                             foreach (InfosModule module in new SystemModulesList().Modules)
-                            { ModulesList.Add(module); }
+                            {
+                                ModulesList.Add(module);
+                            }
+                        }
 
                         return ModulesList;
                     }
                     else
                     {
                         if (GetSystemModules)
+                        {
                             foreach (InfosModule module in new SystemModulesList().Modules)
-                            { ModulesList.Add(module); }
+                            {
+                                ModulesList.Add(module);
+                            }
+                        }
 
                         return ModulesList;
                     }
@@ -205,7 +219,9 @@ namespace SerrisModulesServer.Manager
                         InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
 
                         if (module != null)
+                        {
                             return module;
+                        }
                     }
                 }
                 catch
@@ -219,7 +235,7 @@ namespace SerrisModulesServer.Manager
 
         public InfosModule GetModuleViaID(int id)
         {
-            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync()) ))
+            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -234,7 +250,9 @@ namespace SerrisModulesServer.Manager
                         InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
 
                         if (module != null)
+                        {
                             return module;
+                        }
                     }
                 }
                 catch
@@ -265,9 +283,9 @@ namespace SerrisModulesServer.Manager
 
             try
             {
-                using (FileRandomAccessStream reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
+                using (var reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
                 {
-                    BitmapImage bitmapImage = new BitmapImage();
+                    var bitmapImage = new BitmapImage();
                     bitmapImage.SetSource(reader);
 
                     return bitmapImage;

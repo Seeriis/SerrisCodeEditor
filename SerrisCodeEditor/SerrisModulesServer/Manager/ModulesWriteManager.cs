@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -19,12 +18,14 @@ namespace SerrisModulesServer.Manager
 {
     public class ModulesWriteManager
     {
-        StorageFile file = null; StorageFolder folder_modules = null; ModulesAccessManager AccessManager;
+        StorageFile file;
+        StorageFolder folder_modules;
+        ModulesAccessManager AccessManager;
 
         public ModulesWriteManager()
         {
-            file = AsyncHelpers.RunSync<StorageFile>(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-            folder_modules = AsyncHelpers.RunSync<StorageFolder>(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists).AsTask());
+            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            folder_modules = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists).AsTask());
             AccessManager = new ModulesAccessManager();
         }
 
@@ -48,11 +49,15 @@ namespace SerrisModulesServer.Manager
                         content.ID = id; content.ModuleSystem = false; content.IsEnabled = true;
 
                         if (await folder_addon.TryGetItemAsync("theme_ace.js") != null)
+                        {
                             content.ContainMonacoTheme = true;
+                        }
                         else
+                        {
                             content.ContainMonacoTheme = false;
+                        }
 
-                        switch(content.ModuleType)
+                        switch (content.ModuleType)
                         {
                             case ModuleTypesList.Addon:
                                 content.IsPinnedToToolBar = true;
@@ -120,7 +125,8 @@ namespace SerrisModulesServer.Manager
                 {
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
 
-                    var folder_module = await folder_modules.GetFolderAsync(id + ""); await folder_module.DeleteAsync();
+                    StorageFolder folder_module = await folder_modules.GetFolderAsync(id + "");
+                    await folder_module.DeleteAsync();
                     list.Modules.Remove(list.Modules.First(m => m.ID == id));
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
@@ -237,14 +243,17 @@ namespace SerrisModulesServer.Manager
         {
             try
             {
-                var module = await AccessManager.GetModuleViaIDAsync(await AccessManager.GetCurrentThemeAceEditorID());
-                
+                InfosModule module = await AccessManager.GetModuleViaIDAsync(await AccessManager.GetCurrentThemeAceEditorID());
+
                 StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
                 await FileIO.WriteTextAsync(file_content, await new ThemeReader(module.ID).GetThemeJSContentAsync());
 
                 return true;
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<bool> SetCurrentThemeTempContentAsync()
@@ -260,7 +269,10 @@ namespace SerrisModulesServer.Manager
                     return true;
                 }
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
 
         }
     }
@@ -273,7 +285,7 @@ namespace SerrisModulesServer.Manager
         /// <param name="task">Task<T> method to execute</param>
         public static void RunSync(Func<Task> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
             synch.Post(async _ =>
@@ -305,10 +317,10 @@ namespace SerrisModulesServer.Manager
         /// <returns></returns>
         public static T RunSync<T>(Func<Task<T>> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
-            T ret = default(T);
+            var ret = default(T);
             synch.Post(async _ =>
             {
                 try
@@ -335,8 +347,7 @@ namespace SerrisModulesServer.Manager
             private bool done;
             public Exception InnerException { get; set; }
             readonly AutoResetEvent workItemsWaiting = new AutoResetEvent(false);
-            readonly Queue<Tuple<SendOrPostCallback, object>> items =
-                new Queue<Tuple<SendOrPostCallback, object>>();
+            readonly Queue<Tuple<SendOrPostCallback, object>> items = new Queue<Tuple<SendOrPostCallback, object>>();
 
             public override void Send(SendOrPostCallback d, object state)
             {
@@ -385,9 +396,7 @@ namespace SerrisModulesServer.Manager
             }
 
             public override SynchronizationContext CreateCopy()
-            {
-                return this;
-            }
+            => this;
         }
     }
 

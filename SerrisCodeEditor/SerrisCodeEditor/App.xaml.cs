@@ -7,20 +7,10 @@ using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Theme;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor
@@ -36,8 +26,8 @@ namespace SerrisCodeEditor
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -47,11 +37,11 @@ namespace SerrisCodeEditor
         /// <param name="e">Détails concernant la requête et le processus de lancement.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
 
             //Serris Modules Server !
             new SMSInitialize().InitializeSMSJson();
-            new TempContent().CurrentTheme = await new ThemeReader(await new ModulesAccessManager().GetCurrentThemeID()).GetThemeBrushsContent();
+            new TempContent().CurrentTheme = await new ThemeReader(await new ModulesAccessManager().GetCurrentThemeID()).GetThemeBrushesContent();
 
             Messenger.Default.Register<SMSNotification>(this, async (notification) =>
             {
@@ -60,7 +50,7 @@ namespace SerrisCodeEditor
                     switch (notification.Type)
                     {
                         case TypeUpdateModule.CurrentThemeUpdated:
-                            new TempContent().CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushsContent();
+                            new TempContent().CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushesContent();
                             Messenger.Default.Send(new EditorViewNotification { ID = 0, type = EditorViewNotificationType.UpdateUI });
                             break;
                     }
@@ -119,7 +109,7 @@ namespace SerrisCodeEditor
         /// <param name="e">Détails de la requête de suspension.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             //TODO: enregistrez l'état de l'application et arrêtez toute activité en arrière-plan
             deferral.Complete();
         }

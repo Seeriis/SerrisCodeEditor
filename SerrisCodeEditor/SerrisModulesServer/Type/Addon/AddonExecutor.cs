@@ -1,18 +1,11 @@
-﻿using ChakraBridge;
-using SerrisModulesServer.Items;
+﻿using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
-using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace SerrisModulesServer.Type.Addon
@@ -91,9 +84,9 @@ namespace SerrisModulesServer.Type.Addon
 
                 try
                 {
-                    using (var reader = AsyncHelpers.RunSync<StreamReader>(async () => new StreamReader(await _file_read.OpenStreamForReadAsync())))
+                    using (StreamReader reader = AsyncHelpers.RunSync(async () => new StreamReader(await _file_read.OpenStreamForReadAsync())))
                     {
-                        host.Chakra.RunScript(AsyncHelpers.RunSync<string>(async () => await reader.ReadToEndAsync()));
+                        host.Chakra.RunScript(AsyncHelpers.RunSync(async () => await reader.ReadToEndAsync()));
                     }
                 }
                 catch
@@ -103,10 +96,10 @@ namespace SerrisModulesServer.Type.Addon
 
             }
 
-            StorageFile main_js = AsyncHelpers.RunSync<StorageFile>(async () => await folder_module.GetFileAsync("main.js"));
+            StorageFile main_js = AsyncHelpers.RunSync(async () => await folder_module.GetFileAsync("main.js"));
             try
             {
-                string code = AsyncHelpers.RunSync<string>(async () => await FileIO.ReadTextAsync(main_js));
+                string code = AsyncHelpers.RunSync(async () => await FileIO.ReadTextAsync(main_js));
                 host.Chakra.RunScript(code);
             }
             catch (Exception ex)

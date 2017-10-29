@@ -16,7 +16,7 @@ namespace SerrisTabsServer.Manager
 
         public TabsAccessManager()
         {
-            file = AsyncHelpers.RunSync<StorageFile>(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
         }
 
         public async Task<List<InfosTab>> GetTabsAsync(int id)
@@ -53,7 +53,7 @@ namespace SerrisTabsServer.Manager
                 try
                 {
                     List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    List<int> list_ids = new List<int>();
+                    var list_ids = new List<int>();
 
                     if (list != null)
                     {
@@ -85,16 +85,20 @@ namespace SerrisTabsServer.Manager
                 try
                 {
                     List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    List<int> list_ids = new List<int>();
+                    var list_ids = new List<int>();
 
                     if (list != null)
                     {
-                        if(list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
+                        if (list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
+                        {
                             foreach (InfosTab tab in list.Where(m => m.ID == id_list).FirstOrDefault().tabs)
                             {
-                                if(!tab.TabInvisibleByDefault)
+                                if (!tab.TabInvisibleByDefault)
+                                {
                                     list_ids.Add(tab.ID);
+                                }
                             }
+                        }
 
                         return list_ids;
                     }
@@ -124,7 +128,9 @@ namespace SerrisTabsServer.Manager
                     if (list != null)
                     {
                         if (list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs != null)
+                        {
                             return list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
+                        }
                     }
                 }
                 catch
@@ -149,7 +155,9 @@ namespace SerrisTabsServer.Manager
                     if (list != null)
                     {
                         if (list.Where(m => m.ID == id).FirstOrDefault().tabs != null)
+                        {
                             return list.Where(m => m.ID == id).FirstOrDefault();
+                        }
                     }
                 }
                 catch
@@ -189,7 +197,9 @@ namespace SerrisTabsServer.Manager
                 return null;
             }
             catch
-            { return null; }
+            {
+                return null;
+            }
         }
 
         public void UpdateTab(ref InfosTab tab, int id_list)
@@ -200,7 +210,7 @@ namespace SerrisTabsServer.Manager
                 try
                 {
                     int id = tab.ID;
-                    JObject tabs = JObject.Parse(reader.ReadToEnd()).Values<JObject>().Where(m => m["ID"].Value<int>() == id_list).FirstOrDefault(), 
+                    JObject tabs = JObject.Parse(reader.ReadToEnd()).Values<JObject>().Where(m => m["ID"].Value<int>() == id_list).FirstOrDefault(),
                         tab_search = tabs.Values<JObject>().Where(m => m["ID"].Value<int>() == id).FirstOrDefault();
 
                     if (tab != null)
@@ -208,10 +218,7 @@ namespace SerrisTabsServer.Manager
                         tab = tab_search.Value<InfosTab>();
                     }
                 }
-                catch
-                {
-                    
-                }
+                catch { }
             }
 
         }

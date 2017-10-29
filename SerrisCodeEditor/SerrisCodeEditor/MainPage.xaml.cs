@@ -60,7 +60,7 @@ namespace SerrisCodeEditor
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             //ChakraSMS sms = new ChakraSMS(); //Initialize Chakra Engine (important)
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -84,7 +84,7 @@ namespace SerrisCodeEditor
 
                 try
                 {
-                    if(IDs.ID_Tab != 0)
+                    if (IDs.ID_Tab != 0)
                     {
                         string content = await ContentViewer.GetCode();
                         SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => Tabs_manager_writer.PushTabContentViaIDAsync(IDs, content, false));
@@ -94,7 +94,7 @@ namespace SerrisCodeEditor
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    if (this.Dispatcher != view.Dispatcher)
+                    if (Dispatcher != view.Dispatcher)
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = IDs });
@@ -115,7 +115,7 @@ namespace SerrisCodeEditor
             {
                 try
                 {
-                    switch(notification.contactType)
+                    switch (notification.contactType)
                     {
                         case ContactTypeSCEE.SetCodeForEditor:
                             Queue_Tabs.Add(notification);
@@ -131,7 +131,7 @@ namespace SerrisCodeEditor
             });
 
             var sts_initialize = await Tabs_manager_access.GetTabsListIDAsync();
-            
+
             /*if(sts_initialize.Count == 0)
             {
                 IDs.ID_TabsList = await Tabs_manager_writer.CreateTabsListAsync("Liste des onglets - test");
@@ -146,15 +146,15 @@ namespace SerrisCodeEditor
             }*/
 
             list_ids_list.Items.Clear();
-            foreach(int id in sts_initialize)
+            foreach (int id in sts_initialize)
             {
                 list_ids_list.Items.Add(id);
             }
 
             var sms_initialize = await Modules_manager_access.GetModulesAsync(true);
-            foreach(InfosModule module in sms_initialize)
+            foreach (InfosModule module in sms_initialize)
             {
-                if(module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                if (module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
                     PinnedModule pinned = new PinnedModule { ID = module.ID, ModuleName = module.ModuleName, ModuleType = module.ModuleType };
                     pinned.Image = await new AddonReader(module.ID).GetAddonIconViaIDAsync();
@@ -193,14 +193,14 @@ namespace SerrisCodeEditor
             dataPackage.SetText(JsonConvert.SerializeObject(theme, Formatting.Indented));
             Clipboard.SetContent(dataPackage);*/
 
-            ThemeModuleBrush brushs_theme = await new ThemeReader(await Modules_manager_access.GetCurrentThemeID()).GetThemeBrushsContent();
+            ThemeModuleBrush brushs_theme = await new ThemeReader(await Modules_manager_access.GetCurrentThemeID()).GetThemeBrushesContent();
             image_bg.ImageSource = brushs_theme.BackgroundImage;
         }
 
         public void AddTabs(List<int> tabs)
         {
             list_ids.Items.Clear();
-            foreach(int nmb in tabs)
+            foreach (int nmb in tabs)
             {
                 list_ids.Items.Add(nmb);
             }
@@ -240,7 +240,7 @@ namespace SerrisCodeEditor
 
         private async void list_ids_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(list_ids.SelectedItem != null)
+            if (list_ids.SelectedItem != null)
             {
                 IDs.ID_Tab = (int)list_ids.SelectedItem;
                 InfosTab tab = await Tabs_manager_access.GetTabViaIDAsync(IDs);
@@ -278,7 +278,7 @@ namespace SerrisCodeEditor
             {
                 IDs.ID_TabsList = (int)list_ids_list.SelectedItem; TabsList tabslist = await Tabs_manager_access.GetTabsListViaIDAsync(IDs.ID_TabsList);
 
-                if(tabslist != null)
+                if (tabslist != null)
                     name_box.Text = tabslist.name;
 
                 List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);

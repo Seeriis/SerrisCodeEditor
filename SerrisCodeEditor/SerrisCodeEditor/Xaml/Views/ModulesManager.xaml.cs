@@ -2,21 +2,10 @@
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type;
 using SerrisModulesServer.Type.Addon;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -30,11 +19,11 @@ namespace SerrisCodeEditor.Xaml.Views
     {
         public ModulesManager()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ModulesManagerUI_Loaded(object sender, RoutedEventArgs e)
-        { ChangeSelectedButton(0); }
+        => ChangeSelectedButton(0);
 
 
 
@@ -47,27 +36,25 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void ChangeSelectedButton(int newSelectedButton)
         {
-            if(currentSelectedButton != newSelectedButton)
+            if (currentSelectedButton != newSelectedButton)
             {
                 currentSelectedButton = newSelectedButton;
                 ListModules.Items.Clear();
 
                 foreach (InfosModule module in await Modules_manager_access.GetModulesAsync(true))
                 {
-                    ModuleInfosShow module_infos = new ModuleInfosShow { Module = module };
-                    AddonReader reader = new AddonReader(module_infos.Module.ID);
+                    var module_infos = new ModuleInfosShow { Module = module };
+                    var reader = new AddonReader(module_infos.Module.ID);
                     module_infos.Thumbnail = await reader.GetAddonIconViaIDAsync();
 
                     switch (module.ModuleType)
                     {
-                        case ModuleTypesList.Addon:
-                            if (currentSelectedButton == 0)
-                                ListModules.Items.Add(module_infos);
+                        case ModuleTypesList.Addon when currentSelectedButton == 0:
+                            ListModules.Items.Add(module_infos);
                             break;
 
-                        case ModuleTypesList.Theme:
-                            if (currentSelectedButton == 1)
-                                ListModules.Items.Add(module_infos);
+                        case ModuleTypesList.Theme when currentSelectedButton == 1:
+                            ListModules.Items.Add(module_infos);
                             break;
                     }
                 }
@@ -77,14 +64,15 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void ListModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ListModules.SelectedItem != null)
+            if (ListModules.SelectedItem != null)
             {
-                ModuleInfosShow module = (ModuleInfosShow)ListModules.SelectedItem;
+                var module = (ModuleInfosShow)ListModules.SelectedItem;
                 switch (currentSelectedButton)
                 {
                     case 0:
-                        Flyout osef = new Flyout(); Frame osef_b = new Frame();
-                        AddonExecutor executor = new AddonExecutor(module.Module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+                        var osef = new Flyout();
+                        var osef_b = new Frame();
+                        var executor = new AddonExecutor(module.Module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
                         break;
 
                     case 1:
@@ -95,10 +83,10 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private void AddonsButton_PointerPressed(object sender, PointerRoutedEventArgs e)
-        { ChangeSelectedButton(0); }
+        => ChangeSelectedButton(0);
 
         private void ThemesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
-        { ChangeSelectedButton(1); }
+        => ChangeSelectedButton(1);
 
 
 

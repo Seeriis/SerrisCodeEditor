@@ -19,8 +19,8 @@ namespace SerrisTabsServer.Manager
 
         public TabsWriteManager()
         {
-            file = AsyncHelpers.RunSync<StorageFile>(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-            folder_tabs = AsyncHelpers.RunSync<StorageFolder>(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).AsTask());
+            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            folder_tabs = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).AsTask());
         }
 
         /// <summary>
@@ -38,8 +38,7 @@ namespace SerrisTabsServer.Manager
                     int id = new Random().Next(999999);
                     List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
 
-                    if (list == null)
-                        list = new List<TabsList>();
+                    list = list ?? new List<TabsList>();
 
                     list.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
@@ -125,10 +124,12 @@ namespace SerrisTabsServer.Manager
                     TabsList list_tabs = list.First(m => m.ID == id_list);
 
                     if (list_tabs.tabs == null)
+                    {
                         list_tabs.tabs = new List<InfosTab>();
+                    }
 
                     list_tabs.tabs.Add(tab);
-                    var data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.ReplaceExisting);
+                    StorageFile data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = "" }, Formatting.Indented));
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
@@ -165,7 +166,7 @@ namespace SerrisTabsServer.Manager
                     TabsList list_tabs = list.First(m => m.ID == ids.ID_TabsList);
                     InfosTab tab = list_tabs.tabs.First(m => m.ID == ids.ID_Tab);
                     list_tabs.tabs.Remove(tab);
-                    var delete_file = await folder_tabs.CreateFileAsync(ids.ID_TabsList + "_" + ids.ID_Tab + ".json", CreationCollisionOption.ReplaceExisting); await delete_file.DeleteAsync();
+                    StorageFile delete_file = await folder_tabs.CreateFileAsync(ids.ID_TabsList + "_" + ids.ID_Tab + ".json", CreationCollisionOption.ReplaceExisting); await delete_file.DeleteAsync();
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
                     foreach (CoreApplicationView view in CoreApplication.Views)
@@ -211,6 +212,7 @@ namespace SerrisTabsServer.Manager
                             await FileIO.WriteTextAsync(file_content, JsonConvert.SerializeObject(_content, Formatting.Indented));
 
                             if(sendnotification)
+                            {
                                 foreach (CoreApplicationView view in CoreApplication.Views)
                                 {
                                     await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -218,20 +220,16 @@ namespace SerrisTabsServer.Manager
                                         Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = id });
                                     });
                                 }
+                            }
 
                             return true;
                         }
                     }
-                    catch
-                    {
-                        return false;
-                    }
+                    catch { }
                 }
-
-                return false;
             }
-            catch
-            { return false; }
+            catch { }
+            return false;
         }
 
         /// <summary>
@@ -254,10 +252,12 @@ namespace SerrisTabsServer.Manager
 
                     list[index_list].tabs[index_tab] = tab;
 
-                    var data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.OpenIfExists);
+                    StorageFile data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.OpenIfExists);
 
                     if(tab.TabContentTemporary != null)
+                    {
                         await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = tab.TabContentTemporary }, Formatting.Indented));
+                    }
 
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
@@ -287,7 +287,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="task">Task<T> method to execute</param>
         public static void RunSync(Func<Task> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
             synch.Post(async _ =>
@@ -319,10 +319,10 @@ namespace SerrisTabsServer.Manager
         /// <returns></returns>
         public static T RunSync<T>(Func<Task<T>> task)
         {
-            var oldContext = SynchronizationContext.Current;
+            SynchronizationContext oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
-            T ret = default(T);
+            var ret = default(T);
             synch.Post(async _ =>
             {
                 try
@@ -399,9 +399,7 @@ namespace SerrisTabsServer.Manager
             }
 
             public override SynchronizationContext CreateCopy()
-            {
-                return this;
-            }
+            => this;
         }
     }
 

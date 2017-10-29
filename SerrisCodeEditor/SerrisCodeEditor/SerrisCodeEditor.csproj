@@ -133,7 +133,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="SerrisCodeEditor_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -211,7 +210,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\JsBridge\dist\ChakraBridge.winmd</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -79,7 +75,7 @@ namespace SerrisModulesServer.Type.Theme
 
             RoundNotificationColor = new SolidColorBrush(theme_content.RoundNotificationColor);
 
-            BackgroundImage = new BitmapImage(new Uri( Path.Combine(path_module, theme_content.BackgroundImagePath) ));
+            BackgroundImage = new BitmapImage(new Uri(Path.Combine(path_module, theme_content.BackgroundImagePath)));
         }
     }
 

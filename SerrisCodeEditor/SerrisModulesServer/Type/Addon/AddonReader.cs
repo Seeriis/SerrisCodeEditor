@@ -1,10 +1,7 @@
 ﻿using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
@@ -31,10 +28,13 @@ namespace SerrisModulesServer.Type.Addon
             InfosModule ModuleAccess = await new ModulesAccessManager().GetModuleViaIDAsync(_id);
 
             if (ModuleAccess.ModuleSystem)
+            {
                 system_module = true;
+            }
             else
+            {
                 system_module = false;
-
+            }
         }
 
         public async Task<string> GetAddonMainJsViaIDAsync()
@@ -88,9 +88,9 @@ namespace SerrisModulesServer.Type.Addon
 
             try
             {
-                using (FileRandomAccessStream reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
+                using (var reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
                 {
-                    BitmapImage bitmapImage = new BitmapImage();
+                    var bitmapImage = new BitmapImage();
                     bitmapImage.SetSource(reader);
 
                     return bitmapImage;

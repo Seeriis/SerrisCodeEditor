@@ -2,14 +2,10 @@
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.UI.Xaml.Media;
 
 namespace SerrisModulesServer.Type.Theme
 {
@@ -28,10 +24,13 @@ namespace SerrisModulesServer.Type.Theme
             InfosModule ModuleAccess = await new ModulesAccessManager().GetModuleViaIDAsync(_id);
 
             if (ModuleAccess.ModuleSystem)
+            {
                 system_module = true;
+            }
             else
+            {
                 system_module = false;
-
+            }
         }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace SerrisModulesServer.Type.Theme
         /// Get all SolidColorBrush (and BitmapImage) of the theme
         /// </summary>
         /// <returns></returns>
-        public async Task<ThemeModuleBrush> GetThemeBrushsContent()
+        public async Task<ThemeModuleBrush> GetThemeBrushesContent()
         {
             StorageFolder folder_module;
 
@@ -146,15 +145,19 @@ namespace SerrisModulesServer.Type.Theme
 
                     if (content != null)
                     {
-                        ThemeModuleBrush content_brushs = new ThemeModuleBrush();
+                        var content_brushs = new ThemeModuleBrush();
                         System.Diagnostics.Debug.WriteLine(Path.Combine(folder_module.Path, content.BackgroundImagePath));
 
                         content_brushs.SetBrushsAndImageViaThemeModule(content, folder_module.Path);
 
                         /*if (system_module)
+                        {
                             content_brushs.SetBrushsAndImageViaThemeModule(content, "ms-appx://SerrisModulesServer/SystemModules/" + id_module + "/");
+                        }
                         else
-                            content_brushs.SetBrushsAndImageViaThemeModule(content, folder_module.Path);*/
+                        {
+                            content_brushs.SetBrushsAndImageViaThemeModule(content, folder_module.Path);
+                        }*/
 
                         return content_brushs;
                     }

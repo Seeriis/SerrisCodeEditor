@@ -3,9 +3,6 @@ using SerrisModulesServer.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SerrisModulesServer
@@ -24,20 +21,20 @@ namespace SerrisModulesServer
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
 
                     if (list == null)
+                    {
                         WriteNewSMSConfiguration();
+                    }
                 }
                 catch
                 {
                     WriteNewSMSConfiguration();
                 }
             }
-
-
         }
 
         async void WriteNewSMSConfiguration()
         {
-            ModulesList new_list = new ModulesList
+            var new_list = new ModulesList
             {
                 CurrentThemeAceID = 0,
                 CurrentThemeID = 0,

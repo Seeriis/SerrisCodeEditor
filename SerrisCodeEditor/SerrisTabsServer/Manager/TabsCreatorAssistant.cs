@@ -27,9 +27,22 @@ namespace SerrisTabsServer.Manager
                     extension = FileTypes.GetExtensionType(Path.GetExtension(FileName));
                     break;
                 }
-                else continue;
+                else
+                {
+                    continue;
+                }
             }
-            InfosTab newtab = new InfosTab { TabName = FileName, TabStorageMode = type, TabEncoding = encoding.CodePage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabType = extension, TabInvisibleByDefault = false };
+            var newtab = new InfosTab
+            {
+                TabName = FileName,
+                TabStorageMode = type,
+                TabEncoding = encoding.CodePage,
+                TabContentType = ContentType.File,
+                CanBeDeleted = true,
+                CanBeModified = true,
+                TabType = extension,
+                TabInvisibleByDefault = false
+            };
             int id_tab = await WriteManager.CreateTabAsync(newtab, IDList);
             await WriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false);
             return id_tab;
@@ -45,22 +58,28 @@ namespace SerrisTabsServer.Manager
                 });
                 return true;
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<List<int>> OpenFilesAndCreateNewTabsFiles(int IDList, StorageListTypes type)
         {
-            List<int> list_ids = new List<int>();
+            var list_ids = new List<int>();
 
-            FileOpenPicker opener = new FileOpenPicker(); FileTypesManager FileTypes = new FileTypesManager();
+            var opener = new FileOpenPicker();
+            var FileTypes = new FileTypesManager();
             opener.ViewMode = PickerViewMode.Thumbnail;
             opener.SuggestedStartLocation = PickerLocationId.ComputerFolder;
             opener.FileTypeFilter.Add("*");
 
             foreach (string ext in FileTypes.List_Type_extensions)
-            { opener.FileTypeFilter.Add(ext); }
+            {
+                opener.FileTypeFilter.Add(ext);
+            }
 
-            var files = await opener.PickMultipleFilesAsync();
+            IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
             foreach (StorageFile file in files)
             {
                 await Task.Run(async () => 
@@ -68,7 +87,7 @@ namespace SerrisTabsServer.Manager
                     if (file != null)
                     {
                         StorageApplicationPermissions.FutureAccessList.Add(file);
-                        InfosTab tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false };
+                        var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false };
 
                         foreach (string _type in FileTypes.List_Type_extensions)
                         {
@@ -77,7 +96,10 @@ namespace SerrisTabsServer.Manager
                                 tab.TabType = FileTypes.GetExtensionType(file.FileType);
                                 break;
                             }
-                            else continue;
+                            else
+                            {
+                                continue;
+                            }
                         }
 
                         int id_tab = 0;

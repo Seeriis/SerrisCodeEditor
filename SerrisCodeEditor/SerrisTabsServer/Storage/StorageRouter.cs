@@ -1,8 +1,6 @@
 ﻿using SerrisTabsServer.Items;
 using SerrisTabsServer.Storage.StorageTypes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -73,7 +71,7 @@ namespace SerrisTabsServer.Storage
             }
         }
 
-        public async Task<String> ReadFileAndGetContent()
+        public async Task<string> ReadFileAndGetContent()
         {
             switch (tab.TabStorageMode)
             {

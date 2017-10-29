@@ -8,23 +8,14 @@ using SerrisTabsServer.Manager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -33,17 +24,21 @@ namespace SerrisCodeEditor.Xaml.Views
     {
         public EditorView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void EditorViewUI_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); SetTheme(); SetInterface(); }
+        {
+            SetMessenger();
+            SetTheme();
+            SetInterface();
+        }
 
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (temp_variables.CurrentDevice != CurrentDevice.WindowsMobile)
             {
-                if(Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
+                if (Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
                 {
                     ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
                     FocusTitlebarWidth.Width = new GridLength(100, GridUnitType.Pixel);
@@ -91,29 +86,34 @@ namespace SerrisCodeEditor.Xaml.Views
                 try
                 {
                     SetTheme();
-                } catch { }
+                }
+                catch { }
             });
         }
 
         private void DeployUIDetector_PointerEntered(object sender, PointerRoutedEventArgs e)
-        { UpdateUI(true); }
+        => UpdateUI(true);
 
         private void ContentViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
-        { UpdateUI(false); }
+        => UpdateUI(false);
 
         private void UpdateUI(bool isDeployed)
         {
             isUIDeployed = isDeployed;
 
-            if(isUIDeployed)
+            if (isDeployed)
             {
-                PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
+                PrincipalUI.Visibility = Visibility.Visible;
+                SheetsManager.Visibility = Visibility.Visible;
+                SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                SheetViewSplit.IsPaneOpen = true;
             }
             else
             {
-                PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
+                PrincipalUI.Visibility = Visibility.Collapsed;
+                SheetsManager.Visibility = Visibility.Collapsed;
+                SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                SheetViewSplit.IsPaneOpen = false;
 
                 SheetsManager.SelectTabsListSheet();
             }
@@ -127,7 +127,7 @@ namespace SerrisCodeEditor.Xaml.Views
             BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
 
-            if(temp_variables.CurrentDevice == CurrentDevice.Desktop)
+            if (temp_variables.CurrentDevice == CurrentDevice.Desktop)
             {
                 var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 TitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -158,7 +158,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ModuleSheetView_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if(!isUIDeployed)
+            if (!isUIDeployed)
                 SheetViewSplit.IsPaneOpen = true;
         }
 
@@ -180,7 +180,8 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         //For manage tabs content
-        List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>(); bool CanManageQueue = true;
+        List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>();
+        bool CanManageQueue = true;
         public async void ManageQueueTabs()
         {
             while (!CanManageQueue)
@@ -202,7 +203,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    if (this.Dispatcher != view.Dispatcher)
+                    if (Dispatcher != view.Dispatcher)
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = temp_variables.CurrentIDs });
@@ -210,7 +211,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
 
                 temp_variables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
-                ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage; ContentViewer.Code = Queue_Tabs[0].code;
+                ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
+                ContentViewer.Code = Queue_Tabs[0].code;
 
                 Queue_Tabs.RemoveAt(0);
                 CanManageQueue = true;
@@ -226,8 +228,10 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
 
-        TabsAccessManager Tabs_manager_access = new TabsAccessManager(); TabsWriteManager Tabs_manager_writer = new TabsWriteManager();
-        ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
+        TabsAccessManager Tabs_manager_access = new TabsAccessManager();
+        TabsWriteManager Tabs_manager_writer = new TabsWriteManager();
+        ModulesAccessManager Modules_manager_access = new ModulesAccessManager();
+        ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         TempContent temp_variables = new TempContent();
         bool isUIDeployed = false;
 

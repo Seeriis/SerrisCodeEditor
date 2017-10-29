@@ -65,11 +65,8 @@ namespace SerrisCodeEditorEngine.Items
             switch (CodeLanguage)
             {
 
-                case "HTML":
-                    await editor.InvokeScriptAsync("eval", html);
-                    break;
-
                 case "HTM":
+                case "HTML":
                     await editor.InvokeScriptAsync("eval", html);
                     break;
 
@@ -226,7 +223,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "VB":
-                    await editor.InvokeScriptAsync("eval", new string[] { "monaco.editor.setModelLanguage(editor.getModel(), 'vb');" });
+                    await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'vb');" });
                     break;
 
                 default:
