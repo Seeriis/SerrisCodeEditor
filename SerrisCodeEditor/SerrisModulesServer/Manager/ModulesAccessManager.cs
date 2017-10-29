@@ -70,7 +70,7 @@ namespace SerrisModulesServer.Manager
 
         public List<InfosModule> GetModules(bool GetSystemModules)
         {
-            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync())))
+            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -235,7 +235,7 @@ namespace SerrisModulesServer.Manager
 
         public InfosModule GetModuleViaID(int id)
         {
-            using (var reader = new StreamReader(AsyncHelpers.RunSync<Stream>(() => file.OpenStreamForReadAsync())))
+            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try

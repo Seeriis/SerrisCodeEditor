@@ -96,7 +96,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task<string> ReadFileAndGetContent()
         {
-            StorageFile file = AsyncHelpers.RunSync<StorageFile>(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
             string encode_type = "", content = "";
 
             await Task.Run(() =>

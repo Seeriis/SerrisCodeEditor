@@ -57,14 +57,14 @@ namespace SerrisModulesServer.Type.Addon
                 host.Chakra.ProjectNamespace("SCEELibs.Editor.Components");
                 host.Chakra.ProjectObjectToGlobal(_SCEELibs, "sceelibs");
 
-                InfosModule ModuleAccess = AsyncHelpers.RunSync<InfosModule>(async () => await AccessManager.GetModuleViaIDAsync(_id));
+                InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await AccessManager.GetModuleViaIDAsync(_id));
                 StorageFolder folder_module;
 
                 if (ModuleAccess.ModuleSystem)
                 {
-                    StorageFolder folder_content = AsyncHelpers.RunSync<StorageFolder>(async () => await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer")),
-                        folder_systemmodules = AsyncHelpers.RunSync<StorageFolder>(async () => await folder_content.GetFolderAsync("SystemModules"));
-                    folder_module = AsyncHelpers.RunSync<StorageFolder>(async () => await folder_systemmodules.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
+                    StorageFolder folder_content = AsyncHelpers.RunSync(async () => await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer")),
+                        folder_systemmodules = AsyncHelpers.RunSync(async () => await folder_content.GetFolderAsync("SystemModules"));
+                    folder_module = AsyncHelpers.RunSync(async () => await folder_systemmodules.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace SerrisModulesServer.Type.Addon
                 {
                     using (StreamReader reader = AsyncHelpers.RunSync(async () => new StreamReader(await file.OpenStreamForReadAsync())))
                     {
-                        host.Chakra.RunScript(AsyncHelpers.RunSync<string>(async () => await reader.ReadToEndAsync()));
+                        host.Chakra.RunScript(AsyncHelpers.RunSync(async () => await reader.ReadToEndAsync()));
                     }
                 }
                 catch
@@ -127,19 +127,19 @@ namespace SerrisModulesServer.Type.Addon
              */
 
 
-            InfosModule ModuleAccess = AsyncHelpers.RunSync<InfosModule>(async () => await AccessManager.GetModuleViaIDAsync(_id));
+            InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await AccessManager.GetModuleViaIDAsync(_id));
             StorageFolder folder_module;
 
             if (ModuleAccess.ModuleSystem)
             {
-                StorageFolder folder_content = AsyncHelpers.RunSync<StorageFolder>(async () => await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer")),
-                    folder_systemmodules = AsyncHelpers.RunSync<StorageFolder>(async () => await folder_content.GetFolderAsync("SystemModules"));
-                folder_module = AsyncHelpers.RunSync<StorageFolder>(async () => await folder_systemmodules.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
+                StorageFolder folder_content = AsyncHelpers.RunSync(async () => await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer")),
+                    folder_systemmodules = AsyncHelpers.RunSync(async () => await folder_content.GetFolderAsync("SystemModules"));
+                folder_module = AsyncHelpers.RunSync(async () => await folder_systemmodules.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
             }
             else
             {
-                StorageFolder folder_content = AsyncHelpers.RunSync<StorageFolder>(async () => await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists));
-                folder_module = AsyncHelpers.RunSync<StorageFolder>(async () => await folder_content.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
+                StorageFolder folder_content = AsyncHelpers.RunSync(async () => await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists));
+                folder_module = AsyncHelpers.RunSync(async () => await folder_content.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
             }
 
             foreach (string path in ModuleAccess.JSFilesPathList)
@@ -151,12 +151,12 @@ namespace SerrisModulesServer.Type.Addon
                     if (path_temp.Contains(Path.AltDirectorySeparatorChar))
                     {
                         //Debug.WriteLine(path_temp.Split(Path.AltDirectorySeparatorChar).First());
-                        _folder_temp = AsyncHelpers.RunSync<StorageFolder>(async () => await _folder_temp.GetFolderAsync(path_temp.Split(Path.AltDirectorySeparatorChar).First()));
+                        _folder_temp = AsyncHelpers.RunSync(async () => await _folder_temp.GetFolderAsync(path_temp.Split(Path.AltDirectorySeparatorChar).First()));
                         path_temp = path_temp.Substring(path_temp.Split(Path.AltDirectorySeparatorChar).First().Length + 1);
                     }
                     else
                     {
-                        _file_read = AsyncHelpers.RunSync<StorageFile>(async () => await _folder_temp.GetFileAsync(path_temp));
+                        _file_read = AsyncHelpers.RunSync(async () => await _folder_temp.GetFileAsync(path_temp));
                         file_found = true;
                         break;
                     }
