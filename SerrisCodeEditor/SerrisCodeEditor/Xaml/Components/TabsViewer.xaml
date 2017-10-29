@@ -456,7 +456,7 @@
                         <Button.Flyout>
                             <Flyout x:Name="FlyoutNewList">
                                 <StackPanel>
-                                    <TextBox x:Name="TextBoxNewList" Width="167" PlaceholderText="Name of the new list" FontSize="12"/>
+                                    <TextBox x:Name="TextBoxNewList" Width="167" PlaceholderText="Name of the new list" FontSize="12" Style="{StaticResource RoundTextBox}"/>
                                     <Button x:Name="NewList" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewList_Click">
                                         <Grid>
                                             <Grid.ColumnDefinitions>

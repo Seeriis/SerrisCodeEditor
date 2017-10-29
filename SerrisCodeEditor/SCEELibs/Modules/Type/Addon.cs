@@ -30,40 +30,19 @@ namespace SCEELibs.Modules.Type
                 switch(typefunc)
                 {
                     case AddonFunction.main:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.main, ref f, ref ff);
+                        new AddonExecutor(ID, new SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
                         break;
 
                     case AddonFunction.onEditorStart:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.onEditorStart, ref f, ref ff);
+                        new AddonExecutor(ID, new SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorStart);
                         break;
 
                     case AddonFunction.onEditorViewReady:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.onEditorViewReady, ref f, ref ff);
+                        new AddonExecutor(ID, new SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorViewReady);
                         break;
                 }
             });
         }
 
-        public async void executeAddonViaIDAndXAMLElements(int ID, AddonFunction typefunc, Flyout flyout, Frame frame)
-        {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-            () =>
-            {
-                switch (typefunc)
-                {
-                    case AddonFunction.main:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.main, ref flyout, ref frame);
-                        break;
-
-                    case AddonFunction.onEditorStart:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.onEditorStart, ref flyout, ref frame);
-                        break;
-
-                    case AddonFunction.onEditorViewReady:
-                        new AddonExecutor(ID, AddonExecutorFuncTypes.onEditorViewReady, ref flyout, ref frame);
-                        break;
-                }
-            });
-        }
     }
 }

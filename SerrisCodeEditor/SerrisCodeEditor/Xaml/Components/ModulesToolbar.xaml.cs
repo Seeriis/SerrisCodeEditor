@@ -51,8 +51,7 @@ namespace SerrisCodeEditor.Xaml.Components
         private void Module_button_Click(object sender, RoutedEventArgs e)
         {
             PinnedModule module = (sender as Button).DataContext as PinnedModule;
-            Flyout osef = new Flyout(); Frame osef_b = new Frame();
-            AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+            //AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, new SCEELibs.SCEELibs(module.ID));
         }
 
 
@@ -95,11 +94,20 @@ namespace SerrisCodeEditor.Xaml.Components
                 }
                 catch { }
             });
+
+            Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
+            {
+                try
+                {
+                    ToolbarContent.Children.Add(notification_toolbar.widget);
+                }
+                catch { }
+            });
         }
 
         private async void AddModule(int ID)
         {
-            var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
+            /*var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
 
             if(module != null)
             {
@@ -115,8 +123,10 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
                 ToolbarContent.Children.Add(module_button);
-            }
+            }*/
+            //new AddonExecutor(ID, new SCEELibs.SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.whenModuleIsPinned);
 
+            ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
         }
 
         private void RemoveModule(int ID)
@@ -124,5 +134,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void ButtonListModules_Click(object sender, RoutedEventArgs e)
         { FrameListModules.Navigate(typeof(ModulesManager)); }
+
+        private void ScrollViewer_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+            //ScrollMaster.Scroll
+            ScrollMaster.ChangeView(ScrollMaster.HorizontalOffset + (e.GetCurrentPoint(ScrollMaster).Properties.MouseWheelDelta * 2), ScrollMaster.VerticalOffset, ScrollMaster.ZoomFactor);
+            //ScrollMaster.ScrollToHorizontalOffset(ScrollMaster.HorizontalOffset + e.GetCurrentPoint(ScrollMaster).Properties.MouseWheelDelta);
+        }
     }
 }

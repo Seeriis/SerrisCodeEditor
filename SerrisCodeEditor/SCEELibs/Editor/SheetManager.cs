@@ -14,8 +14,15 @@ namespace SCEELibs.Editor
     [AllowForWeb]
     public sealed class SheetManager
     {
+        int id;
 
-        public async void createNewSheet(string sheetName, string pathHTMLPage, int id)
+        public SheetManager(int ID)
+        {
+            id = ID;
+        }
+
+
+        public async void createNewSheet(string sheetName, string pathHTMLPage)
         {
             ModuleHTMLView view = new ModuleHTMLView();
             view.LoadPage(pathHTMLPage, id);

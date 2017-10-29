@@ -83,8 +83,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (currentSelectedButton)
                 {
                     case 0:
-                        Flyout osef = new Flyout(); Frame osef_b = new Frame();
-                        AddonExecutor executor = new AddonExecutor(module.Module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+                        new AddonExecutor(module.Module.ID, new SCEELibs.SCEELibs(module.Module.ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
                         break;
 
                     case 1:

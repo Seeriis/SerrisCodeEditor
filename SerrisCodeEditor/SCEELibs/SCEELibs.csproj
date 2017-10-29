@@ -117,7 +117,9 @@
     <Compile Include="Editor\Notifications\EditorViewNotification.cs" />
     <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
     <Compile Include="Editor\Notifications\TabSelectedNotification.cs" />
+    <Compile Include="Editor\Notifications\ToolbarNotification.cs" />
     <Compile Include="Editor\SheetManager.cs" />
+    <Compile Include="Editor\Components\Widget.cs" />
     <Compile Include="Modules\Manager.cs" />
     <Compile Include="Modules\Type\Addon.cs" />
     <Compile Include="Modules\Type\Theme.cs" />

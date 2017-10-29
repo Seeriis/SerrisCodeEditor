@@ -296,8 +296,7 @@ namespace SerrisCodeEditor
         private void PinnedModuleButton_Click(object sender, RoutedEventArgs e)
         {
             PinnedModule module = (sender as Button).DataContext as PinnedModule;
-            Flyout osef = new Flyout(); Frame osef_b = new Frame();
-            AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+            new AddonExecutor(module.ID, new SCEELibs.SCEELibs(module.ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
 
             var test = new SCEELibs.Modules.Manager().getThemesAvailable(true);
         }

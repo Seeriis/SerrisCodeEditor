@@ -14,6 +14,16 @@ namespace SCEELibs
     [AllowForWeb]
     public sealed class SCEELibs
     {
+        public SCEELibs(int id)
+        {
+            _currentID = id;
+
+            _sheetManager = new SheetManager(id);
+        }
+
+        int _currentID = -1;
+        public int currentID { get { return _currentID; } } 
+
         /* ===========
          * = MODULES =
          * ===========
@@ -32,7 +42,10 @@ namespace SCEELibs
          * = EDITOR =
          * ==========
          */
-        SheetManager _sheetManager = new SheetManager();
+        SheetManager _sheetManager;
         public SheetManager sheetManager { get { return _sheetManager; } }
+
+        ConsoleManager _consoleManager = new ConsoleManager();
+        public ConsoleManager consoleManager { get { return _consoleManager; } }
     }
 }

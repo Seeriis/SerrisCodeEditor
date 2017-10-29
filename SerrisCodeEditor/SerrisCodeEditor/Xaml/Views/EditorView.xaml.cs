@@ -46,7 +46,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 if(Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
                 {
                     ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
-                    FocusTitlebarWidth.Width = new GridLength(100, GridUnitType.Pixel);
+                    FocusTitlebarWidth.Width = new GridLength(272, GridUnitType.Pixel);
                 }
                 else
                 {
@@ -107,11 +107,13 @@ namespace SerrisCodeEditor.Xaml.Views
 
             if(isUIDeployed)
             {
+                SheetViewSeparatorLine.Width = 2;
                 PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
             }
             else
             {
+                SheetViewSeparatorLine.Width = 0;
                 PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
 
