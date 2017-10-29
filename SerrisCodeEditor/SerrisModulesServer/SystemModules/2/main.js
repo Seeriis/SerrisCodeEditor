@@ -3,7 +3,7 @@
     try
     {
         //showPopup("Popup titre", "Ceci est du texte lambda");
-        var libs = new SCEELibs.Modules.Manager();
+        var libs = sceelibs.modulesManager;
         var list_ = libs.getAddonsAvailable(true);
         var list_b = libs.getThemesAvailable(true);
 

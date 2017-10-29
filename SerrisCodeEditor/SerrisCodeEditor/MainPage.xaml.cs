@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Newtonsoft.Json;
 using SCEELibs.Editor.Notifications;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
@@ -10,26 +9,13 @@ using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor
 {
@@ -76,7 +62,9 @@ namespace SerrisCodeEditor
         public async void ManageQueueTabs()
         {
             while (!CanManageQueue)
+            {
                 await Task.Delay(20);
+            }
 
             if (CanManageQueue)
             {
@@ -95,10 +83,12 @@ namespace SerrisCodeEditor
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
                     if (Dispatcher != view.Dispatcher)
+                    {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = IDs });
                         });
+                    }
                 }
 
                 IDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
@@ -130,9 +120,9 @@ namespace SerrisCodeEditor
                 catch { }
             });
 
-            var sts_initialize = await Tabs_manager_access.GetTabsListIDAsync();
+            List<int> sts_initialize = await Tabs_manager_access.GetTabsListIDAsync();
 
-            /*if(sts_initialize.Count == 0)
+            /*if (sts_initialize.Count == 0)
             {
                 IDs.ID_TabsList = await Tabs_manager_writer.CreateTabsListAsync("Liste des onglets - test");
                 List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
@@ -151,12 +141,12 @@ namespace SerrisCodeEditor
                 list_ids_list.Items.Add(id);
             }
 
-            var sms_initialize = await Modules_manager_access.GetModulesAsync(true);
+            List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
             foreach (InfosModule module in sms_initialize)
             {
                 if (module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
-                    PinnedModule pinned = new PinnedModule { ID = module.ID, ModuleName = module.ModuleName, ModuleType = module.ModuleType };
+                    var pinned = new PinnedModule { ID = module.ID, ModuleName = module.ModuleName, ModuleType = module.ModuleType };
                     pinned.Image = await new AddonReader(module.ID).GetAddonIconViaIDAsync();
 
                     ModulesList.Items.Add(pinned);
@@ -222,7 +212,7 @@ namespace SerrisCodeEditor
             int newViewId = 0;
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Frame frame = new Frame();
+                var frame = new Frame();
                 frame.Navigate(typeof(MainPage), null);
                 Window.Current.Content = frame;
                 Window.Current.Activate();
@@ -234,7 +224,7 @@ namespace SerrisCodeEditor
 
         private async void OpenFiles_Click(object sender, RoutedEventArgs e)
         {
-            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            var creator = new TabsCreatorAssistant();
             await creator.OpenFilesAndCreateNewTabsFiles(IDs.ID_TabsList, StorageListTypes.LocalStorage);
         }
 
@@ -258,7 +248,7 @@ namespace SerrisCodeEditor
 
         private async void CreateFile_Click(object sender, RoutedEventArgs e)
         {
-            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            var creator = new TabsCreatorAssistant();
             await creator.CreateNewTab(IDs.ID_TabsList, "test.json", Encoding.ASCII, StorageListTypes.LocalStorage, "Je suis une patate !");
         }
 
@@ -279,7 +269,9 @@ namespace SerrisCodeEditor
                 IDs.ID_TabsList = (int)list_ids_list.SelectedItem; TabsList tabslist = await Tabs_manager_access.GetTabsListViaIDAsync(IDs.ID_TabsList);
 
                 if (tabslist != null)
+                {
                     name_box.Text = tabslist.name;
+                }
 
                 List<int> list_ids = await Tabs_manager_access.GetTabsIDAsync(IDs.ID_TabsList);
                 AddTabs(list_ids);
@@ -289,17 +281,16 @@ namespace SerrisCodeEditor
 
         private async void CreateFileViaTab_Click(object sender, RoutedEventArgs e)
         {
-            TabsCreatorAssistant creator = new TabsCreatorAssistant();
+            var creator = new TabsCreatorAssistant();
             await creator.CreateNewFileViaTab(IDs);
         }
 
         private void PinnedModuleButton_Click(object sender, RoutedEventArgs e)
         {
-            PinnedModule module = (sender as Button).DataContext as PinnedModule;
-            Flyout osef = new Flyout(); Frame osef_b = new Frame();
-            AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+            var module = (sender as Button).DataContext as PinnedModule;
+            new AddonExecutor(module.ID, new SCEELibs.SCEELibs(module.ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
 
-            var test = new SCEELibs.Modules.Manager().getThemesAvailable(true);
+            IList<SCEELibs.Modules.ModuleInfo> test = new SCEELibs.Modules.Manager().getThemesAvailable(true);
         }
     }
 

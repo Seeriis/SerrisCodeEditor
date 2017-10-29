@@ -82,7 +82,7 @@ namespace SerrisTabsServer.Manager
             IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
             foreach (StorageFile file in files)
             {
-                await Task.Run(async () => 
+                await Task.Run(async () =>
                 {
                     if (file != null)
                     {
@@ -103,7 +103,7 @@ namespace SerrisTabsServer.Manager
                         }
 
                         int id_tab = 0;
-                        await Task.Run(async () => 
+                        await Task.Run(async () =>
                         {
                             id_tab = await WriteManager.CreateTabAsync(tab, IDList);
                             new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);

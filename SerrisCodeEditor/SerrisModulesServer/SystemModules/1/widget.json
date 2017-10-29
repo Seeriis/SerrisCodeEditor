@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "osef",
+    "FunctionName": "main",
+    "IconButton": "",
+    "PlaceHolderText": null,
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  },
+  {
+    "Type": 1,
+    "WidgetName": "osef_b",
+    "FunctionName": "main",
+    "IconButton": null,
+    "PlaceHolderText": "Squalala !",
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  }
+]

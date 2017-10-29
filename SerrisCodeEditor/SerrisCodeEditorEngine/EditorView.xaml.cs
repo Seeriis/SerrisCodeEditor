@@ -357,7 +357,8 @@ namespace SerrisCodeEditorEngine
             {
                 string[] row = { "'' + editor.getCursorPosition().row" };
                 string[] column = { "'' + editor.getCursorPosition().column" };
-                return new PositionSCEE {
+                return new PositionSCEE
+                {
                     row = int.Parse(await editor_view.InvokeScriptAsync("eval", row)),
                     column = int.Parse(await editor_view.InvokeScriptAsync("eval", column))
                 };

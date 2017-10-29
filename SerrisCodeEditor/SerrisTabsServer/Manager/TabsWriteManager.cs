@@ -58,7 +58,7 @@ namespace SerrisTabsServer.Manager
                     return 0;
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace SerrisTabsServer.Manager
                     List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
                     TabsList list_tabs = list.First(m => m.ID == id);
 
-                    foreach(InfosTab tab in list_tabs.tabs)
+                    foreach (InfosTab tab in list_tabs.tabs)
                     {
                         try
                         {
@@ -211,7 +211,7 @@ namespace SerrisTabsServer.Manager
                             _content.Content = content;
                             await FileIO.WriteTextAsync(file_content, JsonConvert.SerializeObject(_content, Formatting.Indented));
 
-                            if(sendnotification)
+                            if (sendnotification)
                             {
                                 foreach (CoreApplicationView view in CoreApplication.Views)
                                 {
@@ -254,14 +254,14 @@ namespace SerrisTabsServer.Manager
 
                     StorageFile data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.OpenIfExists);
 
-                    if(tab.TabContentTemporary != null)
+                    if (tab.TabContentTemporary != null)
                     {
                         await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = tab.TabContentTemporary }, Formatting.Indented));
                     }
 
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
-                    foreach(CoreApplicationView view in CoreApplication.Views)
+                    foreach (CoreApplicationView view in CoreApplication.Views)
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {

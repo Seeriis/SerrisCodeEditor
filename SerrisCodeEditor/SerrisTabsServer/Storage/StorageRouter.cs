@@ -1,6 +1,5 @@
 ﻿using SerrisTabsServer.Items;
 using SerrisTabsServer.Storage.StorageTypes;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -91,7 +90,7 @@ namespace SerrisTabsServer.Storage
 
         public async Task WriteFile()
         {
-            switch(tab.TabStorageMode)
+            switch (tab.TabStorageMode)
             {
                 case StorageListTypes.LocalStorage:
                     await new LocalStorage(tab, IdList).WriteFile();

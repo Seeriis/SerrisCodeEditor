@@ -26,7 +26,7 @@ namespace SerrisModulesServer.Type.Addon
 
             Chakra.ProjectNamespace("Windows.UI.Notifications");
             Chakra.ProjectNamespace("Windows.Data.Xml.Dom");
-            Chakra.ProjectNamespace("SCEELibs");
+            //Chakra.ProjectNamespace("SCEELibs");
         }
 
     }

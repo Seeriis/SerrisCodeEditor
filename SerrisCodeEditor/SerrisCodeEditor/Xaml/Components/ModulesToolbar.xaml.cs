@@ -5,20 +5,10 @@ using SerrisCodeEditor.Xaml.Views;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Addon;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Components
 {
@@ -29,7 +19,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         public ModulesToolbar()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Toolbar_Loaded(object sender, RoutedEventArgs e)
@@ -37,7 +27,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void ToolbarContent_Loaded(object sender, RoutedEventArgs e)
         {
-            var sms_initialize = await Modules_manager_access.GetModulesAsync(true);
+            List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
             foreach (InfosModule module in sms_initialize)
             {
                 if (module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
@@ -51,8 +41,7 @@ namespace SerrisCodeEditor.Xaml.Components
         private void Module_button_Click(object sender, RoutedEventArgs e)
         {
             PinnedModule module = (sender as Button).DataContext as PinnedModule;
-            Flyout osef = new Flyout(); Frame osef_b = new Frame();
-            AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, ref osef, ref osef_b);
+            //AddonExecutor executor = new AddonExecutor(module.ID, AddonExecutorFuncTypes.main, new SCEELibs.SCEELibs(module.ID));
         }
 
 
@@ -91,7 +80,16 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 try
                 {
-                    
+
+                }
+                catch { }
+            });
+
+            Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
+            {
+                try
+                {
+                    ToolbarContent.Children.Add(notification_toolbar.widget);
                 }
                 catch { }
             });
@@ -99,7 +97,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void AddModule(int ID)
         {
-            var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
+            /*var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
 
             if(module != null)
             {
@@ -115,8 +113,10 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
                 ToolbarContent.Children.Add(module_button);
-            }
+            }*/
+            //new AddonExecutor(ID, new SCEELibs.SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.whenModuleIsPinned);
 
+            ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
         }
 
         private void RemoveModule(int ID)
@@ -124,5 +124,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void ButtonListModules_Click(object sender, RoutedEventArgs e)
         { FrameListModules.Navigate(typeof(ModulesManager)); }
+
+        private void ScrollViewer_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+            //ScrollMaster.Scroll
+            ScrollMaster.ChangeView(ScrollMaster.HorizontalOffset + (e.GetCurrentPoint(ScrollMaster).Properties.MouseWheelDelta * 2), ScrollMaster.VerticalOffset, ScrollMaster.ZoomFactor);
+            //ScrollMaster.ScrollToHorizontalOffset(ScrollMaster.HorizontalOffset + e.GetCurrentPoint(ScrollMaster).Properties.MouseWheelDelta);
+        }
     }
 }

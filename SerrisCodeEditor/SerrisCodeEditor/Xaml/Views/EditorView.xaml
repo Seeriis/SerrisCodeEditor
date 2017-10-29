@@ -28,8 +28,8 @@
             </Grid.RowDefinitions>
             
             <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
-                <Grid x:Name="DeployUIDetector" Height="65" Background="DarkGray" PointerEntered="DeployUIDetector_PointerEntered">
-                    <TextBlock Text="" Foreground="White" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                <Grid x:Name="DeployUIDetector" Height="65" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
+                    <TextBlock Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
 
                 <Grid>
@@ -56,7 +56,7 @@
                         <Rectangle x:Name="ColorSheetView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Gray"/>
 
                         <my:ModuleSheetView x:Name="SheetView" PointerEntered="ModuleSheetView_PointerEntered" PointerExited="ModuleSheetView_PointerExited" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
-                        <Rectangle Grid.Column="1" Width="2" Fill="White"/>
+                        <Rectangle x:Name="SheetViewSeparatorLine" Grid.Column="1" Width="2" Fill="White"/>
                     </Grid>
                 </SplitView.Pane>
             </SplitView>

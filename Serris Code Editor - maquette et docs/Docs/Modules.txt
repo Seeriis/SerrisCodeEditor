@@ -74,7 +74,8 @@ Pour faire fonctionner le module, il faudra nécessairement créer un fichier "inf
 
 => Dans le fichier "main.js", il y aura obligatoirement une fonction nommé main() qui sera la fonction d'initialisation de l'addon (ex: spécier dans Main() de créer une vue pour le module etc...).
 Il sera possible aussi de mettre les fonctions onEditorStart() (fonction qui est exécuté au lancement d'une nouvelle fenêtre de l'éditeur) et onEditorViewReady() (fonction qui est exécuté lorsque la
-vue de l'éditeur de code est prête, ce qui est idéal pour implanter du code dans Ace editor).
+vue de l'éditeur de code est prête, ce qui est idéal pour implanter du code dans Ace editor) + whenModuleIsPinned() (fonction qui est exécuté si le module est pinné dans la toolbar afin de pouvoir initialiser
+le widget du module dans la toolbar).
 
 => Dans le fichier "theme.json", il y aura les paramètres de votre thème qui sera dans la forme de la class "ThemeModule". Et sur le fichier "theme_ace.js", il y aura le contenu du thème pour la vue
 de l'éditeur de code qui fonctionne sous Ace Editor.

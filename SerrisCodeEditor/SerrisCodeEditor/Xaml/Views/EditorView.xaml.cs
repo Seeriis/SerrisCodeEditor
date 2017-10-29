@@ -41,7 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 if (Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
                 {
                     ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
-                    FocusTitlebarWidth.Width = new GridLength(100, GridUnitType.Pixel);
+                    FocusTitlebarWidth.Width = new GridLength(272, GridUnitType.Pixel);
                 }
                 else
                 {
@@ -103,18 +103,15 @@ namespace SerrisCodeEditor.Xaml.Views
 
             if (isDeployed)
             {
-                PrincipalUI.Visibility = Visibility.Visible;
-                SheetsManager.Visibility = Visibility.Visible;
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
-                SheetViewSplit.IsPaneOpen = true;
+                SheetViewSeparatorLine.Width = 2;
+                PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
+                SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
             }
             else
             {
-                PrincipalUI.Visibility = Visibility.Collapsed;
-                SheetsManager.Visibility = Visibility.Collapsed;
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                SheetViewSplit.IsPaneOpen = false;
-
+                SheetViewSeparatorLine.Width = 0;
+                PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
+                SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
                 SheetsManager.SelectTabsListSheet();
             }
         }
@@ -129,7 +126,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
             if (temp_variables.CurrentDevice == CurrentDevice.Desktop)
             {
-                var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 TitleBar.ButtonBackgroundColor = Colors.Transparent;
                 TitleBar.ButtonForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
             }
@@ -153,20 +150,28 @@ namespace SerrisCodeEditor.Xaml.Views
         private void ContentViewer_EditorCommands(object sender, SerrisCodeEditorEngine.Items.EventSCEE e)
         {
             if (e.message == "click")
+            {
                 UpdateUI(false);
+            }
         }
 
         private void ModuleSheetView_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (!isUIDeployed)
+            {
                 SheetViewSplit.IsPaneOpen = true;
+            }
         }
 
         private void ModuleSheetView_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             if (!isUIDeployed)
+            {
                 if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 62 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
+                {
                     SheetViewSplit.IsPaneOpen = false;
+                }
+            }
 
             Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.X);
         }
@@ -174,9 +179,12 @@ namespace SerrisCodeEditor.Xaml.Views
         private void EditorViewUI_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             if (!isUIDeployed)
+            {
                 if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 62 || e.GetCurrentPoint(MasterGrid).Position.X <= 10)
+                {
                     SheetViewSplit.IsPaneOpen = false;
-
+                }
+            }
         }
 
         //For manage tabs content
@@ -185,7 +193,9 @@ namespace SerrisCodeEditor.Xaml.Views
         public async void ManageQueueTabs()
         {
             while (!CanManageQueue)
+            {
                 await Task.Delay(20);
+            }
 
             if (CanManageQueue)
             {
@@ -204,10 +214,12 @@ namespace SerrisCodeEditor.Xaml.Views
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
                     if (Dispatcher != view.Dispatcher)
+                    {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = temp_variables.CurrentIDs });
                         });
+                    }
                 }
 
                 temp_variables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
@@ -238,7 +250,9 @@ namespace SerrisCodeEditor.Xaml.Views
         private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (!isUIDeployed)
+            {
                 SheetViewSplit.IsPaneOpen = false;
+            }
         }
     }
 

@@ -10,7 +10,7 @@
         {
             u_result = u_result + (u_result + 2);
         }
-        Manager_b.sendConsoleInformationNotification("Résultat: " + u_result);
+        sceelibs.consoleManager.sendConsoleInformationNotification("Résultat: " + u_result);
 
         //Manager = SerrisModulesServer.Items.Lol;
         //Test = Windows.UI.Popups.MessageDialog("test");
@@ -19,10 +19,10 @@
         uri.title = "Ceci est un titre c:";
         uri.showAsync();*/
 
-        var Manager = new SCEELibs.Editor.SheetManager();
+        //var Manager = new SCEELibs.Editor.SheetManager();
         //var button = new Windows.UI.Xaml.Controls.Button(); button.content = "coucou !";
 
-        Manager.createNewSheet("Bouton test", "HTML/content.html", currentID);
+        sceelibs.sheetManager.createNewSheet("Bouton test", "HTML/content.html");
 
         //Manager.deleteModule(1);
 

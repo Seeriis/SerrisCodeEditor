@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +36,7 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -115,6 +117,8 @@
     <None Include="project.json" />
     <Content Include="SystemModules\0\lol.jpg" />
     <Content Include="SystemModules\0\theme.json" />
+    <Content Include="SystemModules\1\widget.json" />
+    <Content Include="SystemModules\2\widget.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SMSInfos.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="SystemModules\SystemModulesList.cs" />
     <Compile Include="Type\Addon\AddonExecutor.cs" />
     <Compile Include="Type\Addon\AddonReader.cs" />
+    <Compile Include="Type\Addon\AddonWidget.cs" />
     <Compile Include="Type\Addon\ChakraSMS.cs" />
     <Compile Include="Type\ModuleTypesList.cs" />
     <Compile Include="Type\Theme\ThemeModule.cs" />

@@ -22,7 +22,7 @@ namespace SCEELibs.Editor.Components
 {
     public sealed partial class ModuleHTMLView : UserControl
     {
-        WebView html_view; bool isLoaded = false;
+        WebView html_view; bool isLoaded = false; int current_id;
 
         public ModuleHTMLView()
         {
@@ -36,7 +36,7 @@ namespace SCEELibs.Editor.Components
 
         private void Html_view_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            html_view.AddWebAllowedObject("SCEELibs", new SCEELibs());
+            html_view.AddWebAllowedObject("SCEELibs", new SCEELibs(current_id));
         }
 
 
@@ -59,6 +59,7 @@ namespace SCEELibs.Editor.Components
 
                 isLoaded = true;
             }
+            current_id = id;
 
             ModulesAccessManager AccessManager = new ModulesAccessManager();
 
