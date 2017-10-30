@@ -36,7 +36,7 @@ namespace SCEELibs.Editor.Components
 
         private void Html_view_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            html_view.AddWebAllowedObject("SCEELibs", new SCEELibs(current_id));
+            html_view.AddWebAllowedObject("sceelibs", new SCEELibs(current_id));
         }
 
 

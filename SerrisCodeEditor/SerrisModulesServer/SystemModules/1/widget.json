@@ -11,7 +11,7 @@
   {
     "Type": 1,
     "WidgetName": "osef_b",
-    "FunctionName": "main",
+    "FunctionName": "textBoxAction",
     "IconButton": null,
     "PlaceHolderText": "Squalala !",
     "WithFlyout": false,

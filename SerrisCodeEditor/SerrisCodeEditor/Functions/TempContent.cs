@@ -3,6 +3,7 @@ using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Theme;
 using SerrisTabsServer.Items;
 using Windows.System.Profile;
+using Windows.UI.Xaml.Controls;
 
 namespace SerrisCodeEditor.Functions
 {
@@ -44,6 +45,9 @@ namespace SerrisCodeEditor.Functions
 
         private static ModulesAccessManager _modulesaccessmanger = new ModulesAccessManager();
         public ModulesAccessManager ModulesAccessManager { get { return _modulesaccessmanger; } }
+
+        private static StackPanel _currentModulesToolbar = new StackPanel();
+        public StackPanel CurrentModulesToolbar { get => _currentModulesToolbar; set => _currentModulesToolbar = value; }
 
     }
 

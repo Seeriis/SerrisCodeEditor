@@ -69,6 +69,8 @@ namespace SCEELibs.Editor.Components
 
 
         public void sendWidget()
-        { Messenger.Default.Send(new ToolbarNotification { id = id, widget = widget_content }); }
+        {
+            //Messenger.Default.Send(new ToolbarNotification { id = id, widget = widget_content });
+        }
     }
 }

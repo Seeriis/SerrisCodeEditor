@@ -7,9 +7,26 @@ using Windows.UI.Xaml;
 
 namespace SCEELibs.Editor.Notifications
 {
+    public enum ToolbarProperties
+    {
+        Visibility,
+
+        ButtonEnabled,
+        IsButtonEnabled,
+
+        SetTextBoxContent,
+        GetTextBoxContent,
+
+        FlyoutEnabled
+    }
+
     public sealed class ToolbarNotification
     {
         public int id { get; set; } //ID of the module who sent the notification
-        public UIElement widget { get; set; } //Widget of the module
+        public string uiElementName { get; set; }
+        public bool answerNotification { get; set; }
+
+        public ToolbarProperties propertie { get; set; }
+        public object content { get; set; }
     }
 }

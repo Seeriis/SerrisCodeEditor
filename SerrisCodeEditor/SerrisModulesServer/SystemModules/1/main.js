@@ -37,9 +37,20 @@
 
         console.log("U est supérieur ou égal à 5 à partir de " + m); //Affichage du résultat dans la console
         */
+
+        sceelibs.widgetManager.enableButton("osef", false);
+        sceelibs.consoleManager.sendConsoleInformationNotification("Le bouton 'osef' est " + sceelibs.widgetManager.isButtonEnabled("osef"));
     }
     catch (e)
     {
         console.log(e.message);
     }
+}
+
+function textBoxAction()
+{
+    sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
+    sceelibs.consoleManager.sendConsoleInformationNotification(sceelibs.widgetManager.getTextBoxContent("osef_b"));
+    sceelibs.widgetManager.setTextBoxContent("osef_b", "Ok !");
+
 }

@@ -20,6 +20,7 @@ namespace SerrisCodeEditor.Xaml.Components
         public ModulesToolbar()
         {
             InitializeComponent();
+            temp_variables.CurrentModulesToolbar = ToolbarContent;
         }
 
         private void Toolbar_Loaded(object sender, RoutedEventArgs e)
@@ -89,7 +90,28 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 try
                 {
-                    ToolbarContent.Children.Add(notification_toolbar.widget);
+                    StackPanel widget = (StackPanel)ToolbarContent.FindName("" + notification_toolbar.id);
+
+                    switch(notification_toolbar.propertie)
+                    {
+                        case ToolbarProperties.ButtonEnabled:
+                            ((Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).IsEnabled = (bool)notification_toolbar.content;
+                            break;
+
+                        case ToolbarProperties.IsButtonEnabled when !notification_toolbar.answerNotification:
+                            Button element = (Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
+                            Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = true, content = element.IsEnabled });
+                            break;
+
+                        case ToolbarProperties.SetTextBoxContent:
+                            ((TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).Text = (string)notification_toolbar.content;
+                            break;
+
+                        case ToolbarProperties.GetTextBoxContent when !notification_toolbar.answerNotification:
+                            TextBox elementb = (TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
+                            Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
+                            break;
+                    }
                 }
                 catch { }
             });

@@ -19,6 +19,7 @@ namespace SCEELibs
             _currentID = id;
 
             _sheetManager = new SheetManager(id);
+            _widgetManager = new WidgetManager(id);
         }
 
         int _currentID = -1;
@@ -47,5 +48,8 @@ namespace SCEELibs
 
         ConsoleManager _consoleManager = new ConsoleManager();
         public ConsoleManager consoleManager { get { return _consoleManager; } }
+
+        WidgetManager _widgetManager;
+        public WidgetManager widgetManager { get => _widgetManager; }
     }
 }

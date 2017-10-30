@@ -167,13 +167,21 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (!isUIDeployed)
             {
-                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 62 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
+                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 70 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {
                     SheetViewSplit.IsPaneOpen = false;
                 }
             }
 
-            Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.X);
+            Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.Y);
+        }
+
+        private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (!isUIDeployed)
+            {
+                SheetViewSplit.IsPaneOpen = false;
+            }
         }
 
         private void EditorViewUI_PointerExited(object sender, PointerRoutedEventArgs e)
@@ -247,13 +255,6 @@ namespace SerrisCodeEditor.Xaml.Views
         TempContent temp_variables = new TempContent();
         bool isUIDeployed = false;
 
-        private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (!isUIDeployed)
-            {
-                SheetViewSplit.IsPaneOpen = false;
-            }
-        }
     }
 
 }

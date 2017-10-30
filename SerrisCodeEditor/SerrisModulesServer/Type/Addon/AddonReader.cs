@@ -153,7 +153,7 @@ namespace SerrisModulesServer.Type.Addon
                                     var new_button = new Button();
                                     new_button.Margin = new Thickness(5, 0, 5, 0);
 
-                                    new_button.Name = widget.WidgetName; new_button.Style = (Style)Application.Current.Resources["Round_Button"];
+                                    new_button.Name = widget.WidgetName + id_module; new_button.Style = (Style)Application.Current.Resources["Round_Button"];
                                     new_button.Padding = new Thickness(0);
                                     new_button.Width = 25; new_button.Height = 25;
                                     new_button.FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets");
@@ -172,7 +172,7 @@ namespace SerrisModulesServer.Type.Addon
                                     var new_textbox = new TextBox();
                                     new_textbox.Margin = new Thickness(5, 0, 5, 0);
 
-                                    new_textbox.Name = widget.WidgetName; new_textbox.Style = (Style)Application.Current.Resources["RoundTextBox"];
+                                    new_textbox.Name = widget.WidgetName + id_module; new_textbox.Style = (Style)Application.Current.Resources["RoundTextBox"];
                                     //new_textbox.Padding = new Thickness(0);
                                     new_textbox.Width = 150; new_textbox.Height = 25;
                                     new_textbox.PlaceholderText = widget.PlaceHolderText;
