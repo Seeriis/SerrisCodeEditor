@@ -58,6 +58,28 @@ namespace SerrisCodeEditor
                 catch { }
             });
 
+            Messenger.Default.Register<TempContentNotification>(this, async (notification) =>
+            {
+                try
+                {
+                    switch(notification.type)
+                    {
+                        case TempContentType.currentIDs when !notification.answerNotification:
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentIDs, content = new TempContent().CurrentIDs });
+                            break;
+
+                        case TempContentType.currentDevice when !notification.answerNotification:
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentDevice, content = new TempContent().CurrentDevice });
+                            break;
+
+                        case TempContentType.currentTheme when !notification.answerNotification:
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentTheme, content = new TempContent().CurrentTheme });
+                            break;
+                    }
+                }
+                catch { }
+            });
+
             // Ne répétez pas l'initialisation de l'application lorsque la fenêtre comporte déjà du contenu,
             // assurez-vous juste que la fenêtre est active
             if (rootFrame == null)

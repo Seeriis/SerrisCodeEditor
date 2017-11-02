@@ -25,6 +25,7 @@ namespace SCEELibs
         int _currentID = -1;
         public int currentID { get { return _currentID; } } 
 
+
         /* ===========
          * = MODULES =
          * ===========
@@ -39,6 +40,14 @@ namespace SCEELibs
         public Theme theme { get { return _theme; } }
 
 
+        /* ========
+         * = TABS =
+         * ========
+         */
+        Tabs.Manager _tabsManager = new Tabs.Manager();
+        public Tabs.Manager tabsManager { get => _tabsManager; }
+
+
         /* ==========
          * = EDITOR =
          * ==========
@@ -51,5 +60,8 @@ namespace SCEELibs
 
         WidgetManager _widgetManager;
         public WidgetManager widgetManager { get => _widgetManager; }
+
+        EditorInjection _editorInjection = new EditorInjection();
+        public EditorInjection editorInjection { get => _editorInjection; }
     }
 }

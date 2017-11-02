@@ -115,10 +115,76 @@ namespace SerrisTabsServer.Manager
 
         }
 
+        public List<int> GetTabsID(int id_list)
+        {
+
+            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+                    var list_ids = new List<int>();
+
+                    if (list != null)
+                    {
+                        if (list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
+                        {
+                            foreach (InfosTab tab in list.Where(m => m.ID == id_list).FirstOrDefault().tabs)
+                            {
+                                if (!tab.TabInvisibleByDefault)
+                                {
+                                    list_ids.Add(tab.ID);
+                                }
+                            }
+                        }
+
+                        return list_ids;
+                    }
+                    else
+                    {
+                        return list_ids;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+        }
+
         public async Task<InfosTab> GetTabViaIDAsync(TabID id)
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+
+                    if (list != null)
+                    {
+                        if (list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs != null)
+                        {
+                            return list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
+                        }
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        public InfosTab GetTabViaID(TabID id)
+        {
+
+            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try

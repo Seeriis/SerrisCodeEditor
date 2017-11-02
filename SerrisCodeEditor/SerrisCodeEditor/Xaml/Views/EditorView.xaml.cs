@@ -89,6 +89,20 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
                 catch { }
             });
+
+            Messenger.Default.Register<SCEENotification>(this, (notification_scee) =>
+            {
+                try
+                {
+                    switch(notification_scee.type)
+                    {
+                        case SCEENotifType.Injection:
+                            ContentViewer.SendAndExecuteJavaScript((string)notification_scee.content);
+                            break;
+                    }
+                }
+                catch { }
+            });
         }
 
         private void DeployUIDetector_PointerEntered(object sender, PointerRoutedEventArgs e)

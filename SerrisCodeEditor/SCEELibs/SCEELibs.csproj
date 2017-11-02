@@ -113,10 +113,13 @@
     </Compile>
     <Compile Include="Editor\ConsoleManager.cs" />
     <Compile Include="Editor\CurrentDevice.cs" />
+    <Compile Include="Editor\EditorInjection.cs" />
     <Compile Include="Editor\Notifications\ConsoleNotification.cs" />
     <Compile Include="Editor\Notifications\EditorViewNotification.cs" />
     <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
+    <Compile Include="Editor\Notifications\SCEENotification.cs" />
     <Compile Include="Editor\Notifications\TabSelectedNotification.cs" />
+    <Compile Include="Editor\Notifications\TempContentNotification.cs" />
     <Compile Include="Editor\Notifications\ToolbarNotification.cs" />
     <Compile Include="Editor\SheetManager.cs" />
     <Compile Include="Editor\Components\Widget.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="Modules\Type\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SCEELibs.cs" />
+    <Compile Include="Tabs\Items\Tab.cs" />
+    <Compile Include="Tabs\Items\TabIDs.cs" />
+    <Compile Include="Tabs\Manager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SerrisCodeEditorEngine\SerrisCodeEditorEngine.csproj">
@@ -141,9 +147,7 @@
       <Name>SerrisTabsServer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tabs\Manager\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Editor\Components\ModuleHTMLView.xaml">
       <SubType>Designer</SubType>
