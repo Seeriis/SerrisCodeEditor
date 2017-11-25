@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "save",
+    "FunctionName": "save",
+    "IconButton": "",
+    "PlaceHolderText": null,
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  },
+  {
+    "Type": 0,
+    "WidgetName": "saveas",
+    "FunctionName": "saveas",
+    "IconButton": "",
+    "PlaceHolderText": null,
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  }
+]

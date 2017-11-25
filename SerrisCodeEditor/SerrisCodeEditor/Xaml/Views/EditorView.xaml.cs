@@ -90,7 +90,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 catch { }
             });
 
-            Messenger.Default.Register<SCEENotification>(this, (notification_scee) =>
+            Messenger.Default.Register<SCEENotification>(this, async (notification_scee) =>
             {
                 try
                 {
@@ -98,6 +98,12 @@ namespace SerrisCodeEditor.Xaml.Views
                     {
                         case SCEENotifType.Injection:
                             ContentViewer.SendAndExecuteJavaScript((string)notification_scee.content);
+                            break;
+
+                        case SCEENotifType.SaveCurrentTab when !notification_scee.answerNotification:
+                            string content = await ContentViewer.GetCode();
+                            await Tabs_manager_writer.PushTabContentViaIDAsync(temp_variables.CurrentIDs, content, false);
+                            Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = true });
                             break;
                     }
                 }
@@ -187,7 +193,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
             }
 
-            Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.Y);
+            //Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.Y);
         }
 
         private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -207,6 +213,11 @@ namespace SerrisCodeEditor.Xaml.Views
                     SheetViewSplit.IsPaneOpen = false;
                 }
             }
+        }
+
+        private void ContentViewer_EditorLoaded(object sender, EventArgs e)
+        {
+            //new SCEELibs.SCEELibs().consoleManager.sendConsoleErrorNotification("jpp");
         }
 
         //For manage tabs content

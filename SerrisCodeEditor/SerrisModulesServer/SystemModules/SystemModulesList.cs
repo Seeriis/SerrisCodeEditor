@@ -66,6 +66,46 @@ namespace SerrisModulesServer.SystemModules
                 {
                     "libs/test.js"
                 }
+            },
+            new InfosModule
+            {
+                ID = 3,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Undo'n Redo module",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Module for undo and redo in the editor",
+                IsPinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
+            },
+            new InfosModule
+            {
+                ID = 4,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Save module",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Module for save tabs in the editor",
+                IsPinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
             }
         };
     }

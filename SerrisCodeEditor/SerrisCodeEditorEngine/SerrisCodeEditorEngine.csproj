@@ -188,6 +188,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SCEELibs\SCEELibs.csproj">
+      <Project>{c850053a-719d-4a4f-a4c0-fe6efe2f0755}</Project>
+      <Name>SCEELibs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

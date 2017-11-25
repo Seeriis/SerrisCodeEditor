@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 
 namespace SCEELibs.Editor
 {
+    [AllowForWeb]
     public sealed class ConsoleManager
     {
         public void sendConsoleInformationNotification(string content)

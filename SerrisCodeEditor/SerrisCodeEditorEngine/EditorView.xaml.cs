@@ -205,6 +205,11 @@ namespace SerrisCodeEditorEngine
             }
         }
 
+        private void Editor_view_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            editor_view.AddWebAllowedObject("sceelibs", new SCEELibs.SCEELibs());
+        }
+
         private void editor_view_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e) { InitializeEditor(); }
 
 
@@ -472,6 +477,7 @@ namespace SerrisCodeEditorEngine
             editor_view = new WebView(WebViewExecutionMode.SeparateThread);
             editor_view.NavigationFailed += editor_view_NavigationFailed;
             editor_view.ScriptNotify += editor_view_ScriptNotify;
+            editor_view.NavigationStarting += Editor_view_NavigationStarting;
 
             editor_view.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Visible);
 

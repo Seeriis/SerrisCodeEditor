@@ -113,7 +113,7 @@
     </Compile>
     <Compile Include="Editor\ConsoleManager.cs" />
     <Compile Include="Editor\CurrentDevice.cs" />
-    <Compile Include="Editor\EditorInjection.cs" />
+    <Compile Include="Editor\EditorEngine.cs" />
     <Compile Include="Editor\Notifications\ConsoleNotification.cs" />
     <Compile Include="Editor\Notifications\EditorViewNotification.cs" />
     <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
@@ -134,10 +134,6 @@
     <Compile Include="Tabs\Manager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SerrisCodeEditorEngine\SerrisCodeEditorEngine.csproj">
-      <Project>{2e194bb9-5ef0-41d8-a994-a9d258772637}</Project>
-      <Name>SerrisCodeEditorEngine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SerrisModulesServer\SerrisModulesServer.csproj">
       <Project>{214e3692-f44a-4d67-a34e-6492f0850f19}</Project>
       <Name>SerrisModulesServer</Name>

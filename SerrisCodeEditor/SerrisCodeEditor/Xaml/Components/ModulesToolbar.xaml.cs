@@ -28,14 +28,19 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void ToolbarContent_Loaded(object sender, RoutedEventArgs e)
         {
-            List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
-            foreach (InfosModule module in sms_initialize)
+            //List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
+            foreach(int id in await new ModulesPinned().GetModulesPinned())
+            {
+                AddModule(id);
+            }
+
+            /*foreach (InfosModule module in sms_initialize)
             {
                 if (module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
                     AddModule(module.ID);
                 }
-            }
+            }*/
 
         }
 
@@ -64,6 +69,7 @@ namespace SerrisCodeEditor.Xaml.Components
                     {
                         case TypeUpdateModule.ModuleDeleted:
                             RemoveModule(notification.ID);
+                            new ModulesPinned().RemoveModule(notification.ID);
                             break;
 
                         case TypeUpdateModule.NewModule:
@@ -71,6 +77,24 @@ namespace SerrisCodeEditor.Xaml.Components
                             break;
 
                         case TypeUpdateModule.UpdateModule:
+                            break;
+                    }
+                }
+                catch { }
+            });
+
+            Messenger.Default.Register<ModulesPinnedNotification>(this, (notification) => 
+            {
+                try
+                {
+                    switch(notification.Modification)
+                    {
+                        case ModulesPinedModification.Added:
+                            AddModule(notification.ID);
+                            break;
+
+                        case ModulesPinedModification.Removed:
+                            RemoveModule(notification.ID);
                             break;
                     }
                 }

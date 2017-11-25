@@ -44,11 +44,6 @@ namespace SCEELibs.Tabs.Items
          * =============
          */
 
-        public void saveContentToTabIfIsCurrentTab()
-        {
-
-        }
-
         public async void saveContentToFile()
         {
             await new StorageRouter(new TabsAccessManager().GetTabViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }), id.listID).WriteFile();

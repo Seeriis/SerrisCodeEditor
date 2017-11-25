@@ -28,7 +28,7 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button x:Name="ModuleOptions" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#CCFFFFFF" BorderBrush="#CCFFFFFF" Click="ModuleOptions_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
-                    <Button x:Name="ModulePin" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#CCFFFFFF" BorderBrush="#CCFFFFFF" Click="ModuleOptions_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
+                    <Button x:Name="ModulePin" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#CCFFFFFF" BorderBrush="#CCFFFFFF" Click="ModulePin_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
                     <Button x:Name="ModuleDelete" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF343434" Visibility="Visible" Grid.Column="2" Background="#CCFFFFFF" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
                 </StackPanel>
             </Grid>

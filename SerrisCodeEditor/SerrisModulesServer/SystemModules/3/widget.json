@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "undo",
+    "FunctionName": "undo",
+    "IconButton": "",
+    "PlaceHolderText": null,
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  },
+  {
+    "Type": 0,
+    "WidgetName": "redo",
+    "FunctionName": "redo",
+    "IconButton": "",
+    "PlaceHolderText": null,
+    "WithFlyout": false,
+    "PathFlyoutPage": null
+  }
+]

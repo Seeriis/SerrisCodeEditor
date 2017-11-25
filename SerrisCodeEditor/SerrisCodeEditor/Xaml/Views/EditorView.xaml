@@ -17,7 +17,7 @@
         
         <!-- FIRST LAYER -->
         <Grid x:Name="ContentViewerGrid" Margin="65,0,0,0" PointerEntered="ContentViewerGrid_PointerEntered">
-            <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands"/>
+            <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands" EditorLoaded="ContentViewer_EditorLoaded"/>
         </Grid>
     
         <!-- SECOND LAYER -->
@@ -28,7 +28,7 @@
             </Grid.RowDefinitions>
             
             <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
-                <Grid x:Name="DeployUIDetector" Height="65" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
+                <Grid x:Name="DeployUIDetector" Height="73" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
                     <TextBlock Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
 
@@ -63,18 +63,18 @@
         </Grid>
         
         <!-- THIRD LAYER -->
-        <Grid x:Name="PrincipalUI" VerticalAlignment="Top" MinHeight="65" Visibility="Visible">
+        <Grid x:Name="PrincipalUI" VerticalAlignment="Top" MinHeight="73" Visibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.RowSpan="2" Height="65" VerticalAlignment="Top">
+            <Rectangle Grid.RowSpan="2" Height="73" VerticalAlignment="Top">
                 <Rectangle.Fill>
                     <ImageBrush x:Name="BackgroundPrinciapalUI" Stretch="UniformToFill"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Height="65" VerticalAlignment="Top" Fill="Gray"/>
+            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Height="73" VerticalAlignment="Top" Fill="Gray"/>
 
             <!-- Toolbar + Grid windows focus-->
             <Grid Grid.Row="0" x:Name="FirstBar">
@@ -83,8 +83,8 @@
                     <ColumnDefinition x:Name="FocusTitlebarWidth" Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="32"/>
-                <Grid x:Name="focus_titlebar" Grid.Column="1" Height="32" Background="Transparent"/>
+                <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40"/>
+                <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent"/>
             </Grid>
 
             <!-- Console + others buttons -->

@@ -1,7 +1,9 @@
-﻿using SerrisModulesServer.Items;
+﻿using SerrisCodeEditor.Functions;
+using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type;
 using SerrisModulesServer.Type.Addon;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -17,6 +19,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
     public sealed partial class ModulesManager : Page
     {
+        ModulesPinned Pinned = new ModulesPinned();
+
         public ModulesManager()
         {
             InitializeComponent();
@@ -100,6 +104,18 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ModuleOptions_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private async void ModulePin_Click(object sender, RoutedEventArgs e)
+        {
+            ModuleInfosShow module = (ModuleInfosShow)(sender as Button).DataContext;
+
+            List<int> list = await Pinned.GetModulesPinned();
+
+            if (list.Contains(module.Module.ID))
+                Pinned.RemoveModule(module.Module.ID);
+            else
+                Pinned.AddNewModule(module.Module.ID);
 
         }
     }

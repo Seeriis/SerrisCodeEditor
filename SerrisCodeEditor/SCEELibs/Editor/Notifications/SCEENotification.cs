@@ -9,12 +9,15 @@ namespace SCEELibs.Editor.Notifications
 
     public enum SCEENotifType
     {
-        Injection
+        Injection,
+        SaveCurrentTab
     }
 
     public sealed class SCEENotification
     {
         public SCEENotifType type { get; set; }
         public object content { get; set; }
+        public bool answerNotification { get; set; }
+
     }
 }

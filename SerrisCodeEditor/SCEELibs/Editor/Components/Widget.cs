@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using SCEELibs.Editor.Notifications;
 using SerrisModulesServer.Type.Addon;
+using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,6 +9,7 @@ using Windows.UI.Xaml.Media;
 
 namespace SCEELibs.Editor.Components
 {
+    [AllowForWeb]
     public sealed class Widget
     {
         private StackPanel widget_content = new StackPanel();

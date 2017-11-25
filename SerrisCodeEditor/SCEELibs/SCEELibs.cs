@@ -22,6 +22,8 @@ namespace SCEELibs
             _widgetManager = new WidgetManager(id);
         }
 
+        public SCEELibs() { }
+
         int _currentID = -1;
         public int currentID { get { return _currentID; } } 
 
@@ -61,7 +63,23 @@ namespace SCEELibs
         WidgetManager _widgetManager;
         public WidgetManager widgetManager { get => _widgetManager; }
 
-        EditorInjection _editorInjection = new EditorInjection();
-        public EditorInjection editorInjection { get => _editorInjection; }
+        Editor.EditorEngine _editorEngine = new Editor.EditorEngine();
+        public EditorEngine editorEngine { get => _editorEngine; }
+
+
+
+        /* ===============================================
+         * = FUNCTIONS FOR WEBVIEW (SCEELIBS WITHOUT ID) =
+         * ===============================================
+         */
+        public WidgetManager getWidgetManagerViaID(int id)
+        {
+            return new WidgetManager(id);
+        }
+
+        public SheetManager getSheetManagerViaID(int id)
+        {
+            return new SheetManager(id);
+        }
     }
 }
