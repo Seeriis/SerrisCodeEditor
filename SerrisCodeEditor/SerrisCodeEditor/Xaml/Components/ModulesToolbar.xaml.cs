@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
 using SerrisCodeEditor.Xaml.Views;
@@ -61,44 +62,54 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<SMSNotification>(this, (notification) =>
+            Messenger.Default.Register<SMSNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() => 
                 {
-                    switch (notification.Type)
+                    try
                     {
-                        case TypeUpdateModule.ModuleDeleted:
-                            RemoveModule(notification.ID);
-                            new ModulesPinned().RemoveModule(notification.ID);
-                            break;
+                        switch (notification.Type)
+                        {
+                            case TypeUpdateModule.ModuleDeleted:
+                                RemoveModule(notification.ID);
+                                new ModulesPinned().RemoveModule(notification.ID);
+                                break;
 
-                        case TypeUpdateModule.NewModule:
-                            AddModule(notification.ID);
-                            break;
+                            case TypeUpdateModule.NewModule:
+                                AddModule(notification.ID);
+                                break;
 
-                        case TypeUpdateModule.UpdateModule:
-                            break;
+                            case TypeUpdateModule.UpdateModule:
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+
+                });
+
             });
 
-            Messenger.Default.Register<ModulesPinnedNotification>(this, (notification) => 
+            Messenger.Default.Register<ModulesPinnedNotification>(this, async (notification) => 
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    switch(notification.Modification)
+                    try
                     {
-                        case ModulesPinedModification.Added:
-                            AddModule(notification.ID);
-                            break;
+                        switch (notification.Modification)
+                        {
+                            case ModulesPinedModification.Added:
+                                AddModule(notification.ID);
+                                break;
 
-                        case ModulesPinedModification.Removed:
-                            RemoveModule(notification.ID);
-                            break;
+                            case ModulesPinedModification.Removed:
+                                RemoveModule(notification.ID);
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+
+                });
+
             });
 
             Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>
@@ -110,34 +121,40 @@ namespace SerrisCodeEditor.Xaml.Components
                 catch { }
             });
 
-            Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
+            Messenger.Default.Register<ToolbarNotification>(this, async (notification_toolbar) =>
             {
-                try
+
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    StackPanel widget = (StackPanel)ToolbarContent.FindName("" + notification_toolbar.id);
-
-                    switch(notification_toolbar.propertie)
+                    try
                     {
-                        case ToolbarProperties.ButtonEnabled:
-                            ((Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).IsEnabled = (bool)notification_toolbar.content;
-                            break;
+                        StackPanel widget = (StackPanel)ToolbarContent.FindName("" + notification_toolbar.id);
 
-                        case ToolbarProperties.IsButtonEnabled when !notification_toolbar.answerNotification:
-                            Button element = (Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
-                            Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = true, content = element.IsEnabled });
-                            break;
+                        switch (notification_toolbar.propertie)
+                        {
+                            case ToolbarProperties.ButtonEnabled:
+                                ((Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).IsEnabled = (bool)notification_toolbar.content;
+                                break;
 
-                        case ToolbarProperties.SetTextBoxContent:
-                            ((TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).Text = (string)notification_toolbar.content;
-                            break;
+                            case ToolbarProperties.IsButtonEnabled when !notification_toolbar.answerNotification:
+                                Button element = (Button)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
+                                Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = true, content = element.IsEnabled });
+                                break;
 
-                        case ToolbarProperties.GetTextBoxContent when !notification_toolbar.answerNotification:
-                            TextBox elementb = (TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
-                            Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
-                            break;
+                            case ToolbarProperties.SetTextBoxContent:
+                                ((TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id)).Text = (string)notification_toolbar.content;
+                                break;
+
+                            case ToolbarProperties.GetTextBoxContent when !notification_toolbar.answerNotification:
+                                TextBox elementb = (TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
+                                Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+
+                });
+
             });
         }
 

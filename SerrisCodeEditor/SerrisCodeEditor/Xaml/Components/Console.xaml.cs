@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
 using SerrisModulesServer.Type.Addon;
@@ -59,49 +60,53 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<ConsoleNotification>(this, (notification) =>
+            Messenger.Default.Register<ConsoleNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() => 
                 {
-                    SetLastNotificationInfos(notification);
-
-                    switch (notification.typeNotification)
+                    try
                     {
-                        case ConsoleTypeNotification.Error:
-                            errors_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                        SetLastNotificationInfos(notification);
 
-                            if (ShowErrors)
-                                CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
-                            break;
+                        switch (notification.typeNotification)
+                        {
+                            case ConsoleTypeNotification.Error:
+                                errors_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                        case ConsoleTypeNotification.Information:
-                            informations_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                if (ShowErrors)
+                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                break;
 
-                            if (ShowInformations)
-                                CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                            case ConsoleTypeNotification.Information:
+                                informations_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                            break;
+                                if (ShowInformations)
+                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                        case ConsoleTypeNotification.Result:
-                            results_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                break;
 
-                            if (ShowResults)
-                                CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                            case ConsoleTypeNotification.Result:
+                                results_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                            break;
+                                if (ShowResults)
+                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                        case ConsoleTypeNotification.Warning:
-                            warnings_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                break;
 
-                            if (ShowWarnings)
-                                CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                            case ConsoleTypeNotification.Warning:
+                                warnings_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
-                            break;
+                                if (ShowWarnings)
+                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+
+                                break;
+                        }
+
+                        UpdateNotifsNumber();
                     }
+                    catch { }
 
-                    UpdateNotifsNumber();
-                }
-                catch { }
+                });
             });
 
             Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>

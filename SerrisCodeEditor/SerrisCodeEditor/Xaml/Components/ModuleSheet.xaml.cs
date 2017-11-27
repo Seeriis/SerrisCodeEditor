@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using System;
 using System.Collections.Generic;
@@ -89,41 +90,46 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<ModuleSheetNotification>(this, (notification) =>
+            Messenger.Default.Register<ModuleSheetNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() => 
                 {
-                    switch (notification.type)
+                    try
                     {
+                        switch (notification.type)
+                        {
 
-                        case ModuleSheetNotificationType.SelectSheet:
-                            if(notification.id == current_sheet.id)
-                            {
-                                isSelected = true;
-                                GridButton.BorderThickness = new Thickness(1);
-                            }
-                            else
-                            {
-                                isSelected = false;
-                                GridButton.BorderThickness = new Thickness(0);
-                            }
-                            break;
+                            case ModuleSheetNotificationType.SelectSheet:
+                                if (notification.id == current_sheet.id)
+                                {
+                                    isSelected = true;
+                                    GridButton.BorderThickness = new Thickness(1);
+                                }
+                                else
+                                {
+                                    isSelected = false;
+                                    GridButton.BorderThickness = new Thickness(0);
+                                }
+                                break;
 
-                        case ModuleSheetNotificationType.UpdatedSheet:
-                            if (notification.id == current_sheet.id)
-                                current_sheet = notification;
-                            break;
+                            case ModuleSheetNotificationType.UpdatedSheet:
+                                if (notification.id == current_sheet.id)
+                                    current_sheet = notification;
+                                break;
 
-                        case ModuleSheetNotificationType.TriggerSheet:
-                            if (notification.id == current_sheet.id)
-                            {
-                                current_sheet.type = ModuleSheetNotificationType.SelectSheet;
-                                Messenger.Default.Send(current_sheet);
-                            }
-                            break;
+                            case ModuleSheetNotificationType.TriggerSheet:
+                                if (notification.id == current_sheet.id)
+                                {
+                                    current_sheet.type = ModuleSheetNotificationType.SelectSheet;
+                                    Messenger.Default.Send(current_sheet);
+                                }
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+
+                });
+
             });
 
             if (!isInitialized)

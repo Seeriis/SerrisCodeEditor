@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
@@ -69,42 +70,51 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<STSNotification>(this, (nm) =>
+            Messenger.Default.Register<STSNotification>(this, async (nm) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-
-                    if (nm.ID.ID_Tab == current_tab.ID && nm.ID.ID_TabsList == current_list)
+                    try
                     {
-                        switch (nm.Type)
-                        {
-                            case TypeUpdateTab.TabUpdated:
-                                UpdateTabInformations();
-                                break;
-                        }
-                    }
 
-                }
-                catch { }
+                        if (nm.ID.ID_Tab == current_tab.ID && nm.ID.ID_TabsList == current_list)
+                        {
+                            switch (nm.Type)
+                            {
+                                case TypeUpdateTab.TabUpdated:
+                                    UpdateTabInformations();
+                                    break;
+                            }
+                        }
+
+                    }
+                    catch { }
+                });
+
             });
 
             Messenger.Default.Register<TabSelectedNotification>(this, async (nm) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
-
-                    if (nm.tabID == current_tab.ID && nm.tabsListID == current_list)
+                    try
                     {
-                        switch (nm.contactType)
-                        {
-                            case ContactTypeSCEE.GetCodeForTab:
-                                await write_manager.PushTabContentViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, current_tab.TabContentTemporary, true);
-                                break;
-                        }
-                    }
 
-                }
-                catch { }
+                        if (nm.tabID == current_tab.ID && nm.tabsListID == current_list)
+                        {
+                            switch (nm.contactType)
+                            {
+                                case ContactTypeSCEE.GetCodeForTab:
+                                    await write_manager.PushTabContentViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, current_tab.TabContentTemporary, true);
+                                    break;
+                            }
+                        }
+
+                    }
+                    catch { }
+
+                });
+
             });
         }
 

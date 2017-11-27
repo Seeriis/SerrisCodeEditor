@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
@@ -95,59 +96,64 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             Messenger.Default.Register<STSNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
-                    if (CurrentSelectedIDs.ID_TabsList == notification.ID.ID_TabsList)
+                    try
                     {
-
-                        switch (notification.Type)
+                        if (CurrentSelectedIDs.ID_TabsList == notification.ID.ID_TabsList)
                         {
-                            case TypeUpdateTab.NewTab:
-                                Tabs.Items.Add(notification.ID);
-                                break;
 
-                            case TypeUpdateTab.TabDeleted:
-                                int i = 0;
-                                foreach(TabID item in Tabs.Items)
-                                {
-                                    if(item.ID_Tab == notification.ID.ID_Tab)
+                            switch (notification.Type)
+                            {
+                                case TypeUpdateTab.NewTab:
+                                    Tabs.Items.Add(notification.ID);
+                                    break;
+
+                                case TypeUpdateTab.TabDeleted:
+                                    int i = 0;
+                                    foreach (TabID item in Tabs.Items)
                                     {
-                                        Tabs.Items.RemoveAt(i);
-                                        break;
+                                        if (item.ID_Tab == notification.ID.ID_Tab)
+                                        {
+                                            Tabs.Items.RemoveAt(i);
+                                            break;
+                                        }
+
+                                        i++;
                                     }
+                                    await write_manager.DeleteTabAsync(notification.ID);
+                                    break;
 
-                                    i++;
-                                }
-                                await write_manager.DeleteTabAsync(notification.ID);
-                                break;
+                                case TypeUpdateTab.NewList:
+                                    var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
+                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                    Lists.SelectedIndex = Lists.Items.Count - 1;
+                                    break;
 
-                            case TypeUpdateTab.NewList:
-                                var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
-                                Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
-                                Lists.SelectedIndex = Lists.Items.Count - 1;
-                                break;
+                                case TypeUpdateTab.ListDeleted:
+                                    Lists.Items.RemoveAt(Lists.SelectedIndex);
+                                    break;
+                            }
 
-                            case TypeUpdateTab.ListDeleted:
-                                Lists.Items.RemoveAt(Lists.SelectedIndex);
-                                break;
                         }
+                        else
+                            switch (notification.Type)
+                            {
+                                case TypeUpdateTab.NewList:
+                                    var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
+                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                    Lists.SelectedIndex = Lists.Items.Count - 1;
+                                    break;
 
+                                case TypeUpdateTab.ListDeleted:
+                                    Lists.Items.RemoveAt(Lists.SelectedIndex);
+                                    break;
+                            }
                     }
-                    else
-                        switch (notification.Type)
-                        {
-                            case TypeUpdateTab.NewList:
-                                var list = await access_manager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
-                                Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
-                                Lists.SelectedIndex = Lists.Items.Count - 1;
-                                break;
+                    catch { }
 
-                            case TypeUpdateTab.ListDeleted:
-                                Lists.Items.RemoveAt(Lists.SelectedIndex);
-                                break;
-                        }
-                }
-                catch { }
+                });
+
             });
 
         }

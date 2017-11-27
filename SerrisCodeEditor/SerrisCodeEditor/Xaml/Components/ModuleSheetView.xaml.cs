@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using System;
 using System.Collections.Generic;
@@ -29,16 +30,20 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<ModuleSheetNotification>(this, (notification) =>
+            Messenger.Default.Register<ModuleSheetNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    if (notification.type == ModuleSheetNotificationType.SelectSheet)
+                    try
                     {
-                        FrameView.Content = notification.sheetContent;
+                        if (notification.type == ModuleSheetNotificationType.SelectSheet)
+                        {
+                            FrameView.Content = notification.sheetContent;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+                });
+
             });
 
         }

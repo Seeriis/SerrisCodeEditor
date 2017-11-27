@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using System;
 using System.Collections.Generic;
@@ -46,28 +47,32 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<ModuleSheetNotification>(this, (notification) =>
+            Messenger.Default.Register<ModuleSheetNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    switch(notification.type)
+                    try
                     {
-                        case ModuleSheetNotificationType.NewSheet:
-                            AddModule(notification);
-                            break;
+                        switch (notification.type)
+                        {
+                            case ModuleSheetNotificationType.NewSheet:
+                                AddModule(notification);
+                                break;
 
-                        case ModuleSheetNotificationType.RemoveSheet:
-                            RemoveModule(notification.id);
-                            break;
+                            case ModuleSheetNotificationType.RemoveSheet:
+                                RemoveModule(notification.id);
+                                break;
 
-                        case ModuleSheetNotificationType.InitalizedSheet:
-                            if (notification.id == sheet_tabslist)
-                                Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.SelectSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true });
+                            case ModuleSheetNotificationType.InitalizedSheet:
+                                if (notification.id == sheet_tabslist)
+                                    Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.SelectSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true });
 
-                            break;
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+                });
+
             });
 
         }
