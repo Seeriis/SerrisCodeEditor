@@ -154,11 +154,31 @@ namespace SerrisCodeEditor.Xaml.Components
 
                             case ToolbarProperties.OpenFlyout:
                                 UIElement UIElement = (UIElement)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
-                                Flyout FlyoutElement = new Flyout();
-                                (FlyoutElement.Content as Frame).Navigate(typeof(ModuleHTMLView));
+                                Flyout FlyoutElement;
 
-                                UIElement.ContextFlyout = FlyoutElement;
-                                UIElement.ContextFlyout.ShowAt(UIElement as FrameworkElement);
+                                if (UIElement.ContextFlyout == null)
+                                {
+                                    FlyoutElement = new Flyout();
+                                    ModuleHTMLView HTMLView = new ModuleHTMLView();
+                                    HTMLView.Height = 250; HTMLView.Width = 250;
+
+                                    HTMLView.LoadPage((string)notification_toolbar.content, notification_toolbar.id);
+                                    FlyoutElement.Content = HTMLView; FlyoutElement.FlyoutPresenterStyle = (Style)Application.Current.Resources["FlyoutBorderless"];
+
+                                    UIElement.ContextFlyout = FlyoutElement;
+                                    UIElement.ContextFlyout.ShowAt(UIElement as FrameworkElement);
+                                }
+                                else
+                                {
+                                    if((string)notification_toolbar.content != "")
+                                    {
+                                        FlyoutElement = (UIElement.ContextFlyout as Flyout);
+                                        (FlyoutElement.Content as ModuleHTMLView).LoadPage((string)notification_toolbar.content, notification_toolbar.id);
+                                    }
+
+                                    UIElement.ContextFlyout.ShowAt(UIElement as FrameworkElement);
+                                }
+
                                 break;
                         }
                     }

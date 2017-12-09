@@ -4,17 +4,13 @@
     "WidgetName": "osef",
     "FunctionName": "main",
     "IconButton": "",
-    "PlaceHolderText": null,
-    "WithFlyout": false,
-    "PathFlyoutPage": null
+    "PlaceHolderText": null
   },
   {
     "Type": 1,
     "WidgetName": "osef_b",
     "FunctionName": "textBoxAction",
     "IconButton": null,
-    "PlaceHolderText": "Squalala !",
-    "WithFlyout": false,
-    "PathFlyoutPage": null
+    "PlaceHolderText": "Squalala !"
   }
 ]

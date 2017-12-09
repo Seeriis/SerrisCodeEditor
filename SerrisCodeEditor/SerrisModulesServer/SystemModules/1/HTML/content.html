@@ -6,16 +6,19 @@
 
     <p id="p1">Hello World!</p>
 
-    <script>
-        sceelibs.modulesManager;
-        var list = sceelibs.modulesManager.getAddonsAvailable(true);
-        sceelibs.editorEngine.injectJSAndReturnResult("editor.getValue()").then(function (result)
-        {
-            document.getElementById("p1").innerHTML = result;
-        });
-    </script>
-
     <p>The paragraph above was changed by a script.</p>
+    <iframe id="test_frame" src="http://www.google.fr"></iframe>
+
+    <script>
+            /*sceelibs.editorEngine.injectJSAndReturnResult("editor.getValue()").then(function (result)
+            {
+                document.getElementById("p1").innerHTML = result;
+            });*/
+            sceelibs.widgetManager.getTextBoxContent("osef_b").then(function (result) {
+                document.getElementById("p1").innerHTML = result;
+                document.getElementById("test_frame").setAttribute("src", "http://www.youtube.com/results?search_query=" + result);
+            });
+    </script>
 
 </body>
 </html>

@@ -42,9 +42,19 @@
 
 function textBoxAction()
 {
-    sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
-    sceelibs.consoleManager.sendConsoleInformationNotification(sceelibs.widgetManager.getTextBoxContent("osef_b"));
-    sceelibs.widgetManager.setTextBoxContent("osef_b", "Ok !");
-    sceelibs.widgetManager.openFlyout("osef_b", "HTML/content.html");
+    sceelibs.widgetManager.getTextBoxContent("osef_b").then(function (result) {
+        sceelibs.consoleManager.sendConsoleInformationNotification(result);
+        //sceelibs.widgetManager.setTextBoxContent("osef_b", "Ok !");
+    });
+
+    sceelibs.widgetManager.isButtonEnabled("osef").then(function (result) {
+        if (result)
+        {
+            sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
+            sceelibs.widgetManager.openFlyout("osef_b", "HTML/content.html");
+        }
+        else
+            sceelibs.widgetManager.openFlyout("osef_b", "");
+    });
 
 }

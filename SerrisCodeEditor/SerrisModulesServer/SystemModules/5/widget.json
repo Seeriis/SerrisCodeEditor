@@ -3,21 +3,18 @@
     "Type": 0,
     "WidgetName": "copy",
     "FunctionName": "copy",
-    "IconButton": "",
-    "WithFlyout": false
+    "IconButton": ""
   },
   {
     "Type": 0,
     "WidgetName": "paste",
     "FunctionName": "paste",
-    "IconButton": "",
-    "WithFlyout": false
+    "IconButton": ""
   },
   {
     "Type": 0,
     "WidgetName": "cut",
     "FunctionName": "cut",
-    "IconButton": "",
-    "WithFlyout": false
+    "IconButton": ""
   }
 ]

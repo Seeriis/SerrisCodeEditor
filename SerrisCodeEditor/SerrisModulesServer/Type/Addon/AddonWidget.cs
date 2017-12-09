@@ -23,9 +23,5 @@ namespace SerrisModulesServer.Type.Addon
 
         //TextBox
         public string PlaceHolderText { get; set; }
-
-        //Flyout
-        public bool WithFlyout { get; set; }
-        public string PathFlyoutPage { get; set; }
     }
 }
