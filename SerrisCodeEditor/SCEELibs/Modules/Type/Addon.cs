@@ -18,11 +18,10 @@ namespace SCEELibs.Modules.Type
     {
         public async void executeAddonViaID(int ID, AddonFunction typefunc)
         {
+
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
             () =>
             {
-                var f = new Flyout(); var ff = new Frame();
-
                 switch (typefunc)
                 {
                     case AddonFunction.main:
@@ -38,6 +37,13 @@ namespace SCEELibs.Modules.Type
                         break;
                 }
             });
+
+        }
+
+        public async void executeCustomFunctionViaID(int ID, string func_name)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, 
+                () => new AddonExecutor(ID, new SCEELibs(ID)).ExecutePersonalizedFunction(func_name));
         }
 
     }

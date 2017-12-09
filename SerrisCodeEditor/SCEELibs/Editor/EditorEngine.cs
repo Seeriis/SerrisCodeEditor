@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Metadata;
 
 namespace SCEELibs.Editor
@@ -31,6 +32,30 @@ namespace SCEELibs.Editor
             Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = false });
 
             //while (!notif_received) ;
+        }
+
+        public IAsyncOperation<string> injectJSAndReturnResult(string content)
+        {
+            return Task.Run<string>(() => 
+            {
+                bool notif_received = false; string result = "";
+
+                Messenger.Default.Register<SCEENotification>(this, (notification) =>
+                {
+                    if (notification.answerNotification && notification.type == SCEENotifType.InjectionAndReturn)
+                    {
+                        result = (string)notification.content;
+                        notif_received = true;
+                    }
+                });
+
+                Messenger.Default.Send(new SCEENotification { type = SCEENotifType.InjectionAndReturn, answerNotification = false, content = content });
+
+                while (!notif_received) ;
+
+                return result;
+
+            }).AsAsyncOperation();
         }
 
     }

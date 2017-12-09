@@ -16,6 +16,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -62,52 +64,68 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetMessenger()
         {
-            Messenger.Default.Register<TabSelectedNotification>(this, (notification) =>
+            Messenger.Default.Register<TabSelectedNotification>(this, async (notification) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    switch (notification.contactType)
+                    try
                     {
-                        case ContactTypeSCEE.SetCodeForEditor:
-                            Queue_Tabs.Add(notification);
-                            ManageQueueTabs();
-                            break;
+                        switch (notification.contactType)
+                        {
+                            case ContactTypeSCEE.SetCodeForEditor:
+                                Queue_Tabs.Add(notification);
+                                ManageQueueTabs();
+                                break;
 
-                        case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
-                            ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
-                            break;
+                            case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
+                                ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+                });
             });
 
-            Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>
+            Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    SetTheme();
-                }
-                catch { }
+                    try
+                    {
+                        SetTheme();
+                    }
+                    catch { }
+
+                });
+
             });
 
             Messenger.Default.Register<SCEENotification>(this, async (notification_scee) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
-                    switch(notification_scee.type)
+                    try
                     {
-                        case SCEENotifType.Injection:
-                            ContentViewer.SendAndExecuteJavaScript((string)notification_scee.content);
-                            break;
+                        switch (notification_scee.type)
+                        {
+                            case SCEENotifType.Injection:
+                                ContentViewer.SendAndExecuteJavaScript((string)notification_scee.content);
+                                break;
 
-                        case SCEENotifType.SaveCurrentTab when !notification_scee.answerNotification:
-                            string content = await ContentViewer.GetCode();
-                            await Tabs_manager_writer.PushTabContentViaIDAsync(temp_variables.CurrentIDs, content, false);
-                            Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = true });
-                            break;
+                            case SCEENotifType.SaveCurrentTab when !notification_scee.answerNotification:
+                                string content = await ContentViewer.GetCode();
+                                await Tabs_manager_writer.PushTabContentViaIDAsync(temp_variables.CurrentIDs, content, false);
+                                Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = true });
+                                break;
+
+                            case SCEENotifType.InjectionAndReturn when !notification_scee.answerNotification:
+                                Messenger.Default.Send(new SCEENotification { type = SCEENotifType.InjectionAndReturn, answerNotification = true, content = await ContentViewer.SendAndExecuteJavaScriptWithReturn((string)notification_scee.content) });
+                                break;
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+                });
+
             });
         }
 

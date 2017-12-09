@@ -9,7 +9,10 @@
     <script>
         sceelibs.modulesManager;
         var list = sceelibs.modulesManager.getAddonsAvailable(true);
-        document.getElementById("p1").innerHTML = "Il y a " + list.length + " addon(s) de dispo !";
+        sceelibs.editorEngine.injectJSAndReturnResult("editor.getValue()").then(function (result)
+        {
+            document.getElementById("p1").innerHTML = result;
+        });
     </script>
 
     <p>The paragraph above was changed by a script.</p>

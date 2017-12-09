@@ -112,7 +112,7 @@ namespace SerrisModulesServer.Type.Addon
         public async Task<StackPanel> GetAddonWidgetViaIDAsync(object sceelibs)
         {
             StorageFolder folder_module;
-            var widget_content = new StackPanel { Padding = new Thickness(5, 0, 5, 0), Orientation = Orientation.Horizontal, Name = "" + id_module };
+            var widget_content = new StackPanel { Padding = new Thickness(5, 0, 10, 0), Orientation = Orientation.Horizontal, Name = "" + id_module };
 
             if (system_module)
             {

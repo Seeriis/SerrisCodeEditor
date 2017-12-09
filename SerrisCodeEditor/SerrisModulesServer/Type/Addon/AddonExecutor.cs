@@ -187,7 +187,11 @@ namespace SerrisModulesServer.Type.Addon
                 Debug.WriteLine(ex.Message);
             }
 
-            host.Chakra.CallFunction(function_name);
+            try
+            {
+                host.Chakra.CallFunction(function_name);
+            }
+            catch { }
         }
 
     }

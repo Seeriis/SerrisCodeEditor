@@ -64,5 +64,12 @@ namespace SCEELibs.Editor
 
             return result;
         }
+
+        public void openFlyout(string element_name, string html_page)
+        => Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.OpenFlyout, content = html_page, answerNotification = false });
+
+        public void closeFlyout(string element_name)
+        => Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.CloseFlyout, content = null, answerNotification = false });
+
     }
 }

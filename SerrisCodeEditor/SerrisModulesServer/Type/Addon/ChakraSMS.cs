@@ -18,6 +18,7 @@ namespace SerrisModulesServer.Type.Addon
 
             Chakra.ProjectNamespace("System");
             Chakra.ProjectNamespace("Windows.UI.Xaml.Controls");
+            Chakra.ProjectNamespace("Windows.ApplicationModel.DataTransfer");
             Chakra.ProjectNamespace("Windows.UI.Popups");
             Chakra.ProjectNamespace("Windows.Foundation");
             Chakra.ProjectNamespace("SerrisModulesServer");

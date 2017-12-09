@@ -10,6 +10,7 @@ namespace SCEELibs.Editor.Notifications
     public enum SCEENotifType
     {
         Injection,
+        InjectionAndReturn,
         SaveCurrentTab
     }
 

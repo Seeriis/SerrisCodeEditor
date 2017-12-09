@@ -1,0 +1,23 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "copy",
+    "FunctionName": "copy",
+    "IconButton": "",
+    "WithFlyout": false
+  },
+  {
+    "Type": 0,
+    "WidgetName": "paste",
+    "FunctionName": "paste",
+    "IconButton": "",
+    "WithFlyout": false
+  },
+  {
+    "Type": 0,
+    "WidgetName": "cut",
+    "FunctionName": "cut",
+    "IconButton": "",
+    "WithFlyout": false
+  }
+]

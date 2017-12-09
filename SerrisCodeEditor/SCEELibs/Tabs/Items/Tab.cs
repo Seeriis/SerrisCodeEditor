@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Metadata;
 
 namespace SCEELibs.Tabs.Items
@@ -47,6 +48,11 @@ namespace SCEELibs.Tabs.Items
         public async void saveContentToFile()
         {
             await new StorageRouter(new TabsAccessManager().GetTabViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }), id.listID).WriteFile();
+        }
+
+        public IAsyncOperation<string> getContent()
+        {
+            return new TabsAccessManager().GetTabContentViaIDAsync(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }).AsAsyncOperation();
         }
     }
 }

@@ -2,15 +2,8 @@
 {
     try
     {
-        var Manager_b = new SCEELibs.Editor.ConsoleManager();
-
-        var p = 0, n = 5, u_result = 2;
-
-        for (var k = p; k <= n; k++)
-        {
-            u_result = u_result + (u_result + 2);
-        }
-        sceelibs.consoleManager.sendConsoleInformationNotification("Résultat: " + u_result);
+        //var Manager_b = new SCEELibs.Editor.ConsoleManager();
+        //sceelibs.consoleManager.sendConsoleInformationNotification("Résultat: " + u_result);
 
         //Manager = SerrisModulesServer.Items.Lol;
         //Test = Windows.UI.Popups.MessageDialog("test");
@@ -38,8 +31,8 @@
         console.log("U est supérieur ou égal à 5 à partir de " + m); //Affichage du résultat dans la console
         */
 
-        sceelibs.widgetManager.enableButton("osef", false);
-        sceelibs.consoleManager.sendConsoleInformationNotification("Le bouton 'osef' est " + sceelibs.widgetManager.isButtonEnabled("osef"));
+        //sceelibs.widgetManager.enableButton("osef", false);
+        //sceelibs.consoleManager.sendConsoleInformationNotification("Le bouton 'osef' est " + sceelibs.widgetManager.isButtonEnabled("osef"));
     }
     catch (e)
     {
@@ -52,5 +45,6 @@ function textBoxAction()
     sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
     sceelibs.consoleManager.sendConsoleInformationNotification(sceelibs.widgetManager.getTextBoxContent("osef_b"));
     sceelibs.widgetManager.setTextBoxContent("osef_b", "Ok !");
+    sceelibs.widgetManager.openFlyout("osef_b", "HTML/content.html");
 
 }

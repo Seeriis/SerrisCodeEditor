@@ -17,7 +17,8 @@ namespace SCEELibs.Editor.Notifications
         SetTextBoxContent,
         GetTextBoxContent,
 
-        FlyoutEnabled
+        OpenFlyout,
+        CloseFlyout
     }
 
     public sealed class ToolbarNotification

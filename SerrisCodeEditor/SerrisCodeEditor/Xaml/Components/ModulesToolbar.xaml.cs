@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
+using SCEELibs.Editor.Components;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
 using SerrisCodeEditor.Xaml.Views;
@@ -7,6 +8,7 @@ using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Addon;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -32,7 +34,7 @@ namespace SerrisCodeEditor.Xaml.Components
             //List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
             foreach(int id in await new ModulesPinned().GetModulesPinned())
             {
-                AddModule(id);
+                await AddModule(id);
             }
 
             /*foreach (InfosModule module in sms_initialize)
@@ -64,7 +66,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             Messenger.Default.Register<SMSNotification>(this, async (notification) =>
             {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() => 
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () => 
                 {
                     try
                     {
@@ -76,7 +78,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                 break;
 
                             case TypeUpdateModule.NewModule:
-                                AddModule(notification.ID);
+                                await AddModule(notification.ID);
                                 break;
 
                             case TypeUpdateModule.UpdateModule:
@@ -91,14 +93,14 @@ namespace SerrisCodeEditor.Xaml.Components
 
             Messenger.Default.Register<ModulesPinnedNotification>(this, async (notification) => 
             {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
                     try
                     {
                         switch (notification.Modification)
                         {
                             case ModulesPinedModification.Added:
-                                AddModule(notification.ID);
+                                await AddModule(notification.ID);
                                 break;
 
                             case ModulesPinedModification.Removed:
@@ -149,6 +151,15 @@ namespace SerrisCodeEditor.Xaml.Components
                                 TextBox elementb = (TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
                                 Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
                                 break;
+
+                            case ToolbarProperties.OpenFlyout:
+                                UIElement UIElement = (UIElement)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
+                                Flyout FlyoutElement = new Flyout();
+                                (FlyoutElement.Content as Frame).Navigate(typeof(ModuleHTMLView));
+
+                                UIElement.ContextFlyout = FlyoutElement;
+                                UIElement.ContextFlyout.ShowAt(UIElement as FrameworkElement);
+                                break;
                         }
                     }
                     catch { }
@@ -158,7 +169,7 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
-        private async void AddModule(int ID)
+        private async Task AddModule(int ID)
         {
             /*var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
 

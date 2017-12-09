@@ -106,6 +106,26 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 { }
+            },
+            new InfosModule
+            {
+                ID = 5,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Clipboard module",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Module for copy, cut or paste content in the editor",
+                IsPinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
             }
         };
     }

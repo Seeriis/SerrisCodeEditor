@@ -6,6 +6,11 @@
     xmlns:local="using:SerrisCodeEditor.Xaml.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    
     mc:Ignorable="d"
     
     xmlns:engine="using:SerrisCodeEditorEngine"
@@ -28,7 +33,7 @@
             </Grid.RowDefinitions>
             
             <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
-                <Grid x:Name="DeployUIDetector" Height="73" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
+                <Grid x:Name="DeployUIDetector" Height="75" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
                     <TextBlock Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
 
@@ -63,18 +68,23 @@
         </Grid>
         
         <!-- THIRD LAYER -->
-        <Grid x:Name="PrincipalUI" VerticalAlignment="Top" MinHeight="73" Visibility="Visible">
+        <Grid x:Name="PrincipalUI" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.RowSpan="2" Height="73" VerticalAlignment="Top">
-                <Rectangle.Fill>
-                    <ImageBrush x:Name="BackgroundPrinciapalUI" Stretch="UniformToFill"/>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Height="73" VerticalAlignment="Top" Fill="Gray"/>
+            <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Height="75" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
+                <Rectangle Grid.RowSpan="2" Height="75" VerticalAlignment="Top">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
+                    </interactivity:Interaction.Behaviors>
+                    <Rectangle.Fill>
+                        <ImageBrush x:Name="BackgroundPrinciapalUI" Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </controls:DropShadowPanel>
+            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Height="75" VerticalAlignment="Top" Fill="Gray"/>
 
             <!-- Toolbar + Grid windows focus-->
             <Grid Grid.Row="0" x:Name="FirstBar">
@@ -84,7 +94,9 @@
                 </Grid.ColumnDefinitions>
 
                 <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40"/>
-                <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent"/>
+                <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent">
+                    <TextBlock Text="Serris Code Editor - WIP" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
+                </Grid>
             </Grid>
 
             <!-- Console + others buttons -->
@@ -95,8 +107,11 @@
                 </Grid.ColumnDefinitions>
                 
                 <my:Console Height="240" VerticalAlignment="Top"/>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="0,10,10,0">
-                    
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+
                 </StackPanel>
             </Grid>
         </Grid>

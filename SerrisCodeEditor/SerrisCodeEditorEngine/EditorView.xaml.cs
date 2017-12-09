@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -18,8 +19,6 @@ namespace SerrisCodeEditorEngine
         public EditorView()
         {
             InitializeComponent();
-
-            SizeChanged += EditorView_SizeChanged;
         }
 
 
@@ -459,6 +458,26 @@ namespace SerrisCodeEditorEngine
             }
         }
 
+        ///<summary>
+        ///Send javascript command to the editor and get result - ex: component_name.SendAndExecuteJavaScriptWithReturn("");
+        ///</summary>
+        public IAsyncOperation<string> SendAndExecuteJavaScriptWithReturn(string command)
+        {
+            if (Initialized)
+            {
+                try
+                {
+                    string[] js_command = { command };
+                    return editor_view.InvokeScriptAsync("eval", js_command);
+                }
+                catch { return null; }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
 
 
@@ -478,6 +497,7 @@ namespace SerrisCodeEditorEngine
             editor_view.NavigationFailed += editor_view_NavigationFailed;
             editor_view.ScriptNotify += editor_view_ScriptNotify;
             editor_view.NavigationStarting += Editor_view_NavigationStarting;
+            editor_view.SizeChanged += EditorView_SizeChanged;
 
             editor_view.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Visible);
 
