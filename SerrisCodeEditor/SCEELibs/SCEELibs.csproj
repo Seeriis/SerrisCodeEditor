@@ -125,6 +125,7 @@
     <Compile Include="Editor\Components\Widget.cs" />
     <Compile Include="Editor\WidgetManager.cs" />
     <Compile Include="Modules\Manager.cs" />
+    <Compile Include="Modules\StorageManager.cs" />
     <Compile Include="Modules\Type\Addon.cs" />
     <Compile Include="Modules\Type\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

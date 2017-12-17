@@ -20,6 +20,7 @@ namespace SCEELibs
 
             _sheetManager = new SheetManager(id);
             _widgetManager = new WidgetManager(id);
+            _modulesStorageManager = new StorageManager(id);
         }
 
         public SCEELibs() { }
@@ -34,6 +35,9 @@ namespace SCEELibs
          */
         Manager _modulesManager = new Manager();
         public Manager modulesManager { get { return _modulesManager; } }
+
+        StorageManager _modulesStorageManager;
+        public StorageManager modulesStorageManager { get { return _modulesStorageManager; } }
 
         Addon _addon = new Addon();
         public Addon addon { get { return _addon; } }
@@ -80,6 +84,11 @@ namespace SCEELibs
         public SheetManager getSheetManagerViaID(int id)
         {
             return new SheetManager(id);
+        }
+
+        public StorageManager getStorageManager(int id)
+        {
+            return new StorageManager(id);
         }
     }
 }
