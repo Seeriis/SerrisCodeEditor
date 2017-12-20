@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 
 namespace SCEELibs.Modules
 {
+    [AllowForWeb]
     public sealed class StorageManager
     {
         int currentID;
