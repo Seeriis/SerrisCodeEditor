@@ -24,6 +24,7 @@ namespace SCEELibs.Editor.Notifications
     public sealed class ToolbarNotification
     {
         public int id { get; set; } //ID of the module who sent the notification
+        public string guid { get; set; }
         public string uiElementName { get; set; }
         public bool answerNotification { get; set; }
 

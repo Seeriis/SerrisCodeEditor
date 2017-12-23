@@ -14,10 +14,9 @@
             {
                 document.getElementById("p1").innerHTML = result;
             });*/
-            sceelibs.widgetManager.getTextBoxContent("osef_b").then(function (result) {
-                document.getElementById("p1").innerHTML = result;
-                document.getElementById("test_frame").setAttribute("src", "http://www.youtube.com/results?search_query=" + result);
-            });
+        var result = sceelibs.widgetManager.getTextBoxContent("osef_b");
+        document.getElementById("p1").innerHTML = result;
+        document.getElementById("test_frame").setAttribute("src", "http://www.youtube.com/results?search_query=" + result);
     </script>
 
 </body>

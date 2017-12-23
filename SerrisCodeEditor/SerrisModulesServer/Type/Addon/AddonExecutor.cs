@@ -144,8 +144,8 @@ namespace SerrisModulesServer.Type.Addon
 
             foreach (string path in ModuleAccess.JSFilesPathList)
             {
-                StorageFolder _folder_temp = folder_module; StorageFile _file_read = await folder_module.GetFileAsync("main.js"); bool file_found = false; string path_temp = path;
-
+                StorageFolder _folder_temp = folder_module; StorageFile _file_read = AsyncHelpers.RunSync(async () => await folder_module.GetFileAsync("main.js")); bool file_found = false; string path_temp = path;
+                
                 while (!file_found)
                 {
                     if (path_temp.Contains(Path.AltDirectorySeparatorChar))

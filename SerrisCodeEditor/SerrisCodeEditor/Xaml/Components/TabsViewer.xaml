@@ -422,7 +422,9 @@
 
         <StackPanel>
             <StackPanel CornerRadius="0,0,20,20" Margin="0" Padding="2" Background="#CCFFFFFF">
-                <ComboBox x:Name="Lists" Margin="5,10,5,5" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
+                <Rectangle Margin="10,10,10,0" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" Stroke="#CC3C097A" StrokeThickness="0"/>
+
+                <ComboBox x:Name="Lists" Margin="5,5,5,5" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
 
                 <Grid Margin="10,0,10,0">
                     <Grid.ColumnDefinitions>

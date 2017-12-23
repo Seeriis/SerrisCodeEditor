@@ -73,7 +73,7 @@
                 <Rectangle Fill="#A5A5A5" Width="0.5" HorizontalAlignment="Right"/>
             </Grid>
 
-            <ListView x:Name="CurrentListNotifications" Grid.Column="1" ItemTemplate="{StaticResource ConsoleItem}">
+            <ListView x:Name="CurrentListNotifications" Grid.Column="1" ItemTemplate="{StaticResource ConsoleItem}" Loaded="CurrentListNotifications_Loaded">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>

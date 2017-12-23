@@ -161,7 +161,7 @@ namespace SerrisModulesServer.Type.Addon
                                     new_button.Foreground = new SolidColorBrush(Colors.White); new_button.Background = new SolidColorBrush(Colors.Transparent);
                                     new_button.Click += ((e, f) =>
                                     {
-                                        new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName);
+                                        Task.Run(() => new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
                                     });
 
                                     widget_content.Children.Add(new_button);
@@ -177,11 +177,14 @@ namespace SerrisModulesServer.Type.Addon
                                     new_textbox.Width = 150; new_textbox.Height = 25;
                                     new_textbox.PlaceholderText = widget.PlaceHolderText;
                                     new_textbox.FontSize = 14; new_textbox.Background = new SolidColorBrush(Colors.White); new_textbox.Foreground = new SolidColorBrush(Colors.Black);
-                                    new_textbox.KeyDown += ((e, f) =>
+                                    new_textbox.KeyDown += (async (e, f) =>
                                     {
-                                        if (f.Key == Windows.System.VirtualKey.Enter)
+                                        if (f.KeyStatus.RepeatCount == 1)
                                         {
-                                            new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName);
+                                            if (f.Key == Windows.System.VirtualKey.Enter)
+                                            {
+                                                await Task.Run(() => new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
+                                            }
                                         }
                                     });
 

@@ -5,9 +5,11 @@ using SerrisCodeEditor.Functions;
 using SerrisModulesServer.Type.Addon;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -34,6 +36,7 @@ namespace SerrisCodeEditor.Xaml.Components
         public Console()
         {
             this.InitializeComponent();
+            CurrentNotifications.CollectionChanged += CurrentNotifications_CollectionChanged;
         }
 
         private void ConsoleUI_Loaded(object sender, RoutedEventArgs e)
@@ -66,7 +69,6 @@ namespace SerrisCodeEditor.Xaml.Components
                 {
                     try
                     {
-                        SetLastNotificationInfos(notification);
 
                         switch (notification.typeNotification)
                         {
@@ -74,22 +76,22 @@ namespace SerrisCodeEditor.Xaml.Components
                                 errors_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 if (ShowErrors)
-                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                    CurrentNotifications.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
                                 break;
 
                             case ConsoleTypeNotification.Information:
                                 informations_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 if (ShowInformations)
-                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
-
+                                    CurrentNotifications.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                    
                                 break;
 
                             case ConsoleTypeNotification.Result:
                                 results_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 if (ShowResults)
-                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                    CurrentNotifications.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 break;
 
@@ -97,7 +99,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                 warnings_list.Add(new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 if (ShowWarnings)
-                                    CurrentListNotifications.Items.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
+                                    CurrentNotifications.Insert(0, new ConsoleNotificationContent { notifContent = notification, notifIcon = "" });
 
                                 break;
                         }
@@ -134,28 +136,13 @@ namespace SerrisCodeEditor.Xaml.Components
             WarningsNumber.Foreground = temp_variables.CurrentTheme.MainColor;
         }
 
-        private void SetLastNotificationInfos(ConsoleNotification notif)
+        private void CurrentNotifications_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            switch (notif.typeNotification)
+            if(CurrentNotifications.Count > 0)
             {
-                case ConsoleTypeNotification.Error:
-                    LastNotifInfos_Icon.Text = "";
-                    break;
-
-                case ConsoleTypeNotification.Information:
-                    LastNotifInfos_Icon.Text = "";
-                    break;
-
-                case ConsoleTypeNotification.Result:
-                    LastNotifInfos_Icon.Text = "";
-                    break;
-
-                case ConsoleTypeNotification.Warning:
-                    LastNotifInfos_Icon.Text = "";
-                    break;
+                LastNotifInfos_Icon.Text = CurrentNotifications[0].notifIcon;
+                LastNotifInfos_Text.Text = "[" + CurrentNotifications[0].notifContent.date.ToString("HH:mm:ss") + "] " + CurrentNotifications[0].notifContent.content;
             }
-
-            LastNotifInfos_Text.Text = "[" + notif.date.ToString("HH:mm:ss") + "] " + notif.content;
         }
 
         private void Command_box_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -165,8 +152,13 @@ namespace SerrisCodeEditor.Xaml.Components
                 case VirtualKey.Enter:
                     try
                     {
-                        ChakraSMS executor = new ChakraSMS(); executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "Console");
-                        executor.Chakra.RunScript(Command_box.Text);
+                        string CommandContent = Command_box.Text;
+
+                        Task.Run(() => 
+                        {
+                            ChakraSMS executor = new ChakraSMS(); executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "Console");
+                            executor.Chakra.RunScript(CommandContent);
+                        });
                     }
                     catch { }
 
@@ -274,6 +266,11 @@ namespace SerrisCodeEditor.Xaml.Components
             RefreshNotificationsList();
         }
 
+        private void CurrentListNotifications_Loaded(object sender, RoutedEventArgs e)
+        {
+            CurrentListNotifications.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = CurrentNotifications });
+        }
+
         private void CloseConsole()
         {
             LastNotifInfos.Visibility = Visibility.Visible; SymbolOpened.Text = "";
@@ -300,7 +297,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void RefreshNotificationsList()
         {
-            CurrentListNotifications.Items.Clear();
+            CurrentNotifications.Clear();
             List<ConsoleNotificationContent> temp_list = new List<ConsoleNotificationContent>();
             
             if(ShowErrors)
@@ -315,9 +312,8 @@ namespace SerrisCodeEditor.Xaml.Components
             if (ShowWarnings)
                 foreach (var element in warnings_list) { temp_list.Add(element); }
 
-            temp_list.OrderBy(o => o.notifContent.date).ToList();
-            temp_list.Reverse();
-            foreach (var element in temp_list) { CurrentListNotifications.Items.Add(element); }
+            temp_list.Sort((a, b) => b.notifDate.CompareTo(a.notifDate));
+            foreach (var element in temp_list) { CurrentNotifications.Add(element); }
         }
 
 
@@ -330,6 +326,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
         List<ConsoleNotificationContent> errors_list = new List<ConsoleNotificationContent>(), informations_list = new List<ConsoleNotificationContent>(), results_list = new List<ConsoleNotificationContent>(), warnings_list = new List<ConsoleNotificationContent>();
+        public ObservableCollection<ConsoleNotificationContent> CurrentNotifications = new ObservableCollection<ConsoleNotificationContent>();
         List<string> commands_list = new List<string>(); int commands_list_index = -1;
         bool isFlyoutOpened = false;
         bool ShowErrors = true, ShowInformations = true, ShowResults = true, ShowWarnings = true;

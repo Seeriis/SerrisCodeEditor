@@ -4,6 +4,7 @@ using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type;
 using SerrisModulesServer.Type.Addon;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -74,7 +75,10 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (currentSelectedButton)
                 {
                     case 0:
-                        new AddonExecutor(module.Module.ID, new SCEELibs.SCEELibs(module.Module.ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
+                        await Task.Run(() => 
+                        {
+                            new AddonExecutor(module.Module.ID, new SCEELibs.SCEELibs(module.Module.ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.main);
+                        });
                         break;
 
                     case 1:

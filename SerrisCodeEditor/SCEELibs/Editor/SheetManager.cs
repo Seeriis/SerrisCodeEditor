@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Components;
 using SCEELibs.Editor.Notifications;
 using SerrisModulesServer.Type.Addon;
@@ -24,9 +25,13 @@ namespace SCEELibs.Editor
 
         public async void createNewSheet(string sheetName, string pathHTMLPage)
         {
-            ModuleHTMLView view = new ModuleHTMLView();
-            view.LoadPage(pathHTMLPage, id);
-            Messenger.Default.Send(new ModuleSheetNotification { id = id, sheetName = sheetName, type = ModuleSheetNotificationType.NewSheet, sheetContent = view, sheetIcon = await new AddonReader(id).GetAddonIconViaIDAsync(), sheetSystem = false });
+            await DispatcherHelper.ExecuteOnUIThreadAsync(async () => 
+            {
+                ModuleHTMLView view = new ModuleHTMLView();
+                view.LoadPage(pathHTMLPage, id);
+                Messenger.Default.Send(new ModuleSheetNotification { id = id, sheetName = sheetName, type = ModuleSheetNotificationType.NewSheet, sheetContent = view, sheetIcon = await new AddonReader(id).GetAddonIconViaIDAsync(), sheetSystem = false });
+            });
+
         }
 
         public void closeSheet(int id)

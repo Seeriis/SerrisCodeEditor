@@ -22,54 +22,45 @@ namespace SCEELibs.Editor
         public void enableButton(string element_name, bool enabled)
         => Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.ButtonEnabled, content = enabled, answerNotification = false });
 
-        public IAsyncOperation<bool> isButtonEnabled(string element_name)
+        public bool isButtonEnabled(string element_name)
         {
-            return Task.Run(() => 
+            bool notif_received = false, result = false;
+
+            Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
             {
-                bool notif_received = false, result = false;
-
-                Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
+                if (notification_toolbar.id == currentID && notification_toolbar.uiElementName == element_name && notification_toolbar.propertie == ToolbarProperties.IsButtonEnabled && notification_toolbar.answerNotification)
                 {
-                    if (notification_toolbar.id == currentID && notification_toolbar.uiElementName == element_name && notification_toolbar.propertie == ToolbarProperties.IsButtonEnabled && notification_toolbar.answerNotification)
-                    {
-                        result = (bool)notification_toolbar.content;
-                        notif_received = true;
-                    }
-                });
+                    result = (bool)notification_toolbar.content;
+                    notif_received = true;
+                }
+            });
 
-                Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = false });
+            Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = false });
 
-                while (!notif_received) ;
-
-                return result;
-            }).AsAsyncOperation();
+            while (!notif_received) ;
+            return result;
         }
 
         public void setTextBoxContent(string element_name, string text)
         => Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.SetTextBoxContent, content = text, answerNotification = false });
 
-        public IAsyncOperation<string> getTextBoxContent(string element_name)
+        public string getTextBoxContent(string element_name)
         {
-            return Task.Run(() => 
+            string result = ""; bool notif_received = false; string guid = Guid.NewGuid().ToString();
+
+            Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
             {
-                bool notif_received = false;
-                string result = "";
-
-                Messenger.Default.Register<ToolbarNotification>(this, (notification_toolbar) =>
+                if (notification_toolbar.id == currentID && notification_toolbar.guid == guid && notification_toolbar.uiElementName == element_name && notification_toolbar.propertie == ToolbarProperties.GetTextBoxContent && notification_toolbar.answerNotification)
                 {
-                    if (notification_toolbar.id == currentID && notification_toolbar.uiElementName == element_name && notification_toolbar.propertie == ToolbarProperties.GetTextBoxContent && notification_toolbar.answerNotification)
-                    {
-                        result = (string)notification_toolbar.content;
-                        notif_received = true;
-                    }
-                });
+                    result = (string)notification_toolbar.content;
+                    notif_received = true;
+                }
+            });
 
-                Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = false });
+            Messenger.Default.Send(new ToolbarNotification { id = currentID, guid = guid, uiElementName = element_name, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = false });
 
-                while (!notif_received) ;
-
-                return result;
-            }).AsAsyncOperation();
+            while (!notif_received) ;
+            return result;
         }
 
         public void openFlyout(string element_name, string html_page)

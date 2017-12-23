@@ -149,7 +149,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                             case ToolbarProperties.GetTextBoxContent when !notification_toolbar.answerNotification:
                                 TextBox elementb = (TextBox)widget.FindName(notification_toolbar.uiElementName + notification_toolbar.id);
-                                Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
+                                Messenger.Default.Send(new ToolbarNotification { id = notification_toolbar.id, guid = notification_toolbar.guid, uiElementName = notification_toolbar.uiElementName, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = true, content = elementb.Text });
                                 break;
 
                             case ToolbarProperties.OpenFlyout:

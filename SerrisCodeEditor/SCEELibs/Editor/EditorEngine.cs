@@ -34,28 +34,25 @@ namespace SCEELibs.Editor
             //while (!notif_received) ;
         }
 
-        public IAsyncOperation<string> injectJSAndReturnResult(string content)
+        public string injectJSAndReturnResult(string content)
         {
-            return Task.Run<string>(() => 
+            bool notif_received = false; string result = "";
+
+            Messenger.Default.Register<SCEENotification>(this, (notification) =>
             {
-                bool notif_received = false; string result = "";
-
-                Messenger.Default.Register<SCEENotification>(this, (notification) =>
+                if (notification.answerNotification && notification.type == SCEENotifType.InjectionAndReturn)
                 {
-                    if (notification.answerNotification && notification.type == SCEENotifType.InjectionAndReturn)
-                    {
-                        result = (string)notification.content;
-                        notif_received = true;
-                    }
-                });
+                    result = (string)notification.content;
+                    notif_received = true;
+                }
+            });
 
-                Messenger.Default.Send(new SCEENotification { type = SCEENotifType.InjectionAndReturn, answerNotification = false, content = content });
+            Messenger.Default.Send(new SCEENotification { type = SCEENotifType.InjectionAndReturn, answerNotification = false, content = content });
 
-                while (!notif_received) ;
+            while (!notif_received) ;
 
-                return result;
+            return result;
 
-            }).AsAsyncOperation();
         }
 
     }
