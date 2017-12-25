@@ -33,7 +33,7 @@ namespace SerrisModulesServer.Items
         public float SceMinimalVersionRequired { get; set; }
         public bool ContainMonacoTheme { get; set; }
         public bool ModuleSystem { get; set; }
-        public bool IsPinnedToToolBar { get; set; }
+        public bool CanBePinnedToToolBar { get; set; }
         public bool IsEnabled { get; set; }
     }
 

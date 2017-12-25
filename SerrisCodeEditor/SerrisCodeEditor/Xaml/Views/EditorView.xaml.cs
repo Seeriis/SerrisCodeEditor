@@ -156,6 +156,9 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
+            DeployUIDetector.Background = temp_variables.CurrentTheme.MainColor;
+            DeployUIIcon.Foreground = temp_variables.CurrentTheme.MainColorFont;
+
             BackgroundPrinciapalUI.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorPrincipalUI.Fill = temp_variables.CurrentTheme.MainColor;
 

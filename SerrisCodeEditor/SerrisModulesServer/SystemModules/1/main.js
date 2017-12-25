@@ -15,7 +15,7 @@
         //var Manager = new SCEELibs.Editor.SheetManager();
         //var button = new Windows.UI.Xaml.Controls.Button(); button.content = "coucou !";
 
-        sceelibs.sheetManager.createNewSheet("Bouton test", "HTML/content.html");
+        sceelibs.sheetManager.createNewSheet("Sheet test", "HTML/test.html");
 
         //Manager.deleteModule(1);
 
@@ -48,7 +48,7 @@ function textBoxAction()
     if (sceelibs.widgetManager.isButtonEnabled("osef"))
     {
         sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
-        sceelibs.widgetManager.openFlyout("osef_b", "HTML/content.html");
+        sceelibs.widgetManager.openFlyout("osef_b", "HTML/flyout.html");
     }
     else
     {

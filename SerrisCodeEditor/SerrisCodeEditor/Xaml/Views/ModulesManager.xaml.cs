@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace SerrisCodeEditor.Xaml.Views
@@ -16,6 +17,25 @@ namespace SerrisCodeEditor.Xaml.Views
     {
         public BitmapImage Thumbnail { get; set; }
         public InfosModule Module { get; set; }
+        public Visibility DeleteButtonVisibility
+        {
+            get
+            {
+                if(Module.ModuleSystem)
+                {
+                    return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
+            }
+        }
+
+        public SolidColorBrush ForegroundColor
+        {
+            get { return new TempContent().CurrentTheme.MainColorFont; }
+        }
     }
 
     public sealed partial class ModulesManager : Page
@@ -25,6 +45,7 @@ namespace SerrisCodeEditor.Xaml.Views
         public ModulesManager()
         {
             InitializeComponent();
+            SetTheme();
         }
 
         private void ModulesManagerUI_Loaded(object sender, RoutedEventArgs e)
@@ -38,6 +59,19 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
 
+        private void SetTheme()
+        {
+            BackgroundList.Fill = temp_variables.CurrentTheme.MainColor;
+            ButtonsGrid.Background = temp_variables.CurrentTheme.SecondaryColor;
+
+            ButtonsSeparator.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            AddonsText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            AddonsIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            ThemesText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            ThemesIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+        }
 
         private async void ChangeSelectedButton(int newSelectedButton)
         {
@@ -88,6 +122,23 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private void ModuleOptions_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private async void ModulePin_Click(object sender, RoutedEventArgs e)
+        {
+            ModuleInfosShow module = (ModuleInfosShow)(sender as Button).DataContext;
+
+            List<int> list = await Pinned.GetModulesPinned();
+
+            if (list.Contains(module.Module.ID))
+                Pinned.RemoveModule(module.Module.ID);
+            else
+                Pinned.AddNewModule(module.Module.ID);
+
+        }
+
         private void AddonsButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         => ChangeSelectedButton(0);
 
@@ -105,22 +156,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         int currentSelectedButton = -1;
+        TempContent temp_variables = new TempContent();
 
-        private void ModuleOptions_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private async void ModulePin_Click(object sender, RoutedEventArgs e)
-        {
-            ModuleInfosShow module = (ModuleInfosShow)(sender as Button).DataContext;
-
-            List<int> list = await Pinned.GetModulesPinned();
-
-            if (list.Contains(module.Module.ID))
-                Pinned.RemoveModule(module.Module.ID);
-            else
-                Pinned.AddNewModule(module.Module.ID);
-
-        }
     }
 }

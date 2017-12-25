@@ -1,13 +1,8 @@
 ﻿<!DOCTYPE html>
-<html>
-<body>
+<html style="width: 100%; height: 100%;">
+<body style="width: 100%; height: 100%;">
 
-    <h2>JavaScript can Change HTML</h2>
-
-    <p id="p1">Hello World!</p>
-
-    <p>The paragraph above was changed by a script.</p>
-    <iframe id="test_frame" src="http://www.google.fr"></iframe>
+    <iframe style="width: 100%; height: 100%;" id="test_frame" src="#"></iframe>
 
     <script>
             /*sceelibs.editorEngine.injectJSAndReturnResult("editor.getValue()").then(function (result)
@@ -15,9 +10,15 @@
                 document.getElementById("p1").innerHTML = result;
             });*/
         var result = sceelibs.widgetManager.getTextBoxContent("osef_b");
-        document.getElementById("p1").innerHTML = result;
+        //document.getElementById("p1").innerHTML = result;
         document.getElementById("test_frame").setAttribute("src", "http://www.youtube.com/results?search_query=" + result);
     </script>
 
+    <style>
+        * 
+        {
+            margin: 0;
+        }
+    </style>
 </body>
 </html>

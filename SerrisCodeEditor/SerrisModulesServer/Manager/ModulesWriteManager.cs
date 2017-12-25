@@ -60,15 +60,15 @@ namespace SerrisModulesServer.Manager
                         switch (content.ModuleType)
                         {
                             case ModuleTypesList.Addon:
-                                content.IsPinnedToToolBar = true;
+                                content.CanBePinnedToToolBar = true;
                                 break;
 
                             case ModuleTypesList.Theme:
-                                content.IsPinnedToToolBar = false;
+                                content.CanBePinnedToToolBar = false;
                                 break;
 
                             case ModuleTypesList.Language:
-                                content.IsPinnedToToolBar = false;
+                                content.CanBePinnedToToolBar = false;
                                 break;
                         }
 

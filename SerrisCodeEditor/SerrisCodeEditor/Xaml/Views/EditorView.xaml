@@ -34,7 +34,7 @@
             
             <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
                 <Grid x:Name="DeployUIDetector" Height="75" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
-                    <TextBlock Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                    <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
 
                 <Grid>
@@ -108,8 +108,10 @@
                 
                 <my:Console Height="240" VerticalAlignment="Top"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
+                    <!--
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    -->
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
 
                 </StackPanel>

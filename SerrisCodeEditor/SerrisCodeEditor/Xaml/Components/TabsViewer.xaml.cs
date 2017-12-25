@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
@@ -85,9 +86,12 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             if (Tabs.SelectedItem != null)
             {
-                CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
-                var tab = await access_manager.GetTabViaIDAsync(CurrentSelectedIDs);
-                Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+                if(((TabID)Tabs.SelectedItem).ID_Tab != temp_variables.CurrentIDs.ID_Tab)
+                {
+                    CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
+                    var tab = await access_manager.GetTabViaIDAsync(CurrentSelectedIDs);
+                    Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+                }
             }
 
         }
@@ -167,8 +171,13 @@ namespace SerrisCodeEditor.Xaml.Components
             foreach(int id in list_ids)
             {
                 Tabs.Items.Add(new TabID { ID_Tab = id, ID_TabsList = id_list });
-            }
 
+                if (temp_variables.CurrentIDs.ID_TabsList == CurrentSelectedIDs.ID_TabsList && temp_variables.CurrentIDs.ID_Tab == id)
+                {
+                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                }
+            }
+            
         }
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -204,6 +213,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         public TabID CurrentSelectedIDs; bool isLoaded = false;
         TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager();
+        TempContent temp_variables = new TempContent();
 
     }
 }

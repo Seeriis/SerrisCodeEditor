@@ -23,7 +23,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Default light theme of SCE !",
-                IsPinnedToToolBar = false,
+                CanBePinnedToToolBar = false,
                 IsEnabled = true
             },
             new InfosModule
@@ -31,7 +31,7 @@ namespace SerrisModulesServer.SystemModules
                 ID = 1,
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
-                ModuleName = "Test addon c:",
+                ModuleName = "[TEST] Youtube flyout",
                 ModuleSystem = true,
                 ModuleAuthor = "[SP] DeerisLeGris",
                 ModuleVersion = new ModuleVersion
@@ -41,7 +41,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Test addon",
-                IsPinnedToToolBar = true,
+                CanBePinnedToToolBar = true,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>()
             },
@@ -50,7 +50,7 @@ namespace SerrisModulesServer.SystemModules
                 ID = 2,
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
-                ModuleName = "Lool",
+                ModuleName = "[TEST] Notification",
                 ModuleSystem = true,
                 ModuleAuthor = "[SP] DeerisLeGris",
                 ModuleVersion = new ModuleVersion
@@ -60,7 +60,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Test addon B",
-                IsPinnedToToolBar = true,
+                CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 {
@@ -82,7 +82,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Module for undo and redo in the editor",
-                IsPinnedToToolBar = true,
+                CanBePinnedToToolBar = true,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 { }
@@ -102,7 +102,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Module for save tabs in the editor",
-                IsPinnedToToolBar = true,
+                CanBePinnedToToolBar = true,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 { }
@@ -122,7 +122,7 @@ namespace SerrisModulesServer.SystemModules
                     Revision = 0
                 },
                 ModuleDescription = "Module for copy, cut or paste content in the editor",
-                IsPinnedToToolBar = true,
+                CanBePinnedToToolBar = true,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 { }

@@ -54,7 +54,7 @@ namespace SCEELibs.Modules
 
             foreach (InfosModule theme in list_themes.Where(n => n.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Theme).ToList())
             {
-                list_themes_final.Add(new ModuleInfo { ID = theme.ID, moduleSystem = theme.ModuleSystem, moduleName = theme.ModuleName, moduleAuthor = theme.ModuleAuthor, moduleDescription = theme.ModuleDescription, moduleWebsiteLink = theme.ModuleWebsiteLink, containMonacoTheme = theme.ContainMonacoTheme, isEnabled = theme.IsEnabled, isPinnedToToolbar = theme.IsPinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = theme.ModuleVersion.Major, minor = theme.ModuleVersion.Minor, revision = theme.ModuleVersion.Revision } });
+                list_themes_final.Add(new ModuleInfo { ID = theme.ID, moduleSystem = theme.ModuleSystem, moduleName = theme.ModuleName, moduleAuthor = theme.ModuleAuthor, moduleDescription = theme.ModuleDescription, moduleWebsiteLink = theme.ModuleWebsiteLink, containMonacoTheme = theme.ContainMonacoTheme, isEnabled = theme.IsEnabled, isPinnedToToolbar = theme.CanBePinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = theme.ModuleVersion.Major, minor = theme.ModuleVersion.Minor, revision = theme.ModuleVersion.Revision } });
             }
 
             return list_themes_final;
@@ -67,7 +67,7 @@ namespace SCEELibs.Modules
 
             foreach (InfosModule theme in list_addons.Where(n => n.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon).ToList())
             {
-                list_addons_final.Add(new ModuleInfo { ID = theme.ID, moduleSystem = theme.ModuleSystem, moduleName = theme.ModuleName, moduleAuthor = theme.ModuleAuthor, moduleDescription = theme.ModuleDescription, moduleWebsiteLink = theme.ModuleWebsiteLink, containMonacoTheme = theme.ContainMonacoTheme, isEnabled = theme.IsEnabled, isPinnedToToolbar = theme.IsPinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = theme.ModuleVersion.Major, minor = theme.ModuleVersion.Minor, revision = theme.ModuleVersion.Revision } });
+                list_addons_final.Add(new ModuleInfo { ID = theme.ID, moduleSystem = theme.ModuleSystem, moduleName = theme.ModuleName, moduleAuthor = theme.ModuleAuthor, moduleDescription = theme.ModuleDescription, moduleWebsiteLink = theme.ModuleWebsiteLink, containMonacoTheme = theme.ContainMonacoTheme, isEnabled = theme.IsEnabled, isPinnedToToolbar = theme.CanBePinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = theme.ModuleVersion.Major, minor = theme.ModuleVersion.Minor, revision = theme.ModuleVersion.Revision } });
             }
 
             return list_addons_final;
@@ -76,7 +76,7 @@ namespace SCEELibs.Modules
         public ModuleInfo getModuleInfosViaID(int ID)
         {
             var module = access_manager.GetModuleViaID(ID);
-            return new ModuleInfo { ID = module.ID, moduleSystem = module.ModuleSystem, moduleName = module.ModuleName, moduleAuthor = module.ModuleAuthor, moduleDescription = module.ModuleDescription, moduleWebsiteLink = module.ModuleWebsiteLink, containMonacoTheme = module.ContainMonacoTheme, isEnabled = module.IsEnabled, isPinnedToToolbar = module.IsPinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = module.ModuleVersion.Major, minor = module.ModuleVersion.Minor, revision = module.ModuleVersion.Revision } };
+            return new ModuleInfo { ID = module.ID, moduleSystem = module.ModuleSystem, moduleName = module.ModuleName, moduleAuthor = module.ModuleAuthor, moduleDescription = module.ModuleDescription, moduleWebsiteLink = module.ModuleWebsiteLink, containMonacoTheme = module.ContainMonacoTheme, isEnabled = module.IsEnabled, isPinnedToToolbar = module.CanBePinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = module.ModuleVersion.Major, minor = module.ModuleVersion.Minor, revision = module.ModuleVersion.Revision } };
         }
 
         public async void installModule(string zip_path)
