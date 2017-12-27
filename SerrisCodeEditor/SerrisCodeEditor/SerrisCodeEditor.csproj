@@ -97,6 +97,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Functions\ModulesPinned.cs" />
+    <Compile Include="Functions\Settings\DefaultSettings.cs" />
+    <Compile Include="Functions\Settings\SettingsDef.cs" />
+    <Compile Include="Functions\Settings\SettingsNotification.cs" />
     <Compile Include="Functions\TempContent.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -128,6 +131,9 @@
     </Compile>
     <Compile Include="Xaml\Views\ModulesManager.xaml.cs">
       <DependentUpon>ModulesManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Views\SettingsManager.xaml.cs">
+      <DependentUpon>SettingsManager.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +195,10 @@
     <Page Include="Xaml\Views\ModulesManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Xaml\Views\SettingsManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

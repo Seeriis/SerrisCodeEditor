@@ -112,7 +112,20 @@
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
                     -->
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    <Button x:Name="SettingsButton" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <Frame x:Name="FrameSettings"/>
+
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
 
                 </StackPanel>
             </Grid>

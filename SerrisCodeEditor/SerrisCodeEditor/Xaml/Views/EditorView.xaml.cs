@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.Helpers;
+using SerrisCodeEditor.Functions.Settings;
+using Windows.Storage;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -100,6 +102,23 @@ namespace SerrisCodeEditor.Xaml.Views
 
             });
 
+            Messenger.Default.Register<SettingsNotification>(this, async (notification_settings) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        if(notification_settings.SettingsUpdatedName == new DefaultSettings().DefaultSettingsMenuList[0].Name && EditorIsLoaded) //If settings updated for Editor, then...
+                        {
+                            LoadSettings();
+                        }
+                    }
+                    catch { }
+
+                });
+
+            });
+
             Messenger.Default.Register<SCEENotification>(this, async (notification_scee) =>
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
@@ -173,6 +192,38 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private void LoadSettings()
+        {
+            ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+
+            //LINE NUMBERS
+            if (AppSettings.Values.ContainsKey("editor_linenumbers"))
+            {
+                if((bool)AppSettings.Values["editor_linenumbers"])
+                {
+                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: true });");
+                }
+                else
+                {
+                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: false });");
+                }
+            }
+
+            //WRAPPING CODE
+            if (AppSettings.Values.ContainsKey("editor_wordwrap"))
+            {
+                if ((bool)AppSettings.Values["editor_wordwrap"])
+                {
+                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: 'wordWrapColumn', wordWrapMinified: true });");
+                }
+                else
+                {
+                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: 'none', wordWrapMinified: false });");
+                }
+            }
+
+        }
+
         private void SetInterface()
         {
             if (temp_variables.CurrentDevice == CurrentDevice.WindowsMobile)
@@ -238,7 +289,16 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ContentViewer_EditorLoaded(object sender, EventArgs e)
         {
-            //new SCEELibs.SCEELibs().consoleManager.sendConsoleErrorNotification("jpp");
+            if(!EditorIsLoaded)
+            {
+                LoadSettings();
+                EditorIsLoaded = true;
+            }
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            FrameSettings.Navigate(typeof(SettingsManager));
         }
 
         //For manage tabs content
@@ -299,7 +359,7 @@ namespace SerrisCodeEditor.Xaml.Views
         ModulesAccessManager Modules_manager_access = new ModulesAccessManager();
         ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         TempContent temp_variables = new TempContent();
-        bool isUIDeployed = false;
+        bool isUIDeployed = false, EditorIsLoaded = false;
 
     }
 
