@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,7 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class ModuleSheet : UserControl
     {
         bool isSelected = false, isInitialized = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
+        TempContent temp_variables = new TempContent();
 
         public ModuleSheet()
         {
@@ -28,7 +30,17 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void SheetButton_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); }
+        {
+            SetMessenger();
+            SetTheme();
+
+            //Auto selection
+            if (!isSelected)
+            {
+                current_sheet = (ModuleSheetNotification)DataContext; current_sheet.type = ModuleSheetNotificationType.SelectSheet;
+                Messenger.Default.Send(current_sheet);
+            }
+        }
 
         private void SheetButton_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
@@ -88,8 +100,31 @@ namespace SerrisCodeEditor.Xaml.Components
             Messenger.Default.Send(current_sheet);
         }
 
+        private void SetTheme()
+        {
+            GridButton.Background = temp_variables.CurrentTheme.MainColor;
+            name_sheet.Foreground = temp_variables.CurrentTheme.MainColorFont;
+
+            close_sheet.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            close_sheet.BorderBrush = temp_variables.CurrentTheme.MainColorFont;
+        }
+
         private void SetMessenger()
         {
+            Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        SetTheme();
+                    }
+                    catch { }
+
+                });
+
+            });
+
             Messenger.Default.Register<ModuleSheetNotification>(this, async (notification) =>
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(() => 

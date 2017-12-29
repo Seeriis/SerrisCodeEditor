@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="SerrisCodeEditor.Xaml.Views.ModulesInstaller"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SerrisCodeEditor.Xaml.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#B2FFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="0">
+            
+        </Grid>
+
+        <Grid x:Name="PrincipalGrid" Grid.Row="1">
+            
+            <Grid x:Name="SelectModuleGrid" Visibility="Visible">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Install your module here !" FontSize="20" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                    <Button x:Name="OpenModuleButton" Style="{StaticResource RoundCornerButton}" Content="Open module" FontSize="20" HorizontalAlignment="Center" Click="OpenModuleButton_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid x:Name="VerifyModuleGrid" Visibility="Collapsed">
+                <ScrollViewer>
+                    
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" MaxWidth="350">
+                        <TextBlock x:Name="TitleModule" Text="Module name" FontSize="24" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Left">
+                            <TextBlock Text="Author:" FontSize="18" Margin="0,0,15,0"/>
+                            <TextBlock x:Name="AuthorName" Text="Author name" FontSize="18" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                            <TextBlock Text="Version:" FontSize="18" Margin="0,0,15,0"/>
+                            <TextBlock x:Name="VersionNumber" Text="Version number" FontSize="18" FontWeight="Light"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                            <TextBlock Text="Type:" FontSize="18" Margin="0,0,15,0"/>
+                            <TextBlock x:Name="ModuleType" Text="Module type" FontSize="18" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Description:" FontSize="18" Margin="0,15,0,0"/>
+                        <TextBlock x:Name="DescriptionText" Text="Description text" Margin="0,5,0,0" MaxWidth="350" FontSize="18" FontWeight="Light" TextWrapping="Wrap"/>
+
+                        <Button x:Name="InstallModuleButton" Margin="0,30,0,0" Style="{StaticResource RoundCornerButton}" Content="Install module" FontSize="20" HorizontalAlignment="Center" Click="InstallModuleButton_Click" Background="#FF00AA27" Foreground="White"/>
+
+                    </StackPanel>
+                    
+                </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="ResultInstallation" Visibility="Collapsed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="ResultText" Text="Result text" FontSize="20" Margin="0,0,0,5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+
+        <TextBlock Text="WORK IN PROGRESS" FontSize="16" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#99000000"/>
+
+    </Grid>
+</Page>

@@ -126,8 +126,10 @@ namespace SerrisCodeEditor.Xaml.Views
                         {
                             case SettingType.Checkbox:
                                 ToggleSwitch Switch = new ToggleSwitch();
+                                Switch.Style = (Style)Application.Current.Resources["SwitchControl"];
                                 Switch.Margin = new Thickness(0, 20, 0, 0);
                                 Switch.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                Switch.Background = temp_variables.CurrentTheme.MainColor;
                                 Switch.Header = SettingControl.Description;
 
                                 if (AppSettings.Values.ContainsKey(SettingControl.VarSaveName))

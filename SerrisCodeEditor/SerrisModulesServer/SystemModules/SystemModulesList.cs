@@ -126,6 +126,24 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 { }
+            },
+            new InfosModule
+            {
+                ID = 6,
+                ModuleType = ModuleTypesList.Theme,
+                ContainMonacoTheme = true,
+                ModuleName = "SCE - Dark theme",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Background by Last Sentencer",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true
             }
         };
     }

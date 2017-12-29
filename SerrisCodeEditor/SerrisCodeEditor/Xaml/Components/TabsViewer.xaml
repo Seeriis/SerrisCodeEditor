@@ -420,94 +420,91 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <StackPanel CornerRadius="0,0,20,20" Margin="0" Padding="2" Background="#CCFFFFFF">
-                <Rectangle Margin="10,10,10,0" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" Stroke="#CC3C097A" StrokeThickness="0"/>
+        <StackPanel x:Name="TabsViewerControls" CornerRadius="0,0,20,20" Margin="0" Padding="2" Background="#CCFFFFFF">
+            <Rectangle x:Name="SeparatorA" Margin="10,10,10,0" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
 
-                <ComboBox x:Name="Lists" Margin="5,5,5,5" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
+            <ComboBox x:Name="Lists" Margin="5,5,5,5" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
 
-                <Grid Margin="10,0,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,0,10,4" Foreground="#FF292929" Background="#FF3C097A"/>
+                <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,0,10,4" Foreground="#FF292929" Background="#FF3C097A"/>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Height="32" VerticalAlignment="Top">
-                        <Button x:Name="DeleteButtonFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="White" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="5,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
-                            <Button.Flyout>
-                                <Flyout x:Name="FlyoutDeleteList">
-                                    <StackPanel>
-                                        <TextBlock Width="167" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Are you sure to delete this list ?" FontSize="12" TextWrapping="Wrap"/>
-                                        <Button x:Name="DeleteButton" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="DeleteButton_Click">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Delete" FontSize="12" Grid.Column="1"/>
-                                            </Grid>
-                                        </Button>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                        <Button x:Name="NewListFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="White" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="0,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
-                            <Button.Flyout>
-                                <Flyout x:Name="FlyoutNewList">
-                                    <StackPanel>
-                                        <TextBox x:Name="TextBoxNewList" Width="167" PlaceholderText="Name of the new list" FontSize="12" Style="{StaticResource RoundTextBox}"/>
-                                        <Button x:Name="NewList" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewList_Click">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Create list" FontSize="12" Grid.Column="1"/>
-                                            </Grid>
-                                        </Button>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </StackPanel>
-
-                    <Rectangle VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" Stroke="#CC3C097A" StrokeThickness="0"/>
-                </Grid>
-
-                <Grid Margin="0,10,0,8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button x:Name="CreateButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="30,10,10,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="CreateButton_Click">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="New file" FontSize="15" Grid.Column="1"/>
-                        </Grid>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Height="32" VerticalAlignment="Top">
+                    <Button x:Name="DeleteButtonFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="5,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
+                        <Button.Flyout>
+                            <Flyout x:Name="FlyoutDeleteList">
+                                <StackPanel>
+                                    <TextBlock Width="167" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Are you sure to delete this list ?" FontSize="12" TextWrapping="Wrap"/>
+                                    <Button x:Name="DeleteButton" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="DeleteButton_Click">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Delete" FontSize="12" Grid.Column="1"/>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
                     </Button>
-
-                    <Button x:Name="OpenButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="#7FFFFFFF" FontSize="15" Margin="10,10,30,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="OpenButton_Click">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
-                            <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Open file" FontSize="15" Grid.Column="1"/>
-                        </Grid>
+                    <Button x:Name="NewListFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="0,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
+                        <Button.Flyout>
+                            <Flyout x:Name="FlyoutNewList">
+                                <StackPanel>
+                                    <TextBox x:Name="TextBoxNewList" Width="167" PlaceholderText="Name of the new list" FontSize="12" Style="{StaticResource RoundTextBox}"/>
+                                    <Button x:Name="NewList" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewList_Click">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Create list" FontSize="12" Grid.Column="1"/>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
                     </Button>
-                </Grid>
+                </StackPanel>
 
-            </StackPanel>
+                <Rectangle x:Name="SeparatorB" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
+            </Grid>
+
+            <Grid Margin="0,10,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="CreateButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" Margin="30,10,10,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="CreateButton_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
+                        <TextBlock x:Name="CreateText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="New file" FontSize="15" Grid.Column="1"/>
+                    </Grid>
+                </Button>
+
+                <Button x:Name="OpenButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" FontSize="15" Margin="10,10,30,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="OpenButton_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="OpenIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
+                        <TextBlock x:Name="OpenText" HorizontalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Open file" FontSize="15" Grid.Column="1"/>
+                    </Grid>
+                </Button>
+            </Grid>
 
         </StackPanel>
 

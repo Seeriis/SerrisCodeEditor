@@ -95,7 +95,7 @@
 
                 <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40"/>
                 <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent">
-                    <TextBlock Text="Serris Code Editor - WIP" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
+                    <TextBlock Text="Serris Code Editor - Vincennes build" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
                 </Grid>
             </Grid>
 

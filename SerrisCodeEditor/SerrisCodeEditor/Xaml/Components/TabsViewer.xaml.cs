@@ -36,7 +36,10 @@ namespace SerrisCodeEditor.Xaml.Components
         { this.InitializeComponent(); }
 
         private void TabsView_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); }
+        {
+            SetMessenger();
+            SetTheme();
+        }
 
 
 
@@ -96,8 +99,50 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
+        private void SetTheme()
+        {
+            TabsViewerControls.Background = temp_variables.CurrentTheme.SecondaryColor;
+
+            SeparatorA.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+            SeparatorB.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            Lists.Background = temp_variables.CurrentTheme.SecondaryColor;
+            Lists.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            Lists.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            Box_Search.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            NewListFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            NewListFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            DeleteButtonFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            DeleteButtonFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            OpenButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            OpenIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            OpenText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            CreateButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            CreateIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            CreateText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+        }
+
         private void SetMessenger()
         {
+            Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        SetTheme();
+                    }
+                    catch { }
+
+                });
+
+            });
+
             Messenger.Default.Register<STSNotification>(this, async (notification) =>
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>

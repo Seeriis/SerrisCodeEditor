@@ -29,90 +29,94 @@ namespace SerrisModulesServer.Manager
             AccessManager = new ModulesAccessManager();
         }
 
-        public async Task<bool> AddModuleAsync(StorageFile module_zip)
+        public Task<bool> AddModuleAsync(StorageFile module_zip)
         {
-            int id = new Random().Next(999999);
-            StorageFolder folder_addon = await folder_modules.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
-
-            ZipFile.ExtractToDirectory(module_zip.Path, folder_addon.Path);
-
-            StorageFile file_infos = await folder_addon.CreateFileAsync("infos.json", CreationCollisionOption.OpenIfExists);
-            using (var reader = new StreamReader(await file_infos.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            return Task.Run(async () => 
             {
-                try
+                int id = new Random().Next(999999);
+                StorageFolder folder_addon = await folder_modules.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
+
+                ZipFile.ExtractToDirectory(module_zip.Path, folder_addon.Path);
+
+                StorageFile file_infos = await folder_addon.CreateFileAsync("infos.json", CreationCollisionOption.OpenIfExists);
+                using (var reader = new StreamReader(await file_infos.OpenStreamForReadAsync()))
+                using (JsonReader JsonReader = new JsonTextReader(reader))
                 {
-                    InfosModule content = new JsonSerializer().Deserialize<InfosModule>(JsonReader);
-
-                    if (content != null)
+                    try
                     {
-                        content.ID = id; content.ModuleSystem = false; content.IsEnabled = true;
+                        InfosModule content = new JsonSerializer().Deserialize<InfosModule>(JsonReader);
 
-                        if (await folder_addon.TryGetItemAsync("theme_ace.js") != null)
+                        if (content != null)
                         {
-                            content.ContainMonacoTheme = true;
-                        }
-                        else
-                        {
-                            content.ContainMonacoTheme = false;
-                        }
+                            content.ID = id; content.ModuleSystem = false; content.IsEnabled = true;
 
-                        switch (content.ModuleType)
-                        {
-                            case ModuleTypesList.Addon:
-                                content.CanBePinnedToToolBar = true;
-                                break;
-
-                            case ModuleTypesList.Theme:
-                                content.CanBePinnedToToolBar = false;
-                                break;
-
-                            case ModuleTypesList.Language:
-                                content.CanBePinnedToToolBar = false;
-                                break;
-                        }
-
-                        using (var reader_b = new StreamReader(await file.OpenStreamForReadAsync()))
-                        using (JsonReader JsonReader_b = new JsonTextReader(reader))
-                        {
-                            try
+                            if (await folder_addon.TryGetItemAsync("theme_ace.js") != null)
                             {
-                                ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
+                                content.ContainMonacoTheme = true;
+                            }
+                            else
+                            {
+                                content.ContainMonacoTheme = false;
+                            }
 
-                                if (list == null)
+                            switch (content.ModuleType)
+                            {
+                                case ModuleTypesList.Addon:
+                                    content.CanBePinnedToToolBar = true;
+                                    break;
+
+                                case ModuleTypesList.Theme:
+                                    content.CanBePinnedToToolBar = false;
+                                    break;
+
+                                case ModuleTypesList.Language:
+                                    content.CanBePinnedToToolBar = false;
+                                    break;
+                            }
+
+                            using (var reader_b = new StreamReader(await file.OpenStreamForReadAsync()))
+                            using (JsonReader JsonReader_b = new JsonTextReader(reader))
+                            {
+                                try
                                 {
-                                    list = new ModulesList();
-                                    list.Modules = new List<InfosModule>();
-                                }
+                                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader_b);
 
-                                list.Modules.Add(content);
-                                await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                                foreach (CoreApplicationView view in CoreApplication.Views)
-                                {
-                                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                    if (list == null)
                                     {
-                                        Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.NewModule, ID = id });
-                                    });
+                                        list = new ModulesList();
+                                        list.Modules = new List<InfosModule>();
+                                    }
+
+                                    list.Modules.Add(content);
+                                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
+
+                                    foreach (CoreApplicationView view in CoreApplication.Views)
+                                    {
+                                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                        {
+                                            Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.NewModule, ID = id });
+                                        });
+                                    }
+
+                                    return true;
                                 }
+                                catch
+                                {
+                                    return false;
+                                }
+                            }
 
-                                return true;
-                            }
-                            catch
-                            {
-                                return false;
-                            }
                         }
-
+                    }
+                    catch
+                    {
+                        return false;
                     }
                 }
-                catch
-                {
-                    return false;
-                }
-            }
 
-            return true;
+                return true;
+
+            });
 
         }
 

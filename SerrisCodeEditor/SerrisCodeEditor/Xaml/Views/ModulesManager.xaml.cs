@@ -1,8 +1,11 @@
-﻿using SerrisCodeEditor.Functions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type;
 using SerrisModulesServer.Type.Addon;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -62,7 +65,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private void SetTheme()
         {
             BackgroundList.Fill = temp_variables.CurrentTheme.MainColor;
-            ButtonsGrid.Background = temp_variables.CurrentTheme.SecondaryColor;
+            MenuButtons.Background = temp_variables.CurrentTheme.SecondaryColor;
 
             ButtonsSeparator.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
 
@@ -71,34 +74,43 @@ namespace SerrisCodeEditor.Xaml.Views
 
             ThemesText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
             ThemesIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            InstallButton.Background = temp_variables.CurrentTheme.MainColor;
+            IconInstallButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            TextInstallButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
         }
 
-        private async void ChangeSelectedButton(int newSelectedButton)
+        private void ChangeSelectedButton(int newSelectedButton)
         {
             if (currentSelectedButton != newSelectedButton)
             {
                 currentSelectedButton = newSelectedButton;
-                ListModules.Items.Clear();
-
-                foreach (InfosModule module in await Modules_manager_access.GetModulesAsync(true))
-                {
-                    var module_infos = new ModuleInfosShow { Module = module };
-                    var reader = new AddonReader(module_infos.Module.ID);
-                    module_infos.Thumbnail = await reader.GetAddonIconViaIDAsync();
-
-                    switch (module.ModuleType)
-                    {
-                        case ModuleTypesList.Addon when currentSelectedButton == 0:
-                            ListModules.Items.Add(module_infos);
-                            break;
-
-                        case ModuleTypesList.Theme when currentSelectedButton == 1:
-                            ListModules.Items.Add(module_infos);
-                            break;
-                    }
-                }
+                LoadModules();
             }
 
+        }
+
+        private async void LoadModules()
+        {
+            ListModules.Items.Clear();
+
+            foreach (InfosModule module in await Modules_manager_access.GetModulesAsync(true))
+            {
+                var module_infos = new ModuleInfosShow { Module = module };
+                var reader = new AddonReader(module_infos.Module.ID);
+                module_infos.Thumbnail = await reader.GetAddonIconViaIDAsync();
+
+                switch (module.ModuleType)
+                {
+                    case ModuleTypesList.Addon when currentSelectedButton == 0:
+                        ListModules.Items.Add(module_infos);
+                        break;
+
+                    case ModuleTypesList.Theme when currentSelectedButton == 1:
+                        ListModules.Items.Add(module_infos);
+                        break;
+                }
+            }
         }
 
         private async void ListModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,6 +149,21 @@ namespace SerrisCodeEditor.Xaml.Views
             else
                 Pinned.AddNewModule(module.Module.ID);
 
+        }
+
+        private void InstallButton_Click(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = "Module installer", type = ModuleSheetNotificationType.NewSheet, sheetContent = new ModulesInstaller(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = false });
+        }
+
+        private async void DeleteAcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModuleInfosShow element = (ModuleInfosShow)((Button)sender).DataContext;
+
+            if(await Modules_manager_writer.DeleteModuleViaIDAsync(element.Module.ID))
+            {
+                LoadModules();
+            }
         }
 
         private void AddonsButton_PointerPressed(object sender, PointerRoutedEventArgs e)

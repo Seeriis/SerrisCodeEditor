@@ -91,7 +91,7 @@ namespace SCEELibs.Modules
                 dialog_warning.Commands.Add(new UICommand { Label = "Yes", Invoked = async (e) => 
                 {
                     StorageFile file = await StorageFile.GetFileFromPathAsync(zip_path);
-                    var result_verify = new ModulesVerifyAssistant(file).VerifyPackageAsync();
+                    var result_verify = await new ModulesVerifyAssistant(file).VerifyPackageAsync();
 
                     if(result_verify == PackageVerificationCode.Passed)
                         await write_manager.AddModuleAsync(file);

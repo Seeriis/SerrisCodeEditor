@@ -20,6 +20,8 @@ using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SerrisCodeEditor.Functions.Settings;
 using Windows.Storage;
+using SerrisModulesServer.Items;
+using SerrisModulesServer.Type.Addon;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -224,6 +226,18 @@ namespace SerrisCodeEditor.Xaml.Views
 
         }
 
+        private async void ExecuteModulesFunction()
+        {
+            foreach(InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
+            {
+                if(Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                {
+                    SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(Module.ID);
+                    await Task.Run(() => new AddonExecutor(Module.ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorViewReady));
+                }
+            }
+        }
+
         private void SetInterface()
         {
             if (temp_variables.CurrentDevice == CurrentDevice.WindowsMobile)
@@ -292,6 +306,7 @@ namespace SerrisCodeEditor.Xaml.Views
             if(!EditorIsLoaded)
             {
                 LoadSettings();
+                ExecuteModulesFunction();
                 EditorIsLoaded = true;
             }
         }

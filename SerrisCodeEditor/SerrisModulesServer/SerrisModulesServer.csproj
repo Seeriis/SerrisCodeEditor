@@ -122,6 +122,9 @@
     <Content Include="SystemModules\4\icon.png" />
     <Content Include="SystemModules\4\logo.png" />
     <Content Include="SystemModules\4\main.js" />
+    <Content Include="SystemModules\6\background.jpg" />
+    <Content Include="SystemModules\6\icon.png" />
+    <Content Include="SystemModules\6\logo.png" />
     <Content Include="SystemModules\5\icon.png" />
     <Content Include="SystemModules\5\logo.png" />
     <Content Include="SystemModules\5\main.js" />
@@ -131,6 +134,7 @@
     <Content Include="SystemModules\3\widget.json" />
     <Content Include="SystemModules\4\widget.json" />
     <Content Include="SystemModules\5\widget.json" />
+    <Content Include="SystemModules\6\theme.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SMSInfos.cs" />

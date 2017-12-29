@@ -129,6 +129,9 @@
     <Compile Include="Xaml\Views\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Xaml\Views\ModulesInstaller.xaml.cs">
+      <DependentUpon>ModulesInstaller.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\Views\ModulesManager.xaml.cs">
       <DependentUpon>ModulesManager.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Xaml\Views\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\ModulesInstaller.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
