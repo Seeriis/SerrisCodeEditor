@@ -28,8 +28,13 @@ namespace SCEELibs.Tabs
             //Convert InfosTab (.NET Lib) to Tab (WinRT Component)
             newTab.id = id;
             newTab.dateTabContentUpdated = tab.DateTabContentUpdated;
-            newTab.pathContent = tab.PathContent;
-            switch(tab.TabContentType)
+
+            if(tab.PathContent == null)
+                newTab.pathContent = "";
+            else
+                newTab.pathContent = tab.PathContent;
+
+            switch (tab.TabContentType)
             {
                 case ContentType.File:
                     newTab.tabContentType = ContentTypeInfos.File;

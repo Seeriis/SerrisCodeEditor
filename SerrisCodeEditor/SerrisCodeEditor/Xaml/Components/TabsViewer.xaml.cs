@@ -125,6 +125,13 @@ namespace SerrisCodeEditor.Xaml.Components
             CreateButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
             CreateIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
             CreateText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            TextBoxNewTab.Background = temp_variables.CurrentTheme.MainColor;
+            TextBoxNewTab.Foreground = temp_variables.CurrentTheme.MainColorFont;
+
+            NewTabAcceptButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            IconCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            TextCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
         }
 
         private void SetMessenger()
@@ -238,7 +245,16 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
+            if (NewTabCreatorGrid.Visibility == Visibility.Collapsed)
+                NewTabCreatorGrid.Visibility = Visibility.Visible;
+            else
+                NewTabCreatorGrid.Visibility = Visibility.Collapsed;
+        }
 
+        private async void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
+            NewTabCreatorGrid.Visibility = Visibility.Collapsed;
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -257,8 +273,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
         public TabID CurrentSelectedIDs; bool isLoaded = false;
-        TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager();
+        TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager(); TabsCreatorAssistant CreatorAssistant = new TabsCreatorAssistant();
         TempContent temp_variables = new TempContent();
-
     }
 }

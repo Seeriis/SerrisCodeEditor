@@ -1,4 +1,5 @@
-﻿using SerrisTabsServer.Items;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using System;
 using System.IO;
@@ -18,37 +19,41 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task CreateFile()
         {
-            var folderPicker = new FolderPicker();
-            StorageFolder folder;
-            folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
-
-            foreach (string ext in FileTypes.List_Type_extensions)
+            await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                folderPicker.FileTypeFilter.Add(ext);
-            }
+                var folderPicker = new FolderPicker();
+                StorageFolder folder;
+                folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
 
-            folder = await folderPicker.PickSingleFolderAsync();
-            if (folder != null)
-            {
-                StorageFile file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
-                Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
-
-                foreach (string type in FileTypes.List_Type_extensions)
+                foreach (string ext in FileTypes.List_Type_extensions)
                 {
-                    if (Tab.TabName.Contains(type))
-                    {
-                        Tab.TabType = FileTypes.GetExtensionType(file.FileType);
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    folderPicker.FileTypeFilter.Add(ext);
                 }
-                Tab.PathContent = file.Path;
-                await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
-            }
+
+                folder = await folderPicker.PickSingleFolderAsync();
+                if (folder != null)
+                {
+                    StorageFile file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
+                    Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
+                    Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
+
+                    foreach (string type in FileTypes.List_Type_extensions)
+                    {
+                        if (Tab.TabName.Contains(type))
+                        {
+                            Tab.TabType = FileTypes.GetExtensionType(file.FileType);
+                            break;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    Tab.PathContent = file.Path;
+                    await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
+                }
+
+            });
 
         }
 
@@ -123,17 +128,34 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task WriteFile()
         {
-            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
 
-            if (file != null)
+            await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                await FileIO.WriteTextAsync(file, string.Empty);
-                using (var rd = new StreamWriter(await file.OpenStreamForWriteAsync(), Encoding.GetEncoding(Tab.TabEncoding)))
+                try
                 {
-                    rd.Write(await TabsReader.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
-                    rd.Flush(); rd.Dispose();
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(Tab.PathContent);
+
+                    if (file != null)
+                    {
+                        await FileIO.WriteTextAsync(file, string.Empty);
+                        using (var rd = new StreamWriter(await file.OpenStreamForWriteAsync(), Encoding.GetEncoding(Tab.TabEncoding)))
+                        {
+                            rd.Write(await TabsReader.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
+                            rd.Flush(); rd.Dispose();
+                        }
+                    }
+
                 }
-            }
+                catch
+                {
+                    await CreateFile().ContinueWith(async (e) => 
+                    {
+                        await WriteFile();
+                    });
+                }
+
+            });
+
         }
 
     }

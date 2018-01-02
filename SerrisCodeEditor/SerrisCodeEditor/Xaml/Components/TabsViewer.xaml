@@ -490,7 +490,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
-                        <TextBlock x:Name="CreateText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="New file" FontSize="15" Grid.Column="1"/>
+                        <TextBlock x:Name="CreateText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="New tab" FontSize="15" Grid.Column="1"/>
                     </Grid>
                 </Button>
 
@@ -506,6 +506,16 @@
                 </Button>
             </Grid>
 
+            <StackPanel x:Name="NewTabCreatorGrid" Margin="0,0,0,8" Padding="10,0,10,0" Visibility="Collapsed">
+                <TextBox x:Name="TextBoxNewTab" PlaceholderText="Example: toothless.js" FontSize="12" Style="{StaticResource RoundTextBox}"/>
+                <Button x:Name="NewTabAcceptButton" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" VerticalContentAlignment="Stretch" Padding="5" Click="NewTabAcceptButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="IconCreateTab" FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
+                        <TextBlock x:Name="TextCreateTab" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Create tab" FontSize="12" Margin="10,0,0,0"/>
+                    </StackPanel>                
+                </Button>
+            </StackPanel>
+            
         </StackPanel>
 
 

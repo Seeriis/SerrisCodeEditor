@@ -160,7 +160,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                 {
                                     FlyoutElement = new Flyout();
                                     ModuleHTMLView HTMLView = new ModuleHTMLView();
-                                    HTMLView.Height = 250; HTMLView.Width = 250;
+                                    HTMLView.Height = 300; HTMLView.Width = 300;
 
                                     HTMLView.LoadPage((string)notification_toolbar.content, notification_toolbar.id);
                                     FlyoutElement.Content = HTMLView; FlyoutElement.FlyoutPresenterStyle = (Style)Application.Current.Resources["FlyoutBorderless"];

@@ -31,7 +31,7 @@ namespace SerrisModulesServer.SystemModules
                 ID = 1,
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
-                ModuleName = "[TEST] Youtube flyout",
+                ModuleName = "[TEST] Soundcloud flyout",
                 ModuleSystem = true,
                 ModuleAuthor = "[SP] DeerisLeGris",
                 ModuleVersion = new ModuleVersion
