@@ -4,15 +4,9 @@
 
 function save()
 {
-    sceelibs.editorEngine.saveCurrentSelectedTab();
     var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID());
-    sceelibs.consoleManager.sendConsoleInformationNotification(tab.pathContent);
 
-    /*if (tab.pathContent === "")
-    {
-        tab.createTabFile();
-    }*/
-
+    sceelibs.editorEngine.saveCurrentSelectedTab();
     tab.saveContentToFile();
     sceelibs.consoleManager.sendConsoleInformationNotification('"' + tab.tabName + '" has been saved at ' + tab.pathContent + ' !');
 }

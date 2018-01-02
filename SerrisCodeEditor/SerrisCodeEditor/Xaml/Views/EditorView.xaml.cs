@@ -165,6 +165,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 SheetViewSeparatorLine.Width = 2;
                 PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
+
+                Messenger.Default.Send(SheetViewMode.Deployed);
             }
             else
             {
@@ -172,6 +174,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
                 SheetsManager.SelectTabsListSheet();
+
+                Messenger.Default.Send(SheetViewMode.Minimized);
             }
         }
 

@@ -127,6 +127,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 foreach(CoreApplicationView view in CoreApplication.Views)
                 {
+                    Extension_tab.Text = current_tab.TabType.ToUpper();
                     name_tab.Text = current_tab.TabName;
                     path_tab.Text = current_tab.PathContent;
                     encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;

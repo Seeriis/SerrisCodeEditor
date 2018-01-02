@@ -37,6 +37,8 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabsView_Loaded(object sender, RoutedEventArgs e)
         {
+            TabsViewerControls.Visibility = Visibility.Collapsed;
+
             SetMessenger();
             SetTheme();
         }
@@ -148,6 +150,28 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 });
 
+            });
+
+            Messenger.Default.Register<SheetViewMode>(this, async (notification_sheetview) => 
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        switch(notification_sheetview)
+                        {
+                            case SheetViewMode.Deployed:
+                                TabsViewerControls.Visibility = Visibility.Visible;
+                                break;
+
+                            case SheetViewMode.Minimized:
+                                TabsViewerControls.Visibility = Visibility.Collapsed;
+                                break;
+                        }
+                    }
+                    catch { }
+
+                });
             });
 
             Messenger.Default.Register<STSNotification>(this, async (notification) =>

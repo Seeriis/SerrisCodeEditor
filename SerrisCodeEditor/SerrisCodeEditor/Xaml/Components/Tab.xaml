@@ -301,12 +301,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" Margin="45,0,60,0" RadiusX="1" RadiusY="3" Grid.ColumnSpan="2"/>
+                <Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" Margin="65,0,60,0" RadiusX="1" RadiusY="3" Grid.ColumnSpan="2"/>
                 <Grid Background="Transparent">
-                    <Grid Background="Transparent" Width="42" HorizontalAlignment="Left">
-                        <Image x:Name="image_tab" Width="25" Height="20"/>
+                    <Grid Background="Transparent" Width="65" HorizontalAlignment="Left">
+                        <TextBlock x:Name="Extension_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
+
                     </Grid>
-                    <StackPanel VerticalAlignment="Center" Margin="55,0,0,0" HorizontalAlignment="Left">
+                    <StackPanel VerticalAlignment="Center" Margin="65,0,0,0" HorizontalAlignment="Left">
                         <TextBlock x:Name="name_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" Width="205" TextTrimming="CharacterEllipsis"/>
                         <TextBlock x:Name="path_tab" Text="" FontSize="10" Foreground="#B2FFFFFF" FontStyle="Italic" FontFamily="ms-appx:/Fonts/Montserrat-Regular.ttf#Montserrat" Visibility="Collapsed" VerticalAlignment="Center" Width="205" TextWrapping="Wrap" MaxHeight="25" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
