@@ -200,6 +200,9 @@ namespace SerrisCodeEditor.Xaml.Components
                             {
                                 case TypeUpdateTab.NewTab:
                                     Tabs.Items.Add(notification.ID);
+
+                                    //Auto selection
+                                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
                                     break;
 
                                 case TypeUpdateTab.TabDeleted:
@@ -208,6 +211,12 @@ namespace SerrisCodeEditor.Xaml.Components
                                     {
                                         if (item.ID_Tab == notification.ID.ID_Tab)
                                         {
+                                            //Auto selection
+                                            if (CurrentSelectedIDs.ID_Tab == notification.ID.ID_Tab && Tabs.Items.Count - 2 >= 0)
+                                            {
+                                                Tabs.SelectedIndex = Tabs.Items.Count - 2;
+                                            }
+
                                             Tabs.Items.RemoveAt(i);
                                             break;
                                         }
@@ -283,8 +292,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
             }
 
+        }
 
-
+        private async void CreateTab()
+        {
+            await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
+            NewTabCreatorGrid.Visibility = Visibility.Collapsed;
+            TextBoxNewTab.Text = "";
         }
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -294,8 +308,18 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            TabsCreatorAssistant creator = new TabsCreatorAssistant();
-            await creator.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            await CreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+        }
+
+        private void TextBoxNewTab_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.KeyStatus.RepeatCount == 1)
+            {
+                if (e.Key == Windows.System.VirtualKey.Enter)
+                {
+                    CreateTab();
+                }
+            }
         }
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
@@ -306,10 +330,9 @@ namespace SerrisCodeEditor.Xaml.Components
                 NewTabCreatorGrid.Visibility = Visibility.Collapsed;
         }
 
-        private async void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
+        private void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
         {
-            await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
-            NewTabCreatorGrid.Visibility = Visibility.Collapsed;
+            CreateTab();
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -329,7 +352,8 @@ namespace SerrisCodeEditor.Xaml.Components
 
         public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false;
         TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager(); TabsCreatorAssistant CreatorAssistant = new TabsCreatorAssistant();
-        TempContent temp_variables = new TempContent(); ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+        TempContent temp_variables = new TempContent();
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
     }
 }

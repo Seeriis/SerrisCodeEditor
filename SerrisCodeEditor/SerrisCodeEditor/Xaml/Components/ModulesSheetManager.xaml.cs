@@ -30,7 +30,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void ModulesSheetContent_Loaded(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true });
+            Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true });
         }
 
         private void SheetManager_Loaded(object sender, RoutedEventArgs e)
@@ -61,11 +61,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
                             case ModuleSheetNotificationType.RemoveSheet:
                                 RemoveModule(notification.id);
+                                SelectTabsListSheet();
                                 break;
 
                             case ModuleSheetNotificationType.InitalizedSheet:
                                 if (notification.id == sheet_tabslist)
-                                    Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.SelectSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true });
+                                    SelectTabsListSheet();
 
                                 break;
                         }
@@ -96,7 +97,7 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         public void SelectTabsListSheet()
-        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.TriggerSheet, sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = true }); }
+        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.TriggerSheet, sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
 
         private void RemoveModule(int ID)
         { ModulesSheetContent.Children.Remove((UIElement)ModulesSheetContent.FindName("" + ID)); }

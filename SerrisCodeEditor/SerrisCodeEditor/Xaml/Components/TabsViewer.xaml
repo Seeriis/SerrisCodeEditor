@@ -507,7 +507,7 @@
             </Grid>
 
             <StackPanel x:Name="NewTabCreatorGrid" Margin="0,0,0,8" Padding="10,0,10,0" Visibility="Collapsed">
-                <TextBox x:Name="TextBoxNewTab" PlaceholderText="Example: toothless.js" FontSize="12" Style="{StaticResource RoundTextBox}"/>
+                <TextBox x:Name="TextBoxNewTab" PlaceholderText="Example: toothless.js" FontSize="12" Style="{StaticResource RoundTextBox}" KeyDown="TextBoxNewTab_KeyDown"/>
                 <Button x:Name="NewTabAcceptButton" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" VerticalContentAlignment="Stretch" Padding="5" Click="NewTabAcceptButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock x:Name="IconCreateTab" FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>

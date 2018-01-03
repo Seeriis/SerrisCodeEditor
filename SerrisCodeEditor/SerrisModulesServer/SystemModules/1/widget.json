@@ -2,8 +2,8 @@
   {
     "Type": 0,
     "WidgetName": "osef",
-    "FunctionName": "main",
-    "IconButton": "",
+    "FunctionName": "openFlyout",
+    "IconButton": "",
     "PlaceHolderText": null
   },
   {

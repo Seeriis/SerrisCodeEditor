@@ -153,7 +153,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = "Module installer", type = ModuleSheetNotificationType.NewSheet, sheetContent = new ModulesInstaller(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/StoreLogo.png")), sheetSystem = false });
+            Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = "Module installer", type = ModuleSheetNotificationType.NewSheet, sheetContent = new ModulesInstaller(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/modules_installer.png")), sheetSystem = false });
         }
 
         private async void DeleteAcceptButton_Click(object sender, RoutedEventArgs e)

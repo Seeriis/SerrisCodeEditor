@@ -42,18 +42,13 @@
 
 function textBoxAction()
 {
-    sceelibs.consoleManager.sendConsoleInformationNotification(sceelibs.widgetManager.getTextBoxContent("osef_b"));
+    sceelibs.consoleManager.sendConsoleInformationNotification("SOUNDCLOUD: " + sceelibs.widgetManager.getTextBoxContent("osef_b"));
     //sceelibs.widgetManager.setTextBoxContent("osef_b", "Ok !");
 
-    if (sceelibs.widgetManager.isButtonEnabled("osef"))
-    {
-        sceelibs.widgetManager.enableButton("osef", !sceelibs.widgetManager.isButtonEnabled("osef"));
-        sceelibs.widgetManager.openFlyout("osef_b", "HTML/flyout.html");
-    }
-    else
-    {
-        sceelibs.widgetManager.openFlyout("osef_b", "");
+    sceelibs.widgetManager.openFlyout("osef_b", "HTML/flyout.html");
+}
 
-    }
-
+function openFlyout()
+{
+    sceelibs.widgetManager.openFlyout("osef_b", "");
 }
