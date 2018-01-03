@@ -15,6 +15,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -198,8 +199,14 @@ namespace SerrisCodeEditor.Xaml.Views
                                 Link.FontSize = 12;
                                 Link.FontStyle = FontStyle.Italic;
                                 Link.FontWeight = FontWeights.Light;
-                                Link.Text = (string)SettingControl.Parameter;
                                 Link.Foreground = temp_variables.CurrentTheme.MainColorFont;
+
+                                Underline UnderlineText = new Underline();
+                                Run TextLink = new Run();
+                                TextLink.Text = (string)SettingControl.Parameter;
+                                UnderlineText.Inlines.Add(TextLink);
+                                Link.Inlines.Add(UnderlineText);
+
                                 Link.PointerPressed += (async (e, f) => 
                                 {
                                     TextBlock LinkContent = (TextBlock)e;
