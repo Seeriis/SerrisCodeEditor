@@ -14,6 +14,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,8 +38,6 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabsView_Loaded(object sender, RoutedEventArgs e)
         {
-            TabsViewerControls.Visibility = Visibility.Collapsed;
-
             SetMessenger();
             SetTheme();
         }
@@ -69,10 +68,19 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             if(!isLoaded)
             {
+                TabsViewerControls.Visibility = Visibility.Collapsed;
+
                 foreach (int id in await access_manager.GetTabsListIDAsync())
                 {
                     var list = await access_manager.GetTabsListViaIDAsync(id);
                     Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+
+                    if (AppSettings.Values.ContainsKey("Tabs_list-selected-index"))
+                    {
+                        if((int)AppSettings.Values["Tabs_list-selected-index"] == id)
+                            Lists.SelectedIndex = Lists.Items.Count - 1;
+                    }
+
                 }
 
                 if (Lists.Items.Count == 0)
@@ -80,7 +88,11 @@ namespace SerrisCodeEditor.Xaml.Components
                     await write_manager.CreateTabsListAsync("Default list");
                 }
                 else
-                    Lists.SelectedIndex = 0;
+                {
+                    if (!AppSettings.Values.ContainsKey("Tabs_list-selected-index"))
+                        Lists.SelectedIndex = 0;
+                }
+
 
                 isLoaded = true;
             }
@@ -96,6 +108,7 @@ namespace SerrisCodeEditor.Xaml.Components
                     CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
                     var tab = await access_manager.GetTabViaIDAsync(CurrentSelectedIDs);
                     Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+                    AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
                 }
             }
 
@@ -242,6 +255,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             Tabs.Items.Clear();
             CurrentSelectedIDs.ID_TabsList = id_list;
+            AppSettings.Values["Tabs_list-selected-index"] = id_list;
             List<int> list_ids = await access_manager.GetTabsIDAsync(id_list);
             
             foreach(int id in list_ids)
@@ -252,8 +266,25 @@ namespace SerrisCodeEditor.Xaml.Components
                 {
                     Tabs.SelectedIndex = Tabs.Items.Count - 1;
                 }
+
+                //Select the last selected tab when TabsViewer is initialized
+                if (AppSettings.Values.ContainsKey("Tabs_tab-selected-index"))
+                {
+                    if (!LastTabLoaded && (int)AppSettings.Values["Tabs_tab-selected-index"] == id && (int)AppSettings.Values["Tabs_list-selected-index"] == id_list)
+                    {
+                        Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                        LastTabLoaded = true;
+                    }
+                }
+                else
+                {
+                    LastTabLoaded = true;
+                }
+
             }
-            
+
+
+
         }
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -296,8 +327,9 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
 
-        public TabID CurrentSelectedIDs; bool isLoaded = false;
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false;
         TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager(); TabsCreatorAssistant CreatorAssistant = new TabsCreatorAssistant();
-        TempContent temp_variables = new TempContent();
+        TempContent temp_variables = new TempContent(); ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+
     }
 }

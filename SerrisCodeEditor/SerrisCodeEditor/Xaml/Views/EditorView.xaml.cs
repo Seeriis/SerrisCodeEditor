@@ -22,6 +22,7 @@ using SerrisCodeEditor.Functions.Settings;
 using Windows.Storage;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Type.Addon;
+using System.Text;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -35,6 +36,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void EditorViewUI_Loaded(object sender, RoutedEventArgs e)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             SetMessenger();
             SetTheme();
             SetInterface();

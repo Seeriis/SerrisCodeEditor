@@ -1,4 +1,5 @@
-﻿using SerrisCodeEditorEngine.Items;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using SerrisCodeEditorEngine.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,10 +37,28 @@ namespace SerrisCodeEditorEngine
             set
             {
                 IsLoading(true);
-                while (!Initialized) ;
 
-                new Languages().GetActualLanguage(CodeLanguage, editor_view);
-                SetCode(value);
+                Task.Run(() => 
+                {
+                    while (!Initialized)
+                    {
+                        if (Initialized)
+                            break;
+                    }
+
+                }).ContinueWith((e) => 
+                {
+                    DispatcherHelper.ExecuteOnUIThreadAsync(() => 
+                    {
+                        if (Initialized)
+                        {
+                            new Languages().GetActualLanguage(CodeLanguage, editor_view);
+                            SetCode(value);
+                        }
+
+                    });
+                });
+
             }
         }
         public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(string), typeof(EditorView), null);
