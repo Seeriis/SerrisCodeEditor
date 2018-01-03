@@ -141,9 +141,29 @@ namespace SerrisModulesServer.SystemModules
                     Minor = 0,
                     Revision = 0
                 },
-                ModuleDescription = "Background by Last Sentencer",
+                ModuleDescription = "Background by Last Sentencer (deviantart)",
                 CanBePinnedToToolBar = false,
                 IsEnabled = true
+            },
+            new InfosModule
+            {
+                ID = 7,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "SCE Marne-la-Vallée informations",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Informations about the SCE project !",
+                CanBePinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
             }
         };
     }

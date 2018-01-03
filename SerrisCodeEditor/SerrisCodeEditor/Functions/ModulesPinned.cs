@@ -25,7 +25,7 @@ namespace SerrisCodeEditor.Functions
 
     public class ModulesPinned
     {
-        int[] DefaultModulesPinned = { 4, 3 };
+        int[] DefaultModulesPinned = { 7, 4, 3 };
         StorageFile file;
 
         public ModulesPinned()
