@@ -202,7 +202,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                     Tabs.Items.Add(notification.ID);
 
                                     //Auto selection
-                                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                                    //Tabs.SelectedIndex = Tabs.Items.Count - 1;
                                     break;
 
                                 case TypeUpdateTab.TabDeleted:
