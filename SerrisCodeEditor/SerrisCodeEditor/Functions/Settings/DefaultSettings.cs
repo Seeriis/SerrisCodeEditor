@@ -53,7 +53,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Serris Code Editor",
                         Type = SettingType.SecondDescription,
 
-                        Parameter = "By Survivaliste Project"
+                        Parameter = "By Seeris"
                     },
 
                     new Setting
@@ -69,7 +69,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Become a SCE developer on GitHub !",
                         Type = SettingType.Link,
 
-                        Parameter = "http://www.github.com/"
+                        Parameter = "https://github.com/Seeris/SerrisCodeEditor"
                     }
                 }
 
