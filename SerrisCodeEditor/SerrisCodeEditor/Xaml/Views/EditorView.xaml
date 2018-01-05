@@ -18,6 +18,14 @@
     
     Loaded="EditorViewUI_Loaded" SizeChanged="EditorViewUI_SizeChanged" PointerExited="EditorViewUI_PointerExited">
 
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="MobileMode">
+
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    
     <Grid x:Name="MasterGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         
         <!-- FIRST LAYER -->
@@ -30,9 +38,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             
-            <StackPanel VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
+            <StackPanel x:Name="TopSheetViewSplit" VerticalAlignment="Top" Width="65" HorizontalAlignment="Left">
                 <Grid x:Name="DeployUIDetector" Height="75" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
                     <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
                 </Grid>
@@ -74,7 +83,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Height="75" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
+            <controls:DropShadowPanel x:Name="BackgroundPrincipalUIControl" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Height="75" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
                 <Rectangle Grid.RowSpan="2" Height="75" VerticalAlignment="Top">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
@@ -95,7 +104,7 @@
 
                 <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40"/>
                 <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent">
-                    <TextBlock Text="Serris Code Editor - Vincennes build" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
+                    <TextBlock x:Name="TextInfoTitlebar" Text="Serris Code Editor - Vincennes build" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
                 </Grid>
             </Grid>
 
@@ -106,7 +115,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <my:Console Height="240" VerticalAlignment="Top"/>
+                <my:Console x:Name="Console" Height="240" VerticalAlignment="Top"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
                     <!--
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>

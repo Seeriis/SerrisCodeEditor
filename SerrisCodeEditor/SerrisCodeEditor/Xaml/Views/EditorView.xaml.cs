@@ -153,7 +153,7 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private void DeployUIDetector_PointerEntered(object sender, PointerRoutedEventArgs e)
-        => UpdateUI(true);
+        => UpdateUI(!isUIDeployed);
 
         private void ContentViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
         => UpdateUI(false);
@@ -165,7 +165,14 @@ namespace SerrisCodeEditor.Xaml.Views
             if (isDeployed)
             {
                 SheetViewSeparatorLine.Width = 2;
-                PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
+
+                switch(temp_variables.CurrentDevice)
+                {
+                    case CurrentDevice.Desktop:
+                        PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
+                        break;
+                }
+
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
 
                 Messenger.Default.Send(SheetViewMode.Deployed);
@@ -173,8 +180,20 @@ namespace SerrisCodeEditor.Xaml.Views
             else
             {
                 SheetViewSeparatorLine.Width = 0;
-                PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay; SheetViewSplit.IsPaneOpen = false;
+
+                switch (temp_variables.CurrentDevice)
+                {
+                    case CurrentDevice.Desktop:
+                        PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
+                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                        break;
+
+                    case CurrentDevice.WindowsMobile:
+                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                        break;
+                }
+
+                SheetViewSplit.IsPaneOpen = false;
                 SheetsManager.SelectTabsListSheet();
 
                 Messenger.Default.Send(SheetViewMode.Minimized);
@@ -192,12 +211,22 @@ namespace SerrisCodeEditor.Xaml.Views
             BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
 
-            if (temp_variables.CurrentDevice == CurrentDevice.Desktop)
+            switch(temp_variables.CurrentDevice)
             {
-                ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
-                TitleBar.ButtonBackgroundColor = Colors.Transparent;
-                TitleBar.ButtonForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
+                case CurrentDevice.Desktop:
+                    ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    TitleBar.ButtonBackgroundColor = Colors.Transparent;
+                    TitleBar.ButtonForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
+                    break;
+
+                case CurrentDevice.WindowsMobile:
+                    var StatusBarSettings = StatusBar.GetForCurrentView();
+                    StatusBarSettings.ForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
+                    StatusBarSettings.BackgroundColor = temp_variables.CurrentTheme.MainColor.Color;
+                    StatusBarSettings.BackgroundOpacity = 1;
+                    break;
             }
+
         }
 
         private void LoadSettings()
@@ -246,14 +275,33 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetInterface()
         {
-            if (temp_variables.CurrentDevice == CurrentDevice.WindowsMobile)
-            { }
-            else
-            {
-                CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
-                Window.Current.SetTitleBar(focus_titlebar);
+            switch(temp_variables.CurrentDevice)
+            {
+                case CurrentDevice.WindowsMobile:
+                    //UI modification for mobile
+                    PrincipalUI.VerticalAlignment = VerticalAlignment.Bottom;
+                    ColorPrincipalUI.VerticalAlignment = VerticalAlignment.Bottom;
+                    BackgroundPrincipalUIControl.VerticalAlignment = VerticalAlignment.Bottom;
+                    Console.Height = 30;
+                    SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
+                    Grid.SetRow(TopSheetViewSplit, 2);
+                    Grid.SetColumnSpan(Toolbar, 1);
+                    Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    TextInfoTitlebar.Margin = new Thickness(0);
+                    PrincipalUI.Margin = new Thickness(65, 0, 0, 0);
+                    ContentViewerGrid.Margin = new Thickness(0, 0, 0, 75);
+                    TextInfoTitlebar.Visibility = Visibility.Collapsed;
+
+                    StatusBar.GetForCurrentView().ProgressIndicator.Text = "Serris Code Editor MLV";
+                    break;
+
+                case CurrentDevice.Desktop:
+                    CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
+                    Window.Current.SetTitleBar(focus_titlebar);
+                    break;
             }
 
             UpdateUI(false);
