@@ -162,16 +162,17 @@
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ChakraBridge">
-      <HintPath>..\..\..\JsBridge\dist\ChakraBridge.winmd</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Type\Language\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SystemModules\0\logo.png" />
     <Content Include="SystemModules\0\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\JsBridge-master\dist\ChakraBridge.winmd</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
