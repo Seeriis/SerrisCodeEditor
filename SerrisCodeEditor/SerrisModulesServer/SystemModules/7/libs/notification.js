@@ -1,11 +1,4 @@
-﻿function showPopup(title, text)
-{
-    var uri = new Windows.UI.Popups.MessageDialog(text);
-    uri.title = title;
-    uri.showAsync();
-}
-
-function createWindowsNotification(text)
+﻿function createWindowsNotification(text)
 {
     var ToastNotifier = Windows.UI.Notifications.ToastNotificationManager.createToastNotifier();
     var toastXml = Windows.UI.Notifications.ToastNotificationManager.getTemplateContent(Windows.UI.Notifications.ToastTemplateType.ToastText02);

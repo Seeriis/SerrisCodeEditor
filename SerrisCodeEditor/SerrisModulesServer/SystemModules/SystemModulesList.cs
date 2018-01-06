@@ -164,7 +164,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
                 {
-                    "libs/test.js"
+                    "libs/notification.js"
                 }
             }
         };

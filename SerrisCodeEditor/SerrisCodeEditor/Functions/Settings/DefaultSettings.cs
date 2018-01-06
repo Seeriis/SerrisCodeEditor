@@ -66,6 +66,14 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
+                        Description = "Version",
+                        Type = SettingType.SecondDescription,
+
+                        Parameter = new SCEELibs.SCEInfos().versionName
+                    },
+
+                    new Setting
+                    {
                         Description = "Become a SCE developer on GitHub !",
                         Type = SettingType.Link,
 
