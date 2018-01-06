@@ -1,6 +1,10 @@
 # Serris Code Editor
 Welcome to the GitHub of the modular code editor for Windows 10 (UWP) called "Serris Code Editor" !
 
+For more informations about the project, you can look the wiki [here](https://github.com/Seeris/SerrisCodeEditor/wiki).
+
+![](https://yoshilegris.files.wordpress.com/2017/06/pre-alpha_7.png)
+
 ## How to run the application
 
 - Install Visual Studio 2017 with the UWP SDK version 14393 (Anniversary Edition);
