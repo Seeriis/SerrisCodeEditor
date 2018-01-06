@@ -131,6 +131,7 @@
     <Compile Include="Modules\Type\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SCEELibs.cs" />
+    <Compile Include="SCEInfos.cs" />
     <Compile Include="Tabs\Items\Tab.cs" />
     <Compile Include="Tabs\Items\TabIDs.cs" />
     <Compile Include="Tabs\Manager.cs" />

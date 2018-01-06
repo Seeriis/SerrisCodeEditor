@@ -137,6 +137,7 @@
     <Content Include="SystemModules\6\theme.json" />
     <Content Include="SystemModules\7\HTML\infos.html" />
     <Content Include="SystemModules\7\icon.png" />
+    <Content Include="SystemModules\7\libs\test.js" />
     <Content Include="SystemModules\7\logo.png" />
     <Content Include="SystemModules\7\main.js" />
     <Content Include="SystemModules\7\widget.json" />

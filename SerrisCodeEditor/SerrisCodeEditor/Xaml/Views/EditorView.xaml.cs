@@ -263,7 +263,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void ExecuteModulesFunction()
         {
-            foreach(InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
+            //onEditorViewReady
+            foreach (InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
             {
                 if(Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
@@ -273,7 +274,7 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
-        private void SetInterface()
+        private async void SetInterface()
         {
 
             switch(temp_variables.CurrentDevice)
@@ -297,6 +298,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
 
                 case CurrentDevice.Desktop:
+                    TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
@@ -305,6 +307,18 @@ namespace SerrisCodeEditor.Xaml.Views
             }
 
             UpdateUI(false);
+
+
+            //onEditorStart
+            foreach (InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
+            {
+                if (Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                {
+                    SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(Module.ID);
+                    await Task.Run(() => new AddonExecutor(Module.ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorStart));
+                }
+            }
+
         }
 
         private void ContentViewer_EditorCommands(object sender, SerrisCodeEditorEngine.Items.EventSCEE e)

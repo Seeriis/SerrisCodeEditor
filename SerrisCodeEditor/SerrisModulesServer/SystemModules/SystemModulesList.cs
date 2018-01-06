@@ -163,7 +163,9 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = true,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>
-                { }
+                {
+                    "libs/test.js"
+                }
             }
         };
     }
