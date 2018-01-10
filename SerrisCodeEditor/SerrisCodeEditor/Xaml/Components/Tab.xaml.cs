@@ -41,6 +41,10 @@ namespace SerrisCodeEditor.Xaml.Components
             if (DataContext != null)
             {
                 TabID ids = (TabID)DataContext;
+
+                if (current_tab == null)
+                    current_tab = new InfosTab();
+
                 current_tab.ID = ids.ID_Tab; current_list = ids.ID_TabsList;
                 UpdateTabInformations();
             }

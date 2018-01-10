@@ -85,6 +85,9 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 }
             });
 
+            if (encode_type == "")
+                encode_type = "utf-8";
+
             using (var st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
             {
                 await TabsWriter.PushTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }, st.ReadToEnd(), true);
