@@ -34,12 +34,18 @@
         </Grid>
     
         <!-- SECOND LAYER -->
-        <Grid Margin="0,75,0,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+
+            <StackPanel x:Name="TopSheetViewSplit" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left">
+                <Grid x:Name="DeployUIDetectorB" Height="75" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
+                    <TextBlock x:Name="DeployUIIconB" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                </Grid>
+            </StackPanel>
 
             <SplitView x:Name="SheetViewSplit" Grid.Row="1" DisplayMode="CompactInline" CompactPaneLength="60">
                 <SplitView.Content>
