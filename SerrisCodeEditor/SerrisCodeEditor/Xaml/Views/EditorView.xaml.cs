@@ -169,6 +169,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch(temp_variables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
+                        PrincipalUI.Margin = new Thickness(0);
+                        DeployUIDetector.Visibility = Visibility.Collapsed;
                         PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
                         break;
                 }
@@ -184,12 +186,15 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (temp_variables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
-                        PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
+                        //PrincipalUI.Visibility = Visibility.Collapsed;
+                        //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
+                        DeployUIDetector.Visibility = Visibility.Visible;
+                        SheetsManager.Visibility = Visibility.Collapsed;
                         SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
                         break;
 
                     case CurrentDevice.WindowsMobile:
-                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetsManager.Visibility = Visibility.Collapsed;
                         break;
                 }
 
@@ -202,8 +207,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
-            DeployUIDetector.Background = temp_variables.CurrentTheme.MainColor;
-            DeployUIIcon.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            DeployUIDetector.Background = temp_variables.CurrentTheme.SecondaryColor;
+            DeployUIIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
 
             BackgroundPrinciapalUI.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorPrincipalUI.Fill = temp_variables.CurrentTheme.MainColor;
@@ -286,7 +291,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     BackgroundPrincipalUIControl.VerticalAlignment = VerticalAlignment.Bottom;
                     Console.Height = 30;
                     SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
-                    Grid.SetRow(TopSheetViewSplit, 2);
+                    //Grid.SetRow(TopSheetViewSplit, 2);
                     Grid.SetColumnSpan(Toolbar, 1);
                     Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
                     TextInfoTitlebar.Margin = new Thickness(0);
@@ -298,6 +303,9 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
 
                 case CurrentDevice.Desktop:
+                    //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
+                    ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+
                     TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;

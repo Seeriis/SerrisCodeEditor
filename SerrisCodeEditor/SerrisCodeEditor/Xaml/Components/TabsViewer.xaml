@@ -421,20 +421,17 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="TabsViewerControls" CornerRadius="0,0,20,20" Margin="0" Padding="2" Background="#CCFFFFFF">
-            <Rectangle x:Name="SeparatorA" Margin="10,10,10,0" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
 
-            <ComboBox x:Name="Lists" Margin="5,5,5,5" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
-
-            <Grid Margin="10,0,10,0">
+            <Grid Margin="10,15,10,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
+                
+                <ComboBox x:Name="Lists" Margin="0,0,5,0" Grid.Column="0" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A"/>
 
-                <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,0,10,4" Foreground="#FF292929" Background="#FF3C097A"/>
-
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Height="32" VerticalAlignment="Top">
-                    <Button x:Name="DeleteButtonFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="5,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Height="32" VerticalAlignment="Center">
+                    <Button x:Name="DeleteButtonFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="14" Margin="5,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1.5">
                         <Button.Flyout>
                             <Flyout x:Name="FlyoutDeleteList">
                                 <StackPanel>
@@ -453,7 +450,7 @@
                             </Flyout>
                         </Button.Flyout>
                     </Button>
-                    <Button x:Name="NewListFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="0,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1">
+                    <Button x:Name="NewListFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="14" Margin="0,0,5,0" BorderBrush="#FF3C097A" BorderThickness="1.5">
                         <Button.Flyout>
                             <Flyout x:Name="FlyoutNewList">
                                 <StackPanel>
@@ -473,6 +470,16 @@
                         </Button.Flyout>
                     </Button>
                 </StackPanel>
+            </Grid>
+
+            <Grid Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle x:Name="SeparatorA" VerticalAlignment="Top" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
+
+                <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,4,5,4" Foreground="#FF292929" Background="#FF3C097A"/>
 
                 <Rectangle x:Name="SeparatorB" VerticalAlignment="Bottom" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
             </Grid>
