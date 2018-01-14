@@ -245,7 +245,9 @@ namespace SerrisCodeEditor.Xaml.Views
             BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
 
-            switch(temp_variables.CurrentDevice)
+            SheetViewSeparatorLine.Fill = temp_variables.CurrentTheme.MainColor;
+
+            switch (temp_variables.CurrentDevice)
             {
                 case CurrentDevice.Desktop:
                     ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;

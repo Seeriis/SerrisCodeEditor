@@ -116,37 +116,40 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetTheme()
         {
-            TabsViewerControls.Background = temp_variables.CurrentTheme.SecondaryColor;
+            SeparatorA.Fill = temp_variables.CurrentTheme.SecondaryColor;
+            SeparatorB.Fill = temp_variables.CurrentTheme.SecondaryColor;
 
-            SeparatorA.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
-            SeparatorB.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+            Lists.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            Lists.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            Lists.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
 
-            Lists.Background = temp_variables.CurrentTheme.SecondaryColor;
-            Lists.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            Lists.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            Box_Search.Background = temp_variables.CurrentTheme.SecondaryColor;
+            Box_Search.Foreground = temp_variables.CurrentTheme.SecondaryColor;
 
-            Box_Search.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            NewListFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            NewListFlyout.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            NewListFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
 
-            NewListFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            NewListFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            DeleteButtonFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            DeleteButtonFlyout.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            DeleteButtonFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
 
-            DeleteButtonFlyout.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            DeleteButtonFlyout.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
+            OpenButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
+            OpenButton.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            OpenIcon.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            OpenText.Foreground = temp_variables.CurrentTheme.SecondaryColor;
 
-            OpenButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
-            OpenIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            OpenText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            CreateButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
+            CreateButton.Background = temp_variables.CurrentTheme.SecondaryColorFont;
+            CreateIcon.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            CreateText.Foreground = temp_variables.CurrentTheme.SecondaryColor;
 
-            CreateButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
-            CreateIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            CreateText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            TextBoxNewTab.Background = temp_variables.CurrentTheme.SecondaryColor;
+            TextBoxNewTab.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
 
-            TextBoxNewTab.Background = temp_variables.CurrentTheme.MainColor;
-            TextBoxNewTab.Foreground = temp_variables.CurrentTheme.MainColorFont;
-
-            NewTabAcceptButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColorFont;
-            IconCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            TextCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            NewTabAcceptButton.BorderBrush = temp_variables.CurrentTheme.SecondaryColor;
+            IconCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColor;
+            TextCreateTab.Foreground = temp_variables.CurrentTheme.SecondaryColor;
         }
 
         private void SetMessenger()

@@ -301,13 +301,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" Margin="65,0,60,0" RadiusX="1" RadiusY="3" Grid.ColumnSpan="2"/>
+                <Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" Margin="60,0,60,0" RadiusX="1" RadiusY="3" Grid.ColumnSpan="2"/>
                 <Grid Background="Transparent">
-                    <Grid Background="Transparent" Width="65" HorizontalAlignment="Left">
+                    <Grid Background="Transparent" Width="60" HorizontalAlignment="Left">
                         <TextBlock x:Name="Extension_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
 
                     </Grid>
-                    <StackPanel VerticalAlignment="Center" Margin="65,0,0,0" HorizontalAlignment="Left">
+                    <StackPanel VerticalAlignment="Center" Margin="60,0,0,0" HorizontalAlignment="Left">
                         <TextBlock x:Name="name_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" Width="205" TextTrimming="CharacterEllipsis"/>
                         <TextBlock x:Name="path_tab" Text="" FontSize="10" Foreground="#B2FFFFFF" FontStyle="Italic" FontFamily="ms-appx:/Fonts/Montserrat-Regular.ttf#Montserrat" Visibility="Collapsed" VerticalAlignment="Center" Width="205" TextWrapping="Wrap" MaxHeight="25" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
@@ -319,12 +319,12 @@
                             <CompositeTransform/>
                         </Button.RenderTransform>
                     </Button>
-                    <Button x:Name="Close_Tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#7FFF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="0,0,2,0"/>
+                    <Button x:Name="Close_Tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#7FFF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="0,0,8,0"/>
                 </StackPanel>
 
             </Grid>
 
-            <StackPanel Margin="65,0,0,0">
+            <StackPanel Margin="60,0,0,0">
                 <!--<StackPanel Orientation="Horizontal" Margin="10,0,10,5">
                     <TextBlock x:Name="type_info" x:Uid="fileinfo-type" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,5"/>
                     <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Top"/>
