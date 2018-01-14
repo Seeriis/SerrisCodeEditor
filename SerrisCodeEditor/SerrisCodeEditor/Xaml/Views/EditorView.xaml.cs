@@ -339,15 +339,20 @@ namespace SerrisCodeEditor.Xaml.Views
                         if (!(bool)AppSettings.Values["ui_extendedview"])
                         {
                             ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                            BackgroundPrincipalUIControl.Color = Colors.Transparent;
                         }
                         else
                         {
                             ContentViewerGrid.Margin = new Thickness(60, 0, 0, 0);
                             DeployUIDetector.Visibility = Visibility.Collapsed;
+                            BackgroundPrincipalUIControl.Color = Colors.Black;
                         }
                     }
                     else
+                    {
                         ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                        BackgroundPrincipalUIControl.Color = Colors.Transparent;
+                    }
 
                     TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
