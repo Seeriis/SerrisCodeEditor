@@ -60,54 +60,23 @@ namespace SCEELibs.Editor.Components
                 isLoaded = true;
             }
 
-            if(path != "")
+            if(!string.IsNullOrEmpty(path))
             {
                 current_id = id;
 
                 ModulesAccessManager AccessManager = new ModulesAccessManager();
 
                 InfosModule ModuleAccess = await AccessManager.GetModuleViaIDAsync(id);
-                StorageFolder folder_module;
 
                 if (ModuleAccess.ModuleSystem)
                 {
-                    StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                        folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                    folder_module = await folder_systemmodules.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
+                    html_view.Navigate(new Uri("ms-appx-web:///SerrisModulesServer/SystemModules/" + id + "/" + path));
+                    Debug.WriteLine("ms-appx-web:///SerrisModulesServer/SystemModules/" + id + "/" + path);
                 }
                 else
                 {
-                    StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                    folder_module = await folder_content.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
-                }
-
-                StorageFolder _folder_temp = folder_module; StorageFile _file_read = await folder_module.GetFileAsync("main.js"); bool file_found = false; string path_temp = path;
-
-                while (!file_found)
-                {
-                    if (path_temp.Contains(Path.AltDirectorySeparatorChar))
-                    {
-                        _folder_temp = await _folder_temp.GetFolderAsync(path_temp.Split(Path.AltDirectorySeparatorChar).First());
-                        path_temp = path_temp.Substring(path_temp.Split(Path.AltDirectorySeparatorChar).First().Length + 1);
-                    }
-                    else
-                    {
-                        _file_read = AsyncHelpers.RunSync<StorageFile>(async () => await _folder_temp.GetFileAsync(path_temp));
-                        file_found = true;
-                        break;
-                    }
-                }
-
-                try
-                {
-                    using (var reader = AsyncHelpers.RunSync<StreamReader>(async () => new StreamReader(await _file_read.OpenStreamForReadAsync())))
-                    {
-                        html_view.NavigateToString(await reader.ReadToEndAsync());
-                    }
-                }
-                catch
-                {
-                    Debug.WriteLine("Erreur ! :(");
+                    html_view.Navigate(new Uri("ms-appdata:///local/modules/" + id + "/" + path));
+                    Debug.WriteLine("ms-appdata:///local/modules/" + id + "/" + path);
                 }
 
             }
