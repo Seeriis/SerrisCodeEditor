@@ -115,6 +115,9 @@ namespace SerrisCodeEditor.Xaml.Views
                         if(notification_settings.SettingsUpdatedName == new DefaultSettings().DefaultSettingsMenuList[0].Name && EditorIsLoaded) //If settings updated for Editor, then...
                         {
                             LoadSettings();
+                        } else if (notification_settings.SettingsUpdatedName == new DefaultSettings().DefaultSettingsMenuList[1].Name)
+                        {
+                            SetInterface();
                         }
                     }
                     catch { }
@@ -169,6 +172,20 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch(temp_variables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
+                        if (AppSettings.Values.ContainsKey("ui_extendedview"))
+                        {
+                            if (!(bool)AppSettings.Values["ui_extendedview"])
+                            {
+                                PrincipalUI.Margin = new Thickness(0);
+                                DeployUIDetector.Visibility = Visibility.Collapsed;
+                            }
+                        }
+                        else
+                        {
+                            PrincipalUI.Margin = new Thickness(0);
+                            DeployUIDetector.Visibility = Visibility.Collapsed;
+                        }
+                        
                         PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
                         break;
                 }
@@ -184,12 +201,26 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (temp_variables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
-                        PrincipalUI.Visibility = Visibility.Collapsed; SheetsManager.Visibility = Visibility.Collapsed;
+                        //PrincipalUI.Visibility = Visibility.Collapsed;
+                        //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
+                        if (AppSettings.Values.ContainsKey("ui_extendedview"))
+                        {
+                            if (!(bool)AppSettings.Values["ui_extendedview"])
+                            {
+                                DeployUIDetector.Visibility = Visibility.Visible;
+                            }
+                            else
+                                PrincipalUI.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                            DeployUIDetector.Visibility = Visibility.Visible;
+
+                        SheetsManager.Visibility = Visibility.Collapsed;
                         SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
                         break;
 
                     case CurrentDevice.WindowsMobile:
-                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetsManager.Visibility = Visibility.Collapsed;
                         break;
                 }
 
@@ -202,8 +233,11 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
-            DeployUIDetector.Background = temp_variables.CurrentTheme.MainColor;
-            DeployUIIcon.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            DeployUIDetector.Background = temp_variables.CurrentTheme.SecondaryColor;
+            DeployUIIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+
+            DeployUIDetectorB.Background = temp_variables.CurrentTheme.MainColor;
+            DeployUIIconB.Foreground = temp_variables.CurrentTheme.MainColorFont;
 
             BackgroundPrinciapalUI.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorPrincipalUI.Fill = temp_variables.CurrentTheme.MainColor;
@@ -211,7 +245,9 @@ namespace SerrisCodeEditor.Xaml.Views
             BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
             ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
 
-            switch(temp_variables.CurrentDevice)
+            SheetViewSeparatorLine.Fill = temp_variables.CurrentTheme.MainColor;
+
+            switch (temp_variables.CurrentDevice)
             {
                 case CurrentDevice.Desktop:
                     ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -231,7 +267,6 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void LoadSettings()
         {
-            ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
             //LINE NUMBERS
             if (AppSettings.Values.ContainsKey("editor_linenumbers"))
@@ -286,7 +321,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     BackgroundPrincipalUIControl.VerticalAlignment = VerticalAlignment.Bottom;
                     Console.Height = 30;
                     SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
-                    Grid.SetRow(TopSheetViewSplit, 2);
+                    //Grid.SetRow(TopSheetViewSplit, 2);
                     Grid.SetColumnSpan(Toolbar, 1);
                     Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
                     TextInfoTitlebar.Margin = new Thickness(0);
@@ -298,6 +333,27 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
 
                 case CurrentDevice.Desktop:
+                    //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
+                    if (AppSettings.Values.ContainsKey("ui_extendedview"))
+                    {
+                        if (!(bool)AppSettings.Values["ui_extendedview"])
+                        {
+                            ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                            BackgroundPrincipalUIControl.Color = Colors.Transparent;
+                        }
+                        else
+                        {
+                            ContentViewerGrid.Margin = new Thickness(60, 0, 0, 0);
+                            DeployUIDetector.Visibility = Visibility.Collapsed;
+                            BackgroundPrincipalUIControl.Color = Colors.Black;
+                        }
+                    }
+                    else
+                    {
+                        ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                        BackgroundPrincipalUIControl.Color = Colors.Transparent;
+                    }
+
                     TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -442,6 +498,7 @@ namespace SerrisCodeEditor.Xaml.Views
         ModulesAccessManager Modules_manager_access = new ModulesAccessManager();
         ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         TempContent temp_variables = new TempContent();
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
         bool isUIDeployed = false, EditorIsLoaded = false;
 
     }

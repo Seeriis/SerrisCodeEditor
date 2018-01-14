@@ -52,59 +52,8 @@ namespace SerrisModulesServer.Type.Addon
             host.Chakra.ProjectNamespace("SCEELibs.Modules.Type");
             host.Chakra.ProjectNamespace("SCEELibs.Tabs");
 
-            if (FuncType == AddonExecutorFuncTypes.whenModuleIsPinned)
-            {
-                host.Chakra.ProjectNamespace("SCEELibs.Editor.Components");
-                host.Chakra.ProjectObjectToGlobal(_SCEELibs, "sceelibs");
+            IntializeChakraAndExecute(FuncType.ToString());
 
-                InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await AccessManager.GetModuleViaIDAsync(_id));
-                StorageFolder folder_module;
-
-                if (ModuleAccess.ModuleSystem)
-                {
-                    StorageFolder folder_content = AsyncHelpers.RunSync(async () => await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer")),
-                        folder_systemmodules = AsyncHelpers.RunSync(async () => await folder_content.GetFolderAsync("SystemModules"));
-                    folder_module = AsyncHelpers.RunSync(async () => await folder_systemmodules.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
-                }
-                else
-                {
-                    StorageFolder folder_content = AsyncHelpers.RunSync(async () => await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists));
-                    folder_module = AsyncHelpers.RunSync(async () => await folder_content.CreateFolderAsync(_id + "", CreationCollisionOption.OpenIfExists));
-                }
-
-                StorageFile file = AsyncHelpers.RunSync(async () => await folder_module.GetFileAsync("widget.js"));
-                try
-                {
-                    using (StreamReader reader = AsyncHelpers.RunSync(async () => new StreamReader(await file.OpenStreamForReadAsync())))
-                    {
-                        host.Chakra.RunScript(AsyncHelpers.RunSync(async () => await reader.ReadToEndAsync()));
-                    }
-                }
-                catch
-                {
-                    Debug.WriteLine("Erreur ! :(");
-                }
-
-                host.Chakra.CallFunction("whenModuleIsPinned");
-            }
-            else
-            {
-                switch (FuncType)
-                {
-                    case AddonExecutorFuncTypes.main:
-                        IntializeChakraAndExecute("main");
-                        break;
-
-                    case AddonExecutorFuncTypes.onEditorStart:
-                        IntializeChakraAndExecute("onEditorStart");
-                        break;
-
-                    case AddonExecutorFuncTypes.onEditorViewReady:
-                        IntializeChakraAndExecute("onEditorViewReady");
-                        break;
-                }
-
-            }
 
         }
 

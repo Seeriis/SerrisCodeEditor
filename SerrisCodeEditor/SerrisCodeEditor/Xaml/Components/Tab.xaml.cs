@@ -57,10 +57,16 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void TabComponent_PointerEntered(object sender, PointerRoutedEventArgs e)
-        { ShowPath.Begin(); }
+        {
+            if (!string.IsNullOrEmpty(current_tab.PathContent))
+                ShowPath.Begin();
+        }
 
         private void TabComponent_PointerExited(object sender, PointerRoutedEventArgs e)
-        { ShowName.Begin(); }
+        {
+            if(!string.IsNullOrEmpty(current_tab.PathContent))
+                ShowName.Begin();
+        }
 
 
 

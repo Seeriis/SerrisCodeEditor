@@ -191,26 +191,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async Task AddModule(int ID)
         {
-            /*var module = await Modules_manager_access.GetModuleViaIDAsync(ID);
-
-            if(module != null)
-            {
-                PinnedModule pinned = new PinnedModule { ID = module.ID, ModuleName = module.ModuleName, ModuleType = module.ModuleType };
-                pinned.Image = await new AddonReader(module.ID).GetAddonIconViaIDAsync();
-
-                Button module_button = new Button();
-                module_button.DataContext = pinned; module_button.Name = "" + pinned.ID;
-                module_button.Height = 30; module_button.Width = 30; module_button.Margin = new Thickness(2, 0, 2, 0);
-                var image_brush = new ImageBrush(); image_brush.Stretch = Stretch.Uniform; image_brush.ImageSource = pinned.Image;
-                module_button.Background = image_brush;
-                module_button.Click += Module_button_Click;
-
-
-                ToolbarContent.Children.Add(module_button);
-            }*/
-            //new AddonExecutor(ID, new SCEELibs.SCEELibs(ID)).ExecuteDefaultFunction(AddonExecutorFuncTypes.whenModuleIsPinned);
-
             ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
+
+            SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(ID);
+            await Task.Run(() => new AddonExecutor(ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.whenModuleIsPinned));
+
         }
 
         private void RemoveModule(int ID)

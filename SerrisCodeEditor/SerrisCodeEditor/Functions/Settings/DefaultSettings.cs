@@ -40,6 +40,26 @@ namespace SerrisCodeEditor.Functions.Settings
 
             },
 
+            //UI
+            new SettingsMenu
+            {
+                Name = "UI",
+                Icon = "",
+
+                Settings = new List<Setting>
+                {
+                    new Setting
+                    {
+                        Description = "UI extended view mode",
+                        Type = SettingType.Checkbox,
+
+                        VarSaveName = "ui_extendedview",
+                        VarSaveDefaultContent = false
+                    }
+                }
+
+            },
+
             //CREDITS
             new SettingsMenu
             {
