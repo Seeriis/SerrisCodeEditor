@@ -107,7 +107,10 @@ namespace SerrisCodeEditor.Xaml.Components
                 {
                     CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
                     var tab = await access_manager.GetTabViaIDAsync(CurrentSelectedIDs);
-                    Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+
+                    if(tab != null)
+                        Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+
                     AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
                 }
             }
@@ -205,28 +208,30 @@ namespace SerrisCodeEditor.Xaml.Components
                                     Tabs.Items.Add(notification.ID);
 
                                     //Auto selection
-                                    //Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
                                     break;
 
                                 case TypeUpdateTab.TabDeleted:
-                                    int i = 0;
-                                    foreach (TabID item in Tabs.Items)
+                                    if(await write_manager.DeleteTabAsync(notification.ID))
                                     {
-                                        if (item.ID_Tab == notification.ID.ID_Tab)
-                                        {
-                                            //Auto selection
-                                            if (CurrentSelectedIDs.ID_Tab == notification.ID.ID_Tab && Tabs.Items.Count - 2 >= 0)
-                                            {
-                                                Tabs.SelectedIndex = Tabs.Items.Count - 2;
-                                            }
+                                        object FindItem = Tabs.Items.SingleOrDefault(o => o.Equals(notification.ID));
 
-                                            Tabs.Items.RemoveAt(i);
-                                            break;
+                                        if (FindItem != null)
+                                        {
+                                            Tabs.Items.Remove(FindItem);
+
+                                            //Auto selection
+                                            if (CurrentSelectedIDs.ID_Tab == notification.ID.ID_Tab && Tabs.Items.Count - 1 >= 0)
+                                            {
+                                                Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                                            }
                                         }
 
-                                        i++;
+                                        if (Tabs.Items.Count == 0)
+                                            await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "default_tab.txt", Encoding.UTF8, StorageListTypes.LocalStorage, "");
+
                                     }
-                                    await write_manager.DeleteTabAsync(notification.ID);
+
                                     break;
 
                                 case TypeUpdateTab.NewList:
@@ -270,29 +275,37 @@ namespace SerrisCodeEditor.Xaml.Components
             AppSettings.Values["Tabs_list-selected-index"] = id_list;
             List<int> list_ids = await access_manager.GetTabsIDAsync(id_list);
             
-            foreach(int id in list_ids)
+            if(list_ids.Count == 0)
             {
-                Tabs.Items.Add(new TabID { ID_Tab = id, ID_TabsList = id_list });
-
-                if (temp_variables.CurrentIDs.ID_TabsList == CurrentSelectedIDs.ID_TabsList && temp_variables.CurrentIDs.ID_Tab == id)
+                await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "default_tab.txt", Encoding.UTF8, StorageListTypes.LocalStorage, "");
+                
+            }
+            else
+            {
+                foreach (int id in list_ids)
                 {
-                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
-                }
+                    Tabs.Items.Add(new TabID { ID_Tab = id, ID_TabsList = id_list });
 
-                //Select the last selected tab when TabsViewer is initialized
-                if (AppSettings.Values.ContainsKey("Tabs_tab-selected-index"))
-                {
-                    if (!LastTabLoaded && (int)AppSettings.Values["Tabs_tab-selected-index"] == id && (int)AppSettings.Values["Tabs_list-selected-index"] == id_list)
+                    if (temp_variables.CurrentIDs.ID_TabsList == CurrentSelectedIDs.ID_TabsList && temp_variables.CurrentIDs.ID_Tab == id)
                     {
                         Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                    }
+
+                    //Select the last selected tab when TabsViewer is initialized
+                    if (AppSettings.Values.ContainsKey("Tabs_tab-selected-index"))
+                    {
+                        if (!LastTabLoaded && (int)AppSettings.Values["Tabs_tab-selected-index"] == id && (int)AppSettings.Values["Tabs_list-selected-index"] == id_list)
+                        {
+                            Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                            LastTabLoaded = true;
+                        }
+                    }
+                    else
+                    {
                         LastTabLoaded = true;
                     }
-                }
-                else
-                {
-                    LastTabLoaded = true;
-                }
 
+                }
             }
 
         }

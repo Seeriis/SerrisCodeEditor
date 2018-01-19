@@ -152,7 +152,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void Close_Tab_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new STSNotification { ID = new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, Type = TypeUpdateTab.TabDeleted });
+            try
+            {
+                Messenger.Default.Send(new STSNotification { ID = new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, Type = TypeUpdateTab.TabDeleted });
+            }
+            catch { }
         }
 
         private void list_types_SelectionChanged(object sender, SelectionChangedEventArgs e)
