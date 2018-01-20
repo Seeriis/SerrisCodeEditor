@@ -112,7 +112,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="tab">Tab you want to create</param>
         /// <param name="id_list">ID of the tabs list</param>
         /// <returns>ID of the new tab</returns>
-        public async Task<int> CreateTabAsync(InfosTab tab, int id_list)
+        public async Task<int> CreateTabAsync(InfosTab tab, int id_list, bool SendNotification)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -137,7 +137,8 @@ namespace SerrisTabsServer.Manager
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
+                            if(SendNotification)
+                                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
                         });
                     }
                     return tab.ID;

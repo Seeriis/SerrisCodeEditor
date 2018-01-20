@@ -1,4 +1,5 @@
-﻿using SerrisTabsServer.Items;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SerrisTabsServer.Items;
 using SerrisTabsServer.Storage;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,14 @@ namespace SerrisTabsServer.Manager
                 TabType = extension,
                 TabInvisibleByDefault = false
             };
-            int id_tab = await WriteManager.CreateTabAsync(newtab, IDList);
-            await WriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false);
-            return id_tab;
+            int id_tab = await WriteManager.CreateTabAsync(newtab, IDList, false);
+            if (await WriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false))
+            {
+                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                return id_tab;
+            }
+            else
+                return 0;
         }
 
         public async Task<bool> CreateNewFileViaTab(TabID ids)
@@ -105,8 +111,9 @@ namespace SerrisTabsServer.Manager
                         int id_tab = 0;
                         await Task.Run(async () =>
                         {
-                            id_tab = await WriteManager.CreateTabAsync(tab, IDList);
+                            id_tab = await WriteManager.CreateTabAsync(tab, IDList, false);
                             new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
                         });
                         list_ids.Add(id_tab);
                     }
