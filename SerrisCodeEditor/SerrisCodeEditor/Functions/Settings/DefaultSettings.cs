@@ -59,7 +59,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Close panel automatically",
+                        Description = "Close the panel automatically (if the UI is deployed)",
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "ui_closepanelauto",

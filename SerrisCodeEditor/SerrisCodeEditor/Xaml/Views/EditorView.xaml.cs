@@ -208,12 +208,16 @@ namespace SerrisCodeEditor.Xaml.Views
                             if (!(bool)AppSettings.Values["ui_extendedview"])
                             {
                                 DeployUIDetector.Visibility = Visibility.Visible;
+                                PrincipalUI.Visibility = Visibility.Visible;
                             }
                             else
                                 PrincipalUI.Visibility = Visibility.Collapsed;
                         }
                         else
+                        {
                             DeployUIDetector.Visibility = Visibility.Visible;
+                            PrincipalUI.Visibility = Visibility.Visible;
+                        }
 
                         SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
                         break;
