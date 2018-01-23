@@ -112,8 +112,10 @@ namespace SerrisTabsServer.Manager
                         await Task.Run(async () =>
                         {
                             id_tab = await WriteManager.CreateTabAsync(tab, IDList, false);
-                            new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                            if(await new StorageRouter(await AccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true))
+                            {
+                                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                            }
                         });
                         list_ids.Add(id_tab);
                     }

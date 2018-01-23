@@ -66,7 +66,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
             await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
         }
 
-        public async void ReadFile(bool ReplaceEncoding)
+        public async Task<bool> ReadFile(bool ReplaceEncoding)
         {
             StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
             string encode_type = "";
@@ -100,6 +100,8 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
                 st.Dispose();
             }
+
+            return true;
         }
 
         public async Task<string> ReadFileAndGetContent()

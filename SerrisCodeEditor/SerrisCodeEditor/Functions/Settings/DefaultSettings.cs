@@ -55,6 +55,15 @@ namespace SerrisCodeEditor.Functions.Settings
 
                         VarSaveName = "ui_extendedview",
                         VarSaveDefaultContent = false
+                    },
+
+                    new Setting
+                    {
+                        Description = "Close panel automatically",
+                        Type = SettingType.Checkbox,
+
+                        VarSaveName = "ui_closepanelauto",
+                        VarSaveDefaultContent = false
                     }
                 }
 

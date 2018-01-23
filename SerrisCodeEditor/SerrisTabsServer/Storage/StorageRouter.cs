@@ -54,13 +54,12 @@ namespace SerrisTabsServer.Storage
             }
         }
 
-        public void ReadFile(bool ReplaceEncoding)
+        public async Task<bool> ReadFile(bool ReplaceEncoding)
         {
             switch (tab.TabStorageMode)
             {
                 case StorageListTypes.LocalStorage:
-                    new LocalStorage(tab, IdList).ReadFile(ReplaceEncoding);
-                    break;
+                    return await new LocalStorage(tab, IdList).ReadFile(ReplaceEncoding);
 
                 case StorageListTypes.Network:
                     break;
@@ -68,6 +67,8 @@ namespace SerrisTabsServer.Storage
                 case StorageListTypes.OneDrive:
                     break;
             }
+
+            return false;
         }
 
         public async Task<string> ReadFileAndGetContent()

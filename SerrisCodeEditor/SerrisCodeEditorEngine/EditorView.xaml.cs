@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -517,12 +518,31 @@ namespace SerrisCodeEditorEngine
             editor_view.ScriptNotify += editor_view_ScriptNotify;
             editor_view.NavigationStarting += Editor_view_NavigationStarting;
             editor_view.SizeChanged += EditorView_SizeChanged;
+            editor_view.LostFocus += Editor_view_LostFocus;
+            InputPane.GetForCurrentView().Hiding += EditorView_Hiding;
 
             editor_view.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Visible);
 
             MasterGrid.Children.Insert(0, editor_view);
 
             InitializeEditor();
+        }
+
+        private async void EditorView_Hiding(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            if (Initialized)
+            {
+                await editor_view.InvokeScriptAsync("eval", new string[] { @"document.activeElement.blur();" });
+            }
+        }
+
+        private async void Editor_view_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Initialized && isWindowsPhone)
+            {
+                await editor_view.InvokeScriptAsync("eval", new string[] { @"document.activeElement.blur();" });
+            }
+
         }
 
         private async void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)

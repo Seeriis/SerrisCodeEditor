@@ -137,15 +137,23 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 foreach(CoreApplicationView view in CoreApplication.Views)
                 {
-                    Extension_tab.Text = current_tab.TabType.ToUpper();
-                    name_tab.Text = current_tab.TabName;
-                    path_tab.Text = current_tab.PathContent;
-                    encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-                }
-                //image_tab.Source = current_tab.;
+                    if(current_tab.TabName.Length >= 4)
+                        Extension_tab.Text = current_tab.TabName.Substring(0, 4);
+                    else
+                        Extension_tab.Text = current_tab.TabType.ToUpper();
 
-                //SET INFOS
-                //default_type = infos_list.GetExtension(current_tab.type).ToUpper(); list_types.SelectedItem = infos_list.GetExtension(current_tab.type).ToUpper();
+                    name_tab.Text = current_tab.TabName;
+
+                    if (!string.IsNullOrEmpty(current_tab.PathContent))
+                    {
+                        path_tab.Text = current_tab.PathContent;
+                        encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
+                        More_Tab.Visibility = Visibility.Visible;
+                    }
+                    else
+                        More_Tab.Visibility = Visibility.Collapsed;
+                }
+
             }
             catch { }
         }

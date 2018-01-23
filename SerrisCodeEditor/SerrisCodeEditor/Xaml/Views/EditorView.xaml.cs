@@ -186,12 +186,12 @@ namespace SerrisCodeEditor.Xaml.Views
                             DeployUIDetector.Visibility = Visibility.Collapsed;
                         }
                         
-                        PrincipalUI.Visibility = Visibility.Visible; SheetsManager.Visibility = Visibility.Visible;
+                        PrincipalUI.Visibility = Visibility.Visible;
                         break;
                 }
 
                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
-
+                SheetsManager.Visibility = Visibility.Visible;
                 Messenger.Default.Send(SheetViewMode.Deployed);
             }
             else
@@ -215,15 +215,15 @@ namespace SerrisCodeEditor.Xaml.Views
                         else
                             DeployUIDetector.Visibility = Visibility.Visible;
 
-                        SheetsManager.Visibility = Visibility.Collapsed;
                         SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
                         break;
 
                     case CurrentDevice.WindowsMobile:
-                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetsManager.Visibility = Visibility.Collapsed;
+                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
                         break;
                 }
 
+                SheetsManager.Visibility = Visibility.Collapsed;
                 SheetViewSplit.IsPaneOpen = false;
                 SheetsManager.SelectTabsListSheet();
 
@@ -321,19 +321,19 @@ namespace SerrisCodeEditor.Xaml.Views
                     BackgroundPrincipalUIControl.VerticalAlignment = VerticalAlignment.Bottom;
                     Console.Height = 30;
                     SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
-                    //Grid.SetRow(TopSheetViewSplit, 2);
                     Grid.SetColumnSpan(Toolbar, 1);
-                    Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    //Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
                     TextInfoTitlebar.Margin = new Thickness(0);
-                    PrincipalUI.Margin = new Thickness(65, 0, 0, 0);
                     ContentViewerGrid.Margin = new Thickness(0, 0, 0, 75);
                     TextInfoTitlebar.Visibility = Visibility.Collapsed;
+                    TopSheetViewSplit.Visibility = Visibility.Collapsed;
 
                     StatusBar.GetForCurrentView().ProgressIndicator.Text = "Serris Code Editor MLV";
+                    UpdateUI(true);
                     break;
 
                 case CurrentDevice.Desktop:
-                    //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
+
                     if (AppSettings.Values.ContainsKey("ui_extendedview"))
                     {
                         if (!(bool)AppSettings.Values["ui_extendedview"])
@@ -354,15 +354,20 @@ namespace SerrisCodeEditor.Xaml.Views
                         BackgroundPrincipalUIControl.Color = Colors.Transparent;
                     }
 
+                    //CLOSE PANEL AUTOMATICALLY
+                    if (AppSettings.Values.ContainsKey("ui_closepanelauto"))
+                    {
+                        ClosePanelAuto = (bool)AppSettings.Values["ui_closepanelauto"];
+                    }
+
                     TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
                     Window.Current.SetTitleBar(focus_titlebar);
+                    UpdateUI(false);
                     break;
             }
-
-            UpdateUI(false);
 
 
             //onEditorStart
@@ -397,13 +402,24 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (!isUIDeployed)
             {
-                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 70 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
+                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 75 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {
                     SheetViewSplit.IsPaneOpen = false;
                 }
             }
 
             //Debug.WriteLine(e.GetCurrentPoint(MasterGrid).Position.Y);
+        }
+
+        private void SheetsManager_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (ClosePanelAuto && isUIDeployed)
+            {
+                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength + 15) || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
+                {
+                    UpdateUI(false);
+                }
+            }
         }
 
         private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -499,7 +515,7 @@ namespace SerrisCodeEditor.Xaml.Views
         ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         TempContent temp_variables = new TempContent();
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false;
 
     }
 

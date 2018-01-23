@@ -49,7 +49,7 @@
 
             <SplitView x:Name="SheetViewSplit" Grid.Row="1" DisplayMode="CompactInline" CompactPaneLength="60">
                 <SplitView.Content>
-                    <my:ModulesSheetManager x:Name="SheetsManager" HorizontalAlignment="Left" Width="300"/>
+                    <my:ModulesSheetManager x:Name="SheetsManager" HorizontalAlignment="Left" Width="300" PointerExited="SheetsManager_PointerExited"/>
                 </SplitView.Content>
 
                 <SplitView.Pane>

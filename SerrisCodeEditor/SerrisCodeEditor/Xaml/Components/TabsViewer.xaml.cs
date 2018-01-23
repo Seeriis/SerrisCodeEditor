@@ -50,6 +50,8 @@ namespace SerrisCodeEditor.Xaml.Components
          */
 
 
+        private async void CreateDefaultTab()
+        => await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "New tab", Encoding.UTF8, StorageListTypes.LocalStorage, "");
 
         private async void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -107,9 +109,19 @@ namespace SerrisCodeEditor.Xaml.Components
                 {
                     CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
                     var tab = await access_manager.GetTabViaIDAsync(CurrentSelectedIDs);
+                    int EncodingType = tab.TabEncoding;
+                    string TabType = "";
 
-                    if(tab != null)
-                        Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = tab.TabType.ToUpper(), typeCode = Encoding.GetEncoding(tab.TabEncoding).EncodingName });
+                    if (EncodingType == 0)
+                        EncodingType = Encoding.UTF8.CodePage;
+
+                    if (string.IsNullOrEmpty(tab.TabType))
+                        TabType = "TXT";
+                    else
+                        TabType = tab.TabType.ToUpper();
+
+                    if (tab != null)
+                        Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await access_manager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName });
 
                     AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
                     AppSettings.Values["Tabs_list-selected-index"] = ((TabID)Tabs.SelectedItem).ID_TabsList;
@@ -229,8 +241,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                         }
 
                                         if (Tabs.Items.Count == 0)
-                                            await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "default_tab.txt", Encoding.UTF8, StorageListTypes.LocalStorage, "");
-
+                                            CreateDefaultTab();
                                     }
 
                                     break;
@@ -277,8 +288,7 @@ namespace SerrisCodeEditor.Xaml.Components
             
             if(list_ids.Count == 0)
             {
-                await CreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "default_tab.txt", Encoding.UTF8, StorageListTypes.LocalStorage, "");
-                
+                CreateDefaultTab();
             }
             else
             {
