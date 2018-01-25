@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SerrisCodeEditor.Functions.Settings
 {
-    public class DefaultSettings
+    public static class DefaultSettings
     {
-        public List<SettingsMenu> DefaultSettingsMenuList = new List<SettingsMenu>
+        public static SettingsMenu[] DefaultSettingsMenuList =
         {
 
             //EDITOR
@@ -98,7 +98,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Version",
                         Type = SettingType.SecondDescription,
 
-                        Parameter = new SCEELibs.SCEInfos().versionName
+                        Parameter = SCEELibs.SCEInfos.versionName
                     },
 
                     new Setting

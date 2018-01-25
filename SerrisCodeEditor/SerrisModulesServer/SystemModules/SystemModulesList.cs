@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace SerrisModulesServer.SystemModules
 {
-    public class SystemModulesList
+    public static class SystemModulesList
     {
-        public List<InfosModule> Modules = new List<InfosModule>
+        public static InfosModule[] Modules =
         {
             new InfosModule
             {

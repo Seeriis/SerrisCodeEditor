@@ -17,34 +17,28 @@ namespace SerrisCodeEditor.Xaml.Components
 {
     public sealed partial class ModulesToolbar : UserControl
     {
-        ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
-        TempContent temp_variables = new TempContent();
 
         public ModulesToolbar()
         {
             InitializeComponent();
-            temp_variables.CurrentModulesToolbar = ToolbarContent;
+            //GlobalVariables.CurrentModulesToolbar = ToolbarContent;
         }
 
         private void Toolbar_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); }
+        {
+            SetMessenger();
+            SetTheme();
+        }
 
         private async void ToolbarContent_Loaded(object sender, RoutedEventArgs e)
         {
-            //List<InfosModule> sms_initialize = await Modules_manager_access.GetModulesAsync(true);
-            foreach(int id in await new ModulesPinned().GetModulesPinned())
+            await Task.Run(async () => 
             {
-                await AddModule(id);
-            }
-
-            /*foreach (InfosModule module in sms_initialize)
-            {
-                if (module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                foreach (int id in await ModulesPinned.GetModulesPinned())
                 {
-                    AddModule(module.ID);
+                    await AddModule(id);
                 }
-            }*/
-
+            });
         }
 
         private void Module_button_Click(object sender, RoutedEventArgs e)
@@ -74,7 +68,7 @@ namespace SerrisCodeEditor.Xaml.Components
                         {
                             case TypeUpdateModule.ModuleDeleted:
                                 RemoveModule(notification.ID);
-                                new ModulesPinned().RemoveModule(notification.ID);
+                                ModulesPinned.RemoveModule(notification.ID);
                                 break;
 
                             case TypeUpdateModule.NewModule:
@@ -114,13 +108,18 @@ namespace SerrisCodeEditor.Xaml.Components
 
             });
 
-            Messenger.Default.Register<EditorViewNotification>(this, (notification_ui) =>
+            Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
             {
-                try
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
+                    try
+                    {
+                        SetTheme();
+                    }
+                    catch { }
 
-                }
-                catch { }
+                });
+
             });
 
             Messenger.Default.Register<ToolbarNotification>(this, async (notification_toolbar) =>
@@ -189,9 +188,19 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
+        private void SetTheme()
+        {
+            ButtonListModules.Background = GlobalVariables.CurrentTheme.ToolbarRoundButtonColor;
+            ButtonListModules.Foreground = GlobalVariables.CurrentTheme.ToolbarRoundButtonColorFont;
+        }
+
         private async Task AddModule(int ID)
         {
-            ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
+            await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+            {
+                ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
+
+            });
 
             SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(ID);
             await Task.Run(() => new AddonExecutor(ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.whenModuleIsPinned));

@@ -21,7 +21,7 @@ namespace SerrisModulesServer.Type.Theme
 
         async Task IsSystemModuleOrNot(int _id)
         {
-            InfosModule ModuleAccess = await new ModulesAccessManager().GetModuleViaIDAsync(_id);
+            InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(_id);
 
             if (ModuleAccess.ModuleSystem)
             {

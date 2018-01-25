@@ -27,7 +27,6 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class Tab : UserControl
     {
         InfosTab current_tab = new InfosTab(); int current_list; bool infos_opened = false, enable_selection = false;
-        TabsAccessManager access_manager = new TabsAccessManager(); TabsWriteManager write_manager = new TabsWriteManager();
 
         public Tab()
         {
@@ -115,7 +114,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (nm.contactType)
                             {
                                 case ContactTypeSCEE.GetCodeForTab:
-                                    await write_manager.PushTabContentViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, current_tab.TabContentTemporary, true);
+                                    await TabsWriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, current_tab.TabContentTemporary, true);
                                     break;
                             }
                         }
@@ -133,7 +132,7 @@ namespace SerrisCodeEditor.Xaml.Components
             //Set temp tab + tabs list ID
             try
             {
-                current_tab = await access_manager.GetTabViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
+                current_tab = await TabsAccessManager.GetTabViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
 
                 foreach(CoreApplicationView view in CoreApplication.Views)
                 {

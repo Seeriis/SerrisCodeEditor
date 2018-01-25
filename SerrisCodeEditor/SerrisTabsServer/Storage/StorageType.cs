@@ -10,8 +10,6 @@ namespace SerrisTabsServer.Storage
 
         public InfosTab Tab { get; set; }
         public int ListTabsID { get; set; }
-        public TabsAccessManager TabsReader = new TabsAccessManager();
-        public TabsWriteManager TabsWriter = new TabsWriteManager();
         public FileTypesManager FileTypes = new FileTypesManager();
 
     }

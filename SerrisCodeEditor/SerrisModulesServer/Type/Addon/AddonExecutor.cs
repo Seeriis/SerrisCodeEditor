@@ -20,13 +20,11 @@ namespace SerrisModulesServer.Type.Addon
     public class AddonExecutor
     {
 
-        private ModulesAccessManager AccessManager;
         private ChakraSMS host;
         private int _id; private object _SCEELibs;
 
         public AddonExecutor(int ID, object SCEELibs)
         {
-            AccessManager = new ModulesAccessManager();
             _id = ID; _SCEELibs = SCEELibs;
             //InitializeExecutor(ID, FuncType, SCEELibs);
         }
@@ -76,7 +74,7 @@ namespace SerrisModulesServer.Type.Addon
              */
 
 
-            InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await AccessManager.GetModuleViaIDAsync(_id));
+            InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await ModulesAccessManager.GetModuleViaIDAsync(_id));
             StorageFolder folder_module;
 
             if (ModuleAccess.ModuleSystem)

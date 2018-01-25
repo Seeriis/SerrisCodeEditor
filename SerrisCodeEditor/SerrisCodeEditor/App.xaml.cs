@@ -41,7 +41,7 @@ namespace SerrisCodeEditor
 
             //Serris Modules Server !
             new SMSInitialize().InitializeSMSJson();
-            new TempContent().CurrentTheme = await new ThemeReader(await new ModulesAccessManager().GetCurrentThemeID()).GetThemeBrushesContent();
+            GlobalVariables.CurrentTheme = await new ThemeReader(await ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
 
             Messenger.Default.Register<SMSNotification>(this, async (notification) =>
             {
@@ -50,7 +50,7 @@ namespace SerrisCodeEditor
                     switch (notification.Type)
                     {
                         case TypeUpdateModule.CurrentThemeUpdated:
-                            new TempContent().CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushesContent();
+                            GlobalVariables.CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushesContent();
                             Messenger.Default.Send(new EditorViewNotification { ID = 0, type = EditorViewNotificationType.UpdateUI });
                             break;
                     }
@@ -65,15 +65,15 @@ namespace SerrisCodeEditor
                     switch(notification.type)
                     {
                         case TempContentType.currentIDs when !notification.answerNotification:
-                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentIDs, content = new TempContent().CurrentIDs });
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentIDs, content = GlobalVariables.CurrentIDs });
                             break;
 
                         case TempContentType.currentDevice when !notification.answerNotification:
-                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentDevice, content = new TempContent().CurrentDevice });
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentDevice, content = GlobalVariables.CurrentDevice });
                             break;
 
                         case TempContentType.currentTheme when !notification.answerNotification:
-                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentTheme, content = new TempContent().CurrentTheme });
+                            Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentTheme, content = GlobalVariables.CurrentTheme });
                             break;
                     }
                 }

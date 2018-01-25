@@ -70,9 +70,8 @@ namespace SCEELibs
         Editor.EditorEngine _editorEngine = new Editor.EditorEngine();
         public EditorEngine editorEngine { get => _editorEngine; }
 
-        SCEInfos _editorInfos = new SCEInfos();
-        public SCEInfos editorInfos { get => _editorInfos; }
-
+        public string versionNumber { get => SCEInfos.versionNumber; }
+        public string versionName { get => SCEInfos.versionName; }
 
 
         /* ===============================================

@@ -18,20 +18,17 @@ namespace SerrisModulesServer.Type.Addon
 {
     public class AddonReader
     {
-        ModulesAccessManager AccessManager;
         int id_module; bool system_module;
 
         public AddonReader(int ID)
         {
-            AccessManager = new ModulesAccessManager();
-
             id_module = ID;
             AsyncHelpers.RunSync(() => IsSystemModuleOrNot(ID));
         }
 
         async Task IsSystemModuleOrNot(int _id)
         {
-            InfosModule ModuleAccess = await new ModulesAccessManager().GetModuleViaIDAsync(_id);
+            InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(_id);
 
             if (ModuleAccess.ModuleSystem)
             {

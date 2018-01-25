@@ -50,7 +50,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                         }
                     }
                     Tab.PathContent = file.Path;
-                    await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
                 }
 
             });
@@ -63,7 +63,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
             await file.DeleteAsync();
             Tab.TabStorageMode = StorageListTypes.Nothing;
             Tab.PathContent = "";
-            await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
+            await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
         }
 
         public async Task<bool> ReadFile(bool ReplaceEncoding)
@@ -90,12 +90,12 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
             using (var st = new StreamReader(await file.OpenStreamForReadAsync(), Encoding.GetEncoding(encode_type)))
             {
-                await TabsWriter.PushTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }, st.ReadToEnd(), true);
+                await TabsWriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }, st.ReadToEnd(), true);
 
                 if (ReplaceEncoding)
                 {
                     Tab.TabEncoding = Encoding.GetEncoding(encode_type).CodePage;
-                    await TabsWriter.PushUpdateTabAsync(Tab, ListTabsID);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
                 }
 
                 st.Dispose();
@@ -145,7 +145,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                         await FileIO.WriteTextAsync(file, string.Empty);
                         using (var rd = new StreamWriter(await file.OpenStreamForWriteAsync(), Encoding.GetEncoding(Tab.TabEncoding)))
                         {
-                            rd.Write(await TabsReader.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
+                            rd.Write(await TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
                             rd.Flush(); rd.Dispose();
                         }
                     }

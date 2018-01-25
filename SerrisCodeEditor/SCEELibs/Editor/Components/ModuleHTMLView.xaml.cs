@@ -64,9 +64,7 @@ namespace SCEELibs.Editor.Components
             {
                 current_id = id;
 
-                ModulesAccessManager AccessManager = new ModulesAccessManager();
-
-                InfosModule ModuleAccess = await AccessManager.GetModuleViaIDAsync(id);
+                InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(id);
 
                 if (ModuleAccess.ModuleSystem)
                 {

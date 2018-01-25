@@ -25,7 +25,6 @@ namespace SerrisCodeEditor.Xaml.Views
     {
         StorageFile ModuleFile;
         ModulesVerifyAssistant VerifyAssistant;
-        ModulesWriteManager ModulesManager = new ModulesWriteManager();
 
         public ModulesInstaller()
         {
@@ -72,7 +71,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                 if (CodeResult == PackageVerificationCode.Passed)
                 {
-                    if(await ModulesManager.AddModuleAsync(ModuleFile))
+                    if(await ModulesWriteManager.AddModuleAsync(ModuleFile))
                     {
                         ResultText.Text = "Module has been installed without any problem !";
                     }

@@ -23,17 +23,12 @@ namespace SerrisCodeEditor.Functions
         public ModulesPinedModification Modification { get; set; }
     }
 
-    public class ModulesPinned
+    public static class ModulesPinned
     {
-        int[] DefaultModulesPinned = { 7, 4, 3 };
-        StorageFile file;
+        static int[] DefaultModulesPinned = { 7, 4, 3 };
+        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_pinned.json", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public ModulesPinned()
-        {
-            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_pinned.json", CreationCollisionOption.OpenIfExists).AsTask());
-        }
-
-        public async Task<List<int>> GetModulesPinned()
+        public static async Task<List<int>> GetModulesPinned()
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -67,7 +62,7 @@ namespace SerrisCodeEditor.Functions
 
         }
 
-        public async void AddNewModule(int id)
+        public static async void AddNewModule(int id)
         {
             List<int> List = await GetModulesPinned();
             List.Add(id);
@@ -76,7 +71,7 @@ namespace SerrisCodeEditor.Functions
             Messenger.Default.Send<ModulesPinnedNotification>(new ModulesPinnedNotification { ID = id, Modification = ModulesPinedModification.Added });
         }
 
-        public async void RemoveModule(int id)
+        public static async void RemoveModule(int id)
         {
             List<int> List = await GetModulesPinned();
             List.Remove(id);

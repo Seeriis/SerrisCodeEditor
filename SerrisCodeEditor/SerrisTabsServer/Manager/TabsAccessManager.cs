@@ -10,16 +10,11 @@ using Windows.Storage;
 
 namespace SerrisTabsServer.Manager
 {
-    public class TabsAccessManager
+    public static class TabsAccessManager
     {
-        StorageFile file;
+        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public TabsAccessManager()
-        {
-            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-        }
-
-        public async Task<List<InfosTab>> GetTabsAsync(int id)
+        public static async Task<List<InfosTab>> GetTabsAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -44,7 +39,7 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public async Task<List<int>> GetTabsListIDAsync()
+        public static async Task<List<int>> GetTabsListIDAsync()
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -76,7 +71,7 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public async Task<List<int>> GetTabsIDAsync(int id_list)
+        public static async Task<List<int>> GetTabsIDAsync(int id_list)
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -115,7 +110,7 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public List<int> GetTabsID(int id_list)
+        public static List<int> GetTabsID(int id_list)
         {
 
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
@@ -154,7 +149,7 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public async Task<InfosTab> GetTabViaIDAsync(TabID id)
+        public static async Task<InfosTab> GetTabViaIDAsync(TabID id)
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -181,7 +176,7 @@ namespace SerrisTabsServer.Manager
             return null;
         }
 
-        public InfosTab GetTabViaID(TabID id)
+        public static InfosTab GetTabViaID(TabID id)
         {
 
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
@@ -208,7 +203,7 @@ namespace SerrisTabsServer.Manager
             return null;
         }
 
-        public async Task<TabsList> GetTabsListViaIDAsync(int id)
+        public static async Task<TabsList> GetTabsListViaIDAsync(int id)
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -235,7 +230,7 @@ namespace SerrisTabsServer.Manager
             return null;
         }
 
-        public async Task<string> GetTabContentViaIDAsync(TabID id)
+        public static async Task<string> GetTabContentViaIDAsync(TabID id)
         {
             try
             {
@@ -268,7 +263,7 @@ namespace SerrisTabsServer.Manager
             }
         }
 
-        public void UpdateTab(ref InfosTab tab, int id_list)
+        public static void UpdateTab(ref InfosTab tab, int id_list)
         {
 
             using (var reader = new StreamReader(file.OpenStreamForReadAsync().Result))

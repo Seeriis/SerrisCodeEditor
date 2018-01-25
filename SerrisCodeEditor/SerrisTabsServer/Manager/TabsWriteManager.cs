@@ -13,22 +13,17 @@ using Windows.UI.Core;
 
 namespace SerrisTabsServer.Manager
 {
-    public class TabsWriteManager
+    public static class TabsWriteManager
     {
-        StorageFile file = null; StorageFolder folder_tabs = null;
-
-        public TabsWriteManager()
-        {
-            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-            folder_tabs = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).AsTask());
-        }
+        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+        static StorageFolder folder_tabs = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).AsTask());
 
         /// <summary>
         /// Create a new tabs list
         /// </summary>
         /// <param name="new_name">Name of your tabs list</param>
         /// <returns>ID of the new tabs list created</returns>
-        public async Task<int> CreateTabsListAsync(string new_name)
+        public static async Task<int> CreateTabsListAsync(string new_name)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -66,7 +61,7 @@ namespace SerrisTabsServer.Manager
         /// </summary>
         /// <param name="id">ID of the tabs list</param>
         /// <returns></returns>
-        public async Task<bool> DeleteTabsListAsync(int id)
+        public static async Task<bool> DeleteTabsListAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -112,7 +107,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="tab">Tab you want to create</param>
         /// <param name="id_list">ID of the tabs list</param>
         /// <returns>ID of the new tab</returns>
-        public async Task<int> CreateTabAsync(InfosTab tab, int id_list, bool SendNotification)
+        public static async Task<int> CreateTabAsync(InfosTab tab, int id_list, bool SendNotification)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -156,7 +151,7 @@ namespace SerrisTabsServer.Manager
         /// </summary>
         /// <param name="ids">ID of the tab and tabs list where is the tab</param>
         /// <returns></returns>
-        public async Task<bool> DeleteTabAsync(TabID ids)
+        public static async Task<bool> DeleteTabAsync(TabID ids)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -194,7 +189,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="content">Content you want to push in the tab</param>
         /// <param name="sendnotification">Send (or not) a notification about the updated content with MVVMLight</param>
         /// <returns></returns>
-        public async Task<bool> PushTabContentViaIDAsync(TabID id, string content, bool sendnotification)
+        public static async Task<bool> PushTabContentViaIDAsync(TabID id, string content, bool sendnotification)
         {
             try
             {
@@ -239,7 +234,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="tab">Tab infos you want to update</param>
         /// <param name="id_list">ID of the tabs list where is the tab</param>
         /// <returns></returns>
-        public async Task<bool> PushUpdateTabAsync(InfosTab tab, int id_list)
+        public static async Task<bool> PushUpdateTabAsync(InfosTab tab, int id_list)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))

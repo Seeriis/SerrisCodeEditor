@@ -124,16 +124,16 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetTheme()
         {
-            MasterGrid.Background = temp_variables.CurrentTheme.SecondaryColor;
-            ConsoleMoreInfosViewer.Background = temp_variables.CurrentTheme.SecondaryColor;
+            MasterGrid.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            ConsoleMoreInfosViewer.Background = GlobalVariables.CurrentTheme.SecondaryColor;
 
-            LastNotifInfos_Icon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            LastNotifInfos_Text.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            LastNotifInfos_Icon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            LastNotifInfos_Text.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            ErrorsNumber.Foreground = temp_variables.CurrentTheme.MainColor;
-            InformationsNumber.Foreground = temp_variables.CurrentTheme.MainColor;
-            ResultsNumber.Foreground = temp_variables.CurrentTheme.MainColor;
-            WarningsNumber.Foreground = temp_variables.CurrentTheme.MainColor;
+            ErrorsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            InformationsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            ResultsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            WarningsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
         }
 
         private void CurrentNotifications_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -200,13 +200,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
             if (ShowInformations)
             {
-                InformationsButton.Background = temp_variables.CurrentTheme.MainColor;
-                InformationsButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                InformationsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                InformationsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             }
             else
             {
                 InformationsButton.Background = new SolidColorBrush(Colors.Transparent);
-                InformationsButton.Foreground = temp_variables.CurrentTheme.MainColor;
+                InformationsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
             }
 
             RefreshNotificationsList();
@@ -218,13 +218,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
             if (ShowResults)
             {
-                ResultsButton.Background = temp_variables.CurrentTheme.MainColor;
-                ResultsButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                ResultsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                ResultsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             }
             else
             {
                 ResultsButton.Background = new SolidColorBrush(Colors.Transparent);
-                ResultsButton.Foreground = temp_variables.CurrentTheme.MainColor;
+                ResultsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
             }
 
             RefreshNotificationsList();
@@ -236,13 +236,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
             if (ShowWarnings)
             {
-                WarningsButton.Background = temp_variables.CurrentTheme.MainColor;
-                WarningsButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                WarningsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                WarningsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             }
             else
             {
                 WarningsButton.Background = new SolidColorBrush(Colors.Transparent);
-                WarningsButton.Foreground = temp_variables.CurrentTheme.MainColor;
+                WarningsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
             }
 
             RefreshNotificationsList();
@@ -254,13 +254,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
             if (ShowErrors)
             {
-                ErrorsButton.Background = temp_variables.CurrentTheme.MainColor;
-                ErrorsButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                ErrorsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                ErrorsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             }
             else
             {
                 ErrorsButton.Background = new SolidColorBrush(Colors.Transparent);
-                ErrorsButton.Foreground = temp_variables.CurrentTheme.MainColor;
+                ErrorsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
             }
 
             RefreshNotificationsList();
@@ -330,7 +330,6 @@ namespace SerrisCodeEditor.Xaml.Components
         List<string> commands_list = new List<string>(); int commands_list_index = -1;
         bool isFlyoutOpened = false;
         bool ShowErrors = true, ShowInformations = true, ShowResults = true, ShowWarnings = true;
-        TempContent temp_variables = new TempContent();
 
     }
 }

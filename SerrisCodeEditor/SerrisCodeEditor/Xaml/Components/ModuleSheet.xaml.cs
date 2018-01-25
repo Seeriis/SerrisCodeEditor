@@ -22,7 +22,6 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class ModuleSheet : UserControl
     {
         bool isSelected = false, isInitialized = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
-        TempContent temp_variables = new TempContent();
 
         public ModuleSheet()
         {
@@ -102,11 +101,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetTheme()
         {
-            GridButton.Background = temp_variables.CurrentTheme.MainColor;
-            name_sheet.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            GridButton.Background = GlobalVariables.CurrentTheme.MainColor;
+            name_sheet.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
-            close_sheet.Foreground = temp_variables.CurrentTheme.MainColorFont;
-            close_sheet.BorderBrush = temp_variables.CurrentTheme.MainColorFont;
+            close_sheet.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            close_sheet.BorderBrush = GlobalVariables.CurrentTheme.MainColorFont;
         }
 
         private void SetMessenger()

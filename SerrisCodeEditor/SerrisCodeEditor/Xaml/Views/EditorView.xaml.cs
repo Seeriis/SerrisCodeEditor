@@ -44,7 +44,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (temp_variables.CurrentDevice != CurrentDevice.WindowsMobile)
+            if (GlobalVariables.CurrentDevice != CurrentDevice.WindowsMobile)
             {
                 if (Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
                 {
@@ -112,10 +112,10 @@ namespace SerrisCodeEditor.Xaml.Views
                 {
                     try
                     {
-                        if(notification_settings.SettingsUpdatedName == new DefaultSettings().DefaultSettingsMenuList[0].Name && EditorIsLoaded) //If settings updated for Editor, then...
+                        if(notification_settings.SettingsUpdatedName == DefaultSettings.DefaultSettingsMenuList[0].Name && EditorIsLoaded) //If settings updated for Editor, then...
                         {
                             LoadSettings();
-                        } else if (notification_settings.SettingsUpdatedName == new DefaultSettings().DefaultSettingsMenuList[1].Name)
+                        } else if (notification_settings.SettingsUpdatedName == DefaultSettings.DefaultSettingsMenuList[1].Name)
                         {
                             SetInterface();
                         }
@@ -140,7 +140,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                             case SCEENotifType.SaveCurrentTab when !notification_scee.answerNotification:
                                 string content = await ContentViewer.GetCode();
-                                await Tabs_manager_writer.PushTabContentViaIDAsync(temp_variables.CurrentIDs, content, false);
+                                await TabsWriteManager.PushTabContentViaIDAsync(GlobalVariables.CurrentIDs, content, false);
                                 Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = true });
                                 break;
 
@@ -169,7 +169,7 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 SheetViewSeparatorLine.Width = 2;
 
-                switch(temp_variables.CurrentDevice)
+                switch(GlobalVariables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
                         if (AppSettings.Values.ContainsKey("ui_extendedview"))
@@ -198,7 +198,7 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 SheetViewSeparatorLine.Width = 0;
 
-                switch (temp_variables.CurrentDevice)
+                switch (GlobalVariables.CurrentDevice)
                 {
                     case CurrentDevice.Desktop:
                         //PrincipalUI.Visibility = Visibility.Collapsed;
@@ -237,32 +237,32 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
-            DeployUIDetector.Background = temp_variables.CurrentTheme.SecondaryColor;
-            DeployUIIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            DeployUIDetector.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            DeployUIIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            DeployUIDetectorB.Background = temp_variables.CurrentTheme.MainColor;
-            DeployUIIconB.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            DeployUIDetectorB.Background = GlobalVariables.CurrentTheme.MainColor;
+            DeployUIIconB.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
-            BackgroundPrinciapalUI.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
-            ColorPrincipalUI.Fill = temp_variables.CurrentTheme.MainColor;
+            BackgroundPrinciapalUI.ImageSource = GlobalVariables.CurrentTheme.BackgroundImage;
+            ColorPrincipalUI.Fill = GlobalVariables.CurrentTheme.MainColor;
 
-            BackgroundSheetView.ImageSource = temp_variables.CurrentTheme.BackgroundImage;
-            ColorSheetView.Fill = temp_variables.CurrentTheme.MainColor;
+            BackgroundSheetView.ImageSource = GlobalVariables.CurrentTheme.BackgroundImage;
+            ColorSheetView.Fill = GlobalVariables.CurrentTheme.MainColor;
 
-            SheetViewSeparatorLine.Fill = temp_variables.CurrentTheme.MainColor;
+            SheetViewSeparatorLine.Fill = GlobalVariables.CurrentTheme.MainColor;
 
-            switch (temp_variables.CurrentDevice)
+            switch (GlobalVariables.CurrentDevice)
             {
                 case CurrentDevice.Desktop:
                     ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
                     TitleBar.ButtonBackgroundColor = Colors.Transparent;
-                    TitleBar.ButtonForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
+                    TitleBar.ButtonForegroundColor = GlobalVariables.CurrentTheme.MainColorFont.Color;
                     break;
 
                 case CurrentDevice.WindowsMobile:
                     var StatusBarSettings = StatusBar.GetForCurrentView();
-                    StatusBarSettings.ForegroundColor = temp_variables.CurrentTheme.MainColorFont.Color;
-                    StatusBarSettings.BackgroundColor = temp_variables.CurrentTheme.MainColor.Color;
+                    StatusBarSettings.ForegroundColor = GlobalVariables.CurrentTheme.MainColorFont.Color;
+                    StatusBarSettings.BackgroundColor = GlobalVariables.CurrentTheme.MainColor.Color;
                     StatusBarSettings.BackgroundOpacity = 1;
                     break;
             }
@@ -303,7 +303,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void ExecuteModulesFunction()
         {
             //onEditorViewReady
-            foreach (InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
+            foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
             {
                 if(Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
@@ -316,7 +316,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void SetInterface()
         {
 
-            switch(temp_variables.CurrentDevice)
+            switch(GlobalVariables.CurrentDevice)
             {
                 case CurrentDevice.WindowsMobile:
                     //UI modification for mobile
@@ -364,7 +364,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         ClosePanelAuto = (bool)AppSettings.Values["ui_closepanelauto"];
                     }
 
-                    TextInfoTitlebar.Text = "Serris Code Editor - " + new SCEELibs.SCEInfos().versionName;
+                    TextInfoTitlebar.Text = "Serris Code Editor - " + SCEELibs.SCEInfos.versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
@@ -375,7 +375,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
             //onEditorStart
-            foreach (InfosModule Module in await Modules_manager_access.GetModulesAsync(true))
+            foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
             {
                 if (Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
@@ -476,10 +476,10 @@ namespace SerrisCodeEditor.Xaml.Views
 
                 try
                 {
-                    if (temp_variables.CurrentIDs.ID_Tab != 0)
+                    if (GlobalVariables.CurrentIDs.ID_Tab != 0)
                     {
                         string content = await ContentViewer.GetCode();
-                        SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => Tabs_manager_writer.PushTabContentViaIDAsync(temp_variables.CurrentIDs, content, false));
+                        SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => TabsWriteManager.PushTabContentViaIDAsync(GlobalVariables.CurrentIDs, content, false));
                     }
                 }
                 catch { }
@@ -490,12 +490,12 @@ namespace SerrisCodeEditor.Xaml.Views
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = temp_variables.CurrentIDs });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = GlobalVariables.CurrentIDs });
                         });
                     }
                 }
 
-                temp_variables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
+                GlobalVariables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
                 ContentViewer.Code = Queue_Tabs[0].code;
 
@@ -513,11 +513,6 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
 
-        TabsAccessManager Tabs_manager_access = new TabsAccessManager();
-        TabsWriteManager Tabs_manager_writer = new TabsWriteManager();
-        ModulesAccessManager Modules_manager_access = new ModulesAccessManager();
-        ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
-        TempContent temp_variables = new TempContent();
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
         bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false;
 

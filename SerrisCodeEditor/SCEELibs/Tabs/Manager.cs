@@ -17,12 +17,10 @@ namespace SCEELibs.Tabs
     [AllowForWeb]
     public sealed class Manager
     {
-        TabsAccessManager accessManager = new TabsAccessManager();
-        TabsWriteManager writeManager = new TabsWriteManager();
 
         public Tab getTabViaID(TabIDs id)
         {
-            var tab = accessManager.GetTabViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID });
+            var tab = TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID });
             Tab newTab = new Tab();
 
             //Convert InfosTab (.NET Lib) to Tab (WinRT Component)
@@ -78,7 +76,7 @@ namespace SCEELibs.Tabs
         public IList<TabIDs> getTabsIDOfTheCurrentList()
         {
             int currentList = getCurrentSelectedTabAndTabsListID().listID;
-            List<int> ids = accessManager.GetTabsID(currentList);
+            List<int> ids = TabsAccessManager.GetTabsID(currentList);
             IList<TabIDs> list_ids = new List<TabIDs>();
 
             foreach(int id in ids)
@@ -90,10 +88,10 @@ namespace SCEELibs.Tabs
         }
 
         public async void createNewList(string listName)
-        => await writeManager.CreateTabsListAsync(listName);
+        => await TabsWriteManager.CreateTabsListAsync(listName);
 
         public async void createNewTabInTheCurrentList(string fileName, string content)
-        => await new TabsCreatorAssistant().CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
+        => await TabsCreatorAssistant.CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
 
     }
 }

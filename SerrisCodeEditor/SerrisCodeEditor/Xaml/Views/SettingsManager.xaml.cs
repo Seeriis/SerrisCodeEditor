@@ -26,15 +26,12 @@ namespace SerrisCodeEditor.Xaml.Views
 
     public sealed partial class SettingsManager : Page
     {
-        List<SettingsMenu> ListSettings;
-        TempContent temp_variables = new TempContent();
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
         public SettingsManager()
         {
             this.InitializeComponent();
 
-            ListSettings = new DefaultSettings().DefaultSettingsMenuList;
             SetTheme();
         }
 
@@ -42,7 +39,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             int ColumnCount = 0;
 
-            foreach (SettingsMenu menu in ListSettings)
+            foreach (SettingsMenu menu in DefaultSettings.DefaultSettingsMenuList)
             {
                 //BUTTON
                 ButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -65,14 +62,14 @@ namespace SerrisCodeEditor.Xaml.Views
                 ButtonIcon.FontSize = 18;
                 ButtonIcon.FontFamily = new FontFamily("Segoe MDL2 Assets");
                 ButtonIcon.HorizontalAlignment = HorizontalAlignment.Center;
-                ButtonIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+                ButtonIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
                 ButtonIcon.Text = menu.Icon;
                 ButtonContent.Children.Add(ButtonIcon);
 
                 TextBlock ButtonTitle = new TextBlock();
                 ButtonTitle.FontSize = 15;
                 ButtonTitle.Text = menu.Name;
-                ButtonTitle.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+                ButtonTitle.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
                 ButtonContent.Children.Add(ButtonTitle);
 
                 ButtonMenu.Children.Add(ButtonContent);
@@ -83,7 +80,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 ColumnCount++;
 
                 //SEPARATOR
-                if(ColumnCount < (ListSettings.Count * 2) - 1)
+                if(ColumnCount < (DefaultSettings.DefaultSettingsMenuList.Length * 2) - 1)
                 {
                     ButtonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Pixel) });
 
@@ -91,7 +88,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     Separator.Width = 2;
                     Separator.Margin = new Thickness(0, 15, 0, 15);
                     Separator.RadiusX = 2; Separator.RadiusY = 1;
-                    Separator.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+                    Separator.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
                     ButtonsGrid.Children.Add(Separator);
                     Grid.SetColumn(Separator, ColumnCount);
@@ -102,18 +99,18 @@ namespace SerrisCodeEditor.Xaml.Views
             }
 
             //Default selection
-            SelectMenu(ListSettings[0].Name);
+            SelectMenu(DefaultSettings.DefaultSettingsMenuList[0].Name);
         }
 
         private void SetTheme()
         {
-            BackgroundList.Fill = temp_variables.CurrentTheme.MainColor;
-            ButtonsGrid.Background = temp_variables.CurrentTheme.SecondaryColor;
+            BackgroundList.Fill = GlobalVariables.CurrentTheme.MainColor;
+            ButtonsGrid.Background = GlobalVariables.CurrentTheme.SecondaryColor;
         }
 
         private void SelectMenu(string MenuName)
         {
-            foreach(SettingsMenu menu in ListSettings)
+            foreach(SettingsMenu menu in DefaultSettings.DefaultSettingsMenuList)
             {
                 if(menu.Name == MenuName)
                 {
@@ -129,8 +126,8 @@ namespace SerrisCodeEditor.Xaml.Views
                                 ToggleSwitch Switch = new ToggleSwitch();
                                 Switch.Style = (Style)Application.Current.Resources["SwitchControl"];
                                 Switch.Margin = new Thickness(0, 20, 0, 0);
-                                Switch.Foreground = temp_variables.CurrentTheme.MainColorFont;
-                                Switch.Background = temp_variables.CurrentTheme.MainColor;
+                                Switch.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+                                Switch.Background = GlobalVariables.CurrentTheme.MainColor;
                                 Switch.Header = SettingControl.Description;
 
                                 if (AppSettings.Values.ContainsKey(SettingControl.VarSaveName))
@@ -157,7 +154,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 TextBlock TitleTextBox = new TextBlock();
                                 TitleTextBox.FontSize = 15;
                                 TitleTextBox.Text = SettingControl.Description;
-                                TitleTextBox.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                TitleTextBox.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
                                 TextBoxControl.Children.Add(TitleTextBox);
 
@@ -167,7 +164,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 TextBox.Style = (Style)Application.Current.Resources["RoundTextBox"];
                                 TextBox.Width = 150; TextBox.Height = 25;
                                 //TextBox.PlaceholderText = "";
-                                TextBox.FontSize = 14; TextBox.Background = temp_variables.CurrentTheme.SecondaryColor; TextBox.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+                                TextBox.FontSize = 14; TextBox.Background = GlobalVariables.CurrentTheme.SecondaryColor; TextBox.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
                                 TextBox.KeyDown += ((e, f) =>
                                 {
                                     if (f.KeyStatus.RepeatCount == 1)
@@ -190,7 +187,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 TextBlock TitleLink = new TextBlock();
                                 TitleLink.FontSize = 15;
                                 TitleLink.Text = SettingControl.Description;
-                                TitleLink.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                TitleLink.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
                                 LinkControl.Children.Add(TitleLink);
 
@@ -199,7 +196,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 Link.FontSize = 12;
                                 Link.FontStyle = FontStyle.Italic;
                                 Link.FontWeight = FontWeights.Light;
-                                Link.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                Link.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
                                 Underline UnderlineText = new Underline();
                                 Run TextLink = new Run();
@@ -224,7 +221,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 TextBlock TitleDescription = new TextBlock();
                                 TitleDescription.FontSize = 15;
                                 TitleDescription.Text = SettingControl.Description;
-                                TitleDescription.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                TitleDescription.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
                                 DescriptionControl.Children.Add(TitleDescription);
 
@@ -233,7 +230,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 Description.FontSize = 13;
                                 Description.FontWeight = FontWeights.Light;
                                 Description.Text = (string)SettingControl.Parameter;
-                                Description.Foreground = temp_variables.CurrentTheme.MainColorFont;
+                                Description.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
                                 DescriptionControl.Children.Add(Description);
                                 MenuControls.Children.Add(DescriptionControl);

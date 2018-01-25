@@ -16,20 +16,12 @@ using Windows.UI.Core;
 
 namespace SerrisModulesServer.Manager
 {
-    public class ModulesWriteManager
+    public static class ModulesWriteManager
     {
-        StorageFile file;
-        StorageFolder folder_modules;
-        ModulesAccessManager AccessManager;
+        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+        static StorageFolder folder_modules = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public ModulesWriteManager()
-        {
-            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-            folder_modules = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists).AsTask());
-            AccessManager = new ModulesAccessManager();
-        }
-
-        public Task<bool> AddModuleAsync(StorageFile module_zip)
+        public static Task<bool> AddModuleAsync(StorageFile module_zip)
         {
             return Task.Run(async () => 
             {
@@ -120,7 +112,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public async Task<bool> DeleteModuleViaIDAsync(int id)
+        public static async Task<bool> DeleteModuleViaIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -152,7 +144,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public async Task<bool> PushUpdateModuleAsync(InfosModule module)
+        public static async Task<bool> PushUpdateModuleAsync(InfosModule module)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -184,7 +176,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public async Task<bool> SetCurrentThemeIDAsync(int id)
+        public static async Task<bool> SetCurrentThemeIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -214,7 +206,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public async Task<bool> SetCurrentAceEditoThemeIDAsync(int id)
+        public static async Task<bool> SetCurrentAceEditoThemeIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -243,11 +235,11 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public async Task<bool> SetCurrentThemeAceEditorTempContentAsync()
+        public static async Task<bool> SetCurrentThemeAceEditorTempContentAsync()
         {
             try
             {
-                InfosModule module = await AccessManager.GetModuleViaIDAsync(await AccessManager.GetCurrentThemeAceEditorID());
+                InfosModule module = await ModulesAccessManager.GetModuleViaIDAsync(await ModulesAccessManager.GetCurrentThemeAceEditorID());
 
                 StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
                 await FileIO.WriteTextAsync(file_content, await new ThemeReader(module.ID).GetThemeJSContentAsync());
@@ -260,9 +252,9 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public async Task<bool> SetCurrentThemeTempContentAsync()
+        public static async Task<bool> SetCurrentThemeTempContentAsync()
         {
-            StorageFolder folder_module = await folder_modules.CreateFolderAsync(await AccessManager.GetCurrentThemeAceEditorID() + "", CreationCollisionOption.OpenIfExists);
+            StorageFolder folder_module = await folder_modules.CreateFolderAsync(await ModulesAccessManager.GetCurrentThemeAceEditorID() + "", CreationCollisionOption.OpenIfExists);
             StorageFile file_content_temp = await ApplicationData.Current.LocalFolder.CreateFileAsync("theme_temp.json", CreationCollisionOption.OpenIfExists), file_content = await folder_module.GetFileAsync("theme_ace.js");
 
             try

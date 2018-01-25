@@ -100,7 +100,7 @@
     <Compile Include="Functions\Settings\DefaultSettings.cs" />
     <Compile Include="Functions\Settings\SettingsDef.cs" />
     <Compile Include="Functions\Settings\SettingsNotification.cs" />
-    <Compile Include="Functions\TempContent.cs" />
+    <Compile Include="Functions\GlobalVariables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xaml\Components\Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>

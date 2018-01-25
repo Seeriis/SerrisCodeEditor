@@ -14,16 +14,11 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace SerrisModulesServer.Manager
 {
-    public sealed class ModulesAccessManager
+    public static class ModulesAccessManager
     {
-        StorageFile file;
+        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public ModulesAccessManager()
-        {
-            file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-        }
-
-        public async Task<List<InfosModule>> GetModulesAsync(bool GetSystemModules)
+        public static async Task<List<InfosModule>> GetModulesAsync(bool GetSystemModules)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -41,7 +36,7 @@ namespace SerrisModulesServer.Manager
 
                         if (GetSystemModules)
                         {
-                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            foreach (InfosModule module in SystemModulesList.Modules)
                             { ModulesList.Add(module); }
                         }
 
@@ -51,7 +46,7 @@ namespace SerrisModulesServer.Manager
                     {
                         if (GetSystemModules)
                         {
-                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            foreach (InfosModule module in SystemModulesList.Modules)
                             {
                                 ModulesList.Add(module);
                             }
@@ -68,7 +63,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public List<InfosModule> GetModules(bool GetSystemModules)
+        public static List<InfosModule> GetModules(bool GetSystemModules)
         {
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -84,7 +79,7 @@ namespace SerrisModulesServer.Manager
 
                         if (GetSystemModules)
                         {
-                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            foreach (InfosModule module in SystemModulesList.Modules)
                             {
                                 ModulesList.Add(module);
                             }
@@ -96,7 +91,7 @@ namespace SerrisModulesServer.Manager
                     {
                         if (GetSystemModules)
                         {
-                            foreach (InfosModule module in new SystemModulesList().Modules)
+                            foreach (InfosModule module in SystemModulesList.Modules)
                             {
                                 ModulesList.Add(module);
                             }
@@ -114,7 +109,7 @@ namespace SerrisModulesServer.Manager
         }
 
 
-        public async Task<int> GetCurrentThemeID()
+        public static async Task<int> GetCurrentThemeID()
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -138,7 +133,7 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public async Task<int> GetCurrentThemeAceEditorID()
+        public static async Task<int> GetCurrentThemeAceEditorID()
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -162,7 +157,7 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public async Task<ThemeModule> GetCurrentThemeTempContent()
+        public static async Task<ThemeModule> GetCurrentThemeTempContent()
         {
             StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("theme_temp.json", CreationCollisionOption.OpenIfExists);
 
@@ -187,7 +182,7 @@ namespace SerrisModulesServer.Manager
             return null;
         }
 
-        public async Task<string> GetCurrentThemeAceEditorTempContent()
+        public static async Task<string> GetCurrentThemeAceEditorTempContent()
         {
             StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
 
@@ -202,7 +197,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public async Task<InfosModule> GetModuleViaIDAsync(int id)
+        public static async Task<InfosModule> GetModuleViaIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -213,7 +208,7 @@ namespace SerrisModulesServer.Manager
 
                     if (list != null)
                     {
-                        foreach (InfosModule _module in new SystemModulesList().Modules)
+                        foreach (InfosModule _module in SystemModulesList.Modules)
                         { list.Modules.Add(_module); }
 
                         InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
@@ -233,7 +228,7 @@ namespace SerrisModulesServer.Manager
             return null;
         }
 
-        public InfosModule GetModuleViaID(int id)
+        public static InfosModule GetModuleViaID(int id)
         {
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -244,7 +239,7 @@ namespace SerrisModulesServer.Manager
 
                     if (list != null)
                     {
-                        foreach (InfosModule _module in new SystemModulesList().Modules)
+                        foreach (InfosModule _module in SystemModulesList.Modules)
                         { list.Modules.Add(_module); }
 
                         InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
@@ -264,7 +259,7 @@ namespace SerrisModulesServer.Manager
             return null;
         }
 
-        public async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(int id, bool IsSystemModule)
+        public static async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(int id, bool IsSystemModule)
         {
             StorageFolder folder_module;
 

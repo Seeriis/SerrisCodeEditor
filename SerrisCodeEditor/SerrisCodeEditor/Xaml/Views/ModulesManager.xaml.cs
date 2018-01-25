@@ -37,13 +37,12 @@ namespace SerrisCodeEditor.Xaml.Views
 
         public SolidColorBrush ForegroundColor
         {
-            get { return new TempContent().CurrentTheme.MainColorFont; }
+            get { return GlobalVariables.CurrentTheme.MainColorFont; }
         }
     }
 
     public sealed partial class ModulesManager : Page
     {
-        ModulesPinned Pinned = new ModulesPinned();
 
         public ModulesManager()
         {
@@ -64,20 +63,20 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
-            BackgroundList.Fill = temp_variables.CurrentTheme.MainColor;
-            MenuButtons.Background = temp_variables.CurrentTheme.SecondaryColor;
+            BackgroundList.Fill = GlobalVariables.CurrentTheme.MainColor;
+            MenuButtons.Background = GlobalVariables.CurrentTheme.SecondaryColor;
 
-            ButtonsSeparator.Fill = temp_variables.CurrentTheme.SecondaryColorFont;
+            ButtonsSeparator.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            AddonsText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            AddonsIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            AddonsText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            AddonsIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            ThemesText.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
-            ThemesIcon.Foreground = temp_variables.CurrentTheme.SecondaryColorFont;
+            ThemesText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ThemesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            InstallButton.Background = temp_variables.CurrentTheme.MainColor;
-            IconInstallButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
-            TextInstallButton.Foreground = temp_variables.CurrentTheme.MainColorFont;
+            InstallButton.Background = GlobalVariables.CurrentTheme.MainColor;
+            IconInstallButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            TextInstallButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
         }
 
         private void ChangeSelectedButton(int newSelectedButton)
@@ -94,7 +93,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             ListModules.Items.Clear();
 
-            foreach (InfosModule module in await Modules_manager_access.GetModulesAsync(true))
+            foreach (InfosModule module in await ModulesAccessManager.GetModulesAsync(true))
             {
                 var module_infos = new ModuleInfosShow { Module = module };
                 var reader = new AddonReader(module_infos.Module.ID);
@@ -128,7 +127,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         break;
 
                     case 1:
-                        await Modules_manager_writer.SetCurrentThemeIDAsync(module.Module.ID);
+                        await ModulesWriteManager.SetCurrentThemeIDAsync(module.Module.ID);
                         break;
                 }
             }
@@ -142,12 +141,12 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             ModuleInfosShow module = (ModuleInfosShow)(sender as Button).DataContext;
 
-            List<int> list = await Pinned.GetModulesPinned();
+            List<int> list = await ModulesPinned.GetModulesPinned();
 
             if (list.Contains(module.Module.ID))
-                Pinned.RemoveModule(module.Module.ID);
+                ModulesPinned.RemoveModule(module.Module.ID);
             else
-                Pinned.AddNewModule(module.Module.ID);
+                ModulesPinned.AddNewModule(module.Module.ID);
 
         }
 
@@ -160,7 +159,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             ModuleInfosShow element = (ModuleInfosShow)((Button)sender).DataContext;
 
-            if(await Modules_manager_writer.DeleteModuleViaIDAsync(element.Module.ID))
+            if(await ModulesWriteManager.DeleteModuleViaIDAsync(element.Module.ID))
             {
                 LoadModules();
             }
@@ -181,9 +180,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
 
-        ModulesAccessManager Modules_manager_access = new ModulesAccessManager(); ModulesWriteManager Modules_manager_writer = new ModulesWriteManager();
         int currentSelectedButton = -1;
-        TempContent temp_variables = new TempContent();
 
     }
 }

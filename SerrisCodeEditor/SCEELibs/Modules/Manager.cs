@@ -44,13 +44,10 @@ namespace SCEELibs.Modules
     public sealed class Manager
     {
 
-        ModulesAccessManager access_manager = new ModulesAccessManager();
-        ModulesWriteManager write_manager = new ModulesWriteManager();
-
         public IList<ModuleInfo> getThemesAvailable(bool system_themes)
         {
             IList<ModuleInfo> list_themes_final = new List<ModuleInfo>();
-            List<InfosModule> list_themes = access_manager.GetModules(system_themes);
+            List<InfosModule> list_themes = ModulesAccessManager.GetModules(system_themes);
 
             foreach (InfosModule theme in list_themes.Where(n => n.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Theme).ToList())
             {
@@ -63,7 +60,7 @@ namespace SCEELibs.Modules
         public IList<ModuleInfo> getAddonsAvailable(bool system_addons)
         {
             IList<ModuleInfo> list_addons_final = new List<ModuleInfo>();
-            List<InfosModule> list_addons = access_manager.GetModules(system_addons);
+            List<InfosModule> list_addons = ModulesAccessManager.GetModules(system_addons);
 
             foreach (InfosModule theme in list_addons.Where(n => n.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon).ToList())
             {
@@ -75,7 +72,7 @@ namespace SCEELibs.Modules
 
         public ModuleInfo getModuleInfosViaID(int ID)
         {
-            var module = access_manager.GetModuleViaID(ID);
+            var module = ModulesAccessManager.GetModuleViaID(ID);
             return new ModuleInfo { ID = module.ID, moduleSystem = module.ModuleSystem, moduleName = module.ModuleName, moduleAuthor = module.ModuleAuthor, moduleDescription = module.ModuleDescription, moduleWebsiteLink = module.ModuleWebsiteLink, containMonacoTheme = module.ContainMonacoTheme, isEnabled = module.IsEnabled, isPinnedToToolbar = module.CanBePinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = module.ModuleVersion.Major, minor = module.ModuleVersion.Minor, revision = module.ModuleVersion.Revision } };
         }
 
@@ -94,7 +91,7 @@ namespace SCEELibs.Modules
                     var result_verify = await new ModulesVerifyAssistant(file).VerifyPackageAsync();
 
                     if(result_verify == PackageVerificationCode.Passed)
-                        await write_manager.AddModuleAsync(file);
+                        await ModulesWriteManager.AddModuleAsync(file);
 
                 }
                 });
@@ -123,7 +120,7 @@ namespace SCEELibs.Modules
                     Label = "Yes",
                     Invoked = async (e) =>
                     {
-                        await write_manager.DeleteModuleViaIDAsync(ID);
+                        await ModulesWriteManager.DeleteModuleViaIDAsync(ID);
                     }
                 });
 
