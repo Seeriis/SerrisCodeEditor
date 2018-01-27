@@ -198,7 +198,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID)));
+                ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID), GlobalVariables.CurrentTheme));
 
             });
 

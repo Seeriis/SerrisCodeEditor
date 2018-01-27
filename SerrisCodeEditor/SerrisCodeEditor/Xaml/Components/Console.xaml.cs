@@ -29,7 +29,8 @@ namespace SerrisCodeEditor.Xaml.Components
         public string notifIcon { get; set; }
         public string notifDate { get { return notifContent.date.ToString("HH:mm:ss"); } }
         public ConsoleNotification notifContent { get; set; }
-    }
+        public SolidColorBrush foreground { get => GlobalVariables.CurrentTheme.SecondaryColorFont; }
+        }
 
     public sealed partial class Console : UserControl
     {
@@ -129,11 +130,65 @@ namespace SerrisCodeEditor.Xaml.Components
 
             LastNotifInfos_Icon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             LastNotifInfos_Text.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            SymbolOpened.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            ErrorsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
-            InformationsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
-            ResultsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
-            WarningsNumber.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            Command_box.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            ErrorsNumber.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            InformationsNumber.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ResultsNumber.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            WarningsNumber.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            ErrorsStackpanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+            InformationsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+            ResultsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+            WarningsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+
+            if (ShowInformations)
+            {
+                InformationsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                InformationsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            }
+            else
+            {
+                InformationsButton.Background = new SolidColorBrush(Colors.Transparent);
+                InformationsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            }
+
+            if (ShowResults)
+            {
+                ResultsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                ResultsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            }
+            else
+            {
+                ResultsButton.Background = new SolidColorBrush(Colors.Transparent);
+                ResultsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            }
+
+            if (ShowWarnings)
+            {
+                WarningsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                WarningsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            }
+            else
+            {
+                WarningsButton.Background = new SolidColorBrush(Colors.Transparent);
+                WarningsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            }
+
+            if (ShowErrors)
+            {
+                ErrorsButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                ErrorsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            }
+            else
+            {
+                ErrorsButton.Background = new SolidColorBrush(Colors.Transparent);
+                ErrorsButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
+            }
+
+            RefreshNotificationsList();
         }
 
         private void CurrentNotifications_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.Theme;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -106,7 +107,7 @@ namespace SerrisModulesServer.Type.Addon
 
         }
 
-        public async Task<StackPanel> GetAddonWidgetViaIDAsync(object sceelibs)
+        public async Task<StackPanel> GetAddonWidgetViaIDAsync(object sceelibs, ThemeModuleBrush theme)
         {
             StorageFolder folder_module;
             var widget_content = new StackPanel { Padding = new Thickness(5, 0, 10, 0), Orientation = Orientation.Horizontal, Name = "" + id_module };
@@ -155,7 +156,7 @@ namespace SerrisModulesServer.Type.Addon
                                     new_button.Width = 25; new_button.Height = 25;
                                     new_button.FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets");
                                     new_button.Content = widget.IconButton;
-                                    new_button.Foreground = new SolidColorBrush(Colors.White); new_button.Background = new SolidColorBrush(Colors.Transparent);
+                                    new_button.Foreground = theme.ToolbarColorFont; new_button.Background = new SolidColorBrush(Colors.Transparent);
                                     new_button.Click += ((e, f) =>
                                     {
                                         Task.Run(() => new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
@@ -173,7 +174,7 @@ namespace SerrisModulesServer.Type.Addon
                                     //new_textbox.Padding = new Thickness(0);
                                     new_textbox.Width = 150; new_textbox.Height = 25;
                                     new_textbox.PlaceholderText = widget.PlaceHolderText;
-                                    new_textbox.FontSize = 14; new_textbox.Background = new SolidColorBrush(Colors.White); new_textbox.Foreground = new SolidColorBrush(Colors.Black);
+                                    new_textbox.FontSize = 14; new_textbox.Background = theme.ToolbarColorFont; new_textbox.Foreground = theme.ToolbarColor;
                                     new_textbox.KeyDown += (async (e, f) =>
                                     {
                                         if (f.KeyStatus.RepeatCount == 1)
