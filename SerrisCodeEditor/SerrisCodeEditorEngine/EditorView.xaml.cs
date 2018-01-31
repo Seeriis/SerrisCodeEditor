@@ -208,7 +208,6 @@ namespace SerrisCodeEditorEngine
                 }*/
 
                 IsLoading(false);
-                EditorLoaded?.Invoke(this, new EventArgs());
             }
         }
 
@@ -573,6 +572,7 @@ namespace SerrisCodeEditorEngine
 
                 case "loaded":
                     Initialized = true;
+                    EditorLoaded?.Invoke(this, new EventArgs());
                     break;
 
             }

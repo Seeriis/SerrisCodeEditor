@@ -452,6 +452,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 LoadSettings();
                 ExecuteModulesFunction();
                 EditorIsLoaded = true;
+                SheetsManager.AddTabsListSheet();
             }
         }
 

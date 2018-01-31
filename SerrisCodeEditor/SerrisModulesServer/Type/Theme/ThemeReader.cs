@@ -16,22 +16,13 @@ namespace SerrisModulesServer.Type.Theme
         public ThemeReader(int ID)
         {
             id_module = ID;
-            AsyncHelpers.RunSync(() => IsSystemModuleOrNot(ID));
+            InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(ID);
+            system_module = ModuleAccess.ModuleSystem;
         }
 
-        async Task IsSystemModuleOrNot(int _id)
+        /*async Task IsSystemModuleOrNot(int _id)
         {
-            InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(_id);
-
-            if (ModuleAccess.ModuleSystem)
-            {
-                system_module = true;
-            }
-            else
-            {
-                system_module = false;
-            }
-        }
+        }*/
 
         /// <summary>
         /// Get the JavaScript content of the monaco theme

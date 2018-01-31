@@ -41,7 +41,7 @@ namespace SerrisCodeEditor
 
             //Serris Modules Server !
             new SMSInitialize().InitializeSMSJson();
-            GlobalVariables.CurrentTheme = await new ThemeReader(await ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
+            GlobalVariables.CurrentTheme = await new ThemeReader(ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
 
             Messenger.Default.Register<SMSNotification>(this, async (notification) =>
             {

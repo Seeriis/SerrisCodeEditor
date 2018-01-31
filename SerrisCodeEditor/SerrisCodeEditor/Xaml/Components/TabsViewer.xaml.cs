@@ -329,6 +329,13 @@ namespace SerrisCodeEditor.Xaml.Components
             TextBoxNewTab.Text = "";
         }
 
+        private async void CreateList()
+        {
+            FlyoutNewList.Hide();
+            await TabsWriteManager.CreateTabsListAsync(TextBoxNewList.Text);
+            TextBoxNewList.Text = "";
+        }
+
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -350,6 +357,17 @@ namespace SerrisCodeEditor.Xaml.Components
             }
         }
 
+        private void TextBoxNewList_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.KeyStatus.RepeatCount == 1)
+            {
+                if (e.Key == Windows.System.VirtualKey.Enter)
+                {
+                    CreateList();
+                }
+            }
+        }
+
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             if (NewTabCreatorGrid.Visibility == Visibility.Collapsed)
@@ -359,15 +377,13 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreateTab();
-        }
+        => CreateTab();
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         { await TabsWriteManager.DeleteTabsListAsync(CurrentSelectedIDs.ID_TabsList); FlyoutDeleteList.Hide(); }
 
-        private async void NewList_Click(object sender, RoutedEventArgs e)
-        { await TabsWriteManager.CreateTabsListAsync(TextBoxNewList.Text); TextBoxNewList.Text = ""; FlyoutNewList.Hide(); }
+        private void NewList_Click(object sender, RoutedEventArgs e)
+        => CreateList();
 
 
 

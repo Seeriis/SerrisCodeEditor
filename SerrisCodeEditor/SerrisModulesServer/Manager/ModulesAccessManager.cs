@@ -16,10 +16,12 @@ namespace SerrisModulesServer.Manager
 {
     public static class ModulesAccessManager
     {
-        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+        //static StorageFile file;
 
         public static async Task<List<InfosModule>> GetModulesAsync(bool GetSystemModules)
         {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
@@ -65,6 +67,8 @@ namespace SerrisModulesServer.Manager
 
         public static List<InfosModule> GetModules(bool GetSystemModules)
         {
+            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
@@ -109,9 +113,37 @@ namespace SerrisModulesServer.Manager
         }
 
 
-        public static async Task<int> GetCurrentThemeID()
+        public static async Task<int> GetCurrentThemeIDAsync()
         {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (JsonReader JsonReader = new JsonTextReader(reader))
+            {
+                try
+                {
+                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
+                    if (list != null)
+                    {
+                        return list.CurrentThemeID;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public static int GetCurrentThemeID()
+        {
+            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+
+            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -135,6 +167,8 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<int> GetCurrentThemeAceEditorID()
         {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
@@ -199,6 +233,8 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<InfosModule> GetModuleViaIDAsync(int id)
         {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
@@ -230,6 +266,8 @@ namespace SerrisModulesServer.Manager
 
         public static InfosModule GetModuleViaID(int id)
         {
+            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+
             using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
@@ -249,6 +287,22 @@ namespace SerrisModulesServer.Manager
                             return module;
                         }
                     }
+                    else
+                    {
+                        list = new ModulesList();
+                        list.Modules = new List<InfosModule>();
+
+                        foreach (InfosModule _module in SystemModulesList.Modules)
+                        { list.Modules.Add(_module); }
+
+                        InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
+
+                        if (module != null)
+                        {
+                            return module;
+                        }
+
+                    }
                 }
                 catch
                 {
@@ -266,12 +320,12 @@ namespace SerrisModulesServer.Manager
             if (IsSystemModule)
             {
                 StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"), folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
+                folder_module = await folder_systemmodules.CreateFolderAsync(await GetCurrentThemeIDAsync() + "", CreationCollisionOption.OpenIfExists);
             }
             else
             {
                 StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
+                folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeIDAsync() + "", CreationCollisionOption.OpenIfExists);
             }
 
             StorageFile file_content = await folder_module.GetFileAsync("logo.png");
