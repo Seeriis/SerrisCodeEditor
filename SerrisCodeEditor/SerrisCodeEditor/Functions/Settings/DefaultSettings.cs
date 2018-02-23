@@ -64,6 +64,15 @@ namespace SerrisCodeEditor.Functions.Settings
 
                         VarSaveName = "ui_closepanelauto",
                         VarSaveDefaultContent = false
+                    },
+
+                    new Setting
+                    {
+                        Description = "Left pane length (in pixel)",
+                        Type = SettingType.TextboxNumber,
+
+                        VarSaveName = "ui_leftpanelength",
+                        VarSaveDefaultContent = 60
                     }
                 }
 

@@ -37,7 +37,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="0,0,15,15">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="0,0,0,15">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -88,12 +88,86 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="0,0,15,15" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="0,0,0,15" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="TabsManageOpenButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="Padding" Value="8,4,8,4"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="0,0,15,0">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="0,0,15,0" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ComboxBoxTabsList" TargetType="ComboBox">
             <Setter Property="Padding" Value="12,5,0,7"/>
             <Setter Property="MinWidth" Value="{ThemeResource ComboBoxThemeMinWidth}"/>
@@ -580,6 +654,12 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="TabsViewerControls" Margin="0" Padding="2" Background="Transparent">
+            <Grid Margin="15,5,15,0">
+                <Rectangle x:Name="SeparatorB" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
+
+                <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search tab..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,4" Foreground="#FF292929" Background="#FF3C097A"/>
+
+            </Grid>
 
             <Grid Margin="10,15,10,5">
                 <Grid.ColumnDefinitions>
@@ -631,13 +711,14 @@
                 </StackPanel>
             </Grid>
 
+
             <Grid Margin="10,0,10,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="CreateButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" Margin="5,10,10,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="CreateButton_Click">
+                <Button x:Name="CreateButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" Margin="5,10,5,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="CreateButton_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -648,7 +729,7 @@
                     </Grid>
                 </Button>
 
-                <Button x:Name="OpenButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" FontSize="15" Margin="10,10,5,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="OpenButton_Click">
+                <Button x:Name="OpenButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" FontSize="15" Margin="5,10,5,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageOpenButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="OpenButton_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -671,13 +752,6 @@
             </StackPanel>
 
 
-            <Grid Margin="5,15,5,0">
-                <Rectangle x:Name="SeparatorA" VerticalAlignment="Top" HorizontalAlignment="Stretch" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
-                <Rectangle x:Name="SeparatorB" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Fill="#CC3C097A" Height="1" Grid.ColumnSpan="2" StrokeThickness="0"/>
-
-                <TextBox x:Name="Box_Search" VerticalAlignment="Top" PlaceholderText="Search..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="5,4" Foreground="#FF292929" Background="#FF3C097A"/>
-
-            </Grid>
 
         </StackPanel>
 

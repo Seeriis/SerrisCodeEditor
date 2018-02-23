@@ -180,6 +180,71 @@ namespace SerrisCodeEditor.Xaml.Views
                                 MenuControls.Children.Add(TextBoxControl);
                                 break;
 
+                            case SettingType.TextboxNumber:
+                                StackPanel TextBoxNmbControl = new StackPanel();
+                                TextBoxNmbControl.Margin = new Thickness(0, 20, 0, 0);
+
+                                TextBlock TitleTextBoxNmb = new TextBlock();
+                                TitleTextBoxNmb.FontSize = 15;
+                                TitleTextBoxNmb.Text = SettingControl.Description;
+                                TitleTextBoxNmb.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                                TextBoxNmbControl.Children.Add(TitleTextBoxNmb);
+
+                                TextBox TextBoxNmb = new TextBox();
+                                TextBoxNmb.Margin = new Thickness(5, 5, 0, 0);
+
+                                TextBoxNmb.Style = (Style)Application.Current.Resources["RoundTextBox"];
+                                TextBoxNmb.Width = 150; TextBoxNmb.Height = 25;
+                                TextBoxNmb.HorizontalAlignment = HorizontalAlignment.Left;
+                                TextBoxNmb.FontSize = 14; TextBoxNmb.Background = GlobalVariables.CurrentTheme.SecondaryColor; TextBoxNmb.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+                                if (AppSettings.Values.ContainsKey(SettingControl.VarSaveName))
+                                    TextBoxNmb.Text = ((int)AppSettings.Values[SettingControl.VarSaveName]).ToString();
+                                else
+                                    TextBoxNmb.Text = ((int)SettingControl.VarSaveDefaultContent).ToString();
+
+                                TextBoxNmb.KeyDown += ((e, f) =>
+                                {
+                                    if (f.Key == Windows.System.VirtualKey.Enter)
+                                    {
+                                        f.Handled = false;
+                                        if (string.IsNullOrEmpty(TextBoxNmb.Text))
+                                        {
+                                            AppSettings.Values[SettingControl.VarSaveName] = (int)SettingControl.VarSaveDefaultContent;
+                                        }
+                                        else
+                                        {
+                                            AppSettings.Values[SettingControl.VarSaveName] = int.Parse(TextBoxNmb.Text);
+                                        }
+                                        Messenger.Default.Send(new SettingsNotification { SettingsUpdatedName = menu.Name });
+
+                                        return;
+                                    }
+
+                                    if (f.Key.ToString().Equals("Back"))
+                                    {
+                                        f.Handled = false;
+                                        return;
+                                    }
+
+                                    for (int i = 0; i < 10; i++)
+                                    {
+                                        if (f.Key.ToString() == string.Format("Number{0}", i))
+                                        {
+                                            f.Handled = false;
+                                            return;
+                                        }
+                                    }
+
+                                    f.Handled = true;
+
+                                });
+
+                                TextBoxNmbControl.Children.Add(TextBoxNmb);
+                                MenuControls.Children.Add(TextBoxNmbControl);
+                                break;
+
                             case SettingType.Link:
                                 StackPanel LinkControl = new StackPanel();
                                 LinkControl.Margin = new Thickness(0, 20, 0, 0);

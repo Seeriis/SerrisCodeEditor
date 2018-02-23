@@ -27,6 +27,7 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class Tab : UserControl
     {
         InfosTab current_tab = new InfosTab(); int current_list; bool infos_opened = false, enable_selection = false;
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
         public Tab()
         {
@@ -43,6 +44,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 if (current_tab == null)
                     current_tab = new InfosTab();
+
+                if (AppSettings.Values.ContainsKey("ui_leftpanelength"))
+                {
+                    GridInfoLeft.Width = (int)AppSettings.Values["ui_leftpanelength"];
+                    StackInfos.Margin = new Thickness((int)AppSettings.Values["ui_leftpanelength"], 0, 0, 0);
+                }
 
                 current_tab.ID = ids.ID_Tab; current_list = ids.ID_TabsList;
                 UpdateTabInformations();
@@ -136,10 +143,14 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 foreach(CoreApplicationView view in CoreApplication.Views)
                 {
-                    if(current_tab.TabName.Length >= 4)
-                        Extension_tab.Text = current_tab.TabName.Substring(0, 4);
+                    if(current_tab.TabName.Length >= (int)(GridInfoLeft.ActualWidth / 10))
+                    {
+                        Extension_tab.Text = current_tab.TabName.Substring(0, (int)(GridInfoLeft.ActualWidth / 10));
+                    }
                     else
-                        Extension_tab.Text = current_tab.TabType.ToUpper();
+                    {
+                        Extension_tab.Text = current_tab.TabName;
+                    }
 
                     name_tab.Text = current_tab.TabName;
 

@@ -23,6 +23,7 @@ using Windows.Storage;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Type.Addon;
 using System.Text;
+using Windows.UI.Input;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -40,6 +41,9 @@ namespace SerrisCodeEditor.Xaml.Views
             SetMessenger();
             SetTheme();
             SetInterface();
+
+            PointerMoved += EditorView_PointerMoved;
+            PointerReleased += SeparatorLinePointerReleased;
         }
 
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -167,7 +171,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
             if (isDeployed)
             {
-                SheetViewSeparatorLine.Width = 2;
+                SheetViewSeparatorLine.Width = 8;
 
                 switch(GlobalVariables.CurrentDevice)
                 {
@@ -364,6 +368,14 @@ namespace SerrisCodeEditor.Xaml.Views
                         ClosePanelAuto = (bool)AppSettings.Values["ui_closepanelauto"];
                     }
 
+                    if (AppSettings.Values.ContainsKey("ui_leftpanelength"))
+                    {
+                        TopSheetViewSplit.Width = (int)AppSettings.Values["ui_leftpanelength"];
+                        SheetViewSplit.CompactPaneLength = (int)AppSettings.Values["ui_leftpanelength"];
+                        ContentViewerGrid.Margin = new Thickness((int)AppSettings.Values["ui_leftpanelength"], ContentViewerGrid.Margin.Top, 0, 0);
+                    }
+
+
                     TextInfoTitlebar.Text = "Serris Code Editor - " + SCEELibs.SCEInfos.versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -373,15 +385,19 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
             }
 
-
-            //onEditorStart
-            foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
+            if(!EditorStartModulesEventsLaunched)
             {
-                if (Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                //onEditorStart
+                foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
                 {
-                    SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(Module.ID);
-                    await Task.Run(() => new AddonExecutor(Module.ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorStart));
+                    if (Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
+                    {
+                        SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(Module.ID);
+                        await Task.Run(() => new AddonExecutor(Module.ID, Libs).ExecuteDefaultFunction(AddonExecutorFuncTypes.onEditorStart));
+                    }
                 }
+
+                EditorStartModulesEventsLaunched = true;
             }
 
         }
@@ -505,6 +521,31 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private void SeparatorLinePointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            SeparatorClicked = true;
+
+            if(OpenPaneLengthOriginal == 0)
+                OpenPaneLengthOriginal = SheetViewSplit.OpenPaneLength;
+
+            //var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
+            //SheetViewSplit.OpenPaneLength = pointerPosition.X + 4;
+
+        }
+        private void EditorView_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            if (SeparatorClicked)
+            {
+                var pointerPosition = e.GetCurrentPoint(MasterGrid);
+
+                if(pointerPosition.Position.X + 4 > OpenPaneLengthOriginal)
+                    SheetViewSplit.OpenPaneLength = pointerPosition.Position.X + 4;
+            }
+        }
+
+        private void SeparatorLinePointerReleased(object sender, PointerRoutedEventArgs e)
+        => SeparatorClicked = false;
+
 
 
         /* =============
@@ -515,7 +556,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false;
+        double OpenPaneLengthOriginal = 0;
 
     }
 

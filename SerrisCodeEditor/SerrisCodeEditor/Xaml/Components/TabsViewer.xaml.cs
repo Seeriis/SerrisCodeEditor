@@ -132,7 +132,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetTheme()
         {
-            SeparatorA.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
+            //SeparatorA.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
             SeparatorB.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
 
             Lists.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
