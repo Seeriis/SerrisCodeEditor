@@ -107,6 +107,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="SystemModules\0\background.jpg" />
+    <Content Include="SystemModules\0\theme.js" />
     <Content Include="SystemModules\1\HTML\test.html" />
     <Content Include="SystemModules\1\HTML\flyout.html" />
     <Content Include="SystemModules\1\icon.png" />
@@ -134,6 +135,7 @@
     <Content Include="SystemModules\3\widget.json" />
     <Content Include="SystemModules\4\widget.json" />
     <Content Include="SystemModules\5\widget.json" />
+    <Content Include="SystemModules\6\theme.js" />
     <Content Include="SystemModules\6\theme.json" />
     <Content Include="SystemModules\7\HTML\infos.html" />
     <Content Include="SystemModules\7\icon.png" />

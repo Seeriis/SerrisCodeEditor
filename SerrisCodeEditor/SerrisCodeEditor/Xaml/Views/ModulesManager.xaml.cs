@@ -20,6 +20,8 @@ namespace SerrisCodeEditor.Xaml.Views
     {
         public BitmapImage Thumbnail { get; set; }
         public InfosModule Module { get; set; }
+        public int StrokeThickness { get; set; }
+
         public Visibility DeleteButtonVisibility
         {
             get
@@ -39,6 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             get { return GlobalVariables.CurrentTheme.MainColorFont; }
         }
+
     }
 
     public sealed partial class ModulesManager : Page
@@ -92,10 +95,11 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void LoadModules()
         {
             ListModules.Items.Clear();
+            int IDThemeMonaco = await ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = await ModulesAccessManager.GetCurrentThemeIDAsync();
 
             foreach (InfosModule module in await ModulesAccessManager.GetModulesAsync(true))
             {
-                var module_infos = new ModuleInfosShow { Module = module };
+                var module_infos = new ModuleInfosShow { Module = module, StrokeThickness = 0 };
                 var reader = new AddonReader(module_infos.Module.ID);
                 module_infos.Thumbnail = await reader.GetAddonIconViaIDAsync();
 
@@ -106,6 +110,9 @@ namespace SerrisCodeEditor.Xaml.Views
                         break;
 
                     case ModuleTypesList.Theme when currentSelectedButton == 1:
+                        if (IDTheme == module_infos.Module.ID || IDThemeMonaco == module_infos.Module.ID)
+                            module_infos.StrokeThickness = 2;
+
                         ListModules.Items.Add(module_infos);
                         break;
                 }
@@ -128,6 +135,10 @@ namespace SerrisCodeEditor.Xaml.Views
 
                     case 1:
                         await ModulesWriteManager.SetCurrentThemeIDAsync(module.Module.ID);
+
+                        if(module.Module.ContainMonacoTheme)
+                            await ModulesWriteManager.SetCurrentMonacoThemeIDAsync(module.Module.ID);
+
                         break;
                 }
             }

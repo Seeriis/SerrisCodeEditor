@@ -165,7 +165,7 @@ namespace SerrisModulesServer.Manager
             }
         }
 
-        public static async Task<int> GetCurrentThemeAceEditorID()
+        public static async Task<int> GetCurrentThemeMonacoID()
         {
             StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
 
@@ -177,7 +177,7 @@ namespace SerrisModulesServer.Manager
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
                     if (list != null)
                     {
-                        return list.CurrentThemeAceID;
+                        return list.CurrentThemeMonacoID;
                     }
                     else
                     {

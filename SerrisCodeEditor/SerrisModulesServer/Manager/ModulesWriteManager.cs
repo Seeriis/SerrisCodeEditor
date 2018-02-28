@@ -206,7 +206,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<bool> SetCurrentAceEditoThemeIDAsync(int id)
+        public static async Task<bool> SetCurrentMonacoThemeIDAsync(int id)
         {
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -215,7 +215,7 @@ namespace SerrisModulesServer.Manager
                 {
                     ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
 
-                    list.CurrentThemeAceID = id;
+                    list.CurrentThemeMonacoID = id;
                     await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
 
                     foreach (CoreApplicationView view in CoreApplication.Views)
@@ -239,7 +239,7 @@ namespace SerrisModulesServer.Manager
         {
             try
             {
-                InfosModule module = await ModulesAccessManager.GetModuleViaIDAsync(await ModulesAccessManager.GetCurrentThemeAceEditorID());
+                InfosModule module = await ModulesAccessManager.GetModuleViaIDAsync(await ModulesAccessManager.GetCurrentThemeMonacoID());
 
                 StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
                 await FileIO.WriteTextAsync(file_content, await new ThemeReader(module.ID).GetThemeJSContentAsync());
@@ -254,7 +254,7 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<bool> SetCurrentThemeTempContentAsync()
         {
-            StorageFolder folder_module = await folder_modules.CreateFolderAsync(await ModulesAccessManager.GetCurrentThemeAceEditorID() + "", CreationCollisionOption.OpenIfExists);
+            StorageFolder folder_module = await folder_modules.CreateFolderAsync(await ModulesAccessManager.GetCurrentThemeMonacoID() + "", CreationCollisionOption.OpenIfExists);
             StorageFile file_content_temp = await ApplicationData.Current.LocalFolder.CreateFileAsync("theme_temp.json", CreationCollisionOption.OpenIfExists), file_content = await folder_module.GetFileAsync("theme_ace.js");
 
             try

@@ -22,7 +22,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Margin="0,0,10,0">
+                <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Margin="0,0,10,0" Stroke="White" StrokeThickness="{Binding StrokeThickness}">
                     <Ellipse.Fill>
                         <ImageBrush Stretch="Uniform" ImageSource="{Binding Thumbnail}"/>
                     </Ellipse.Fill>

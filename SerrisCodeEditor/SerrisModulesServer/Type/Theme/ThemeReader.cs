@@ -44,7 +44,7 @@ namespace SerrisModulesServer.Type.Theme
                 folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
             }
 
-            StorageFile file_content = await folder_module.GetFileAsync("theme_ace.js");
+            StorageFile file_content = await folder_module.GetFileAsync("theme.js");
 
             try
             {

@@ -5,7 +5,7 @@ namespace SerrisModulesServer.Items
     public class ModulesList
     {
         public int CurrentThemeID { get; set; }
-        public int CurrentThemeAceID { get; set; }
+        public int CurrentThemeMonacoID { get; set; }
         public List<InfosModule> Modules { get; set; }
     }
 }

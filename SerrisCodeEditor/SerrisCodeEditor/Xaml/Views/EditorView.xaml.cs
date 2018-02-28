@@ -24,6 +24,7 @@ using SerrisModulesServer.Items;
 using SerrisModulesServer.Type.Addon;
 using System.Text;
 using Windows.UI.Input;
+using SerrisModulesServer.Type.Theme;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -103,6 +104,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     try
                     {
                         SetTheme();
+                        SetMonacoTheme();
                     }
                     catch { }
 
@@ -271,6 +273,18 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
             }
 
+        }
+
+        private async void SetMonacoTheme()
+        {
+            if (EditorIsLoaded)
+            {
+                var MonacoTheme = ModulesAccessManager.GetModuleViaID(await ModulesAccessManager.GetCurrentThemeMonacoID());
+                ContentViewer.SendAndExecuteJavaScript(await new ThemeReader(await ModulesAccessManager.GetCurrentThemeMonacoID()).GetThemeJSContentAsync());
+                ContentViewer.SendAndExecuteJavaScript("monaco.editor.setTheme('" + MonacoTheme.ModuleMonacoThemeName + "');");
+
+                //Debug.WriteLine(MonacoTheme.ModuleMonacoThemeName);
+            }
         }
 
         private void LoadSettings()
@@ -469,6 +483,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 ExecuteModulesFunction();
                 EditorIsLoaded = true;
                 SheetsManager.AddTabsListSheet();
+                SetMonacoTheme();
             }
         }
 

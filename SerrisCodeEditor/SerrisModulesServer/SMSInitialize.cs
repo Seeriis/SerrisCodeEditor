@@ -36,7 +36,7 @@ namespace SerrisModulesServer
         {
             var new_list = new ModulesList
             {
-                CurrentThemeAceID = 0,
+                CurrentThemeMonacoID = 0,
                 CurrentThemeID = 0,
                 Modules = new List<InfosModule>()
             };
