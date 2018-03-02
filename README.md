@@ -14,7 +14,7 @@ For more informations about the project, you can look the wiki [here](https://gi
 
 ### Serris Code Editor
 
-Created by DeerisLeGris (Seeriis) under the MIT license.
+Created by DeerisLeGris - Théo Ferreira (Seeriis) under the MIT license.
 
 ### Projects used
 
