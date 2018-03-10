@@ -18,15 +18,14 @@ namespace SerrisModulesServer.Manager
 {
     public static class ModulesWriteManager
     {
-        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-        static StorageFolder folder_modules = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists).AsTask());
-
         public static Task<bool> AddModuleAsync(StorageFile module_zip)
         {
+            ModulesDataCache.LoadModulesData();
+
             return Task.Run(async () => 
             {
                 int id = new Random().Next(999999);
-                StorageFolder folder_addon = await folder_modules.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
+                StorageFolder folder_addon = await ModulesDataCache.ModulesListFolder.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
 
                 ZipFile.ExtractToDirectory(module_zip.Path, folder_addon.Path);
 
@@ -66,38 +65,18 @@ namespace SerrisModulesServer.Manager
                                     break;
                             }
 
-                            using (var reader_b = new StreamReader(await file.OpenStreamForReadAsync()))
-                            using (JsonReader JsonReader_b = new JsonTextReader(reader))
+                            ModulesDataCache.ModulesListDeserialized.Modules.Add(content);
+                            await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+
+                            foreach (CoreApplicationView view in CoreApplication.Views)
                             {
-                                try
+                                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                                 {
-                                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader_b);
-
-                                    if (list == null)
-                                    {
-                                        list = new ModulesList();
-                                        list.Modules = new List<InfosModule>();
-                                    }
-
-                                    list.Modules.Add(content);
-                                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                                    foreach (CoreApplicationView view in CoreApplication.Views)
-                                    {
-                                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                                        {
-                                            Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.NewModule, ID = id });
-                                        });
-                                    }
-
-                                    return true;
-                                }
-                                catch
-                                {
-                                    return false;
-                                }
+                                    Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.NewModule, ID = id });
+                                });
                             }
 
+                            return true;
                         }
                     }
                     catch
@@ -114,80 +93,73 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<bool> DeleteModuleViaIDAsync(int id)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            ModulesDataCache.LoadModulesData();
+
+            try
             {
-                try
+                StorageFolder folder_module = await ModulesDataCache.ModulesListFolder.GetFolderAsync(id + "");
+                await folder_module.DeleteAsync();
+                ModulesDataCache.ModulesListDeserialized.Modules.Remove(ModulesDataCache.ModulesListDeserialized.Modules.First(m => m.ID == id));
+                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-
-                    StorageFolder folder_module = await folder_modules.GetFolderAsync(id + "");
-                    await folder_module.DeleteAsync();
-                    list.Modules.Remove(list.Modules.First(m => m.ID == id));
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.ModuleDeleted, ID = id });
-                        });
-                    }
+                        Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.ModuleDeleted, ID = id });
+                    });
+                }
 
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
         }
 
         public static async Task<bool> PushUpdateModuleAsync(InfosModule module)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            ModulesDataCache.LoadModulesData();
+
+            try
             {
-                try
+                InfosModule _module = ModulesDataCache.ModulesListDeserialized.Modules.First(m => m.ID == module.ID);
+                int index_module = ModulesDataCache.ModulesListDeserialized.Modules.IndexOf(_module);
+
+                ModulesDataCache.ModulesListDeserialized.Modules[index_module] = module;
+
+                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    InfosModule _module = list.Modules.First(m => m.ID == module.ID);
-                    int index_module = list.Modules.IndexOf(_module);
-
-                    list.Modules[index_module] = module;
-
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.UpdateModule, ID = module.ID });
-                        });
-                    }
-                    return true;
+                        Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.UpdateModule, ID = module.ID });
+                    });
                 }
-                catch
-                {
-                    return false;
-                }
+                return true;
             }
+            catch
+            {
+                return false;
+            }
+
 
         }
 
-        public static async Task<bool> SetCurrentThemeIDAsync(int id)
+        public static async Task<bool> SetCurrentThemeIDAsync(int id, bool SendNotification)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            ModulesDataCache.LoadModulesData();
+
+            try
             {
-                try
+                ModulesDataCache.ModulesListDeserialized.CurrentThemeID = id;
+                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+
+                if (SendNotification)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-
-                    list.CurrentThemeID = id;
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
                     foreach (CoreApplicationView view in CoreApplication.Views)
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -195,29 +167,28 @@ namespace SerrisModulesServer.Manager
                             Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.CurrentThemeUpdated, ID = id });
                         });
                     }
+                }
 
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
         }
 
-        public static async Task<bool> SetCurrentMonacoThemeIDAsync(int id)
+        public static async Task<bool> SetCurrentMonacoThemeIDAsync(int id, bool SendNotification)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            ModulesDataCache.LoadModulesData();
+
+            try
             {
-                try
+                ModulesDataCache.ModulesListDeserialized.CurrentThemeMonacoID = id;
+                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+
+                if (SendNotification)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-
-                    list.CurrentThemeMonacoID = id;
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
                     foreach (CoreApplicationView view in CoreApplication.Views)
                     {
                         await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -225,21 +196,24 @@ namespace SerrisModulesServer.Manager
                             Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.CurrentThemeUpdated, ID = id });
                         });
                     }
+                }
 
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                return true;
             }
+            catch
+            {
+                return false;
+            }
+
         }
 
         public static async Task<bool> SetCurrentThemeAceEditorTempContentAsync()
         {
+            ModulesDataCache.LoadModulesData();
+
             try
             {
-                InfosModule module = await ModulesAccessManager.GetModuleViaIDAsync(await ModulesAccessManager.GetCurrentThemeMonacoID());
+                InfosModule module = ModulesAccessManager.GetModuleViaID(ModulesAccessManager.GetCurrentThemeMonacoID());
 
                 StorageFile file_content = await ApplicationData.Current.LocalFolder.CreateFileAsync("themeace_temp.js", CreationCollisionOption.OpenIfExists);
                 await FileIO.WriteTextAsync(file_content, await new ThemeReader(module.ID).GetThemeJSContentAsync());
@@ -254,7 +228,7 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<bool> SetCurrentThemeTempContentAsync()
         {
-            StorageFolder folder_module = await folder_modules.CreateFolderAsync(await ModulesAccessManager.GetCurrentThemeMonacoID() + "", CreationCollisionOption.OpenIfExists);
+            StorageFolder folder_module = await ModulesDataCache.ModulesListFolder.CreateFolderAsync(ModulesAccessManager.GetCurrentThemeMonacoID() + "", CreationCollisionOption.OpenIfExists);
             StorageFile file_content_temp = await ApplicationData.Current.LocalFolder.CreateFileAsync("theme_temp.json", CreationCollisionOption.OpenIfExists), file_content = await folder_module.GetFileAsync("theme_ace.js");
 
             try

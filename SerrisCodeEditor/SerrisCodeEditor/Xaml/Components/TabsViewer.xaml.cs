@@ -72,9 +72,9 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 TabsViewerControls.Visibility = Visibility.Collapsed;
 
-                foreach (int id in await TabsAccessManager.GetTabsListIDAsync())
+                foreach (int id in TabsAccessManager.GetTabsListID())
                 {
-                    var list = await TabsAccessManager.GetTabsListViaIDAsync(id);
+                    var list = TabsAccessManager.GetTabsListViaID(id);
                     Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
 
                     if (AppSettings.Values.ContainsKey("Tabs_list-selected-index"))
@@ -108,7 +108,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 if(((TabID)Tabs.SelectedItem).ID_Tab != GlobalVariables.CurrentIDs.ID_Tab)
                 {
                     CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
-                    var tab = await TabsAccessManager.GetTabViaIDAsync(CurrentSelectedIDs);
+                    var tab = TabsAccessManager.GetTabViaID(CurrentSelectedIDs);
                     int EncodingType = tab.TabEncoding;
                     string TabType = "";
 
@@ -249,7 +249,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                     break;
 
                                 case TypeUpdateTab.NewList:
-                                    var list = await TabsAccessManager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
+                                    var list = TabsAccessManager.GetTabsListViaID(notification.ID.ID_TabsList);
                                     Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
                                     Lists.SelectedIndex = Lists.Items.Count - 1;
                                     break;
@@ -264,7 +264,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (notification.Type)
                             {
                                 case TypeUpdateTab.NewList:
-                                    var list = await TabsAccessManager.GetTabsListViaIDAsync(notification.ID.ID_TabsList);
+                                    var list = TabsAccessManager.GetTabsListViaID(notification.ID.ID_TabsList);
                                     Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
                                     Lists.SelectedIndex = Lists.Items.Count - 1;
                                     break;
@@ -282,11 +282,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
-        private async void ChangeSelectedList(int id_list)
+        private void ChangeSelectedList(int id_list)
         {
             Tabs.Items.Clear();
             CurrentSelectedIDs.ID_TabsList = id_list;
-            List<int> list_ids = await TabsAccessManager.GetTabsIDAsync(id_list);
+            List<int> list_ids = TabsAccessManager.GetTabsID(id_list);
             
             if(list_ids.Count == 0)
             {

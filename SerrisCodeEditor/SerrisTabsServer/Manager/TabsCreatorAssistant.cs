@@ -56,9 +56,9 @@ namespace SerrisTabsServer.Manager
         {
             try
             {
-                await new StorageRouter(await TabsAccessManager.GetTabViaIDAsync(ids), ids.ID_TabsList).CreateFile().ContinueWith(async (e) =>
+                await new StorageRouter(TabsAccessManager.GetTabViaID(ids), ids.ID_TabsList).CreateFile().ContinueWith(async (e) =>
                 {
-                    await new StorageRouter(await TabsAccessManager.GetTabViaIDAsync(ids), ids.ID_TabsList).WriteFile();
+                    await new StorageRouter(TabsAccessManager.GetTabViaID(ids), ids.ID_TabsList).WriteFile();
                 });
                 return true;
             }
@@ -110,7 +110,7 @@ namespace SerrisTabsServer.Manager
                         await Task.Run(async () =>
                         {
                             id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
-                            if(await new StorageRouter(await TabsAccessManager.GetTabViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true))
+                            if(await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true))
                             {
                                 Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
                             }

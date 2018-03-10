@@ -279,8 +279,8 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (EditorIsLoaded)
             {
-                var MonacoTheme = ModulesAccessManager.GetModuleViaID(await ModulesAccessManager.GetCurrentThemeMonacoID());
-                ContentViewer.SendAndExecuteJavaScript(await new ThemeReader(await ModulesAccessManager.GetCurrentThemeMonacoID()).GetThemeJSContentAsync());
+                var MonacoTheme = ModulesAccessManager.GetModuleViaID(ModulesAccessManager.GetCurrentThemeMonacoID());
+                ContentViewer.SendAndExecuteJavaScript(await new ThemeReader(ModulesAccessManager.GetCurrentThemeMonacoID()).GetThemeJSContentAsync());
                 ContentViewer.SendAndExecuteJavaScript("monaco.editor.setTheme('" + MonacoTheme.ModuleMonacoThemeName + "');");
 
                 //Debug.WriteLine(MonacoTheme.ModuleMonacoThemeName);
@@ -321,7 +321,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void ExecuteModulesFunction()
         {
             //onEditorViewReady
-            foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
+            foreach (InfosModule Module in ModulesAccessManager.GetModules(true))
             {
                 if(Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                 {
@@ -402,7 +402,7 @@ namespace SerrisCodeEditor.Xaml.Views
             if(!EditorStartModulesEventsLaunched)
             {
                 //onEditorStart
-                foreach (InfosModule Module in await ModulesAccessManager.GetModulesAsync(true))
+                foreach (InfosModule Module in ModulesAccessManager.GetModules(true))
                 {
                     if (Module.IsEnabled && Module.ModuleType == SerrisModulesServer.Type.ModuleTypesList.Addon)
                     {

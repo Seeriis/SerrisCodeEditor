@@ -145,6 +145,7 @@
     <Content Include="SystemModules\7\widget.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\ModulesDataCache.cs" />
     <Compile Include="SMSInfos.cs" />
     <Compile Include="SMSInitialize.cs" />
     <Compile Include="Items\InfosModule.cs" />

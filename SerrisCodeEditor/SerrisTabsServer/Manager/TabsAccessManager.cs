@@ -12,219 +12,135 @@ namespace SerrisTabsServer.Manager
 {
     public static class TabsAccessManager
     {
-        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public static async Task<List<InfosTab>> GetTabsAsync(int id)
+        public static List<InfosTab> GetTabs(int id)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            TabsDataCache.LoadTabsData();
+
+            try
             {
-                try
+                if (TabsDataCache.TabsListDeserialized != null)
                 {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    if (list != null)
-                    {
-                        return list.Where(m => m.ID == id).FirstOrDefault().tabs.Where(n => n.TabInvisibleByDefault == false).ToList();
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return TabsDataCache.TabsListDeserialized.Where(m => m.ID == id).FirstOrDefault().tabs.Where(n => n.TabInvisibleByDefault == false).ToList();
                 }
-                catch
+                else
                 {
                     return null;
                 }
             }
-
-        }
-
-        public static async Task<List<int>> GetTabsListIDAsync()
-        {
-
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            catch
             {
-                try
-                {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    var list_ids = new List<int>();
-
-                    if (list != null)
-                    {
-                        foreach (TabsList list_tabs in list)
-                        {
-                            list_ids.Add(list_tabs.ID);
-                        }
-                        return list_ids;
-                    }
-                    else
-                    {
-                        return list_ids;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
+                return null;
             }
 
         }
 
-        public static async Task<List<int>> GetTabsIDAsync(int id_list)
+        public static List<int> GetTabsListID()
         {
+            TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
-                {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    var list_ids = new List<int>();
+                var list_ids = new List<int>();
 
-                    if (list != null)
-                    {
-                        if (list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
-                        {
-                            foreach (InfosTab tab in list.Where(m => m.ID == id_list).FirstOrDefault().tabs)
-                            {
-                                if (!tab.TabInvisibleByDefault)
-                                {
-                                    list_ids.Add(tab.ID);
-                                }
-                            }
-                        }
-
-                        return list_ids;
-                    }
-                    else
-                    {
-                        return list_ids;
-                    }
-                }
-                catch
+                if (TabsDataCache.TabsListDeserialized != null)
                 {
-                    return null;
+                    foreach (TabsList list_tabs in TabsDataCache.TabsListDeserialized)
+                    {
+                        list_ids.Add(list_tabs.ID);
+                    }
+                    return list_ids;
                 }
+                else
+                {
+                    return list_ids;
+                }
+            }
+            catch
+            {
+                return null;
             }
 
         }
 
         public static List<int> GetTabsID(int id_list)
         {
+            TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
-                {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    var list_ids = new List<int>();
+                var list_ids = new List<int>();
 
-                    if (list != null)
+                if (TabsDataCache.TabsListDeserialized != null)
+                {
+                    if (TabsDataCache.TabsListDeserialized.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
                     {
-                        if (list.Where(m => m.ID == id_list).FirstOrDefault().tabs != null)
+                        foreach (InfosTab tab in TabsDataCache.TabsListDeserialized.Where(m => m.ID == id_list).FirstOrDefault().tabs)
                         {
-                            foreach (InfosTab tab in list.Where(m => m.ID == id_list).FirstOrDefault().tabs)
+                            if (!tab.TabInvisibleByDefault)
                             {
-                                if (!tab.TabInvisibleByDefault)
-                                {
-                                    list_ids.Add(tab.ID);
-                                }
+                                list_ids.Add(tab.ID);
                             }
                         }
+                    }
 
-                        return list_ids;
-                    }
-                    else
-                    {
-                        return list_ids;
-                    }
+                    return list_ids;
                 }
-                catch
+                else
                 {
-                    return null;
+                    return list_ids;
                 }
             }
-
-        }
-
-        public static async Task<InfosTab> GetTabViaIDAsync(TabID id)
-        {
-
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            catch
             {
-                try
-                {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-
-                    if (list != null)
-                    {
-                        if (list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs != null)
-                        {
-                            return list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
-                        }
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
+                return null;
             }
 
-            return null;
         }
 
         public static InfosTab GetTabViaID(TabID id)
         {
+            TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                if (TabsDataCache.TabsListDeserialized != null)
                 {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+                    List<InfosTab> InfosTabList = TabsDataCache.TabsListDeserialized.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs;
 
-                    if (list != null)
+                    if (InfosTabList != null)
                     {
-                        if (list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs != null)
-                        {
-                            return list.Where(m => m.ID == id.ID_TabsList).FirstOrDefault().tabs.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
-                        }
+                        return InfosTabList.Where(m => m.ID == id.ID_Tab).FirstOrDefault();
                     }
                 }
-                catch
-                {
-                    return null;
-                }
+            }
+            catch
+            {
+                return null;
             }
 
             return null;
         }
 
-        public static async Task<TabsList> GetTabsListViaIDAsync(int id)
+        public static TabsList GetTabsListViaID(int id)
         {
+            TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                if (TabsDataCache.TabsListDeserialized != null)
                 {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+                    TabsList List = TabsDataCache.TabsListDeserialized.Where(m => m.ID == id).FirstOrDefault();
 
-                    if (list != null)
+                    if (List.tabs != null)
                     {
-                        if (list.Where(m => m.ID == id).FirstOrDefault().tabs != null)
-                        {
-                            return list.Where(m => m.ID == id).FirstOrDefault();
-                        }
+                        return List;
                     }
                 }
-                catch
-                {
-                    return null;
-                }
+            }
+            catch
+            {
+                return null;
             }
 
             return null;
@@ -234,8 +150,7 @@ namespace SerrisTabsServer.Manager
         {
             try
             {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists);
-                StorageFile file_content = await folder_content.GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json");
+                StorageFile file_content = await TabsDataCache.TabsListFolder.GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json");
 
                 using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
                 using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -263,10 +178,11 @@ namespace SerrisTabsServer.Manager
             }
         }
 
-        public static void UpdateTab(ref InfosTab tab, int id_list)
+        public static void UpdateTabRef(ref InfosTab tab, int id_list)
         {
+            TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(file.OpenStreamForReadAsync().Result))
+            using (var reader = new StreamReader(TabsDataCache.TabsListFile.OpenStreamForReadAsync().Result))
             {
                 try
                 {

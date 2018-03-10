@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -16,178 +17,89 @@ namespace SerrisModulesServer.Manager
 {
     public static class ModulesAccessManager
     {
-        //static StorageFile file;
-
-        public static async Task<List<InfosModule>> GetModulesAsync(bool GetSystemModules)
-        {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
-
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
-            {
-                try
-                {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    var ModulesList = new List<InfosModule>();
-                    if (list != null)
-                    {
-                        foreach (InfosModule module in list.Modules)
-                        {
-                            ModulesList.Add(module);
-                        }
-
-                        if (GetSystemModules)
-                        {
-                            foreach (InfosModule module in SystemModulesList.Modules)
-                            { ModulesList.Add(module); }
-                        }
-
-                        return ModulesList;
-                    }
-                    else
-                    {
-                        if (GetSystemModules)
-                        {
-                            foreach (InfosModule module in SystemModulesList.Modules)
-                            {
-                                ModulesList.Add(module);
-                            }
-                        }
-
-                        return ModulesList;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-        }
 
         public static List<InfosModule> GetModules(bool GetSystemModules)
         {
-            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            ModulesDataCache.LoadModulesData();
 
-            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                var ModulesList = new List<InfosModule>();
+                if (ModulesDataCache.ModulesListDeserialized != null)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    var ModulesList = new List<InfosModule>();
-                    if (list != null)
+                    foreach (InfosModule module in ModulesDataCache.ModulesListDeserialized.Modules)
                     {
-                        foreach (InfosModule module in list.Modules)
+                        ModulesList.Add(module);
+                    }
+
+                    if (GetSystemModules)
+                    {
+                        foreach (InfosModule module in SystemModulesList.Modules)
                         { ModulesList.Add(module); }
-
-                        if (GetSystemModules)
-                        {
-                            foreach (InfosModule module in SystemModulesList.Modules)
-                            {
-                                ModulesList.Add(module);
-                            }
-                        }
-
-                        return ModulesList;
                     }
-                    else
-                    {
-                        if (GetSystemModules)
-                        {
-                            foreach (InfosModule module in SystemModulesList.Modules)
-                            {
-                                ModulesList.Add(module);
-                            }
-                        }
 
-                        return ModulesList;
-                    }
+                    return ModulesList;
                 }
-                catch
+                else
                 {
-                    return null;
+                    if (GetSystemModules)
+                    {
+                        foreach (InfosModule module in SystemModulesList.Modules)
+                        {
+                            ModulesList.Add(module);
+                        }
+                    }
+
+                    return ModulesList;
                 }
             }
-
-        }
-
-
-        public static async Task<int> GetCurrentThemeIDAsync()
-        {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
-
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            catch
             {
-                try
-                {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    if (list != null)
-                    {
-                        return list.CurrentThemeID;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
-                catch
-                {
-                    return 0;
-                }
+                return null;
             }
+
+
         }
 
         public static int GetCurrentThemeID()
         {
-            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            ModulesDataCache.LoadModulesData();
 
-            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                if (ModulesDataCache.ModulesListDeserialized != null)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    if (list != null)
-                    {
-                        return list.CurrentThemeID;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return ModulesDataCache.ModulesListDeserialized.CurrentThemeID;
                 }
-                catch
+                else
                 {
                     return 0;
                 }
             }
+            catch
+            {
+                return 0;
+            }
         }
 
-        public static async Task<int> GetCurrentThemeMonacoID()
+        public static int GetCurrentThemeMonacoID()
         {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+            ModulesDataCache.LoadModulesData();
 
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                if (ModulesDataCache.ModulesListDeserialized != null)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-                    if (list != null)
-                    {
-                        return list.CurrentThemeMonacoID;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return ModulesDataCache.ModulesListDeserialized.CurrentThemeMonacoID;
                 }
-                catch
+                else
                 {
                     return 0;
                 }
+            }
+            catch
+            {
+                return 0;
             }
         }
 
@@ -231,83 +143,22 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<InfosModule> GetModuleViaIDAsync(int id)
-        {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
-
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
-            {
-                try
-                {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-
-                    if (list != null)
-                    {
-                        foreach (InfosModule _module in SystemModulesList.Modules)
-                        { list.Modules.Add(_module); }
-
-                        InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
-
-                        if (module != null)
-                        {
-                            return module;
-                        }
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
         public static InfosModule GetModuleViaID(int id)
         {
-            StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists).AsTask());
+            ModulesDataCache.LoadModulesData();
 
-            using (var reader = new StreamReader(AsyncHelpers.RunSync(() => file.OpenStreamForReadAsync())))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            try
             {
-                try
+                InfosModule module = GetModules(true).Where(m => m.ID == id).FirstOrDefault();
+
+                if (module != null)
                 {
-                    ModulesList list = new JsonSerializer().Deserialize<ModulesList>(JsonReader);
-
-                    if (list != null)
-                    {
-                        foreach (InfosModule _module in SystemModulesList.Modules)
-                        { list.Modules.Add(_module); }
-
-                        InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
-
-                        if (module != null)
-                        {
-                            return module;
-                        }
-                    }
-                    else
-                    {
-                        list = new ModulesList();
-                        list.Modules = new List<InfosModule>();
-
-                        foreach (InfosModule _module in SystemModulesList.Modules)
-                        { list.Modules.Add(_module); }
-
-                        InfosModule module = list.Modules.Where(m => m.ID == id).FirstOrDefault();
-
-                        if (module != null)
-                        {
-                            return module;
-                        }
-
-                    }
+                    return module;
                 }
-                catch
-                {
-                    return null;
-                }
+            }
+            catch
+            {
+                return null;
             }
 
             return null;
@@ -320,12 +171,12 @@ namespace SerrisModulesServer.Manager
             if (IsSystemModule)
             {
                 StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"), folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(await GetCurrentThemeIDAsync() + "", CreationCollisionOption.OpenIfExists);
+                folder_module = await folder_systemmodules.CreateFolderAsync(GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
             }
             else
             {
                 StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(await GetCurrentThemeIDAsync() + "", CreationCollisionOption.OpenIfExists);
+                folder_module = await folder_content.CreateFolderAsync(GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
             }
 
             StorageFile file_content = await folder_module.GetFileAsync("logo.png");

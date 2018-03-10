@@ -95,9 +95,9 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void LoadModules()
         {
             ListModules.Items.Clear();
-            int IDThemeMonaco = await ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = await ModulesAccessManager.GetCurrentThemeIDAsync();
+            int IDThemeMonaco = ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = ModulesAccessManager.GetCurrentThemeID();
 
-            foreach (InfosModule module in await ModulesAccessManager.GetModulesAsync(true))
+            foreach (InfosModule module in ModulesAccessManager.GetModules(true))
             {
                 var module_infos = new ModuleInfosShow { Module = module, StrokeThickness = 0 };
                 var reader = new AddonReader(module_infos.Module.ID);
@@ -134,11 +134,13 @@ namespace SerrisCodeEditor.Xaml.Views
                         break;
 
                     case 1:
-                        await ModulesWriteManager.SetCurrentThemeIDAsync(module.Module.ID);
+                        await ModulesWriteManager.SetCurrentThemeIDAsync(module.Module.ID, false);
 
                         if(module.Module.ContainMonacoTheme)
-                            await ModulesWriteManager.SetCurrentMonacoThemeIDAsync(module.Module.ID);
+                            await ModulesWriteManager.SetCurrentMonacoThemeIDAsync(module.Module.ID, false);
 
+                        Messenger.Default.Send(new SMSNotification { Type = TypeUpdateModule.CurrentThemeUpdated, ID = module.Module.ID });
+                        LoadModules();
                         break;
                 }
             }

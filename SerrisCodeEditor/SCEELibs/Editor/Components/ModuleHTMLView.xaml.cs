@@ -48,7 +48,7 @@ namespace SCEELibs.Editor.Components
 
 
 
-        public async void LoadPage(string path, int id)
+        public void LoadPage(string path, int id)
         {
             if (!isLoaded)
             {
@@ -64,7 +64,7 @@ namespace SCEELibs.Editor.Components
             {
                 current_id = id;
 
-                InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(id);
+                InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(id);
 
                 if (ModuleAccess.ModuleSystem)
                 {

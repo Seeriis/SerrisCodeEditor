@@ -29,7 +29,7 @@ namespace SerrisModulesServer.Type.Addon
 
         async Task IsSystemModuleOrNot(int _id)
         {
-            InfosModule ModuleAccess = await ModulesAccessManager.GetModuleViaIDAsync(_id);
+            InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(_id);
 
             if (ModuleAccess.ModuleSystem)
             {

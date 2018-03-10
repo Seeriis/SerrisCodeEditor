@@ -19,7 +19,7 @@ namespace SCEELibs.Modules.Type
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
             async () =>
             {
-                await ModulesWriteManager.SetCurrentThemeIDAsync(ID);
+                await ModulesWriteManager.SetCurrentThemeIDAsync(ID, true);
             });
 
         }
@@ -30,7 +30,7 @@ namespace SCEELibs.Modules.Type
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
             async () =>
             {
-                await ModulesWriteManager.SetCurrentMonacoThemeIDAsync(ID);
+                await ModulesWriteManager.SetCurrentMonacoThemeIDAsync(ID, true);
             });
 
         }

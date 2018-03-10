@@ -15,8 +15,6 @@ namespace SerrisTabsServer.Manager
 {
     public static class TabsWriteManager
     {
-        static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists).AsTask());
-        static StorageFolder folder_tabs = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFolderAsync("tabs", CreationCollisionOption.OpenIfExists).AsTask());
 
         /// <summary>
         /// Create a new tabs list
@@ -25,33 +23,28 @@ namespace SerrisTabsServer.Manager
         /// <returns>ID of the new tabs list created</returns>
         public static async Task<int> CreateTabsListAsync(string new_name)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            TabsDataCache.LoadTabsData();
+
+            try
             {
-                try
+                int id = new Random().Next(999999);
+
+                TabsDataCache.TabsListDeserialized.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
+                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    int id = new Random().Next(999999);
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-
-                    list = list ?? new List<TabsList>();
-
-                    list.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewList, ID = new TabID { ID_TabsList = id } });
-                        });
-                    }
+                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewList, ID = new TabID { ID_TabsList = id } });
+                    });
+                }
 
-                    return id;
-                }
-                catch
-                {
-                    return 0;
-                }
+                return id;
+            }
+            catch
+            {
+                return 0;
             }
 
         }
@@ -63,40 +56,37 @@ namespace SerrisTabsServer.Manager
         /// <returns></returns>
         public static async Task<bool> DeleteTabsListAsync(int id)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            TabsDataCache.LoadTabsData();
+
+            try
             {
-                try
+                TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == id);
+
+                foreach (InfosTab tab in list_tabs.tabs)
                 {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    TabsList list_tabs = list.First(m => m.ID == id);
-
-                    foreach (InfosTab tab in list_tabs.tabs)
+                    try
                     {
-                        try
-                        {
-                            await folder_tabs.GetFileAsync(id + "_" + tab.ID + ".json").GetResults().DeleteAsync();
-                        }
-                        catch { }
+                        await TabsDataCache.TabsListFolder.GetFileAsync(id + "_" + tab.ID + ".json").GetResults().DeleteAsync();
                     }
-
-                    list.Remove(list_tabs);
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
-                    {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.ListDeleted, ID = new TabID { ID_TabsList = id } });
-                        });
-                    }
-
-                    return true;
+                    catch { }
                 }
-                catch
+
+                TabsDataCache.TabsListDeserialized.Remove(list_tabs);
+                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    return false;
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.ListDeleted, ID = new TabID { ID_TabsList = id } });
+                    });
                 }
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
         }
@@ -109,39 +99,36 @@ namespace SerrisTabsServer.Manager
         /// <returns>ID of the new tab</returns>
         public static async Task<int> CreateTabAsync(InfosTab tab, int id_list, bool SendNotification)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            TabsDataCache.LoadTabsData();
+
+            try
             {
-                try
+                tab.ID = new Random().Next(999999);
+                TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == id_list);
+
+                if (list_tabs.tabs == null)
                 {
-                    tab.ID = new Random().Next(999999);
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    TabsList list_tabs = list.First(m => m.ID == id_list);
-
-                    if (list_tabs.tabs == null)
-                    {
-                        list_tabs.tabs = new List<InfosTab>();
-                    }
-
-                    list_tabs.tabs.Add(tab);
-                    StorageFile data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = "" }, Formatting.Indented));
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
-                    {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            if(SendNotification)
-                                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
-                        });
-                    }
-                    return tab.ID;
+                    list_tabs.tabs = new List<InfosTab>();
                 }
-                catch
+
+                list_tabs.tabs.Add(tab);
+                StorageFile data_tab = await TabsDataCache.TabsListFolder.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = "" }, Formatting.Indented));
+                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    return 0;
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        if (SendNotification)
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
+                    });
                 }
+                return tab.ID;
+            }
+            catch
+            {
+                return 0;
             }
 
         }
@@ -153,31 +140,28 @@ namespace SerrisTabsServer.Manager
         /// <returns></returns>
         public static async Task<bool> DeleteTabAsync(TabID ids)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
-            {
-                try
-                {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    TabsList list_tabs = list.First(m => m.ID == ids.ID_TabsList);
-                    InfosTab tab = list_tabs.tabs.First(m => m.ID == ids.ID_Tab);
-                    list_tabs.tabs.Remove(tab);
-                    StorageFile delete_file = await folder_tabs.CreateFileAsync(ids.ID_TabsList + "_" + ids.ID_Tab + ".json", CreationCollisionOption.ReplaceExisting); await delete_file.DeleteAsync();
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
+            TabsDataCache.LoadTabsData();
 
-                    foreach (CoreApplicationView view in CoreApplication.Views)
-                    {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabDeleted, ID = new TabID { ID_Tab = ids.ID_Tab, ID_TabsList = ids.ID_TabsList } });
-                        });
-                    }
-                    return true;
-                }
-                catch
+            try
+            {
+                TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == ids.ID_TabsList);
+                InfosTab tab = list_tabs.tabs.First(m => m.ID == ids.ID_Tab);
+                list_tabs.tabs.Remove(tab);
+                StorageFile delete_file = await TabsDataCache.TabsListFolder.CreateFileAsync(ids.ID_TabsList + "_" + ids.ID_Tab + ".json", CreationCollisionOption.ReplaceExisting); await delete_file.DeleteAsync();
+                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListFile, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    return false;
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabDeleted, ID = new TabID { ID_Tab = ids.ID_Tab, ID_TabsList = ids.ID_TabsList } });
+                    });
                 }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
         }
@@ -193,7 +177,8 @@ namespace SerrisTabsServer.Manager
         {
             try
             {
-                StorageFile file_content = await folder_tabs.CreateFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json", CreationCollisionOption.OpenIfExists);
+                TabsDataCache.LoadTabsData();
+                StorageFile file_content = await TabsDataCache.TabsListFolder.CreateFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json", CreationCollisionOption.OpenIfExists);
 
                 using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
                 using (JsonReader JsonReader = new JsonTextReader(reader))
@@ -236,40 +221,37 @@ namespace SerrisTabsServer.Manager
         /// <returns></returns>
         public static async Task<bool> PushUpdateTabAsync(InfosTab tab, int id_list)
         {
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
+            TabsDataCache.LoadTabsData();
+
+            try
             {
-                try
+                TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == id_list);
+                InfosTab _tab = list_tabs.tabs.First(m => m.ID == tab.ID);
+                int index_list = TabsDataCache.TabsListDeserialized.IndexOf(list_tabs), index_tab = list_tabs.tabs.IndexOf(_tab);
+
+                TabsDataCache.TabsListDeserialized[index_list].tabs[index_tab] = tab;
+
+                StorageFile data_tab = await TabsDataCache.TabsListFolder.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.OpenIfExists);
+
+                if (tab.TabContentTemporary != null)
                 {
-                    List<TabsList> list = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
-                    TabsList list_tabs = list.First(m => m.ID == id_list);
-                    InfosTab _tab = list_tabs.tabs.First(m => m.ID == tab.ID);
-                    int index_list = list.IndexOf(list_tabs), index_tab = list_tabs.tabs.IndexOf(_tab);
-
-                    list[index_list].tabs[index_tab] = tab;
-
-                    StorageFile data_tab = await folder_tabs.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.OpenIfExists);
-
-                    if (tab.TabContentTemporary != null)
-                    {
-                        await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = tab.TabContentTemporary }, Formatting.Indented));
-                    }
-
-                    await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(list, Formatting.Indented));
-
-                    foreach (CoreApplicationView view in CoreApplication.Views)
-                    {
-                        await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
-                        });
-                    }
-                    return true;
+                    await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = tab.TabContentTemporary }, Formatting.Indented));
                 }
-                catch
+
+                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+
+                foreach (CoreApplicationView view in CoreApplication.Views)
                 {
-                    return false;
+                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = new TabID { ID_Tab = tab.ID, ID_TabsList = id_list } });
+                    });
                 }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
         }

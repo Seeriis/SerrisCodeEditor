@@ -74,7 +74,7 @@ namespace SerrisModulesServer.Type.Addon
              */
 
 
-            InfosModule ModuleAccess = AsyncHelpers.RunSync(async () => await ModulesAccessManager.GetModuleViaIDAsync(_id));
+            InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(_id);
             StorageFolder folder_module;
 
             if (ModuleAccess.ModuleSystem)

@@ -134,12 +134,12 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
-        private async void UpdateTabInformations()
+        private void UpdateTabInformations()
         {
             //Set temp tab + tabs list ID
             try
             {
-                current_tab = await TabsAccessManager.GetTabViaIDAsync(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
+                current_tab = TabsAccessManager.GetTabViaID(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
 
                 foreach(CoreApplicationView view in CoreApplication.Views)
                 {

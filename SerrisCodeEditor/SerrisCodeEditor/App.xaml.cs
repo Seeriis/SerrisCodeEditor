@@ -58,7 +58,7 @@ namespace SerrisCodeEditor
                 catch { }
             });
 
-            Messenger.Default.Register<TempContentNotification>(this, async (notification) =>
+            Messenger.Default.Register<TempContentNotification>(this, (notification) =>
             {
                 try
                 {
