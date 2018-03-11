@@ -13,7 +13,11 @@ function save()
 
 function saveas()
 {
-    sceelibs.consoleManager.sendConsoleInformationNotification("This function is not available on this build of Serris Code Editor :(");
+    var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID());
+    tab.getContent().then(function (content)
+    {
+        sceelibs.tabsManager.createNewTabInTheCurrentList("Copy_" + tab.tabName, content);
+    });
 }
 
 function onEditorViewReady()

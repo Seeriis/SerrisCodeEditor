@@ -1,7 +1,4 @@
-﻿
-var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
-
-function main() { }
+﻿function main() { }
 
 function copy()
 {
@@ -9,8 +6,7 @@ function copy()
     {
         var result = sceelibs.editorEngine.injectJSAndReturnResult("window.editor.getModel().getValueInRange(window.editor.getSelection())");
 
-        dataPackage.setText(result);
-        Windows.ApplicationModel.DataTransfer.Clipboard.setContent(dataPackage);
+        SCEELibs.Helpers.Clipboard.setContent(result);
         sceelibs.consoleManager.sendConsoleInformationNotification("Text copied to the clipboard !");
     } catch (e)
     {
@@ -22,15 +18,11 @@ function copy()
 function cut()
 {
     try {
-        sceelibs.consoleManager.sendConsoleInformationNotification("This function is not available on this build of Serris Code Editor :(");
+        var result = sceelibs.editorEngine.injectJSAndReturnResult("window.editor.getModel().getValueInRange(window.editor.getSelection())");
 
-        /*var result = sceelibs.editorEngine.injectJSAndReturnResult("window.editor.getModel().getValueInRange(window.editor.getSelection())");
-
-        dataPackage.setText(result);
-        Windows.ApplicationModel.DataTransfer.Clipboard.setContent(dataPackage);
-        sceelibs.consoleManager.sendConsoleInformationNotification("Text copied to the clipboard !");
-        sceelibs.editorEngine.injectJS("editor.trigger('keyboard', 'type', {text: ''});");*/
-
+        SCEELibs.Helpers.Clipboard.setContent(result);
+        sceelibs.editorEngine.injectJSAndReturnResult("var selection = window.editor.getSelection(); var range = new monaco.Range(selection.startLineNumber, selection.startColumn, selection.endLineNumber, selection.endColumn); var id = { major: 1, minor: 1 }; editor.executeEdits('source', [ {identifier: id, range: range, text: '', forceMoveMarkers: true} ]);");
+        sceelibs.consoleManager.sendConsoleInformationNotification("Text has been cutted !");
     } catch (e) {
         sceelibs.consoleManager.sendConsoleErrorNotification(e.message);
     }
@@ -38,5 +30,10 @@ function cut()
 
 function paste()
 {
-    sceelibs.consoleManager.sendConsoleInformationNotification("This function is not available on this build of Serris Code Editor :(");
+    try {
+        sceelibs.editorEngine.injectJSAndReturnResult("var selection = window.editor.getSelection(); var range = new monaco.Range(selection.startLineNumber, selection.startColumn, selection.endLineNumber, selection.endColumn); var id = { major: 1, minor: 1 }; editor.executeEdits('source', [ {identifier: id, range: range, text: '" + SCEELibs.Helpers.Clipboard.getContent() + "', forceMoveMarkers: true} ]);");
+        sceelibs.consoleManager.sendConsoleInformationNotification("Text has been pasted from the clipboard !");
+    } catch (e) {
+        sceelibs.consoleManager.sendConsoleErrorNotification(e.message);
+    }
 }

@@ -162,82 +162,84 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private void DeployUIDetector_PointerEntered(object sender, PointerRoutedEventArgs e)
-        => UpdateUI(!isUIDeployed);
+        => UpdateUI(!isUIDeployed, false);
 
         private void ContentViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
-        => UpdateUI(false);
+        => UpdateUI(false, false);
 
-        private void UpdateUI(bool isDeployed)
+        private void UpdateUI(bool isDeployed, bool ForceUpdate)
         {
-            isUIDeployed = isDeployed;
-
-            if (isDeployed)
+            if(isUIDeployed != isDeployed || ForceUpdate)
             {
-                SheetViewSeparatorLine.Width = 8;
+                isUIDeployed = isDeployed;
 
-                switch(GlobalVariables.CurrentDevice)
+                if (isDeployed)
                 {
-                    case CurrentDevice.Desktop:
-                        if (AppSettings.Values.ContainsKey("ui_extendedview"))
-                        {
-                            if (!(bool)AppSettings.Values["ui_extendedview"])
+                    SheetViewSeparatorLine.Width = 8;
+
+                    switch (GlobalVariables.CurrentDevice)
+                    {
+                        case CurrentDevice.Desktop:
+                            if (AppSettings.Values.ContainsKey("ui_extendedview"))
+                            {
+                                if (!(bool)AppSettings.Values["ui_extendedview"])
+                                {
+                                    DeployUIIconDeploying.Begin();
+                                }
+                            }
+                            else
                             {
                                 PrincipalUI.Margin = new Thickness(0);
                                 DeployUIDetector.Visibility = Visibility.Collapsed;
                             }
-                        }
-                        else
-                        {
-                            PrincipalUI.Margin = new Thickness(0);
-                            DeployUIDetector.Visibility = Visibility.Collapsed;
-                        }
-                        
-                        PrincipalUI.Visibility = Visibility.Visible;
-                        break;
+
+                            PrincipalUI.Visibility = Visibility.Visible;
+                            break;
+                    }
+
+                    SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
+                    SheetsManager.Visibility = Visibility.Visible;
+                    Messenger.Default.Send(SheetViewMode.Deployed);
                 }
-
-                SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
-                SheetsManager.Visibility = Visibility.Visible;
-                Messenger.Default.Send(SheetViewMode.Deployed);
-            }
-            else
-            {
-                SheetViewSeparatorLine.Width = 0;
-
-                switch (GlobalVariables.CurrentDevice)
+                else
                 {
-                    case CurrentDevice.Desktop:
-                        //PrincipalUI.Visibility = Visibility.Collapsed;
-                        //PrincipalUI.Margin = new Thickness(60, 0, 0, 0);
-                        if (AppSettings.Values.ContainsKey("ui_extendedview"))
-                        {
-                            if (!(bool)AppSettings.Values["ui_extendedview"])
+                    SheetViewSeparatorLine.Width = 0;
+
+                    switch (GlobalVariables.CurrentDevice)
+                    {
+                        case CurrentDevice.Desktop:
+
+                            if (AppSettings.Values.ContainsKey("ui_extendedview"))
+                            {
+                                if (!(bool)AppSettings.Values["ui_extendedview"])
+                                {
+                                    PrincipalUI.Visibility = Visibility.Visible;
+                                    DeployUIIconCollapsing.Begin();
+                                }
+                                else
+                                    PrincipalUI.Visibility = Visibility.Collapsed;
+                            }
+                            else
                             {
                                 DeployUIDetector.Visibility = Visibility.Visible;
                                 PrincipalUI.Visibility = Visibility.Visible;
                             }
-                            else
-                                PrincipalUI.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            DeployUIDetector.Visibility = Visibility.Visible;
-                            PrincipalUI.Visibility = Visibility.Visible;
-                        }
 
-                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                        break;
+                            SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                            break;
 
-                    case CurrentDevice.WindowsMobile:
-                        SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
-                        break;
+                        case CurrentDevice.WindowsMobile:
+                            SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                            break;
+                    }
+
+                    SheetsManager.Visibility = Visibility.Collapsed;
+                    SheetViewSplit.IsPaneOpen = false;
+                    SheetsManager.SelectTabsListSheet();
+
+                    Messenger.Default.Send(SheetViewMode.Minimized);
                 }
 
-                SheetsManager.Visibility = Visibility.Collapsed;
-                SheetViewSplit.IsPaneOpen = false;
-                SheetsManager.SelectTabsListSheet();
-
-                Messenger.Default.Send(SheetViewMode.Minimized);
             }
         }
 
@@ -351,7 +353,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     TopSheetViewSplit.Visibility = Visibility.Collapsed;
 
                     StatusBar.GetForCurrentView().ProgressIndicator.Text = "Serris Code Editor MLV";
-                    UpdateUI(true);
+                    UpdateUI(true, true);
                     break;
 
                 case CurrentDevice.Desktop:
@@ -361,6 +363,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         if (!(bool)AppSettings.Values["ui_extendedview"])
                         {
                             ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                            DeployUIDetector.Visibility = Visibility.Visible;
                             BackgroundPrincipalUIControl.Color = Colors.Transparent;
                         }
                         else
@@ -395,7 +398,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
                     Window.Current.SetTitleBar(focus_titlebar);
-                    UpdateUI(false);
+                    UpdateUI(false, true);
                     break;
             }
 
@@ -420,7 +423,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (e.message == "click")
             {
-                UpdateUI(false);
+                UpdateUI(false, false);
             }
         }
 
@@ -451,7 +454,7 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength + 15) || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {
-                    UpdateUI(false);
+                    UpdateUI(false, false);
                 }
             }
         }

@@ -17,6 +17,36 @@
     xmlns:my="using:SerrisCodeEditor.Xaml.Components"
     
     Loaded="EditorViewUI_Loaded" SizeChanged="EditorViewUI_SizeChanged" PointerExited="EditorViewUI_PointerExited">
+    <Page.Resources>
+        <Storyboard x:Name="DeployUIIconDeploying">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="DeployUIIcon">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="180">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="DeployUIIconCollapsing">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="DeployUIIcon">
+                <EasingDoubleKeyFrame KeyTime="0" Value="180">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
 
     <VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
@@ -25,14 +55,14 @@
             </VisualState>
         </VisualStateGroup>
     </VisualStateManager.VisualStateGroups>
-    
+
     <Grid x:Name="MasterGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+
         <!-- FIRST LAYER -->
         <Grid x:Name="ContentViewerGrid" Margin="65,0,0,0" PointerEntered="ContentViewerGrid_PointerEntered">
             <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands" EditorLoaded="ContentViewer_EditorLoaded"/>
         </Grid>
-    
+
         <!-- SECOND LAYER -->
         <Grid>
             <Grid.RowDefinitions>
@@ -71,7 +101,7 @@
                 </SplitView.Pane>
             </SplitView>
         </Grid>
-        
+
         <!-- THIRD LAYER -->
         <Grid x:Name="PrincipalUI" Visibility="Visible">
             <Grid.RowDefinitions>
@@ -97,7 +127,11 @@
 
             <!-- Open left panel zone -->
             <Grid x:Name="DeployUIDetector" VerticalAlignment="Top" Grid.RowSpan="2" Height="68" Margin="0,5,0,0" Width="60" CornerRadius="0,15,0,0" Background="Transparent" PointerEntered="DeployUIDetector_PointerEntered">
-                <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <CompositeTransform/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
             </Grid>
 
             <!-- Toolbar + Grid windows focus-->
@@ -119,7 +153,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <my:Console x:Name="Console" Height="240" VerticalAlignment="Top"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
                     <!--
@@ -144,6 +178,6 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        
+
     </Grid>
 </Page>
