@@ -141,28 +141,25 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 current_tab = TabsAccessManager.GetTabViaID(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
 
-                foreach(CoreApplicationView view in CoreApplication.Views)
+                if (current_tab.TabName.Length >= (int)(GridInfoLeft.ActualWidth / 10))
                 {
-                    if(current_tab.TabName.Length >= (int)(GridInfoLeft.ActualWidth / 10))
-                    {
-                        Extension_tab.Text = current_tab.TabName.Substring(0, (int)(GridInfoLeft.ActualWidth / 10));
-                    }
-                    else
-                    {
-                        Extension_tab.Text = current_tab.TabName;
-                    }
-
-                    name_tab.Text = current_tab.TabName;
-
-                    if (!string.IsNullOrEmpty(current_tab.PathContent))
-                    {
-                        path_tab.Text = current_tab.PathContent;
-                        encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-                        More_Tab.Visibility = Visibility.Visible;
-                    }
-                    else
-                        More_Tab.Visibility = Visibility.Collapsed;
+                    Extension_tab.Text = current_tab.TabName.Substring(0, (int)(GridInfoLeft.ActualWidth / 10));
                 }
+                else
+                {
+                    Extension_tab.Text = current_tab.TabName;
+                }
+
+                name_tab.Text = current_tab.TabName;
+
+                if (!string.IsNullOrEmpty(current_tab.PathContent))
+                {
+                    path_tab.Text = current_tab.PathContent;
+                    encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
+                    More_Tab.Visibility = Visibility.Visible;
+                }
+                else
+                    More_Tab.Visibility = Visibility.Collapsed;
 
             }
             catch { }

@@ -22,8 +22,8 @@ namespace SerrisTabsServer.Manager
             using (StreamReader Reader = new StreamReader(Task.Run(async () => { return await TabsListFile.OpenStreamForReadAsync(); }).Result))
             using (JsonReader JsonReader = new JsonTextReader(Reader))
             {
-                TabsListDeserialized = new List<TabsList>();
                 TabsListDeserialized = new JsonSerializer().Deserialize<List<TabsList>>(JsonReader);
+                TabsListDeserialized = TabsListDeserialized ?? new List<TabsList>();
             }
         }
 

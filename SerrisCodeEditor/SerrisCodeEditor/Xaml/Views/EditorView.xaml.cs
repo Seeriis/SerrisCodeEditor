@@ -189,8 +189,7 @@ namespace SerrisCodeEditor.Xaml.Views
                             }
                             else
                             {
-                                PrincipalUI.Margin = new Thickness(0);
-                                DeployUIDetector.Visibility = Visibility.Collapsed;
+                                DeployUIIconDeploying.Begin();
                             }
 
                             PrincipalUI.Visibility = Visibility.Visible;
@@ -221,8 +220,8 @@ namespace SerrisCodeEditor.Xaml.Views
                             }
                             else
                             {
-                                DeployUIDetector.Visibility = Visibility.Visible;
                                 PrincipalUI.Visibility = Visibility.Visible;
+                                DeployUIIconCollapsing.Begin();
                             }
 
                             SheetViewSplit.DisplayMode = SplitViewDisplayMode.CompactOverlay;
