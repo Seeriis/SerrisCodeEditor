@@ -91,7 +91,7 @@ namespace SCEELibs.Tabs
         => await TabsWriteManager.CreateTabsListAsync(listName);
 
         public async void createNewTabInTheCurrentList(string fileName, string content)
-        => await TabsCreatorAssistant.CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
+        => TabsCreatorAssistant.CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
 
     }
 }

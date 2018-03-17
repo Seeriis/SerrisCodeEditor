@@ -484,7 +484,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 LoadSettings();
                 ExecuteModulesFunction();
                 EditorIsLoaded = true;
-                SheetsManager.AddTabsListSheet();
+                //SheetsManager.AddTabsListSheet();
                 SetMonacoTheme();
             }
         }

@@ -39,26 +39,19 @@ namespace SerrisCodeEditorEngine
             {
                 IsLoading(true);
 
-                Task.Run(() => 
+                if(Initialized)
                 {
-                    while (!Initialized)
-                    {
-                        if (Initialized)
-                            break;
-                    }
-
-                }).ContinueWith((e) => 
+                    new Languages().GetActualLanguage(CodeLanguage, editor_view);
+                    SetCode(value);
+                }
+                else
                 {
-                    DispatcherHelper.ExecuteOnUIThreadAsync(() => 
+                    EditorLoaded += (e, f) =>
                     {
-                        if (Initialized)
-                        {
-                            new Languages().GetActualLanguage(CodeLanguage, editor_view);
-                            SetCode(value);
-                        }
-
-                    });
-                });
+                        new Languages().GetActualLanguage(CodeLanguage, editor_view);
+                        SetCode(value);
+                    };
+                }
 
             }
         }

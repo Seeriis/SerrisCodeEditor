@@ -30,6 +30,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void ModulesSheetContent_Loaded(object sender, RoutedEventArgs e)
         {
+            AddTabsListSheet();
             //Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true });
         }
 

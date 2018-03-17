@@ -16,7 +16,7 @@ namespace SerrisTabsServer.Manager
     {
         static FileTypesManager FileTypes = new FileTypesManager();
 
-        public static async Task<int> CreateNewTab(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
+        public static void CreateNewTab(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
         {
             string extension = "";
             foreach (string type_file in FileTypes.List_Type_extensions)
@@ -42,14 +42,16 @@ namespace SerrisTabsServer.Manager
                 TabType = extension,
                 TabInvisibleByDefault = false
             };
-            int id_tab = await TabsWriteManager.CreateTabAsync(newtab, IDList, false);
-            if (await TabsWriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false))
+
+            Task.Run(() => 
             {
-                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
-                return id_tab;
-            }
-            else
-                return 0;
+                int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(newtab, IDList, false); }).Result;
+                if (Task.Run(async () => { return await TabsWriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false); }).Result)
+                {
+                    Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                }
+            });
+
         }
 
         public static async Task<bool> CreateNewFileViaTab(TabID ids)
@@ -86,7 +88,7 @@ namespace SerrisTabsServer.Manager
             IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
             foreach (StorageFile file in files)
             {
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
                     if (file != null)
                     {
@@ -106,15 +108,12 @@ namespace SerrisTabsServer.Manager
                             }
                         }
 
-                        int id_tab = 0;
-                        await Task.Run(async () =>
+                        int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
+                        if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
                         {
-                            id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
-                            if(await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true))
-                            {
-                                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
-                            }
-                        });
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                        }
+
                         list_ids.Add(id_tab);
                     }
 

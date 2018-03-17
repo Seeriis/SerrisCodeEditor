@@ -50,8 +50,8 @@ namespace SerrisCodeEditor.Xaml.Components
          */
 
 
-        private async void CreateDefaultTab()
-        => await TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "New tab", Encoding.UTF8, StorageListTypes.LocalStorage, "");
+        private void CreateDefaultTab()
+        => TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "New tab", Encoding.UTF8, StorageListTypes.LocalStorage, "");
 
         private async void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -322,9 +322,9 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
-        private async void CreateTab()
+        private void CreateTab()
         {
-            await TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
+            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
             NewTabCreatorGrid.Visibility = Visibility.Collapsed;
             TextBoxNewTab.Text = "";
         }
