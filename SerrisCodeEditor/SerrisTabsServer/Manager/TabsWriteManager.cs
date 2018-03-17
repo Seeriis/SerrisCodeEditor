@@ -30,7 +30,7 @@ namespace SerrisTabsServer.Manager
                 int id = new Random().Next(999999);
 
                 TabsDataCache.TabsListDeserialized.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
-                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+                TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -72,7 +72,7 @@ namespace SerrisTabsServer.Manager
                 }
 
                 TabsDataCache.TabsListDeserialized.Remove(list_tabs);
-                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+                TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -114,7 +114,7 @@ namespace SerrisTabsServer.Manager
                 list_tabs.tabs.Add(tab);
                 StorageFile data_tab = await TabsDataCache.TabsListFolder.CreateFileAsync(id_list + "_" + tab.ID + ".json", CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = "" }, Formatting.Indented));
-                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+                TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -148,7 +148,7 @@ namespace SerrisTabsServer.Manager
                 InfosTab tab = list_tabs.tabs.First(m => m.ID == ids.ID_Tab);
                 list_tabs.tabs.Remove(tab);
                 StorageFile delete_file = await TabsDataCache.TabsListFolder.CreateFileAsync(ids.ID_TabsList + "_" + ids.ID_Tab + ".json", CreationCollisionOption.ReplaceExisting); await delete_file.DeleteAsync();
-                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListFile, Formatting.Indented));
+                TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -238,7 +238,7 @@ namespace SerrisTabsServer.Manager
                     await FileIO.WriteTextAsync(data_tab, JsonConvert.SerializeObject(new ContentTab { ID = tab.ID, Content = tab.TabContentTemporary }, Formatting.Indented));
                 }
 
-                await FileIO.WriteTextAsync(TabsDataCache.TabsListFile, JsonConvert.SerializeObject(TabsDataCache.TabsListDeserialized, Formatting.Indented));
+                TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {

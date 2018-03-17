@@ -66,7 +66,7 @@ namespace SerrisModulesServer.Manager
                             }
 
                             ModulesDataCache.ModulesListDeserialized.Modules.Add(content);
-                            await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+                            ModulesDataCache.WriteModulesListContentFile();
 
                             foreach (CoreApplicationView view in CoreApplication.Views)
                             {
@@ -100,7 +100,7 @@ namespace SerrisModulesServer.Manager
                 StorageFolder folder_module = await ModulesDataCache.ModulesListFolder.GetFolderAsync(id + "");
                 await folder_module.DeleteAsync();
                 ModulesDataCache.ModulesListDeserialized.Modules.Remove(ModulesDataCache.ModulesListDeserialized.Modules.First(m => m.ID == id));
-                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+                ModulesDataCache.WriteModulesListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -130,7 +130,7 @@ namespace SerrisModulesServer.Manager
 
                 ModulesDataCache.ModulesListDeserialized.Modules[index_module] = module;
 
-                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+                ModulesDataCache.WriteModulesListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)
                 {
@@ -156,7 +156,7 @@ namespace SerrisModulesServer.Manager
             try
             {
                 ModulesDataCache.ModulesListDeserialized.CurrentThemeID = id;
-                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+                ModulesDataCache.WriteModulesListContentFile();
 
                 if (SendNotification)
                 {
@@ -185,7 +185,7 @@ namespace SerrisModulesServer.Manager
             try
             {
                 ModulesDataCache.ModulesListDeserialized.CurrentThemeMonacoID = id;
-                await FileIO.WriteTextAsync(ModulesDataCache.ModulesListFile, JsonConvert.SerializeObject(ModulesDataCache.ModulesListDeserialized, Formatting.Indented));
+                ModulesDataCache.WriteModulesListContentFile();
 
                 if (SendNotification)
                 {

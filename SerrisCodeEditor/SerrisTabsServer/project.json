@@ -4,6 +4,7 @@
     "Microsoft.Toolkit.Uwp": "2.1.1",
     "MvvmLightLibs": "5.3.0",
     "Newtonsoft.Json": "10.0.3",
+    "SerialQueue.NetStandard": "1.0.0.2",
     "System.Text.Encoding.CodePages": "4.4.0",
     "UDE.CSharp.UWP": "1.0.1"
   },

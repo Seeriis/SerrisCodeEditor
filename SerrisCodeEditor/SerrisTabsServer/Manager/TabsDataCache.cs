@@ -27,6 +27,10 @@ namespace SerrisTabsServer.Manager
             }
         }
 
+        private static Dispatch.SerialQueue WriterQueue = new Dispatch.SerialQueue();
+        public static void WriteTabsListContentFile()
+        => WriterQueue.DispatchSync(() => { Task.Run(async () => { await FileIO.WriteTextAsync(TabsListFile, JsonConvert.SerializeObject(TabsListDeserialized, Formatting.Indented)); }); });
+
         public static void LoadTabsData()
         {
             TabsListFile = TabsListFile ?? Task.Run(async () => { return await ApplicationData.Current.LocalFolder.CreateFileAsync("tabs_list.json", CreationCollisionOption.OpenIfExists); }).Result;

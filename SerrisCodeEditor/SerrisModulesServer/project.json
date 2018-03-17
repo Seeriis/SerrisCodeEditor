@@ -2,7 +2,8 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.5",
     "MvvmLightLibs": "5.3.0",
-    "Newtonsoft.Json": "10.0.3"
+    "Newtonsoft.Json": "10.0.3",
+    "SerialQueue.NetStandard": "1.0.0.2"
   },
   "frameworks": {
     "uap10.0.14393": {}

@@ -24,6 +24,10 @@ namespace SerrisModulesServer.Manager
             }
         }
 
+        private static Dispatch.SerialQueue WriterQueue = new Dispatch.SerialQueue();
+        public static void WriteModulesListContentFile()
+        => WriterQueue.DispatchSync(() => { Task.Run(async () => { await FileIO.WriteTextAsync(ModulesListFile, JsonConvert.SerializeObject(ModulesListDeserialized, Formatting.Indented)); }); });
+
         public static void LoadModulesData()
         {
             ModulesListFile = ModulesListFile ?? Task.Run(async () => { return await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists); }).Result;
