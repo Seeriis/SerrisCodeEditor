@@ -220,7 +220,9 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (notification.Type)
                             {
                                 case TypeUpdateTab.NewTab:
-                                    Tabs.Items.Add(notification.ID);
+
+                                    if(!Tabs.Items.Contains(notification.ID))
+                                        Tabs.Items.Add(notification.ID);
 
                                     //Auto selection
                                     Tabs.SelectedIndex = Tabs.Items.Count - 1;
