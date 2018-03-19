@@ -38,8 +38,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabsView_Loaded(object sender, RoutedEventArgs e)
         {
-            SetMessenger();
-            SetTheme();
+            if(!DefaultFunctionsLoaded)
+            {
+                SetMessenger();
+                SetTheme();
+                DefaultFunctionsLoaded = true;
+            }
         }
 
 
@@ -220,9 +224,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (notification.Type)
                             {
                                 case TypeUpdateTab.NewTab:
-
-                                    if(!Tabs.Items.Contains(notification.ID))
-                                        Tabs.Items.Add(notification.ID);
+                                    Tabs.Items.Add(notification.ID);
 
                                     //Auto selection
                                     Tabs.SelectedIndex = Tabs.Items.Count - 1;
@@ -396,7 +398,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
 
-        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false;
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
     }
