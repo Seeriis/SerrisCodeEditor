@@ -14,16 +14,15 @@ namespace SerrisTabsServer.Manager
 {
     public static class TabsCreatorAssistant
     {
-        static FileTypesManager FileTypes = new FileTypesManager();
 
         public static void CreateNewTab(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
         {
             string extension = "";
-            foreach (string type_file in FileTypes.List_Type_extensions)
+            foreach (string type_file in FileTypesManager.List_Type_extensions)
             {
                 if (FileName.Contains(type_file))
                 {
-                    extension = FileTypes.GetExtensionType(Path.GetExtension(FileName));
+                    extension = FileTypesManager.GetExtensionType(Path.GetExtension(FileName));
                     break;
                 }
                 else
@@ -75,12 +74,11 @@ namespace SerrisTabsServer.Manager
             var list_ids = new List<int>();
 
             var opener = new FileOpenPicker();
-            var FileTypes = new FileTypesManager();
             opener.ViewMode = PickerViewMode.Thumbnail;
             opener.SuggestedStartLocation = PickerLocationId.ComputerFolder;
             opener.FileTypeFilter.Add("*");
 
-            foreach (string ext in FileTypes.List_Type_extensions)
+            foreach (string ext in FileTypesManager.List_Type_extensions)
             {
                 opener.FileTypeFilter.Add(ext);
             }
@@ -95,11 +93,11 @@ namespace SerrisTabsServer.Manager
                         StorageApplicationPermissions.FutureAccessList.Add(file);
                         var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false };
 
-                        foreach (string _type in FileTypes.List_Type_extensions)
+                        foreach (string _type in FileTypesManager.List_Type_extensions)
                         {
                             if (tab.TabName.Contains(_type))
                             {
-                                tab.TabType = FileTypes.GetExtensionType(file.FileType);
+                                tab.TabType = FileTypesManager.GetExtensionType(file.FileType);
                                 break;
                             }
                             else

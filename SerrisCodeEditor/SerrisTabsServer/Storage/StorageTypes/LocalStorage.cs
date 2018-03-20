@@ -25,7 +25,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 StorageFolder folder;
                 folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
 
-                foreach (string ext in FileTypes.List_Type_extensions)
+                foreach (string ext in FileTypesManager.List_Type_extensions)
                 {
                     folderPicker.FileTypeFilter.Add(ext);
                 }
@@ -37,11 +37,11 @@ namespace SerrisTabsServer.Storage.StorageTypes
                     Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
                     Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
 
-                    foreach (string type in FileTypes.List_Type_extensions)
+                    foreach (string type in FileTypesManager.List_Type_extensions)
                     {
                         if (Tab.TabName.Contains(type))
                         {
-                            Tab.TabType = FileTypes.GetExtensionType(file.FileType);
+                            Tab.TabType = FileTypesManager.GetExtensionType(file.FileType);
                             break;
                         }
                         else

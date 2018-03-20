@@ -2,30 +2,30 @@
 
 namespace SerrisTabsServer.Manager
 {
-    public class FileTypesManager
+    public static class FileTypesManager
     {
-        public List<string> List_Type = new List<string> { "AS", "ASM", "BAT", "CSS", "C", "CPP", "CC", "CXX", "CLASS", "CS", "CSHTML", "CBL", "COB", "CPY", "COFFEE", "CFM", "CFC", "E", "EX", "EXS", "GROOVY", "HTML", "HX", "HXML", "HAML", "H", "HPP", "HXX", "INC", "JS", "JSON", "JSP", "LUA", "LITCOFFEE", "M", "MM", "ML", "MLI", "PP", "PAS", "PHP", "PY", "PYC", "PYD", "PYO", "PYW", "PYZ", "PL", "PM", "POD", "PS1", "RB", "RBW", "SASS", "SH", "SCSS", "SQL", "SWIFT", "T", "TS", "TEX", "TXT", "VB", "VBHTML", "VBS", "VBE", "WSF", "WSC", "XML", "YAML", "YML" };
-        public List<string> List_Type_extensions = new List<string> { ".html", ".htm", ".css", ".php", ".js", ".scss", ".xml", ".cshtml", ".vbhtml", ".py", ".pyc", ".pyd", ".pyo", ".pyw", ".pyz", ".as", ".class", ".cs", ".lua", ".json", ".c", ".h", ".cpp", ".cc", ".hpp", ".hxx", ".cxx", ".asm", ".m", ".mm", ".coffee", ".litcoffee", ".pl", ".pm", ".t", ".pod", ".pp", ".pas", ".inc", ".rb", ".rbw", ".ts", ".yaml", ".yml", ".swift", ".vbs", ".vbe", ".wsf", ".wsc", ".hx", ".hxml", ".haml", ".cbl", ".cob", ".cpy", ".sass", ".ml", ".mli", ".tex", ".groovy", ".sh", ".ps1", ".ex", ".exs", ".cfm", ".cfc", ".jsp", ".bat", ".e", ".sql", ".txt", ".vb" };
+        public static List<string> List_Type = new List<string> { "AS", "ASM", "BAT", "CSS", "C", "CPP", "CC", "CXX", "CLASS", "CS", "CSHTML", "CBL", "COB", "CPY", "COFFEE", "CFM", "CFC", "E", "EX", "EXS", "GROOVY", "HTML", "HX", "HXML", "HAML", "H", "HPP", "HXX", "INC", "JS", "JSON", "JSP", "LUA", "LITCOFFEE", "M", "MM", "ML", "MLI", "PP", "PAS", "PHP", "PY", "PYC", "PYD", "PYO", "PYW", "PYZ", "PL", "PM", "POD", "PS1", "RB", "RBW", "SASS", "SH", "SCSS", "SQL", "SWIFT", "T", "TS", "TEX", "TXT", "VB", "VBHTML", "VBS", "VBE", "WSF", "WSC", "XML", "YAML", "YML", "INI", "FS" };
+        public static List<string> List_Type_extensions = new List<string> { ".html", ".htm", ".css", ".php", ".js", ".scss", ".xml", ".cshtml", ".vbhtml", ".py", ".pyc", ".pyd", ".pyo", ".pyw", ".pyz", ".as", ".class", ".cs", ".lua", ".json", ".c", ".h", ".cpp", ".cc", ".hpp", ".hxx", ".cxx", ".asm", ".m", ".mm", ".coffee", ".litcoffee", ".pl", ".pm", ".t", ".pod", ".pp", ".pas", ".inc", ".rb", ".rbw", ".ts", ".yaml", ".yml", ".swift", ".vbs", ".vbe", ".wsf", ".wsc", ".hx", ".hxml", ".haml", ".cbl", ".cob", ".cpy", ".sass", ".ml", ".mli", ".tex", ".groovy", ".sh", ".ps1", ".ex", ".exs", ".cfm", ".cfc", ".jsp", ".bat", ".e", ".sql", ".txt", ".vb", ".ini", ".fs" };
 
         //TYPES
-        public List<string> Type_HTML = new List<string> { ".html", ".htm" };
-        public List<string> Type_ASPNET = new List<string> { ".cshtml", ".vbhtml" };
-        public List<string> Type_PYTHON = new List<string> { ".py", ".pyc", ".pyd", ".pyo", ".pyw", ".pyz" };
-        public List<string> Type_C_CPP = new List<string> { ".c", ".h", ".cpp", ".cc", ".hpp", ".hxx", ".cxx" };
-        public List<string> Type_OBJ_C = new List<string> { ".m", ".mm" };
-        public List<string> Type_COFFEE = new List<string> { ".coffee", ".litcoffee" };
-        public List<string> Type_PERL = new List<string> { ".pl", ".pm", ".t", ".pod" };
-        public List<string> Type_PASCAL = new List<string> { ".pp", ".pas", ".inc" };
-        public List<string> Type_RUBY = new List<string> { ".rb", ".rbw" };
-        public List<string> Type_YAML = new List<string> { ".yaml", ".yml" };
-        public List<string> Type_VBSCRIPT = new List<string> { ".vbs", ".vbe", ".wsf", ".wsc" };
-        public List<string> Type_HAXE = new List<string> { ".hx", ".hxml" };
-        public List<string> Type_COBOL = new List<string> { ".cbl", ".cob", ".cpy" };
-        public List<string> Type_OCAML = new List<string> { ".ml", ".mli" };
-        public List<string> Type_ELIXIR = new List<string> { ".ex", ".exs" };
-        public List<string> Type_CFML = new List<string> { ".cfm", ".cfc" };
+        public static List<string> Type_HTML = new List<string> { ".html", ".htm" };
+        public static List<string> Type_ASPNET = new List<string> { ".cshtml", ".vbhtml" };
+        public static List<string> Type_PYTHON = new List<string> { ".py", ".pyc", ".pyd", ".pyo", ".pyw", ".pyz" };
+        public static List<string> Type_C_CPP = new List<string> { ".c", ".h", ".cpp", ".cc", ".hpp", ".hxx", ".cxx" };
+        public static List<string> Type_OBJ_C = new List<string> { ".m", ".mm" };
+        public static List<string> Type_COFFEE = new List<string> { ".coffee", ".litcoffee" };
+        public static List<string> Type_PERL = new List<string> { ".pl", ".pm", ".t", ".pod" };
+        public static List<string> Type_PASCAL = new List<string> { ".pp", ".pas", ".inc" };
+        public static List<string> Type_RUBY = new List<string> { ".rb", ".rbw" };
+        public static List<string> Type_YAML = new List<string> { ".yaml", ".yml" };
+        public static List<string> Type_VBSCRIPT = new List<string> { ".vbs", ".vbe", ".wsf", ".wsc" };
+        public static List<string> Type_HAXE = new List<string> { ".hx", ".hxml" };
+        public static List<string> Type_COBOL = new List<string> { ".cbl", ".cob", ".cpy" };
+        public static List<string> Type_OCAML = new List<string> { ".ml", ".mli" };
+        public static List<string> Type_ELIXIR = new List<string> { ".ex", ".exs" };
+        public static List<string> Type_CFML = new List<string> { ".cfm", ".cfc" };
 
-        public string GetExtensionType(string fileextension)
+        public static string GetExtensionType(string fileextension)
         {
             string extension = fileextension.Replace(".", "");
 
@@ -97,7 +97,7 @@ namespace SerrisTabsServer.Manager
             return extension;
         }
 
-        public string GetExtension(string filetype)
+        public static string GetExtension(string filetype)
         {
             string filetype_ = filetype.ToLower();
 
@@ -169,7 +169,7 @@ namespace SerrisTabsServer.Manager
             return filetype_;
         }
 
-        public bool FileIsSupported(string extension)
+        public static bool FileIsSupported(string extension)
         => List_Type_extensions.Contains(extension);
 
     }

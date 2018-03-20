@@ -10,7 +10,6 @@ namespace SerrisTabsServer.Storage
 
         public InfosTab Tab { get; set; }
         public int ListTabsID { get; set; }
-        public FileTypesManager FileTypes = new FileTypesManager();
 
     }
 }
