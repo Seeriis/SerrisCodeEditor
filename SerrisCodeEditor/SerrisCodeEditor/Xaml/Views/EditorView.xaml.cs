@@ -451,7 +451,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (ClosePanelAuto && isUIDeployed)
             {
-                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength + 15) || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
+                if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength + 5) || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {
                     UpdateUI(false, false);
                 }
