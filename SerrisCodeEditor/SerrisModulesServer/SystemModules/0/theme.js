@@ -5,7 +5,7 @@
 */
 
 monaco.editor.defineTheme('lightTheme', {
-    base: 'vs', // can also be vs-dark or hc-black
+    base: 'vs',
     inherit: true,
     rules: [{ background: 'efefef' }]
 });
