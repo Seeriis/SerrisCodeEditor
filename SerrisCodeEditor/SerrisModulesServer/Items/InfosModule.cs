@@ -27,11 +27,23 @@ namespace SerrisModulesServer.Items
         public string ModuleAuthor { get; set; }
         public string ModuleWebsiteLink { get; set; }
         public string ModuleDescription { get; set; }
-        public string ModuleMonacoThemeName { get; set; }
+
+        //"Addon" module
         public List<string> JSFilesPathList { get; set; }
 
-        public float SceMinimalVersionRequired { get; set; }
+        //"Theme" module
         public bool ContainMonacoTheme { get; set; }
+        public string ModuleMonacoThemeName { get; set; }
+
+        //"ProgrammingLanguage" module
+        public bool ProgrammingLanguageMonacoCompletionAvailable { get; set; }
+        public string ProgrammingLanguageMonacoDefinitionName { get; set; }
+        public List<string> ProgrammingLanguageFilesExtensions { get; set; }
+
+        //"ProjectType" module
+        public List<string> ProjectTypeDefaultFilesPath { get; set; }
+
+        public float SceMinimalVersionRequired { get; set; }
         public bool ModuleSystem { get; set; }
         public bool CanBePinnedToToolBar { get; set; }
         public bool IsEnabled { get; set; }

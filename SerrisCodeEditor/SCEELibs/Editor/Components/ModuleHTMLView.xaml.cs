@@ -68,8 +68,7 @@ namespace SCEELibs.Editor.Components
 
                 if (ModuleAccess.ModuleSystem)
                 {
-                    html_view.Navigate(new Uri("ms-appx-web:///SerrisModulesServer/SystemModules/" + id + "/" + path));
-                    Debug.WriteLine("ms-appx-web:///SerrisModulesServer/SystemModules/" + id + "/" + path);
+                    html_view.Navigate(new Uri("ms-appx-web:///SerrisModulesServer/SystemModules/Addons/" + id + "/" + path));
                 }
                 else
                 {

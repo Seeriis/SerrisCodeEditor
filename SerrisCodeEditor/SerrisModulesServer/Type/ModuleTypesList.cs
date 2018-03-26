@@ -4,6 +4,7 @@
     {
         Addon,
         Theme,
-        Language
+        ProgrammingLanguage,
+        ProjectType
     }
 }

@@ -99,21 +99,20 @@ namespace SerrisCodeEditor.Xaml.Views
 
             foreach (InfosModule module in ModulesAccessManager.GetModules(true))
             {
-                var module_infos = new ModuleInfosShow { Module = module, StrokeThickness = 0 };
-                var reader = new AddonReader(module_infos.Module.ID);
-                module_infos.Thumbnail = await reader.GetAddonIconViaIDAsync();
+                ModuleInfosShow ModuleInfos = new ModuleInfosShow { Module = module, StrokeThickness = 0 };
+                ModuleInfos.Thumbnail = await ModulesAccessManager.GetModuleDefaultLogoViaIDAsync(ModuleInfos.Module.ID, ModuleInfos.Module.ModuleSystem);
 
                 switch (module.ModuleType)
                 {
                     case ModuleTypesList.Addon when currentSelectedButton == 0:
-                        ListModules.Items.Add(module_infos);
+                        ListModules.Items.Add(ModuleInfos);
                         break;
 
                     case ModuleTypesList.Theme when currentSelectedButton == 1:
-                        if (IDTheme == module_infos.Module.ID || IDThemeMonaco == module_infos.Module.ID)
-                            module_infos.StrokeThickness = 2;
+                        if (IDTheme == ModuleInfos.Module.ID || IDThemeMonaco == ModuleInfos.Module.ID)
+                            ModuleInfos.StrokeThickness = 2;
 
-                        ListModules.Items.Add(module_infos);
+                        ListModules.Items.Add(ModuleInfos);
                         break;
                 }
             }

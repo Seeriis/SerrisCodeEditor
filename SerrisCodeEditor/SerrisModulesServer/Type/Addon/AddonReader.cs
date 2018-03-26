@@ -17,50 +17,17 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace SerrisModulesServer.Type.Addon
 {
-    public class AddonReader
+    public class AddonReader : ModuleReader
     {
-        int id_module; bool system_module;
-
-        public AddonReader(int ID)
-        {
-            id_module = ID;
-            AsyncHelpers.RunSync(() => IsSystemModuleOrNot(ID));
-        }
-
-        async Task IsSystemModuleOrNot(int _id)
-        {
-            InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(_id);
-
-            if (ModuleAccess.ModuleSystem)
-            {
-                system_module = true;
-            }
-            else
-            {
-                system_module = false;
-            }
-        }
+        public AddonReader(int ID) : base(ID) { }
 
         public async Task<string> GetAddonMainJsViaIDAsync()
         {
-            StorageFolder folder_module;
-
-            if (system_module)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            StorageFile file_content = await folder_module.GetFileAsync("main.js");
-
             try
             {
-                using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
+                StorageFile MainFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "main.js"));
+
+                using (var reader = new StreamReader(await MainFile.OpenStreamForReadAsync()))
                 {
                     return await reader.ReadToEndAsync();
                 }
@@ -74,25 +41,11 @@ namespace SerrisModulesServer.Type.Addon
 
         public async Task<BitmapImage> GetAddonIconViaIDAsync()
         {
-            StorageFolder folder_module;
-
-            if (system_module)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("icon.png");
-
             try
             {
-                using (var reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
+                StorageFile IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "icon.png"));
+
+                using (var reader = (FileRandomAccessStream)await IconFile.OpenAsync(FileAccessMode.Read))
                 {
                     var bitmapImage = new BitmapImage();
                     bitmapImage.SetSource(reader);
@@ -109,33 +62,10 @@ namespace SerrisModulesServer.Type.Addon
 
         public async Task<StackPanel> GetAddonWidgetViaIDAsync(object sceelibs, ThemeModuleBrush theme)
         {
-            StorageFolder folder_module;
-            var widget_content = new StackPanel { Padding = new Thickness(5, 0, 10, 0), Orientation = Orientation.Horizontal, Name = "" + id_module };
+            StorageFile WidgetFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "widget.json"));
+            var widget_content = new StackPanel { Padding = new Thickness(5, 0, 10, 0), Orientation = Orientation.Horizontal, Name = "" + ModuleID };
 
-            if (system_module)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("widget.json");
-
-            /*AddonWidget widgeet = new AddonWidget { Type = WidgetType.Button, FunctionName = "main", PlaceHolderText = "mdrrhooo" };
-            AddonWidget widget_b = new AddonWidget { Type = WidgetType.TextBox, FunctionName = "main", PlaceHolderText = "mdrrhooo" };
-            List<AddonWidget> widgets = new List<AddonWidget>();
-            widgets.Add(widgeet); widgets.Add(widget_b);
-            var dataPackage = new DataPackage();
-            dataPackage.SetText(JsonConvert.SerializeObject(widgets, Formatting.Indented));
-            Clipboard.SetContent(dataPackage);*/
-
-
-            using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
+            using (var reader = new StreamReader(await WidgetFile.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -151,7 +81,7 @@ namespace SerrisModulesServer.Type.Addon
                                     var new_button = new Button();
                                     new_button.Margin = new Thickness(5, 0, 5, 0);
 
-                                    new_button.Name = widget.WidgetName + id_module; new_button.Style = (Style)Application.Current.Resources["Round_Button"];
+                                    new_button.Name = widget.WidgetName + ModuleID; new_button.Style = (Style)Application.Current.Resources["Round_Button"];
                                     new_button.Padding = new Thickness(0);
                                     new_button.Width = 25; new_button.Height = 25;
                                     new_button.FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe MDL2 Assets");
@@ -159,7 +89,7 @@ namespace SerrisModulesServer.Type.Addon
                                     new_button.Foreground = theme.ToolbarColorFont; new_button.Background = new SolidColorBrush(Colors.Transparent);
                                     new_button.Click += ((e, f) =>
                                     {
-                                        Task.Run(() => new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
+                                        Task.Run(() => new AddonExecutor(ModuleID, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
                                     });
 
                                     widget_content.Children.Add(new_button);
@@ -170,7 +100,7 @@ namespace SerrisModulesServer.Type.Addon
                                     var new_textbox = new TextBox();
                                     new_textbox.Margin = new Thickness(5, 0, 5, 0);
 
-                                    new_textbox.Name = widget.WidgetName + id_module; new_textbox.Style = (Style)Application.Current.Resources["RoundTextBox"];
+                                    new_textbox.Name = widget.WidgetName + ModuleID; new_textbox.Style = (Style)Application.Current.Resources["RoundTextBox"];
                                     //new_textbox.Padding = new Thickness(0);
                                     new_textbox.Width = 150; new_textbox.Height = 25;
                                     new_textbox.PlaceholderText = widget.PlaceHolderText;
@@ -181,7 +111,7 @@ namespace SerrisModulesServer.Type.Addon
                                         {
                                             if (f.Key == Windows.System.VirtualKey.Enter)
                                             {
-                                                await Task.Run(() => new AddonExecutor(id_module, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
+                                                await Task.Run(() => new AddonExecutor(ModuleID, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
                                             }
                                         }
                                     });

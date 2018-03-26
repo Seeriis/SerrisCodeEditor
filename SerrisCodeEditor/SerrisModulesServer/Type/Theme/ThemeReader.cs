@@ -9,20 +9,9 @@ using Windows.Storage;
 
 namespace SerrisModulesServer.Type.Theme
 {
-    public class ThemeReader
+    public class ThemeReader : ModuleReader
     {
-        int id_module; bool system_module;
-
-        public ThemeReader(int ID)
-        {
-            id_module = ID;
-            InfosModule ModuleAccess = ModulesAccessManager.GetModuleViaID(ID);
-            system_module = ModuleAccess.ModuleSystem;
-        }
-
-        /*async Task IsSystemModuleOrNot(int _id)
-        {
-        }*/
+        public ThemeReader(int ID) : base (ID) { }
 
         /// <summary>
         /// Get the JavaScript content of the monaco theme
@@ -30,25 +19,11 @@ namespace SerrisModulesServer.Type.Theme
         /// <returns></returns>
         public async Task<string> GetThemeJSContentAsync()
         {
-            StorageFolder folder_module;
-
-            if (system_module)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("theme.js");
+            StorageFile ThemeContent = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "theme.js"));
 
             try
             {
-                using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
+                using (var reader = new StreamReader(await ThemeContent.OpenStreamForReadAsync()))
                 {
                     return await reader.ReadToEndAsync();
                 }
@@ -67,23 +42,9 @@ namespace SerrisModulesServer.Type.Theme
         /// <returns></returns>
         public async Task<ThemeModule> GetThemeContentAsync()
         {
-            StorageFolder folder_module;
+            StorageFile ThemeContent = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "theme.json"));
 
-            if (system_module)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("theme.json");
-
-            using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
+            using (var reader = new StreamReader(await ThemeContent.OpenStreamForReadAsync()))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -111,52 +72,21 @@ namespace SerrisModulesServer.Type.Theme
         /// <returns></returns>
         public async Task<ThemeModuleBrush> GetThemeBrushesContent()
         {
-            StorageFolder folder_module;
-
-            if (system_module)
+            try
             {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"),
-                    folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(id_module + "", CreationCollisionOption.OpenIfExists);
-            }
+                ThemeModule Content = await GetThemeContentAsync();
 
-            StorageFile file_content = await folder_module.GetFileAsync("theme.json");
-
-            using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
-            using (JsonReader JsonReader = new JsonTextReader(reader))
-            {
-                try
+                if (Content != null)
                 {
-                    ThemeModule content = new JsonSerializer().Deserialize<ThemeModule>(JsonReader);
+                    ThemeModuleBrush Brushs = new ThemeModuleBrush();
+                    Brushs.SetBrushsAndImageViaThemeModule(Content, ModuleFolderPath);
 
-                    if (content != null)
-                    {
-                        var content_brushs = new ThemeModuleBrush();
-                        System.Diagnostics.Debug.WriteLine(Path.Combine(folder_module.Path, content.BackgroundImagePath));
-
-                        content_brushs.SetBrushsAndImageViaThemeModule(content, folder_module.Path);
-
-                        /*if (system_module)
-                        {
-                            content_brushs.SetBrushsAndImageViaThemeModule(content, "ms-appx://SerrisModulesServer/SystemModules/" + id_module + "/");
-                        }
-                        else
-                        {
-                            content_brushs.SetBrushsAndImageViaThemeModule(content, folder_module.Path);
-                        }*/
-
-                        return content_brushs;
-                    }
+                    return Brushs;
                 }
-                catch
-                {
-                    return null;
-                }
+            }
+            catch
+            {
+                return null;
             }
 
             return null;

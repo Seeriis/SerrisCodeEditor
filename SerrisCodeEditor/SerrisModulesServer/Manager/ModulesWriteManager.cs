@@ -60,7 +60,7 @@ namespace SerrisModulesServer.Manager
                                     content.CanBePinnedToToolBar = false;
                                     break;
 
-                                case ModuleTypesList.Language:
+                                case ModuleTypesList.ProgrammingLanguage:
                                     content.CanBePinnedToToolBar = false;
                                     break;
                             }

@@ -29,6 +29,9 @@ namespace SerrisTabsServer.Manager
         {
             string extension = fileextension.Replace(".", "");
 
+            if (fileextension == ".cs")
+                extension = "csharp";
+
             if (Type_HTML.Contains(fileextension))
             {
                 extension = "html";

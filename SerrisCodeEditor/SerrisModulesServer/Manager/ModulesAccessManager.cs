@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.SystemModules;
+using SerrisModulesServer.Type;
 using SerrisModulesServer.Type.Theme;
 using System;
 using System.Collections.Generic;
@@ -24,40 +25,51 @@ namespace SerrisModulesServer.Manager
 
             try
             {
-                var ModulesList = new List<InfosModule>();
-                if (ModulesDataCache.ModulesListDeserialized != null)
+                var ModulesList = new List<InfosModule>(ModulesDataCache.ModulesListDeserialized.Modules);
+
+                if (GetSystemModules)
                 {
-                    foreach (InfosModule module in ModulesDataCache.ModulesListDeserialized.Modules)
-                    {
-                        ModulesList.Add(module);
-                    }
-
-                    if (GetSystemModules)
-                    {
-                        foreach (InfosModule module in SystemModulesList.Modules)
-                        { ModulesList.Add(module); }
-                    }
-
-                    return ModulesList;
+                    ModulesList.AddRange(SystemModulesList.Modules);
                 }
-                else
-                {
-                    if (GetSystemModules)
-                    {
-                        foreach (InfosModule module in SystemModulesList.Modules)
-                        {
-                            ModulesList.Add(module);
-                        }
-                    }
 
-                    return ModulesList;
-                }
+                return ModulesList;
             }
             catch
             {
                 return null;
             }
 
+        }
+
+        public static List<InfosModule> GetSpecificModules(bool GetSystemModules, ModuleTypesList ModuleType)
+        {
+            ModulesDataCache.LoadModulesData();
+
+            try
+            {
+                var ModulesList = new List<InfosModule>();
+
+                foreach(InfosModule Module in ModulesDataCache.ModulesListDeserialized.Modules)
+                {
+                    if (Module.ModuleType == ModuleType)
+                        ModulesList.Add(Module);
+                }
+
+                if (GetSystemModules)
+                {
+                    foreach (InfosModule Module in SystemModulesList.Modules)
+                    {
+                        if (Module.ModuleType == ModuleType)
+                            ModulesList.Add(Module);
+                    }
+                }
+
+                return ModulesList;
+            }
+            catch
+            {
+                return null;
+            }
 
         }
 
@@ -166,24 +178,12 @@ namespace SerrisModulesServer.Manager
 
         public static async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(int id, bool IsSystemModule)
         {
-            StorageFolder folder_module;
-
-            if (IsSystemModule)
-            {
-                StorageFolder folder_content = await Package.Current.InstalledLocation.GetFolderAsync("SerrisModulesServer"), folder_systemmodules = await folder_content.GetFolderAsync("SystemModules");
-                folder_module = await folder_systemmodules.CreateFolderAsync(GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                StorageFolder folder_content = await ApplicationData.Current.LocalFolder.CreateFolderAsync("modules", CreationCollisionOption.OpenIfExists);
-                folder_module = await folder_content.CreateFolderAsync(GetCurrentThemeID() + "", CreationCollisionOption.OpenIfExists);
-            }
-
-            StorageFile file_content = await folder_module.GetFileAsync("logo.png");
 
             try
             {
-                using (var reader = (FileRandomAccessStream)await file_content.OpenAsync(FileAccessMode.Read))
+                StorageFile LogoFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(GetModuleFolderPath(id, IsSystemModule) + "logo.png"));
+
+                using (var reader = (FileRandomAccessStream)await LogoFile.OpenAsync(FileAccessMode.Read))
                 {
                     var bitmapImage = new BitmapImage();
                     bitmapImage.SetSource(reader);
@@ -194,6 +194,33 @@ namespace SerrisModulesServer.Manager
             catch
             {
                 return null;
+            }
+
+        }
+
+        public static string GetModuleFolderPath(int ModuleID, bool IsSystemModule)
+        {
+            string ModulePath = "";
+
+            if(IsSystemModule)
+            {
+                ModulePath = "ms-appx:///SerrisModulesServer/SystemModules/{0}/" + ModuleID + "/";
+                switch (GetModuleViaID(ModuleID).ModuleType)
+                {
+                    default:
+                    case ModuleTypesList.Addon:
+                        return string.Format(ModulePath, "Addons");
+
+                    case ModuleTypesList.ProgrammingLanguage:
+                        return string.Format(ModulePath, "ProgrammingLanguages");
+
+                    case ModuleTypesList.Theme:
+                        return string.Format(ModulePath, "Themes");
+                }
+            }
+            else
+            {
+                return "ms-appdata:///local/modules/" + ModuleID + "/";
             }
 
         }

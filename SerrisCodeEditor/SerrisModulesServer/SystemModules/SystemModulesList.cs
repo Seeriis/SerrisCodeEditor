@@ -168,6 +168,54 @@ namespace SerrisModulesServer.SystemModules
                 {
                     "libs/notification.js"
                 }
+            },
+
+
+            /* =============
+             * = LANGUAGES =
+             * =============
+            */
+
+            new InfosModule
+            {
+                ID = 8,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "CSS",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "CSS language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "css",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".css" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 9,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "C#",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "C#(.NET) language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "csharp",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".cs" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
             }
         };
     }

@@ -106,43 +106,49 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="SystemModules\0\background.jpg" />
-    <Content Include="SystemModules\0\theme.js" />
-    <Content Include="SystemModules\1\HTML\test.html" />
-    <Content Include="SystemModules\1\HTML\flyout.html" />
-    <Content Include="SystemModules\1\icon.png" />
-    <Content Include="SystemModules\1\logo.png" />
-    <Content Include="SystemModules\1\main.js" />
-    <Content Include="SystemModules\2\icon.png" />
-    <Content Include="SystemModules\2\libs\test.js" />
-    <Content Include="SystemModules\2\logo.png" />
-    <Content Include="SystemModules\2\main.js" />
-    <Content Include="SystemModules\3\icon.png" />
-    <Content Include="SystemModules\3\logo.png" />
-    <Content Include="SystemModules\3\main.js" />
-    <Content Include="SystemModules\4\icon.png" />
-    <Content Include="SystemModules\4\logo.png" />
-    <Content Include="SystemModules\4\main.js" />
-    <Content Include="SystemModules\6\background.jpg" />
-    <Content Include="SystemModules\6\icon.png" />
-    <Content Include="SystemModules\6\logo.png" />
-    <Content Include="SystemModules\5\icon.png" />
-    <Content Include="SystemModules\5\logo.png" />
-    <Content Include="SystemModules\5\main.js" />
+    <Content Include="SystemModules\Themes\0\background.jpg" />
+    <Content Include="SystemModules\Themes\0\theme.js" />
+    <Content Include="SystemModules\Addons\1\HTML\test.html" />
+    <Content Include="SystemModules\Addons\1\HTML\flyout.html" />
+    <Content Include="SystemModules\Addons\1\icon.png" />
+    <Content Include="SystemModules\Addons\1\logo.png" />
+    <Content Include="SystemModules\Addons\1\main.js" />
+    <Content Include="SystemModules\Addons\2\icon.png" />
+    <Content Include="SystemModules\Addons\2\libs\test.js" />
+    <Content Include="SystemModules\Addons\2\logo.png" />
+    <Content Include="SystemModules\Addons\2\main.js" />
+    <Content Include="SystemModules\Addons\3\icon.png" />
+    <Content Include="SystemModules\Addons\3\logo.png" />
+    <Content Include="SystemModules\Addons\3\main.js" />
+    <Content Include="SystemModules\Addons\4\icon.png" />
+    <Content Include="SystemModules\Addons\4\logo.png" />
+    <Content Include="SystemModules\Addons\4\main.js" />
+    <Content Include="SystemModules\Themes\6\background.jpg" />
+    <Content Include="SystemModules\Themes\6\icon.png" />
+    <Content Include="SystemModules\Themes\6\logo.png" />
+    <Content Include="SystemModules\Addons\5\icon.png" />
+    <Content Include="SystemModules\Addons\5\logo.png" />
+    <Content Include="SystemModules\Addons\5\main.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\9\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\9\language.scelang" />
+    <Content Include="SystemModules\ProgrammingLanguages\9\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\8\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\8\language.scelang" />
+    <Content Include="SystemModules\ProgrammingLanguages\8\logo.png" />
     <None Include="project.json" />
-    <Content Include="SystemModules\0\theme.json" />
-    <Content Include="SystemModules\1\widget.json" />
-    <Content Include="SystemModules\3\widget.json" />
-    <Content Include="SystemModules\4\widget.json" />
-    <Content Include="SystemModules\5\widget.json" />
-    <Content Include="SystemModules\6\theme.js" />
-    <Content Include="SystemModules\6\theme.json" />
-    <Content Include="SystemModules\7\HTML\infos.html" />
-    <Content Include="SystemModules\7\icon.png" />
-    <Content Include="SystemModules\7\libs\notification.js" />
-    <Content Include="SystemModules\7\logo.png" />
-    <Content Include="SystemModules\7\main.js" />
-    <Content Include="SystemModules\7\widget.json" />
+    <Content Include="SystemModules\Themes\0\theme.json" />
+    <Content Include="SystemModules\Addons\1\widget.json" />
+    <Content Include="SystemModules\Addons\3\widget.json" />
+    <Content Include="SystemModules\Addons\4\widget.json" />
+    <Content Include="SystemModules\Addons\5\widget.json" />
+    <Content Include="SystemModules\Themes\6\theme.js" />
+    <Content Include="SystemModules\Themes\6\theme.json" />
+    <Content Include="SystemModules\Addons\7\HTML\infos.html" />
+    <Content Include="SystemModules\Addons\7\icon.png" />
+    <Content Include="SystemModules\Addons\7\libs\notification.js" />
+    <Content Include="SystemModules\Addons\7\logo.png" />
+    <Content Include="SystemModules\Addons\7\main.js" />
+    <Content Include="SystemModules\Addons\7\widget.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager\ModulesDataCache.cs" />
@@ -160,17 +166,19 @@
     <Compile Include="Type\Addon\AddonReader.cs" />
     <Compile Include="Type\Addon\AddonWidget.cs" />
     <Compile Include="Type\Addon\ChakraSMS.cs" />
+    <Compile Include="Type\ModuleReader.cs" />
     <Compile Include="Type\ModuleTypesList.cs" />
+    <Compile Include="Type\ProgrammingLanguage\ProgrammingLanguageReader.cs" />
     <Compile Include="Type\Theme\ThemeModule.cs" />
     <Compile Include="Type\Theme\ThemeReader.cs" />
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Type\Language\" />
+    <Folder Include="Type\ProjectType\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SystemModules\0\logo.png" />
-    <Content Include="SystemModules\0\icon.png" />
+    <Content Include="SystemModules\Themes\0\logo.png" />
+    <Content Include="SystemModules\Themes\0\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ChakraBridge, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
