@@ -1,4 +1,4 @@
-﻿{
+﻿return {
 	defaultToken: '',
 	tokenPostfix: '.css',
 

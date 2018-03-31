@@ -106,6 +106,24 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="SystemModules\ProgrammingLanguages\15\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\15\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\15\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\14\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\14\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\14\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\13\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\13\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\13\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\12\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\12\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\12\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\11\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\11\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\11\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\10\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\10\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\10\logo.png" />
     <Content Include="SystemModules\Themes\0\background.jpg" />
     <Content Include="SystemModules\Themes\0\theme.js" />
     <Content Include="SystemModules\Addons\1\HTML\test.html" />
@@ -130,10 +148,10 @@
     <Content Include="SystemModules\Addons\5\logo.png" />
     <Content Include="SystemModules\Addons\5\main.js" />
     <Content Include="SystemModules\ProgrammingLanguages\9\icon.png" />
-    <Content Include="SystemModules\ProgrammingLanguages\9\language.scelang" />
+    <Content Include="SystemModules\ProgrammingLanguages\9\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\9\logo.png" />
     <Content Include="SystemModules\ProgrammingLanguages\8\icon.png" />
-    <Content Include="SystemModules\ProgrammingLanguages\8\language.scelang" />
+    <Content Include="SystemModules\ProgrammingLanguages\8\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\8\logo.png" />
     <None Include="project.json" />
     <Content Include="SystemModules\Themes\0\theme.json" />

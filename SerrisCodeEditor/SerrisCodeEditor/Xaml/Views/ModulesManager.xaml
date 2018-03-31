@@ -84,8 +84,10 @@
 
         <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="3.0" Color="Black">
             <StackPanel x:Name="MenuButtons" Background="#FFF3F3F3">
-                <Grid x:Name="ButtonsGrid" Height="50" MinWidth="320" Background="Transparent">
+                <Grid x:Name="ButtonsGrid" MinHeight="50" MinWidth="320" Background="Transparent">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2"/>
                         <ColumnDefinition Width="*"/>
@@ -93,7 +95,7 @@
 
                     <Grid x:Name="AddonsButton" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="AddonsText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Addons" FontSize="15" Grid.Column="1"/>
                         </StackPanel>
                     </Grid>
@@ -104,6 +106,15 @@
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="ThemesText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Themes" FontSize="15" Grid.Column="1"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
+
+                    <Grid x:Name="ProgLanguagesButton" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5">
+                            <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="ProgLanguagesText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Programming languages" FontSize="15" Grid.Column="1" TextWrapping="Wrap" Width="94" TextAlignment="Center"/>
                         </StackPanel>
                     </Grid>
 

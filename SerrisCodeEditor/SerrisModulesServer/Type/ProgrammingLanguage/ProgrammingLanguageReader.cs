@@ -16,8 +16,8 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
         {
             try
             {
-                StorageFile LanguageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "language.scelang"));
-                return "monaco.languages.setMonarchTokensProvider('" + ModulesAccessManager.GetModuleViaID(ModuleID).ProgrammingLanguageMonacoDefinitionName + "'," + await FileIO.ReadTextAsync(LanguageFile) + ");";
+                StorageFile LanguageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "language.js"));
+                return "var content = function() { " + await FileIO.ReadTextAsync(LanguageFile) + " }; monaco.languages.setMonarchTokensProvider('" + ModulesAccessManager.GetModuleViaID(ModuleID).ProgrammingLanguageMonacoDefinitionName + "', content());";
             }
             catch { return ""; }
             

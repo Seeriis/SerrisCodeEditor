@@ -70,12 +70,16 @@ namespace SerrisCodeEditor.Xaml.Views
             MenuButtons.Background = GlobalVariables.CurrentTheme.SecondaryColor;
 
             ButtonsSeparator.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ButtonsSeparatorB.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             AddonsText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             AddonsIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             ThemesText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             ThemesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            ProgLanguagesText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ProgLanguagesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             InstallButton.Background = GlobalVariables.CurrentTheme.MainColor;
             IconInstallButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
@@ -97,6 +101,17 @@ namespace SerrisCodeEditor.Xaml.Views
             ListModules.Items.Clear();
             int IDThemeMonaco = ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = ModulesAccessManager.GetCurrentThemeID();
 
+            switch(currentSelectedButton)
+            {
+                default:
+                    ListModules.SelectionMode = ListViewSelectionMode.Single;
+                    break;
+
+                case 2:
+                    ListModules.SelectionMode = ListViewSelectionMode.None;
+                    break;
+            }
+
             foreach (InfosModule module in ModulesAccessManager.GetModules(true))
             {
                 ModuleInfosShow ModuleInfos = new ModuleInfosShow { Module = module, StrokeThickness = 0 };
@@ -114,8 +129,13 @@ namespace SerrisCodeEditor.Xaml.Views
 
                         ListModules.Items.Add(ModuleInfos);
                         break;
+
+                    case ModuleTypesList.ProgrammingLanguage when currentSelectedButton == 2:
+                        ListModules.Items.Add(ModuleInfos);
+                        break;
                 }
             }
+
         }
 
         private async void ListModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -183,6 +203,9 @@ namespace SerrisCodeEditor.Xaml.Views
         private void ThemesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         => ChangeSelectedButton(1);
 
+        private void ProgLanguagesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
+        => ChangeSelectedButton(2);
+
 
 
         /* =============
@@ -193,6 +216,5 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         int currentSelectedButton = -1;
-
     }
 }

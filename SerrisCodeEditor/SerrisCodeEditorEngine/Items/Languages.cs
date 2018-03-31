@@ -50,6 +50,7 @@ namespace SerrisCodeEditorEngine.Items
 
                 case "HTM":
                 case "HTML":
+                    LoadLanguageInTheEditor(CodeLanguage, editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'html');" });
                     break;
 
@@ -63,6 +64,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "JS":
+                    LoadLanguageInTheEditor("javascript", editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'javascript');" });
                     break;
 
@@ -75,6 +77,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "PYTHON":
+                    LoadLanguageInTheEditor("python", editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'python');" });
                     break;
 
@@ -83,6 +86,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "CLASS":
+                    LoadLanguageInTheEditor("java", editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'java');" });
                     break;
 
@@ -117,6 +121,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "RUBY":
+                    LoadLanguageInTheEditor("ruby", editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'ruby');" });
                     break;
 
@@ -145,6 +150,7 @@ namespace SerrisCodeEditorEngine.Items
                     break;
 
                 case "BAT":
+                    LoadLanguageInTheEditor("bat", editor);
                     await editor.InvokeScriptAsync("eval", new[] { "monaco.editor.setModelLanguage(editor.getModel(), 'bat');" });
                     break;
 

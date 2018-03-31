@@ -182,7 +182,7 @@ namespace SerrisModulesServer.SystemModules
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "CSS",
                 ModuleSystem = true,
-                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleAuthor = "Microsoft",
                 ModuleVersion = new ModuleVersion
                 {
                     Major = 1,
@@ -203,7 +203,7 @@ namespace SerrisModulesServer.SystemModules
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "C#",
                 ModuleSystem = true,
-                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleAuthor = "Microsoft",
                 ModuleVersion = new ModuleVersion
                 {
                     Major = 1,
@@ -215,6 +215,132 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "csharp",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".cs" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 10,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "HTML",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "HTML language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "html",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".html", ".htm" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 11,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Java",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Java language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "java",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".class" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 12,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Javascript",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Javascript language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "javascript",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".js" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 13,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Python",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Python language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "python",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".py", ".pyc", ".pyd" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 14,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Ruby",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Ruby language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "ruby",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".rb" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 15,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Batch script (BAT)",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Batch script (.bat files) language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "bat",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".bat" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
             }
         };

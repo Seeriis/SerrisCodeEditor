@@ -1,4 +1,4 @@
-﻿{
+﻿return {
     keywords: [
         'extern', 'alias', 'using', 'bool', 'decimal', 'sbyte', 'byte', 'short',
         'ushort', 'int', 'uint', 'long', 'ulong', 'char', 'float', 'double',
