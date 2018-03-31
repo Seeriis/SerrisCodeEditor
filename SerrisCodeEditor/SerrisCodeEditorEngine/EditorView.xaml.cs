@@ -41,14 +41,14 @@ namespace SerrisCodeEditorEngine
 
                 if(Initialized)
                 {
-                    Languages.GetActualLanguage(CodeLanguage, editor_view);
+                    Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                     SetCode(value);
                 }
                 else
                 {
                     EditorLoaded += (e, f) =>
                     {
-                        Languages.GetActualLanguage(CodeLanguage, editor_view);
+                        Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                         SetCode(value);
                     };
                 }

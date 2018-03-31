@@ -186,6 +186,7 @@
     <Compile Include="Type\Addon\ChakraSMS.cs" />
     <Compile Include="Type\ModuleReader.cs" />
     <Compile Include="Type\ModuleTypesList.cs" />
+    <Compile Include="Type\ProgrammingLanguage\LanguagesHelper.cs" />
     <Compile Include="Type\ProgrammingLanguage\ProgrammingLanguageReader.cs" />
     <Compile Include="Type\Theme\ThemeModule.cs" />
     <Compile Include="Type\Theme\ThemeReader.cs" />

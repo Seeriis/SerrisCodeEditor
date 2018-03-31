@@ -116,7 +116,6 @@
     <Compile Include="Storage\StorageRouter.cs" />
     <Compile Include="Storage\StorageType.cs" />
     <Compile Include="Storage\StorageTypes\LocalStorage.cs" />
-    <Compile Include="Manager\FileTypesManager.cs" />
     <Compile Include="Manager\TabsAccessManager.cs" />
     <Compile Include="Manager\TabsCreatorAssistant.cs" />
     <Compile Include="Manager\TabsWriteManager.cs" />
@@ -124,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SerrisModulesServer\SerrisModulesServer.csproj">
+      <Project>{214e3692-f44a-4d67-a34e-6492f0850f19}</Project>
+      <Name>SerrisModulesServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

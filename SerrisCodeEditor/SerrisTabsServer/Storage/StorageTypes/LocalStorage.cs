@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
+using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using System;
@@ -24,32 +25,19 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 var folderPicker = new FolderPicker();
                 StorageFolder folder;
                 folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
-
-                foreach (string ext in FileTypesManager.List_Type_extensions)
-                {
-                    folderPicker.FileTypeFilter.Add(ext);
-                }
+                folderPicker.FileTypeFilter.Add("*");
 
                 folder = await folderPicker.PickSingleFolderAsync();
                 if (folder != null)
                 {
                     StorageFile file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
                     Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
-                    Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync(); Tab.TabDateModified = date.DateModified.ToString();
+                    Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync();
 
-                    foreach (string type in FileTypesManager.List_Type_extensions)
-                    {
-                        if (Tab.TabName.Contains(type))
-                        {
-                            Tab.TabType = FileTypesManager.GetExtensionType(file.FileType);
-                            break;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
+                    Tab.TabDateModified = date.DateModified.ToString();
+                    Tab.TabType = LanguagesHelper.GetLanguageType(file.FileType);
                     Tab.PathContent = file.Path;
+
                     await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
                 }
 

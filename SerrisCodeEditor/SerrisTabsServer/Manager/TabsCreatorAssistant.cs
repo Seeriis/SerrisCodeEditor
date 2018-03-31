@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Storage;
 using System;
@@ -17,19 +18,6 @@ namespace SerrisTabsServer.Manager
 
         public static void CreateNewTab(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
         {
-            string extension = "";
-            foreach (string type_file in FileTypesManager.List_Type_extensions)
-            {
-                if (FileName.Contains(type_file))
-                {
-                    extension = FileTypesManager.GetExtensionType(Path.GetExtension(FileName));
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
             var newtab = new InfosTab
             {
                 TabName = FileName,
@@ -38,7 +26,7 @@ namespace SerrisTabsServer.Manager
                 TabContentType = ContentType.File,
                 CanBeDeleted = true,
                 CanBeModified = true,
-                TabType = extension,
+                TabType = LanguagesHelper.GetLanguageType(FileName),
                 TabInvisibleByDefault = false
             };
 
@@ -78,11 +66,6 @@ namespace SerrisTabsServer.Manager
             opener.SuggestedStartLocation = PickerLocationId.ComputerFolder;
             opener.FileTypeFilter.Add("*");
 
-            foreach (string ext in FileTypesManager.List_Type_extensions)
-            {
-                opener.FileTypeFilter.Add(ext);
-            }
-
             IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
             foreach (StorageFile file in files)
             {
@@ -91,20 +74,7 @@ namespace SerrisTabsServer.Manager
                     if (file != null)
                     {
                         StorageApplicationPermissions.FutureAccessList.Add(file);
-                        var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false };
-
-                        foreach (string _type in FileTypesManager.List_Type_extensions)
-                        {
-                            if (tab.TabName.Contains(_type))
-                            {
-                                tab.TabType = FileTypesManager.GetExtensionType(file.FileType);
-                                break;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
+                        var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
                         int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
                         if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
