@@ -342,6 +342,657 @@ namespace SerrisModulesServer.SystemModules
                 ProgrammingLanguageMonacoDefinitionName = "bat",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".bat" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 16,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Coffee script",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Coffee script language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "coffee",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".coffee" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 17,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "C / C++",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "C / C++ language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "cpp",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".cpp", ".c", ".h", ".hh" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 18,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "CSP",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "CSP file",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "csp",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".csp" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 19,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Docker file",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Docker file",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "dockerfile",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".dockerfile" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 20,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "F#",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "F# language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "fsharp",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".fs", ".fsi", ".fsx", ".fsscript" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 21,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Go",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Go language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "go",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".go" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 22,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Handlebars (HTML templating)",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Handlebars.js: HTML templating",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "handlebars",
+                ProgrammingLanguageFilesExtensions = new List<string> { },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 23,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "INI file",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "INI file type",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "ini",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".ini" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 24,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Less",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Less language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "less",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".less" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 25,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Lua",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Lua language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "lua",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".lua" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 26,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Markdown",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Markdown language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "markdown",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".md", ".markdown" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 27,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "MsDAX",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Microsoft Dynamics AX language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "msdax",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".msdax" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 28,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "MySQL",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "MySQL language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "mysql",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sql", ".frm" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 29,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Objective-C",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Objective-C language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "objc",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".m", ".mm" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 30,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "PostgreSQL",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "PostgreSQL language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "pgsql",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sql" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 31,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "PHP",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "PHP language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "php",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".php" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 32,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "ATS",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "ATS (Applied Type System) language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "ats",
+                ProgrammingLanguageFilesExtensions = new List<string> { },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 33,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "PowerShell",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "PowerShell language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "powershell",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".ps1", ".psc1" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 34,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Pug (HTML templating)",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Pug templating language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "pug",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".pug" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 35,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "R",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "R language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "r",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".r", ".R" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 36,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "ASP.NET Razor",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "ASP.NET Razor language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "razor",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".cshtml", ".vbhtml" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 37,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Redis",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Redis language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "redis",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".rdb" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 38,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Amazon Redshift",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Amazon Redshift language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "redshift",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sql" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 39,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Scratch",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Scratch language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "scratch",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sb", ".sb2" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 40,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Sass / Scss",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Sass / Scss language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "sass",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sass", ".scss" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 41,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Solidity",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Solidity language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "solidity",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sol" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 42,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "SQL",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "SQL language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "sql",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".sql" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 43,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Swift",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Swift language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "swift",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".swift" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 44,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "VB(.net)",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "VB(.net) language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "vb",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".vb" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 45,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "XML",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "XML language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "xml",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".xml" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 46,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "YAML",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "YAML language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "yaml",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".yaml" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
             }
         };
     }
