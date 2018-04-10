@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Components;
 using SCEELibs.Editor.Notifications;
+using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Addon;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SCEELibs.Editor
             {
                 ModuleHTMLView view = new ModuleHTMLView();
                 view.LoadPage(pathHTMLPage, id);
-                Messenger.Default.Send(new ModuleSheetNotification { id = id, sheetName = sheetName, type = ModuleSheetNotificationType.NewSheet, sheetContent = view, sheetIcon = await new AddonReader(id).GetAddonIconViaIDAsync(), sheetSystem = false });
+                Messenger.Default.Send(new ModuleSheetNotification { id = id, sheetName = sheetName, type = ModuleSheetNotificationType.NewSheet, sheetContent = view, sheetIcon = await ModulesAccessManager.GetModuleIconViaIDAsync(id, ModulesAccessManager.GetModuleViaID(id).ModuleSystem), sheetSystem = false });
             });
 
         }

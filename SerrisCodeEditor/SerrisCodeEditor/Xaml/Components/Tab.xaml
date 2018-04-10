@@ -306,24 +306,23 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <Grid x:Name="GridInfoLeft" Background="Transparent" Width="60" HorizontalAlignment="Left">
-                        <TextBlock x:Name="Extension_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
+
+                    <Grid x:Name="GridInfoLeft" Background="Transparent" Width="60" Height="30" HorizontalAlignment="Left">
+                        <Image x:Name="TabIcon" Margin="4" HorizontalAlignment="Center"/>
                     </Grid>
                     <Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" RadiusX="1" RadiusY="3" Grid.Column="1"/>
-                    <StackPanel VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left">
-                        <TextBlock x:Name="name_tab" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" Width="205" TextTrimming="CharacterEllipsis"/>
-                        <TextBlock x:Name="path_tab" Text="" FontSize="10" Foreground="#B2FFFFFF" FontStyle="Italic" FontFamily="ms-appx:/Fonts/Montserrat-Regular.ttf#Montserrat" Visibility="Collapsed" VerticalAlignment="Center" Width="205" TextWrapping="Wrap" MaxHeight="25" TextTrimming="CharacterEllipsis"/>
-                    </StackPanel>
+                    <TextBlock x:Name="name_tab" Grid.Column="1" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="path_tab" Grid.Column="1" Text="" FontSize="10" Foreground="#B2FFFFFF" FontStyle="Italic" FontFamily="ms-appx:/Fonts/Montserrat-Regular.ttf#Montserrat" Visibility="Collapsed" TextWrapping="Wrap" MaxHeight="30" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Background="Transparent">
-                    <Button x:Name="More_Tab" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="#7F000000" Click="More_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
+                    <Button x:Name="More_Tab" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="#00000000" Click="More_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <CompositeTransform/>
                         </Button.RenderTransform>
                     </Button>
-                    <Button x:Name="Close_Tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#7FFF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="0,0,8,0"/>
+                    <Button x:Name="Close_Tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#00FF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="12" Margin="0,0,8,0" BorderBrush="#CCFFFFFF" BorderThickness="2"/>
                 </StackPanel>
 
             </Grid>

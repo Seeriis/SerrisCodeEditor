@@ -993,6 +993,27 @@ namespace SerrisModulesServer.SystemModules
                 ProgrammingLanguageMonacoDefinitionName = "yaml",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".yaml" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = 47,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "Text tab (default)",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Default tab language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "txt",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".txt" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
             }
         };
     }

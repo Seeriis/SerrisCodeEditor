@@ -40,6 +40,8 @@ namespace SerrisModulesServer.Items
         public string ProgrammingLanguageMonacoDefinitionName { get; set; }
         public List<string> ProgrammingLanguageFilesExtensions { get; set; }
 
+        public string ProgrammingLanguageTabName { get; set; }
+
         //"ProjectType" module
         public List<string> ProjectTypeDefaultFilesPath { get; set; }
 

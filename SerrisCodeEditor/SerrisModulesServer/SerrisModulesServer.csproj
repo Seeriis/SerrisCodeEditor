@@ -106,6 +106,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="SystemModules\ProgrammingLanguages\47\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\47\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\47\logo.png" />
     <Content Include="SystemModules\ProgrammingLanguages\46\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\46\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\46\logo.png" />

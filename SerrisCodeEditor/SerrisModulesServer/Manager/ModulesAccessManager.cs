@@ -198,6 +198,34 @@ namespace SerrisModulesServer.Manager
 
         }
 
+        public static async Task<BitmapImage> GetModuleIconViaIDAsync(int id, bool IsSystemModule)
+        {
+
+            try
+            {
+                StorageFile IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(GetModuleFolderPath(id, IsSystemModule) + "icon.png"));
+
+                if(IconFile.Path == null)
+                {
+                    //Default tab language module
+                    IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(GetModuleFolderPath(47, true) + "icon.png"));
+                }
+
+                using (var reader = (FileRandomAccessStream)await IconFile.OpenAsync(FileAccessMode.Read))
+                {
+                    var bitmapImage = new BitmapImage();
+                    bitmapImage.SetSource(reader);
+
+                    return bitmapImage;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         public static string GetModuleFolderPath(int ModuleID, bool IsSystemModule)
         {
             string ModulePath = "";

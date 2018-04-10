@@ -39,27 +39,6 @@ namespace SerrisModulesServer.Type.Addon
 
         }
 
-        public async Task<BitmapImage> GetAddonIconViaIDAsync()
-        {
-            try
-            {
-                StorageFile IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "icon.png"));
-
-                using (var reader = (FileRandomAccessStream)await IconFile.OpenAsync(FileAccessMode.Read))
-                {
-                    var bitmapImage = new BitmapImage();
-                    bitmapImage.SetSource(reader);
-
-                    return bitmapImage;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
-        }
-
         public async Task<StackPanel> GetAddonWidgetViaIDAsync(object sceelibs, ThemeModuleBrush theme)
         {
             StorageFile WidgetFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "widget.json"));

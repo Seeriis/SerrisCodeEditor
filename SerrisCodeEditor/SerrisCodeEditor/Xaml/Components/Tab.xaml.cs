@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using System;
@@ -20,6 +22,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Components
@@ -134,21 +137,14 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
-        private void UpdateTabInformations()
+        private async void UpdateTabInformations()
         {
             //Set temp tab + tabs list ID
             try
             {
                 current_tab = TabsAccessManager.GetTabViaID(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
-
-                if (current_tab.TabName.Length >= (int)(GridInfoLeft.ActualWidth / 10))
-                {
-                    Extension_tab.Text = current_tab.TabName.Substring(0, (int)(GridInfoLeft.ActualWidth / 10));
-                }
-                else
-                {
-                    Extension_tab.Text = current_tab.TabName;
-                }
+                int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
+                TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
                 name_tab.Text = current_tab.TabName;
 
