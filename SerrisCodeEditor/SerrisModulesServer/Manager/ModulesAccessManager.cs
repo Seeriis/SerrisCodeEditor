@@ -244,6 +244,9 @@ namespace SerrisModulesServer.Manager
 
                     case ModuleTypesList.Theme:
                         return string.Format(ModulePath, "Themes");
+
+                    case ModuleTypesList.Templates:
+                        return string.Format(ModulePath, "Templates");
                 }
             }
             else

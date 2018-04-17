@@ -1,7 +1,9 @@
 ﻿namespace SerrisModulesServer
 {
-    public class SMSInfos
+    public static class SMSInfos
     {
-        public float SMSCurrentVersion = 1.0f;
+        public static float SMSCurrentVersion = 1.0f;
+
+        public static int DefaultTemplatesID = 48;
     }
 }

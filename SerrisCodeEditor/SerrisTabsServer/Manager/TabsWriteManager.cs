@@ -21,7 +21,7 @@ namespace SerrisTabsServer.Manager
         /// </summary>
         /// <param name="new_name">Name of your tabs list</param>
         /// <returns>ID of the new tabs list created</returns>
-        public static async Task<int> CreateTabsListAsync(string new_name)
+        public static async Task<int> CreateTabsListAsync(string new_name, int TabsListTypeID = 48)
         {
             TabsDataCache.LoadTabsData();
 
@@ -29,7 +29,7 @@ namespace SerrisTabsServer.Manager
             {
                 int id = new Random().Next(999999);
 
-                TabsDataCache.TabsListDeserialized.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>() });
+                TabsDataCache.TabsListDeserialized.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>(), TabsListProjectTypeID = TabsListTypeID });
                 TabsDataCache.WriteTabsListContentFile();
 
                 foreach (CoreApplicationView view in CoreApplication.Views)

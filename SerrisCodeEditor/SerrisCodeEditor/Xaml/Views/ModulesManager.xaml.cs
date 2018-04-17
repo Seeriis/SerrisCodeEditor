@@ -71,15 +71,12 @@ namespace SerrisCodeEditor.Xaml.Views
 
             ButtonsSeparator.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
             ButtonsSeparatorB.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ButtonsSeparatorC.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            AddonsText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             AddonsIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
-
-            ThemesText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             ThemesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
-
-            ProgLanguagesText.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
             ProgLanguagesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            ProjectTypesIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             InstallButton.Background = GlobalVariables.CurrentTheme.MainColor;
             IconInstallButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
@@ -108,6 +105,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     break;
 
                 case 2:
+                case 3:
                     ListModules.SelectionMode = ListViewSelectionMode.None;
                     break;
             }
@@ -119,6 +117,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
                 switch (module.ModuleType)
                 {
+                    case ModuleTypesList.Templates when currentSelectedButton == 3:
+                    case ModuleTypesList.ProgrammingLanguage when currentSelectedButton == 2:
                     case ModuleTypesList.Addon when currentSelectedButton == 0:
                         ListModules.Items.Add(ModuleInfos);
                         break;
@@ -130,9 +130,6 @@ namespace SerrisCodeEditor.Xaml.Views
                         ListModules.Items.Add(ModuleInfos);
                         break;
 
-                    case ModuleTypesList.ProgrammingLanguage when currentSelectedButton == 2:
-                        ListModules.Items.Add(ModuleInfos);
-                        break;
                 }
             }
 
@@ -206,6 +203,10 @@ namespace SerrisCodeEditor.Xaml.Views
         private void ProgLanguagesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         => ChangeSelectedButton(2);
 
+        private void ProjectTypesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
+        => ChangeSelectedButton(3);
+
+
 
 
         /* =============
@@ -216,5 +217,6 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         int currentSelectedButton = -1;
+
     }
 }

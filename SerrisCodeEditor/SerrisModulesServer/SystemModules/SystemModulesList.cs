@@ -1014,6 +1014,33 @@ namespace SerrisModulesServer.SystemModules
                 ProgrammingLanguageMonacoDefinitionName = "txt",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".txt" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            /* =============
+             * = TEMPLATES =
+             * =============
+            */
+            
+            new InfosModule
+            {
+                ID = 48,
+                ModuleType = ModuleTypesList.Templates,
+                ModuleName = "Default list",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "The default list",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>(),
+                TemplateContainProjectTemplate = true,
+                TemplateContainTemplanteFiles = false,
+                TemplateProjectTypeName = "Default"
             }
         };
     }

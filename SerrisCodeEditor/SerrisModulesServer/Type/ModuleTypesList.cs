@@ -5,6 +5,6 @@
         Addon,
         Theme,
         ProgrammingLanguage,
-        ProjectType
+        Templates
     }
 }

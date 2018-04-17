@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
+using SerrisModulesServer.Manager;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
@@ -15,12 +16,14 @@ using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Components
@@ -28,6 +31,7 @@ namespace SerrisCodeEditor.Xaml.Components
     public class ListItem
     {
         public string ListName { get; set; }
+        public BitmapImage ListIcon { get; set; }
         public int ListID { get; set; }
     }
 
@@ -79,7 +83,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 foreach (int id in TabsAccessManager.GetTabsListID())
                 {
                     var list = TabsAccessManager.GetTabsListViaID(id);
-                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name, ListIcon = await ModulesAccessManager.GetModuleIconViaIDAsync(list.TabsListProjectTypeID, true) });
 
                     if (AppSettings.Values.ContainsKey("Tabs_list-selected-index"))
                     {
@@ -137,41 +141,37 @@ namespace SerrisCodeEditor.Xaml.Components
         private void SetTheme()
         {
             //SeparatorA.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
-            SeparatorB.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
 
-            Lists.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
-            Lists.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
-            Lists.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
+            Lists.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
-            Box_Search.Background = GlobalVariables.CurrentTheme.SecondaryColor;
-            Box_Search.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+            Box_Search.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(200, GlobalVariables.CurrentTheme.SecondaryColor.Color.R, GlobalVariables.CurrentTheme.SecondaryColor.Color.G, GlobalVariables.CurrentTheme.SecondaryColor.Color.B));
+            Box_Search.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            NewListFlyout.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
-            NewListFlyout.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
-            NewListFlyout.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
+            NewListFlyout.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
-            DeleteButtonFlyout.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+            /*DeleteButtonFlyout.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
             DeleteButtonFlyout.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
-            DeleteButtonFlyout.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
+            DeleteButtonFlyout.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;*/
 
-            OpenButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
-            OpenButton.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
-            OpenIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
-            OpenText.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+            CreateButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            CreateButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            CreateIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            CreateButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
-            CreateButton.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
-            CreateIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
-            CreateText.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+            TextBoxNewFileProject.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(200, GlobalVariables.CurrentTheme.SecondaryColor.Color.R, GlobalVariables.CurrentTheme.SecondaryColor.Color.G, GlobalVariables.CurrentTheme.SecondaryColor.Color.B));
+            TextBoxNewFileProject.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            TextBoxNewFileProject.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            TextBoxNewTab.Background = GlobalVariables.CurrentTheme.SecondaryColor;
-            TextBoxNewTab.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            NewTabAcceptButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            NewTabAcceptButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            IconCreateTab.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            NewTabAcceptButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColor;
-            NewTabAcceptButton.Background = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            BlankTabRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            TabTemplateRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            DefaultListRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            NewProjectRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
-            IconCreateTab.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
-            TextCreateTab.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+            //Update buttons colors
+            ChangeCreationType(0);
         }
 
         private void SetMessenger()
@@ -254,7 +254,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                                 case TypeUpdateTab.NewList:
                                     var list = TabsAccessManager.GetTabsListViaID(notification.ID.ID_TabsList);
-                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name, ListIcon = await ModulesAccessManager.GetModuleIconViaIDAsync(list.TabsListProjectTypeID, true) });
                                     Lists.SelectedIndex = Lists.Items.Count - 1;
                                     break;
 
@@ -269,7 +269,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             {
                                 case TypeUpdateTab.NewList:
                                     var list = TabsAccessManager.GetTabsListViaID(notification.ID.ID_TabsList);
-                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name });
+                                    Lists.Items.Add(new ListItem { ListID = list.ID, ListName = list.name, ListIcon = await ModulesAccessManager.GetModuleIconViaIDAsync(list.TabsListProjectTypeID, true) });
                                     Lists.SelectedIndex = Lists.Items.Count - 1;
                                     break;
 
@@ -326,18 +326,78 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
+        private void ChangeCreationType(int Type)
+        {
+            if(Type != CurrentCreationType)
+            {
+                CurrentCreationType = Type;
+
+                switch (CurrentCreationType)
+                {
+                    case 0:
+                        TextBoxNewFileProject.PlaceholderText = "Example: toothless.js";
+                        CreatorGridTitle.Text = "Create new tab";
+
+                        SelectTabButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+                        SelectTabButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+                        SelectTabButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+                        SelectListButton.Background = new SolidColorBrush(Colors.Transparent);
+                        SelectListButton.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                        SelectListButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                        CreationTabOptions.Visibility = Visibility.Visible;
+                        CreationListOptions.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case 1:
+                        TextBoxNewFileProject.PlaceholderText = "Example: project csharp";
+                        CreatorGridTitle.Text = "Create new list / project";
+
+                        SelectListButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+                        SelectListButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+                        SelectListButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+                        SelectTabButton.Background = new SolidColorBrush(Colors.Transparent);
+                        SelectTabButton.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                        SelectTabButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                        CreationTabOptions.Visibility = Visibility.Collapsed;
+                        CreationListOptions.Visibility = Visibility.Visible;
+
+                        break;
+                }
+
+            }
+
+        }
+
         private void CreateTab()
         {
-            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewTab.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
-            NewTabCreatorGrid.Visibility = Visibility.Collapsed;
-            TextBoxNewTab.Text = "";
+            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
+            TextBoxNewFileProject.Text = "";
         }
 
         private async void CreateList()
         {
-            FlyoutNewList.Hide();
-            await TabsWriteManager.CreateTabsListAsync(TextBoxNewList.Text);
-            TextBoxNewList.Text = "";
+            await TabsWriteManager.CreateTabsListAsync(TextBoxNewFileProject.Text);
+            TextBoxNewFileProject.Text = "";
+        }
+
+        private void CreateListOrTab()
+        {
+            switch (CurrentCreationType)
+            {
+                case 0:
+                    CreateTab();
+                    break;
+
+                case 1:
+                    CreateList();
+                    break;
+            }
+
+            CreatorGrid.Visibility = Visibility.Collapsed;
         }
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -350,44 +410,36 @@ namespace SerrisCodeEditor.Xaml.Components
             await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
         }
 
-        private void TextBoxNewTab_KeyDown(object sender, KeyRoutedEventArgs e)
+        private void TextBoxNewFileProject_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.KeyStatus.RepeatCount == 1)
             {
                 if (e.Key == Windows.System.VirtualKey.Enter)
                 {
-                    CreateTab();
-                }
-            }
-        }
-
-        private void TextBoxNewList_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.KeyStatus.RepeatCount == 1)
-            {
-                if (e.Key == Windows.System.VirtualKey.Enter)
-                {
-                    CreateList();
+                    CreateListOrTab();
                 }
             }
         }
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NewTabCreatorGrid.Visibility == Visibility.Collapsed)
-                NewTabCreatorGrid.Visibility = Visibility.Visible;
+            if (CreatorGrid.Visibility == Visibility.Collapsed)
+                CreatorGrid.Visibility = Visibility.Visible;
             else
-                NewTabCreatorGrid.Visibility = Visibility.Collapsed;
+                CreatorGrid.Visibility = Visibility.Collapsed;
         }
 
         private void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
-        => CreateTab();
+        => CreateListOrTab();
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
-        { await TabsWriteManager.DeleteTabsListAsync(CurrentSelectedIDs.ID_TabsList); FlyoutDeleteList.Hide(); }
+        { await TabsWriteManager.DeleteTabsListAsync(CurrentSelectedIDs.ID_TabsList); /*FlyoutDeleteList.Hide();*/ }
 
-        private void NewList_Click(object sender, RoutedEventArgs e)
-        => CreateList();
+        private void SelectTabButton_Click(object sender, RoutedEventArgs e)
+        => ChangeCreationType(0);
+
+        private void SelectListButton_Click(object sender, RoutedEventArgs e)
+        => ChangeCreationType(1);
 
 
 
@@ -399,6 +451,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
         public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
+        int CurrentCreationType = -1;
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
     }

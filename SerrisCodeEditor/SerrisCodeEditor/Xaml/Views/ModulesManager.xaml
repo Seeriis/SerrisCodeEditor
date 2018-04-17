@@ -91,33 +91,31 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid x:Name="AddonsButton" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="AddonsText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Addons" FontSize="15" Grid.Column="1"/>
-                        </StackPanel>
+                        <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Rectangle x:Name="ButtonsSeparator" Grid.Column="1" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
                     <Grid x:Name="ThemesButton" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="ThemesText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Themes" FontSize="15" Grid.Column="1"/>
-                        </StackPanel>
+                        <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
                     <Grid x:Name="ProgLanguagesButton" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5">
-                            <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="18" HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="ProgLanguagesText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF666666" Text="Programming languages" FontSize="15" Grid.Column="1" TextWrapping="Wrap" Width="94" TextAlignment="Center"/>
-                        </StackPanel>
+                        <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
+                    <Rectangle x:Name="ButtonsSeparatorC" Grid.Column="5" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
+
+                    <Grid x:Name="ProjectTypesButton" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
+                        <TextBlock x:Name="ProjectTypesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </Grid>
 
                 <Button x:Name="InstallButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="InstallButton_Click" Style="{StaticResource RoundCornerButton}">

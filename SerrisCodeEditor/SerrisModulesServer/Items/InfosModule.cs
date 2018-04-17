@@ -1,4 +1,5 @@
 ﻿using SerrisModulesServer.Type;
+using SerrisModulesServer.Type.Templates;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -28,7 +29,12 @@ namespace SerrisModulesServer.Items
         public string ModuleWebsiteLink { get; set; }
         public string ModuleDescription { get; set; }
 
-        //"Addon" module
+        public float SceMinimalVersionRequired { get; set; }
+        public bool ModuleSystem { get; set; }
+        public bool CanBePinnedToToolBar { get; set; }
+        public bool IsEnabled { get; set; }
+
+        //"Addon" & "Templates" module
         public List<string> JSFilesPathList { get; set; }
 
         //"Theme" module
@@ -39,16 +45,14 @@ namespace SerrisModulesServer.Items
         public bool ProgrammingLanguageMonacoCompletionAvailable { get; set; }
         public string ProgrammingLanguageMonacoDefinitionName { get; set; }
         public List<string> ProgrammingLanguageFilesExtensions { get; set; }
-
         public string ProgrammingLanguageTabName { get; set; }
 
-        //"ProjectType" module
-        public List<string> ProjectTypeDefaultFilesPath { get; set; }
+        //"Templates" module
+        public bool TemplateContainProjectTemplate { get; set; }
+        public string TemplateProjectTypeName { get; set; }
+        public bool TemplateContainTemplanteFiles { get; set; }
+        public List<TemplatesFileInfos> TemplateFilesInfos { get; set; }
 
-        public float SceMinimalVersionRequired { get; set; }
-        public bool ModuleSystem { get; set; }
-        public bool CanBePinnedToToolBar { get; set; }
-        public bool IsEnabled { get; set; }
     }
 
     public sealed class PinnedModule

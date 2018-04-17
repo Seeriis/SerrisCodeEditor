@@ -220,6 +220,9 @@
     <Content Include="SystemModules\ProgrammingLanguages\10\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\10\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\10\logo.png" />
+    <Content Include="SystemModules\Templates\48\icon.png" />
+    <Content Include="SystemModules\Templates\48\main.js" />
+    <Content Include="SystemModules\Templates\48\logo.png" />
     <Content Include="SystemModules\Themes\0\background.jpg" />
     <Content Include="SystemModules\Themes\0\theme.js" />
     <Content Include="SystemModules\Addons\1\HTML\test.html" />
@@ -284,12 +287,16 @@
     <Compile Include="Type\ModuleTypesList.cs" />
     <Compile Include="Type\ProgrammingLanguage\LanguagesHelper.cs" />
     <Compile Include="Type\ProgrammingLanguage\ProgrammingLanguageReader.cs" />
+    <Compile Include="Type\Templates\TemplatesTabInfos.cs" />
+    <Compile Include="Type\Templates\TemplatesReader.cs" />
+    <Compile Include="Type\Templates\TemplatesFileInfos.cs" />
     <Compile Include="Type\Theme\ThemeModule.cs" />
     <Compile Include="Type\Theme\ThemeReader.cs" />
     <EmbeddedResource Include="Properties\SerrisModulesServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Type\ProjectType\" />
+    <Folder Include="SystemModules\Templates\48\ProjectTemplate\" />
+    <Folder Include="SystemModules\Templates\48\TemplateFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SystemModules\Themes\0\logo.png" />
