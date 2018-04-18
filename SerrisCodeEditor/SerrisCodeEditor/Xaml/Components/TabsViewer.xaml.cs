@@ -2,7 +2,9 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
+using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
+using SerrisModulesServer.Type.Templates;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage;
@@ -170,6 +172,19 @@ namespace SerrisCodeEditor.Xaml.Components
             DefaultListRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             NewProjectRadioButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
+            OpenFilesButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            OpenFilesButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            OpenFilesButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            OpenFolderButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            OpenFolderButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            OpenFolderButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            OpenProjectButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            OpenProjectButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            OpenProjectButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            TabTemplatesListView.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             //Update buttons colors
             ChangeCreationType(0);
         }
@@ -204,6 +219,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                             case SheetViewMode.Minimized:
                                 TabsViewerControls.Visibility = Visibility.Collapsed;
+                                ShowCreatorGrid(false);
                                 break;
                         }
                     }
@@ -374,7 +390,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void CreateTab()
         {
-            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, "");
+            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
             TextBoxNewFileProject.Text = "";
         }
 
@@ -397,7 +413,7 @@ namespace SerrisCodeEditor.Xaml.Components
                     break;
             }
 
-            CreatorGrid.Visibility = Visibility.Collapsed;
+            ShowCreatorGrid(false);
         }
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -405,9 +421,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
-        private async void OpenButton_Click(object sender, RoutedEventArgs e)
+        private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
+        => await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+
         }
 
         private void TextBoxNewFileProject_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -421,13 +440,78 @@ namespace SerrisCodeEditor.Xaml.Components
             }
         }
 
+        private void ShowCreatorGrid(bool ShowIt)
+        {
+            if (ShowIt)
+            {
+                //Open CreatorGrid...
+                CreateIcon.Text = "";
+                Tabs.Visibility = Visibility.Collapsed;
+                SeparatorA.Visibility = Visibility.Collapsed;
+                CreatorGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                //Close CreatorGrid and show Tabs...
+                CreateIcon.Text = "";
+                CreatorGrid.Visibility = Visibility.Collapsed;
+                Tabs.Visibility = Visibility.Visible;
+                SeparatorA.Visibility = Visibility.Visible;
+            }
+        }
+
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             if (CreatorGrid.Visibility == Visibility.Collapsed)
-                CreatorGrid.Visibility = Visibility.Visible;
-            else
-                CreatorGrid.Visibility = Visibility.Collapsed;
+            {
+                ShowCreatorGrid(true);
+            }
+            else 
+            {
+                ShowCreatorGrid(false);
+            }
         }
+
+        private async void TabTemplatesListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TemplatesFileInfos> Templates = new List<TemplatesFileInfos>();
+            foreach(InfosModule Module in ModulesAccessManager.GetSpecificModules(true, SerrisModulesServer.Type.ModuleTypesList.Templates))
+            {
+                TemplatesReader Reader = new TemplatesReader(Module.ID);
+                Templates.AddRange(await Reader.GetTemplatesFilesContentAsync());
+            }
+
+            var TemplatesGrouping = from c in Templates
+                                    group c by c.Type;
+
+            TabTemplatesList.Source = TemplatesGrouping;
+            TabTemplatesListView.SelectedIndex = -1;
+        }
+
+        private void TabTemplatesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(TabTemplatesListView.SelectedItem != null)
+            if(TabTemplateRadioButton.IsChecked == true)
+            {
+                TemplatesFileInfos TemplateInfos = TabTemplatesListView.SelectedItem as TemplatesFileInfos;
+                TextBoxNewFileProject.Text = TemplateInfos.SuggestedTemplateName;
+                TabTemplateContent = TemplateInfos.Content;
+            }
+        }
+
+        private void BlankTabRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            TabTemplateContent = "";
+
+            if(TabTemplatesListView != null)
+            {
+                TabTemplatesListView.Visibility = Visibility.Collapsed;
+                TabTemplatesListView.SelectedIndex = -1;
+            }
+        }
+
+        private void TabTemplateRadioButton_Checked(object sender, RoutedEventArgs e)
+        => TabTemplatesListView.Visibility = Visibility.Visible;
 
         private void NewTabAcceptButton_Click(object sender, RoutedEventArgs e)
         => CreateListOrTab();
@@ -452,6 +536,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
         int CurrentCreationType = -1;
+        string TabTemplateContent = "";
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
     }

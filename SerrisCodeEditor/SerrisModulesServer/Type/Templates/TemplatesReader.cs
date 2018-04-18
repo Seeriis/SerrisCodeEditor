@@ -43,9 +43,23 @@ namespace SerrisModulesServer.Type.Templates
             return ProjectTemplateContent;
         }
 
-        public List<TemplatesFileInfos> GetTemplatesFiles()
+        public async Task<List<TemplatesFileInfos>> GetTemplatesFilesContentAsync()
         {
-            return ModuleContent.TemplateFilesInfos;
+            List<TemplatesFileInfos> TemplatesFiles = new List<TemplatesFileInfos>();
+
+            if(ModuleContent.TemplateContainTemplateFiles)
+            {
+                foreach (TemplatesFileInfos Template in ModuleContent.TemplateFilesInfos)
+                {
+                    StorageFile TemplateContent = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ModuleFolderPath + "/TemplateFiles/" + Template.TemplateFileModulePath));
+                    Template.Type = ModuleContent.TemplateProjectTypeName;
+                    Template.Content = await FileIO.ReadTextAsync(TemplateContent);
+
+                    TemplatesFiles.Add(Template);
+                }
+            }
+
+            return TemplatesFiles;
         }
     }
 }

@@ -9,12 +9,18 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-
-    mc:Ignorable="d"
+             xmlns:templates="using:SerrisModulesServer.Type.Templates"
+             mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     Loaded="TabsView_Loaded">
     <UserControl.Resources>
+        <!--
+        CollectionViewSource for templates list
+        -->
+        <CollectionViewSource x:Name="TabTemplatesList" x:Key="TabTemplatesList" IsSourceGrouped="True"/>
+        <CollectionViewSource x:Name="ProjectsTemplatesList" x:Key="ProjectsTemplatesList" IsSourceGrouped="True"/>
+
         <DataTemplate x:Key="Tab">
             <local:Tab DataContext="{Binding}"/>
         </DataTemplate>
@@ -28,6 +34,22 @@
                 <TextBlock Text="{Binding ListName}" Grid.Column="1" FontSize="16" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontFamily="Segoe UI" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="TabTemplateItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="{Binding Foreground, ElementName=TabTemplatesListView}" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                    <TextBlock Text="{Binding Name}" FontSize="14" FontFamily="Segoe UI" Foreground="{Binding Foreground, ElementName=TabTemplatesListView}" FontWeight="Normal" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding Description}" Margin="0,0,5,0" FontSize="12" Foreground="{Binding Foreground, ElementName=TabTemplatesListView}" FontFamily="Segoe UI" FontWeight="Light" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
         <Style x:Key="TabsManageButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource ButtonBackground}"/>
             <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
@@ -204,7 +226,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
-                        <Grid x:Name="LayoutRoot">
+                        <Grid x:Name="LayoutRoot" CornerRadius="5">
                             <Grid.Resources>
                                 <Storyboard x:Key="OverlayOpeningAnimation">
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
@@ -329,8 +351,8 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="HeaderContentPresenter" FontSize="24" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" FontWeight="{ThemeResource ComboBoxHeaderThemeFontWeight}" FlowDirection="{TemplateBinding FlowDirection}" Margin="{ThemeResource ComboBoxHeaderThemeMargin}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
-                            <Border x:Name="Background" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Grid.ColumnSpan="2" Grid.Row="1"/>
-                            <Border x:Name="HighlightBackground" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Grid.ColumnSpan="2" Opacity="0" Grid.Row="1"/>
+                            <Border x:Name="Background" CornerRadius="5" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Grid.ColumnSpan="2" Grid.Row="1"/>
+                            <Border x:Name="HighlightBackground" CornerRadius="5" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Grid.ColumnSpan="2" Opacity="0" Grid.Row="1"/>
                             <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontSize="24">
                                 <TextBlock x:Name="PlaceholderTextBlock" Foreground="{ThemeResource ComboBoxPlaceHolderForeground}" Text="{TemplateBinding PlaceholderText}" FontSize="24" FontWeight="SemiBold"/>
                             </ContentPresenter>
@@ -650,6 +672,7 @@
             </Setter>
         </Style>
 
+
     </UserControl.Resources>
 
     <Grid Background="Transparent">
@@ -715,41 +738,84 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBox x:Name="Box_Search" Grid.Column="0" VerticalAlignment="Top" PlaceholderText="Search tab..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="0,5" Foreground="White" Background="#B23C097A" FontSize="14"/>
 
                 <Button x:Name="CreateButton" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,0,5" Height="30" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="CreateButton_Click">
                     <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
-
-                <!--
-                <Button x:Name="OpenButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" FontSize="15" Margin="5,10,5,10" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageOpenButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="OpenButton_Click">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="OpenIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18"/>
-                        <TextBlock x:Name="OpenText" HorizontalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Open file" FontSize="15" Grid.Column="1"/>
-                    </Grid>
-                </Button>
-                -->
             </Grid>
 
+            <Rectangle x:Name="SeparatorA" Fill="White" VerticalAlignment="Bottom" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1" Margin="10,0,10,10"/>
 
             <StackPanel x:Name="CreatorGrid" Margin="10,0,10,10" Visibility="Collapsed">
-                <Grid>
+                <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="0"/>
-                    <TextBlock x:Name="CreatorGridTitle" Text="Create new tab" Margin="5,0" Grid.Column="1" Foreground="White"/>
-                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="2"/>
+                    <Grid BorderBrush="White" BorderThickness="2" CornerRadius="90" Background="#FF959595" Height="10"/>
+                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1"/>
+                    <TextBlock Text="Open..." Margin="5,0" Grid.Column="2" Foreground="White" FontWeight="SemiBold"/>
+                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="3"/>
                 </Grid>
 
-                <Grid Margin="0,10,0,5">
+                <StackPanel Margin="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="OpenFilesButton" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFilesButton_Click">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="File(s)" FontSize="14" Grid.Column="1"/>
+                            </Grid>
+                        </Button>
+                        <Button x:Name="OpenFolderButton" IsEnabled="False" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="Folder(s)" FontSize="14" Grid.Column="1"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                    <Rectangle Fill="White" Height="1" RadiusX="1" RadiusY="3" Margin="5" />
+                    <Button x:Name="OpenProjectButton" IsEnabled="False" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                            <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="Folder/Project files in a new list" FontSize="14" Grid.Column="1"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid BorderBrush="White" BorderThickness="2" CornerRadius="90" Background="#FF959595" Height="10"/>
+                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1"/>
+                    <TextBlock x:Name="CreatorGridTitle" Text="Create new tab" Margin="5,0" Grid.Column="2" Foreground="White" FontWeight="SemiBold"/>
+                    <Rectangle Fill="White" Height="2" RadiusX="1" RadiusY="3" Grid.Column="3"/>
+                </Grid>
+
+                <Grid Margin="10,15,10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
@@ -761,8 +827,8 @@
                     </Button>
 
                 </Grid>
-                
-                <Grid>
+
+                <Grid Margin="10,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -785,26 +851,48 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
                             <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="List / Project" FontSize="14" Grid.Column="1"/>
-                        </Grid>                    
+                        </Grid>
                     </Button>
-
                 </Grid>
 
-                <Grid x:Name="CreationTabOptions" Margin="10,10,10,0" Visibility="Collapsed">
-                    <StackPanel>
-                        <RadioButton x:Name="BlankTabRadioButton" GroupName="TabContentType" Content="Blank tab" IsChecked="True"/>
-                        <RadioButton x:Name="TabTemplateRadioButton" GroupName="TabContentType" Content="Use tab template"/>
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="CreationListOptions" Margin="10,10,10,0" Visibility="Collapsed">
+                <StackPanel x:Name="CreationTabOptions" Margin="15,10,15,0" Visibility="Visible">
+                    <RadioButton x:Name="BlankTabRadioButton" GroupName="TabContentType" Content="Blank tab" IsChecked="True" Checked="BlankTabRadioButton_Checked"/>
+                    <RadioButton x:Name="TabTemplateRadioButton" GroupName="TabContentType" Content="Use tab template" Checked="TabTemplateRadioButton_Checked"/>
+                    <ListView x:Name="TabTemplatesListView" Background="Transparent" MaxHeight="300" Foreground="White" ItemsSource="{Binding Source={StaticResource TabTemplatesList}}" Loaded="TabTemplatesListView_Loaded" SelectionChanged="TabTemplatesListView_SelectionChanged" ItemTemplate="{StaticResource TabTemplateItem}" SelectedIndex="-1" BorderBrush="White" BorderThickness="2" Visibility="Collapsed" Margin="0,5,0,0">
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Key}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                                <GroupStyle.Panel>
+                                    <ItemsPanelTemplate>
+                                        <VariableSizedWrapGrid/>
+                                    </ItemsPanelTemplate>
+                                </GroupStyle.Panel>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="-5,0,-5,0"/>
+                                <Setter Property="MaxHeight" Value="160"/>
+                                <Setter Property="MinHeight" Value="30"/>
+                                <!-- -12, 0-->
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </StackPanel>
+
+                <Grid x:Name="CreationListOptions" Margin="15,10,15,0" Visibility="Collapsed">
                     <StackPanel>
                         <RadioButton x:Name="DefaultListRadioButton" GroupName="ListContentType" Content="Default tabs list" IsChecked="True"/>
                         <RadioButton x:Name="NewProjectRadioButton" GroupName="ListContentType" Content="New project"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            
-            <Rectangle x:Name="SeparatorA" Fill="White" VerticalAlignment="Bottom" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1" Margin="10,0,10,10"/>
 
         </StackPanel>
 

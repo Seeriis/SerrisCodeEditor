@@ -50,7 +50,7 @@ namespace SerrisModulesServer.Items
         //"Templates" module
         public bool TemplateContainProjectTemplate { get; set; }
         public string TemplateProjectTypeName { get; set; }
-        public bool TemplateContainTemplanteFiles { get; set; }
+        public bool TemplateContainTemplateFiles { get; set; }
         public List<TemplatesFileInfos> TemplateFilesInfos { get; set; }
 
     }

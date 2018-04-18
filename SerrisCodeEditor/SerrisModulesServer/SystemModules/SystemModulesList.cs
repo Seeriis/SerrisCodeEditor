@@ -1,5 +1,6 @@
 ﻿using SerrisModulesServer.Items;
 using SerrisModulesServer.Type;
+using SerrisModulesServer.Type.Templates;
 using System.Collections.Generic;
 
 namespace SerrisModulesServer.SystemModules
@@ -1038,9 +1039,13 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 JSFilesPathList = new List<string>(),
-                TemplateContainProjectTemplate = true,
-                TemplateContainTemplanteFiles = false,
-                TemplateProjectTypeName = "Default"
+                TemplateContainProjectTemplate = false,
+                TemplateContainTemplateFiles = true,
+                TemplateProjectTypeName = "Default",
+                TemplateFilesInfos = new List<TemplatesFileInfos>
+                {
+                    new TemplatesFileInfos { Name = "C# class", Description = "An default C# class", SuggestedTemplateName = "sample.cs", TemplateFileModulePath = "class.cs"  }
+                }
             }
         };
     }
