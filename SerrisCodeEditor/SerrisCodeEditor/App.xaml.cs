@@ -40,7 +40,7 @@ namespace SerrisCodeEditor
             var rootFrame = Window.Current.Content as Frame;
 
             //Serris Modules Server !
-            new SMSInitialize().InitializeSMSJson();
+            SMSInitialize.InitializeSMSJson();
             GlobalVariables.CurrentTheme = await new ThemeReader(ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
 
             Messenger.Default.Register<SMSNotification>(this, async (notification) =>

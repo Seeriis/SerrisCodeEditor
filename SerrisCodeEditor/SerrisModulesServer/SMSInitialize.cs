@@ -3,17 +3,18 @@ using SerrisModulesServer.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SerrisModulesServer
 {
-    public class SMSInitialize
+    public static class SMSInitialize
     {
-        public async void InitializeSMSJson()
+        public static void InitializeSMSJson()
         {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
+            StorageFile file = Task.Run(async () => { return await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists); }).Result;
 
-            using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
+            using (var reader = new StreamReader(Task.Run(async () => { return await file.OpenStreamForReadAsync(); }).Result))
             using (JsonReader JsonReader = new JsonTextReader(reader))
             {
                 try
@@ -32,7 +33,7 @@ namespace SerrisModulesServer
             }
         }
 
-        async void WriteNewSMSConfiguration()
+        private static void WriteNewSMSConfiguration()
         {
             var new_list = new ModulesList
             {
@@ -41,8 +42,8 @@ namespace SerrisModulesServer
                 Modules = new List<InfosModule>()
             };
 
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists);
-            await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(new_list, Formatting.Indented));
+            StorageFile file = Task.Run(async () => { return await ApplicationData.Current.LocalFolder.CreateFileAsync("modules_list.json", CreationCollisionOption.OpenIfExists); }).Result;
+            Task.Run(async () => { await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(new_list, Formatting.Indented)); }).Wait();
 
         }
     }
