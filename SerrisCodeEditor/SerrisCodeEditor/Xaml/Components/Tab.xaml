@@ -88,12 +88,12 @@
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(FrameworkElement.MaxHeight)" Storyboard.TargetName="stackPanel">
                 <EasingDoubleKeyFrame KeyTime="0" Value="30"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="160"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="500"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="RemoveInfos">
             <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(FrameworkElement.MaxHeight)" Storyboard.TargetName="stackPanel">
-                <EasingDoubleKeyFrame KeyTime="0" Value="160"/>
+                <EasingDoubleKeyFrame KeyTime="0" Value="500"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="30"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="More_Tab">
@@ -300,6 +300,7 @@
 
                     <Grid x:Name="GridInfoLeft" Background="Transparent" Width="60" Height="30" HorizontalAlignment="Left">
                         <Image x:Name="TabIcon" Margin="4" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="FolderIcon" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Collapsed"/>
                     </Grid>
                     <!--<Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" RadiusX="1" RadiusY="3" Grid.Column="1"/>-->
                     <TextBlock x:Name="name_tab" Grid.Column="1" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
@@ -318,12 +319,9 @@
 
             </Grid>
 
-            <StackPanel x:Name="StackInfos" Margin="60,0,0,0">
-                <!--<StackPanel Orientation="Horizontal" Margin="10,0,10,5">
-                    <TextBlock x:Name="type_info" x:Uid="fileinfo-type" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Top"/>
-                </StackPanel>-->
+            <local:TabsList x:Name="TabsList" Margin="40,0,20,0" MaxHeight="400" Visibility="Collapsed" ListTabDeleted="TabsList_ListTabDeleted"></local:TabsList>
 
+            <StackPanel x:Name="StackInfos" Margin="60,0,0,0">
                 <StackPanel Orientation="Horizontal" Margin="10,0,10,5">
                     <TextBlock x:Name="encoding_info" x:Uid="fileinfo-encoding" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="encoding_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>

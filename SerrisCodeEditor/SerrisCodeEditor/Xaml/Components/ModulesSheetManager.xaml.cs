@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Xaml.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;

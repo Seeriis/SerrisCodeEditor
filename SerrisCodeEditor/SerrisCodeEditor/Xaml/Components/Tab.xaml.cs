@@ -30,6 +30,7 @@ namespace SerrisCodeEditor.Xaml.Components
     public sealed partial class Tab : UserControl
     {
         InfosTab current_tab = new InfosTab(); int current_list; bool infos_opened = false, enable_selection = false;
+        TabID CurrentIDs;
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
         public Tab()
@@ -45,17 +46,21 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 TabID ids = (TabID)DataContext;
 
-                if (current_tab == null)
-                    current_tab = new InfosTab();
-
-                if (AppSettings.Values.ContainsKey("ui_leftpanelength"))
+                if(CurrentIDs.ID_Tab != ids.ID_Tab && CurrentIDs.ID_TabsList != ids.ID_TabsList)
                 {
-                    GridInfoLeft.Width = (int)AppSettings.Values["ui_leftpanelength"];
-                    StackInfos.Margin = new Thickness((int)AppSettings.Values["ui_leftpanelength"], 0, 0, 0);
+                    if (current_tab == null)
+                        current_tab = new InfosTab();
+
+                    if (AppSettings.Values.ContainsKey("ui_leftpanelength"))
+                    {
+                        GridInfoLeft.Width = (int)AppSettings.Values["ui_leftpanelength"];
+                        StackInfos.Margin = new Thickness((int)AppSettings.Values["ui_leftpanelength"], 0, 0, 0);
+                    }
+
+                    current_tab.ID = ids.ID_Tab; current_list = ids.ID_TabsList;
+                    UpdateTabInformations();
                 }
 
-                current_tab.ID = ids.ID_Tab; current_list = ids.ID_TabsList;
-                UpdateTabInformations();
             }
         }
 
@@ -67,13 +72,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabComponent_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(current_tab.PathContent))
+            if (!string.IsNullOrEmpty(current_tab.PathContent) && current_tab.TabContentType == ContentType.File)
                 ShowPath.Begin();
         }
 
         private void TabComponent_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(current_tab.PathContent))
+            if(!string.IsNullOrEmpty(current_tab.PathContent) && current_tab.TabContentType == ContentType.File)
                 ShowName.Begin();
         }
 
@@ -143,22 +148,71 @@ namespace SerrisCodeEditor.Xaml.Components
             try
             {
                 current_tab = TabsAccessManager.GetTabViaID(new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list });
-                int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
-                TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
                 name_tab.Text = current_tab.TabName;
 
-                if (!string.IsNullOrEmpty(current_tab.PathContent))
+                switch (current_tab.TabContentType)
                 {
-                    path_tab.Text = current_tab.PathContent;
-                    encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-                    More_Tab.Visibility = Visibility.Visible;
+                    case ContentType.File:
+                        int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
+                        TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
+
+                        if (!string.IsNullOrEmpty(current_tab.PathContent))
+                        {
+                            path_tab.Text = current_tab.PathContent;
+                            encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
+                            More_Tab.Visibility = Visibility.Visible;
+                        }
+                        else
+                            More_Tab.Visibility = Visibility.Collapsed;
+
+                        TabsList.Visibility = Visibility.Collapsed;
+                        TabIcon.Visibility = Visibility.Visible;
+                        FolderIcon.Visibility = Visibility.Collapsed;
+                        StackInfos.Visibility = Visibility.Visible;
+                        break;
+
+                    case ContentType.Folder:
+                        More_Tab.Visibility = Visibility.Visible;
+                        TabsList.Visibility = Visibility.Visible;
+                        StackInfos.Visibility = Visibility.Collapsed;
+
+                        TabIcon.Visibility = Visibility.Collapsed;
+                        FolderIcon.Visibility = Visibility.Visible;
+                        ShowInfos.Begin();
+
+                        TabsList.ListTabs.Items.Clear();
+                        TabsList.ListID = current_list;
+                        foreach (int ID in current_tab.FolderContent)
+                        {
+                            try
+                            {
+                                if(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = ID, ID_TabsList = current_list }) != null)
+                                {
+                                    TabsList.ListTabs.Items.Add(new TabID { ID_Tab = ID, ID_TabsList = current_list });
+                                    if ((int)AppSettings.Values["Tabs_tab-selected-index"] == ID && (int)AppSettings.Values["Tabs_list-selected-index"] == current_list)
+                                    {
+                                        TabsList.ListTabs.SelectedIndex = TabsList.ListTabs.Items.Count - 1;
+                                    }
+                                }
+                            }
+                            catch { }
+                        }
+                        break;
                 }
-                else
-                    More_Tab.Visibility = Visibility.Collapsed;
+
 
             }
             catch { }
+        }
+
+        private async void TabsList_ListTabDeleted(object sender, TabID e)
+        {
+            if(current_tab != null)
+            {
+                current_tab.FolderContent.Remove(e.ID_Tab);
+                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+            }
         }
 
         private void Close_Tab_Click(object sender, RoutedEventArgs e)

@@ -244,7 +244,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
-            DeployUIDetector.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            DeployUIDetectorBG.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
             DeployUIIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             DeployUIDetectorB.Background = GlobalVariables.CurrentTheme.MainColor;

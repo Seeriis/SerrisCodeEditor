@@ -15,7 +15,8 @@ namespace SerrisModulesServer.Manager
         MainJsNotFound,
         NoThemeFiles,
         LogoNotFound,
-        OldSceClient
+        OldSceClient,
+        NoProgLanguagesFiles
     }
 
     public class ModulesVerifyAssistant
@@ -83,22 +84,23 @@ namespace SerrisModulesServer.Manager
                         return PackageVerificationCode.LogoNotFound;
                     }
 
+                    //Verify if the icon exist or not
+                    try
+                    {
+                        if (zip_content.GetEntry("icon.png") == null)
+                        {
+                            return PackageVerificationCode.LogoNotFound;
+                        }
+                    }
+                    catch
+                    {
+                        return PackageVerificationCode.LogoNotFound;
+                    }
 
                     switch (type)
                     {
+                        case ModuleTypesList.Templates:
                         case ModuleTypesList.Addon:
-                            //Verify if the toolbar icon of the addon exist or not
-                            try
-                            {
-                                if (zip_content.GetEntry("icon.png") == null)
-                                {
-                                    return PackageVerificationCode.LogoNotFound;
-                                }
-                            }
-                            catch
-                            {
-                                return PackageVerificationCode.LogoNotFound;
-                            }
 
                             //Verify if the "main.js" exist or not
                             try
@@ -113,6 +115,7 @@ namespace SerrisModulesServer.Manager
                             break;
 
                         case ModuleTypesList.Theme:
+
                             //Verify if the "theme.js" or "theme_ace.js" exist or not
                             bool themejs = true, themeacejs = true;
 
@@ -145,6 +148,21 @@ namespace SerrisModulesServer.Manager
                                 return PackageVerificationCode.NoThemeFiles;
                             }
 
+                            break;
+
+                        case ModuleTypesList.ProgrammingLanguage:
+
+                            try
+                            {
+                                if (zip_content.GetEntry("language.js") == null)
+                                {
+                                    return PackageVerificationCode.NoProgLanguagesFiles;
+                                }
+                            }
+                            catch
+                            {
+                                return PackageVerificationCode.NoProgLanguagesFiles;
+                            }
                             break;
                     }
 

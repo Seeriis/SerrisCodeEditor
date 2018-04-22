@@ -126,8 +126,28 @@
             <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="75" VerticalAlignment="Top" Fill="Gray"/>
 
             <!-- Open left panel zone -->
-            <Grid x:Name="DeployUIDetector" VerticalAlignment="Top" Grid.RowSpan="2" Height="68" Margin="0,5,0,0" Width="60" CornerRadius="0,15,0,0" Background="Transparent" PointerEntered="DeployUIDetector_PointerEntered">
-                <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" RenderTransformOrigin="0.5,0.5">
+            <Grid x:Name="DeployUIDetector" VerticalAlignment="Top" Grid.RowSpan="2" Height="73" Width="75" Background="Transparent" PointerEntered="DeployUIDetector_PointerEntered" Canvas.ZIndex="90">
+                <controls:DropShadowPanel VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" BlurRadius="8.0" ShadowOpacity="0.70" OffsetX="4.0" OffsetY="-1" Color="Black">
+
+                    <Path x:Name="DeployUIDetectorBG" Stroke="Black" StrokeThickness="0" Fill="White">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigure StartPoint="0,0" >
+                                        <PathFigure.Segments>
+                                            <LineSegment Point="0,0"></LineSegment>
+                                            <LineSegment Point="60,0"></LineSegment>
+                                            <ArcSegment Size="80,80" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="60,73"/>
+                                            <LineSegment Point="0,73"></LineSegment>
+                                            <LineSegment Point="0,0"></LineSegment>
+                                        </PathFigure.Segments>
+                                    </PathFigure >
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </controls:DropShadowPanel>
+                <TextBlock x:Name="DeployUIIcon" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" RenderTransformOrigin="0.5,0.5" Margin="-10,0,0,0">
                     <TextBlock.RenderTransform>
                         <CompositeTransform/>
                     </TextBlock.RenderTransform>
@@ -154,7 +174,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <my:Console x:Name="Console" Height="240" VerticalAlignment="Top"/>
+                <my:Console x:Name="Console" Height="240" VerticalAlignment="Top" Margin="-15,0,0,0" Canvas.ZIndex="89"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
                     <!--
                     <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>

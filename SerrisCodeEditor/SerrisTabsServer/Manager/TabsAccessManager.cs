@@ -182,7 +182,7 @@ namespace SerrisTabsServer.Manager
         {
             TabsDataCache.LoadTabsData();
 
-            using (var reader = new StreamReader(TabsDataCache.TabsListFile.OpenStreamForReadAsync().Result))
+            using (var reader = new StreamReader(Task.Run(async() => { return await TabsDataCache.TabsListFile.OpenStreamForReadAsync(); }).Result))
             {
                 try
                 {

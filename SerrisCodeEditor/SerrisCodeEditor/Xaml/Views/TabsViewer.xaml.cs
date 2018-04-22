@@ -28,7 +28,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-namespace SerrisCodeEditor.Xaml.Components
+namespace SerrisCodeEditor.Xaml.Views
 {
     public class ListItem
     {
@@ -119,22 +119,26 @@ namespace SerrisCodeEditor.Xaml.Components
                 {
                     CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
                     var tab = TabsAccessManager.GetTabViaID(CurrentSelectedIDs);
-                    int EncodingType = tab.TabEncoding;
-                    string TabType = "";
 
-                    if (EncodingType == 0)
-                        EncodingType = Encoding.UTF8.CodePage;
+                    if(tab.TabContentType == ContentType.File)
+                    {
+                        int EncodingType = tab.TabEncoding;
+                        string TabType = "";
 
-                    if (string.IsNullOrEmpty(tab.TabType))
-                        TabType = "TXT";
-                    else
-                        TabType = tab.TabType.ToUpper();
+                        if (EncodingType == 0)
+                            EncodingType = Encoding.UTF8.CodePage;
 
-                    if (tab != null)
-                        Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName });
+                        if (string.IsNullOrEmpty(tab.TabType))
+                            TabType = "TXT";
+                        else
+                            TabType = tab.TabType.ToUpper();
 
-                    AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
-                    AppSettings.Values["Tabs_list-selected-index"] = ((TabID)Tabs.SelectedItem).ID_TabsList;
+                        if (tab != null)
+                            Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName });
+
+                        AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
+                        AppSettings.Values["Tabs_list-selected-index"] = ((TabID)Tabs.SelectedItem).ID_TabsList;
+                    }
                 }
             }
 
@@ -240,10 +244,13 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (notification.Type)
                             {
                                 case TypeUpdateTab.NewTab:
-                                    Tabs.Items.Add(notification.ID);
+                                    if(!TabsAccessManager.GetTabViaID(notification.ID).TabInvisibleByDefault)
+                                    {
+                                        Tabs.Items.Add(notification.ID);
 
-                                    //Auto selection
-                                    Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                                        //Auto selection
+                                        Tabs.SelectedIndex = Tabs.Items.Count - 1;
+                                    }
                                     break;
 
                                 case TypeUpdateTab.TabDeleted:
@@ -390,7 +397,18 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void CreateTab()
         {
-            TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+            switch(TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
+            {
+                case ContentType.File:
+                    TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                    break;
+
+                //Create file in the selected folder !
+                case ContentType.Folder:
+                    TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                    break;
+            }
+
             TextBoxNewFileProject.Text = "";
         }
 
@@ -422,11 +440,15 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
-        => await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
-
-        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
+            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            ShowCreatorGrid(false);
+        }
 
+        private async void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            await TabsCreatorAssistant.OpenFolder(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            ShowCreatorGrid(false);
         }
 
         private void TextBoxNewFileProject_KeyDown(object sender, KeyRoutedEventArgs e)
