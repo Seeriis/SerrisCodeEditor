@@ -3,7 +3,7 @@ Welcome to the GitHub of the modular code editor for Windows 10 (UWP) called "Se
 
 For more informations about the project, you can look the wiki [here](https://github.com/Seeris/SerrisCodeEditor/wiki).
 
-![](https://yoshilegris.files.wordpress.com/2017/06/pre-alpha_7.png)
+![](https://yoshilegris.files.wordpress.com/2017/06/sce_neuillyplaisance.png)
 
 ## How to run the application
 
