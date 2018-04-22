@@ -148,12 +148,12 @@ namespace SerrisTabsServer.Manager
 
                 foreach (IStorageItem Item in await Folder.GetItemsAsync())
                 {
+                    StorageApplicationPermissions.FutureAccessList.Add(Item);
 
                     if (Item.IsOfType(StorageItemTypes.File))
                     {
                         StorageFile file = (StorageFile)Item;
 
-                        StorageApplicationPermissions.FutureAccessList.Add(file);
                         var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
                         int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
