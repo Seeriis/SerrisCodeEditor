@@ -1,7 +1,14 @@
-﻿namespace lol
+﻿using System;
+
+namespace YourNamespace
 {
-    public class jpp
+    public class DefaultClass
     {
+
+        public DefaultClass()
+        {
+
+        }
 
     }
 }
