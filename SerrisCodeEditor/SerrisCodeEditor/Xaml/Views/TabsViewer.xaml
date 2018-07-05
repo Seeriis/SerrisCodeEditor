@@ -878,7 +878,7 @@
         </StackPanel>
 
         <controls:Loading x:Name="LoadingGrid" IsLoading="False" Background="#B2000000" Grid.RowSpan="2">
-            <ProgressRing IsActive="True" Foreground="White"/>
+            <ProgressRing IsActive="True" Foreground="White" Height="40" Width="40"/>
         </controls:Loading>
         
         <ListView Grid.Row="1" x:Name="Tabs" ItemTemplate="{StaticResource Tab}" SelectionChanged="Tabs_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="0,4,0,0" >

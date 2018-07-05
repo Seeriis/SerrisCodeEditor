@@ -327,6 +327,10 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
             }
 
+            //FONT SIZE
+            if (AppSettings.Values.ContainsKey("editor_fontsize"))
+                ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ fontSize: " + (int)AppSettings.Values["editor_fontsize"] + " });");
+
         }
 
         private async void ExecuteModulesFunction()

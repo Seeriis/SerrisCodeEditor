@@ -35,6 +35,15 @@ namespace SerrisCodeEditor.Functions.Settings
 
                         VarSaveName = "editor_wordwrap",
                         VarSaveDefaultContent = false
+                    },
+
+                    new Setting
+                    {
+                        Description = "Font size (in pixel)",
+                        Type = SettingType.TextboxNumber,
+
+                        VarSaveName = "editor_fontsize",
+                        VarSaveDefaultContent = 14
                     }
                 }
 
@@ -91,7 +100,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Serris Code Editor",
                         Type = SettingType.SecondDescription,
 
-                        Parameter = "By Seeris"
+                        Parameter = "By Seeriis"
                     },
 
                     new Setting
