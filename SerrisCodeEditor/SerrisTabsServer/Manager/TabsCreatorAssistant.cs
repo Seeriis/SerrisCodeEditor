@@ -156,11 +156,8 @@ namespace SerrisTabsServer.Manager
 
                         var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
-                        int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
-                        if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
-                        {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
-                        }
+                        int id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
+                        await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
 
                         FolderItemIDs.Add(id_tab);
                     }
@@ -170,7 +167,7 @@ namespace SerrisTabsServer.Manager
                     }
                 }
 
-                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, TabInvisibleByDefault = true }, IDList, true);
+                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, TabInvisibleByDefault = true }, IDList, false);
             });
         }
 

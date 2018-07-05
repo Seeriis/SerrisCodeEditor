@@ -126,6 +126,7 @@ namespace SerrisCodeEditor.Xaml.Components
         private void SetTheme()
         {
             MasterGrid.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            MasterGrid.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
             ConsoleMoreInfosViewer.Background = GlobalVariables.CurrentTheme.SecondaryColor;
 
             LastNotifInfos_Icon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
@@ -330,6 +331,8 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             LastNotifInfos.Visibility = Visibility.Visible; SymbolOpened.Text = "";
             ConsoleMoreInfosViewer.Visibility = Visibility.Collapsed; Command_box.Visibility = Visibility.Collapsed;
+            MasterGrid.CornerRadius = new CornerRadius(0, 15, 15, 0);
+            MasterGrid.BorderThickness = new Thickness(1);
             isFlyoutOpened = false;
         }
 
@@ -337,6 +340,8 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             LastNotifInfos.Visibility = Visibility.Collapsed; SymbolOpened.Text = "";
             ConsoleMoreInfosViewer.Visibility = Visibility.Visible; Command_box.Visibility = Visibility.Visible;
+            MasterGrid.CornerRadius = new CornerRadius(0, 15, 0, 0);
+            MasterGrid.BorderThickness = new Thickness(0);
             isFlyoutOpened = true;
 
             UpdateNotifsNumber();

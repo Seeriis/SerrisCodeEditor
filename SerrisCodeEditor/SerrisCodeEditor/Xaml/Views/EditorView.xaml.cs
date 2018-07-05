@@ -25,6 +25,7 @@ using SerrisModulesServer.Type.Addon;
 using System.Text;
 using Windows.UI.Input;
 using SerrisModulesServer.Type.Theme;
+using Windows.UI.Xaml.Media;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -245,10 +246,11 @@ namespace SerrisCodeEditor.Xaml.Views
         private void SetTheme()
         {
             DeployUIDetectorBG.Fill = GlobalVariables.CurrentTheme.SecondaryColor;
+            DeployUIDetectorBG.Stroke = GlobalVariables.CurrentTheme.SecondaryColorFont;
             DeployUIIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
-            DeployUIDetectorB.Background = GlobalVariables.CurrentTheme.MainColor;
-            DeployUIIconB.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            DeployUIDetectorB.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            DeployUIIconB.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             BackgroundPrinciapalUI.ImageSource = GlobalVariables.CurrentTheme.BackgroundImage;
             ColorPrincipalUI.Fill = GlobalVariables.CurrentTheme.MainColor;
@@ -258,12 +260,20 @@ namespace SerrisCodeEditor.Xaml.Views
 
             SheetViewSeparatorLine.Fill = GlobalVariables.CurrentTheme.MainColor;
 
+            SolidColorBrush ColorSettingsButtons = new SolidColorBrush(Windows.UI.Color.FromArgb(150, GlobalVariables.CurrentTheme.SecondaryColor.Color.R, GlobalVariables.CurrentTheme.SecondaryColor.Color.G, GlobalVariables.CurrentTheme.SecondaryColor.Color.B));
+
+            SettingsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            NotificationsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            DownloadButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
             switch (GlobalVariables.CurrentDevice)
             {
                 case CurrentDevice.Desktop:
                     ApplicationViewTitleBar TitleBar = ApplicationView.GetForCurrentView().TitleBar;
                     TitleBar.ButtonBackgroundColor = Colors.Transparent;
                     TitleBar.ButtonForegroundColor = GlobalVariables.CurrentTheme.MainColorFont.Color;
+                    TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                    TitleBar.ButtonInactiveForegroundColor = GlobalVariables.CurrentTheme.MainColorFont.Color;
                     break;
 
                 case CurrentDevice.WindowsMobile:
@@ -361,7 +371,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     {
                         if (!(bool)AppSettings.Values["ui_extendedview"])
                         {
-                            ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                            ContentViewerGrid.Margin = new Thickness(60, ColorPrincipalUI.ActualHeight, 0, 0);
                             DeployUIDetector.Visibility = Visibility.Visible;
                             BackgroundPrincipalUIControl.Color = Colors.Transparent;
                         }
@@ -374,7 +384,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     }
                     else
                     {
-                        ContentViewerGrid.Margin = new Thickness(60, 73, 0, 0);
+                        ContentViewerGrid.Margin = new Thickness(60, ColorPrincipalUI.ActualHeight, 0, 0);
                         BackgroundPrincipalUIControl.Color = Colors.Transparent;
                     }
 

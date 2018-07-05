@@ -72,9 +72,11 @@
             </Grid.RowDefinitions>
 
             <StackPanel x:Name="TopSheetViewSplit" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left">
-                <Grid x:Name="DeployUIDetectorB" Height="75" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
-                    <TextBlock x:Name="DeployUIIconB" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
-                </Grid>
+                <controls:DropShadowPanel VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" BlurRadius="8.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="-2" Color="Black" Canvas.ZIndex="50">
+                    <Grid x:Name="DeployUIDetectorB" Height="80" Background="#FF747474" PointerEntered="DeployUIDetector_PointerEntered">
+                        <TextBlock x:Name="DeployUIIconB" Text="" Foreground="#FF3E3E3E" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+                    </Grid>
+                </controls:DropShadowPanel>
             </StackPanel>
 
             <SplitView x:Name="SheetViewSplit" Grid.Row="1" DisplayMode="CompactInline" CompactPaneLength="60">
@@ -113,8 +115,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:DropShadowPanel x:Name="BackgroundPrincipalUIControl" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="75" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
-                <Rectangle Grid.RowSpan="2" Height="75" VerticalAlignment="Top">
+            <controls:DropShadowPanel x:Name="BackgroundPrincipalUIControl" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="80" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
+                <Rectangle Grid.RowSpan="2" Height="80" VerticalAlignment="Top">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
                     </interactivity:Interaction.Behaviors>
@@ -123,13 +125,13 @@
                     </Rectangle.Fill>
                 </Rectangle>
             </controls:DropShadowPanel>
-            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="75" VerticalAlignment="Top" Fill="Gray"/>
+            <Rectangle x:Name="ColorPrincipalUI" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="80" VerticalAlignment="Top" Fill="Gray"/>
 
             <!-- Open left panel zone -->
-            <Grid x:Name="DeployUIDetector" VerticalAlignment="Top" Grid.RowSpan="2" Height="73" Width="75" Background="Transparent" PointerEntered="DeployUIDetector_PointerEntered" Canvas.ZIndex="90">
+            <Grid x:Name="DeployUIDetector" VerticalAlignment="Top" Grid.RowSpan="2" Height="80" Width="75" Background="Transparent" PointerEntered="DeployUIDetector_PointerEntered" Canvas.ZIndex="90">
                 <controls:DropShadowPanel VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" BlurRadius="8.0" ShadowOpacity="0.70" OffsetX="4.0" OffsetY="-1" Color="Black">
 
-                    <Path x:Name="DeployUIDetectorBG" Stroke="Black" StrokeThickness="0" Fill="White">
+                    <Path x:Name="DeployUIDetectorBG" Stroke="Black" StrokeThickness="0" Fill="White" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round">
                         <Path.Data>
                             <PathGeometry>
                                 <PathGeometry.Figures>
@@ -137,8 +139,8 @@
                                         <PathFigure.Segments>
                                             <LineSegment Point="0,0"></LineSegment>
                                             <LineSegment Point="60,0"></LineSegment>
-                                            <ArcSegment Size="80,80" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="60,73"/>
-                                            <LineSegment Point="0,73"></LineSegment>
+                                            <ArcSegment Size="80,80" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="60,78"/>
+                                            <LineSegment Point="0,78"></LineSegment>
                                             <LineSegment Point="0,0"></LineSegment>
                                         </PathFigure.Segments>
                                     </PathFigure >
@@ -176,11 +178,11 @@
 
                 <my:Console x:Name="Console" Height="240" VerticalAlignment="Top" Margin="-15,0,0,0" Canvas.ZIndex="89"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
-                    <!--
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
-                    -->
-                    <Button x:Name="SettingsButton" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
+
+                    <Button x:Name="NotificationsButton" HorizontalAlignment="Right" BorderThickness="1" IsEnabled="False" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    <Button x:Name="DownloadButton" HorizontalAlignment="Right" BorderThickness="1" IsEnabled="False" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+                    
+                    <Button x:Name="SettingsButton" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
                         <Button.Flyout>
                             <Flyout Placement="Bottom">
                                 <Frame x:Name="FrameSettings"/>

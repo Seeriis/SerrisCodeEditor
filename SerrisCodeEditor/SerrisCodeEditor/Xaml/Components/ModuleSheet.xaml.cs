@@ -137,12 +137,12 @@ namespace SerrisCodeEditor.Xaml.Components
                                 if (notification.id == current_sheet.id)
                                 {
                                     isSelected = true;
-                                    GridButton.BorderThickness = new Thickness(1);
+                                    GridButton.Opacity = 1;
                                 }
                                 else
                                 {
                                     isSelected = false;
-                                    GridButton.BorderThickness = new Thickness(0);
+                                    GridButton.Opacity = 0.7;
                                 }
                                 break;
 
