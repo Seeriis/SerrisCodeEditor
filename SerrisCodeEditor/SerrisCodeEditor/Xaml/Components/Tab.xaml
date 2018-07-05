@@ -319,7 +319,14 @@
 
             </Grid>
 
-            <local:TabsList x:Name="TabsList" Margin="40,0,0,0" MaxHeight="400" Visibility="Collapsed" ListTabDeleted="TabsList_ListTabDeleted"></local:TabsList>
+            <Grid x:Name="TabsListGrid" Visibility="Collapsed" MaxHeight="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Width="2" Fill="#CCFFFFFF" HorizontalAlignment="Center" Margin="0,5"/>
+                <local:TabsList x:Name="TabsList" Margin="0" MaxHeight="500" ListTabDeleted="TabsList_ListTabDeleted" Grid.Column="1"></local:TabsList>
+            </Grid>
 
             <StackPanel x:Name="StackInfos" Margin="60,0,0,0">
                 <StackPanel Orientation="Horizontal" Margin="10,0,10,5">

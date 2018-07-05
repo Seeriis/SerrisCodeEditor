@@ -142,6 +142,7 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
+        int TempTabID = 0;
         private async void UpdateTabInformations()
         {
             //Set temp tab + tabs list ID
@@ -166,7 +167,7 @@ namespace SerrisCodeEditor.Xaml.Components
                         else
                             More_Tab.Visibility = Visibility.Collapsed;
 
-                        TabsList.Visibility = Visibility.Collapsed;
+                        TabsListGrid.Visibility = Visibility.Collapsed;
                         TabIcon.Visibility = Visibility.Visible;
                         FolderIcon.Visibility = Visibility.Collapsed;
                         StackInfos.Visibility = Visibility.Visible;
@@ -174,30 +175,36 @@ namespace SerrisCodeEditor.Xaml.Components
 
                     case ContentType.Folder:
                         More_Tab.Visibility = Visibility.Visible;
-                        TabsList.Visibility = Visibility.Visible;
+                        TabsListGrid.Visibility = Visibility.Visible;
                         StackInfos.Visibility = Visibility.Collapsed;
 
                         TabIcon.Visibility = Visibility.Collapsed;
                         FolderIcon.Visibility = Visibility.Visible;
-                        ShowInfos.Begin();
 
-                        TabsList.ListTabs.Items.Clear();
-                        TabsList.ListID = current_list;
-                        foreach (int ID in current_tab.FolderContent)
+                        if(TempTabID != current_tab.ID && TabsList.ListID != current_list)
                         {
-                            try
+                            ShowInfos.Begin();
+
+                            TabsList.ListTabs.Items.Clear();
+                            TempTabID = current_tab.ID;
+                            TabsList.ListID = current_list;
+                            foreach (int ID in current_tab.FolderContent)
                             {
-                                if(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = ID, ID_TabsList = current_list }) != null)
+                                try
                                 {
-                                    TabsList.ListTabs.Items.Add(new TabID { ID_Tab = ID, ID_TabsList = current_list });
-                                    if ((int)AppSettings.Values["Tabs_tab-selected-index"] == ID && (int)AppSettings.Values["Tabs_list-selected-index"] == current_list)
+                                    if (TabsAccessManager.GetTabViaID(new TabID { ID_Tab = ID, ID_TabsList = current_list }) != null)
                                     {
-                                        TabsList.ListTabs.SelectedIndex = TabsList.ListTabs.Items.Count - 1;
+                                        TabsList.ListTabs.Items.Add(new TabID { ID_Tab = ID, ID_TabsList = current_list });
+                                        if ((int)AppSettings.Values["Tabs_tab-selected-index"] == ID && (int)AppSettings.Values["Tabs_list-selected-index"] == current_list)
+                                        {
+                                            TabsList.ListTabs.SelectedIndex = TabsList.ListTabs.Items.Count - 1;
+                                        }
                                     }
                                 }
+                                catch { }
                             }
-                            catch { }
                         }
+                        
                         break;
                 }
 

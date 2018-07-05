@@ -441,13 +441,17 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
         {
+            LoadingGrid.IsLoading = true;
             await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            LoadingGrid.IsLoading = false;
             ShowCreatorGrid(false);
         }
 
         private async void OpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
+            LoadingGrid.IsLoading = true;
             await TabsCreatorAssistant.OpenFolder(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            LoadingGrid.IsLoading = false;
             ShowCreatorGrid(false);
         }
 

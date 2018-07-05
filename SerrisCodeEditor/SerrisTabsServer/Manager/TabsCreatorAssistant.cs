@@ -113,15 +113,21 @@ namespace SerrisTabsServer.Manager
                             if (file != null)
                             {
                                 StorageApplicationPermissions.FutureAccessList.Add(file);
-                                var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
-
-                                int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
-                                if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
+                                if(file.ContentType.Contains("text") || file.ContentType.Contains("application/javascript"))
                                 {
-                                    Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                                    var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+
+                                    int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
+
+
+                                    if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
+                                    {
+                                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                                    }
+
+                                    list_ids.Add(id_tab);
                                 }
 
-                                list_ids.Add(id_tab);
                             }
                         }
                         else
@@ -154,12 +160,16 @@ namespace SerrisTabsServer.Manager
                     {
                         StorageFile file = (StorageFile)Item;
 
-                        var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                        if(file.ContentType.Contains("text") || file.ContentType.Contains("application/javascript"))
+                        {
+                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
-                        int id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
-                        await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+                            int id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
 
-                        FolderItemIDs.Add(id_tab);
+                            await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true);
+
+                            FolderItemIDs.Add(id_tab);
+                        }
                     }
                     else
                     {
