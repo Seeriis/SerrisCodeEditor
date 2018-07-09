@@ -44,6 +44,17 @@ namespace SerrisCodeEditor.Functions.Settings
 
                         VarSaveName = "editor_fontsize",
                         VarSaveDefaultContent = 14
+                    },
+
+                    new Setting
+                    {
+                        Description = "Font family",
+                        Type = SettingType.ComboBox,
+
+                        VarSaveName = "editor_fontfamily",
+                        VarSaveDefaultContent = "Consolas",
+
+                        Parameter = Microsoft.Graphics.Canvas.Text.CanvasTextFormat.GetSystemFontFamilies().ToList()
                     }
                 }
 

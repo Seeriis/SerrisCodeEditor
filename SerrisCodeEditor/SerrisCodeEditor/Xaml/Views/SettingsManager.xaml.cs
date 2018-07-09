@@ -300,6 +300,50 @@ namespace SerrisCodeEditor.Xaml.Views
                                 DescriptionControl.Children.Add(Description);
                                 MenuControls.Children.Add(DescriptionControl);
                                 break;
+
+                            case SettingType.ComboBox:
+                                StackPanel ListControl = new StackPanel();
+                                ListControl.Margin = new Thickness(0, 20, 0, 0);
+
+                                TextBlock TitleList = new TextBlock();
+                                TitleList.FontSize = 15;
+                                TitleList.Text = SettingControl.Description;
+                                TitleList.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                                ListControl.Children.Add(TitleList);
+
+                                ComboBox List = new ComboBox();
+                                List.Margin = new Thickness(5, 5, 0, 0);
+                                List.FontSize = 14;
+                                List.FontWeight = FontWeights.Light;
+                                List.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+                                List.Background = GlobalVariables.CurrentTheme.MainColor;
+
+                                List.SelectionChanged += ((e, f) =>
+                                {
+                                    if(List.SelectedIndex != -1)
+                                    {
+                                        AppSettings.Values[SettingControl.VarSaveName] = List.SelectedValue;
+                                        Messenger.Default.Send(new SettingsNotification { SettingsUpdatedName = menu.Name });
+                                    }
+                                });
+
+                                foreach (string Item in (List<string>)SettingControl.Parameter)
+                                {
+                                    List.Items.Add(Item);
+                                    if (AppSettings.Values.ContainsKey(SettingControl.VarSaveName))
+                                    {
+                                        if(Item == (string)AppSettings.Values[SettingControl.VarSaveName])
+                                        {
+                                            List.SelectedIndex = (List.Items.Count - 1);
+                                        }
+                                    }
+                                }
+
+                                ListControl.Children.Add(List);
+                                MenuControls.Children.Add(ListControl);
+
+                                break;
                         }
                     }
                 }
