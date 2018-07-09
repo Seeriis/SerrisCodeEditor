@@ -338,6 +338,13 @@ namespace SerrisCodeEditor.Xaml.Views
                                             List.SelectedIndex = (List.Items.Count - 1);
                                         }
                                     }
+                                    else
+                                    {
+                                        if (Item == (string)SettingControl.VarSaveDefaultContent)
+                                        {
+                                            List.SelectedIndex = (List.Items.Count - 1);
+                                        }
+                                    }
                                 }
 
                                 ListControl.Children.Add(List);
