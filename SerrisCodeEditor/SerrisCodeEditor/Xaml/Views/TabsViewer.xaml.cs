@@ -397,17 +397,25 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void CreateTab()
         {
-            switch(TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
+            if(CurrentSelectedIDs.ID_Tab != 0)
             {
-                case ContentType.File:
-                    TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
-                    break;
+                switch (TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
+                {
+                    case ContentType.File:
+                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                        break;
 
-                //Create file in the selected folder !
-                case ContentType.Folder:
-                    TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
-                    break;
+                    //Create file in the selected folder !
+                    case ContentType.Folder:
+                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                        break;
+                }
             }
+            else
+            {
+                TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+            }
+
 
             TextBoxNewFileProject.Text = "";
         }

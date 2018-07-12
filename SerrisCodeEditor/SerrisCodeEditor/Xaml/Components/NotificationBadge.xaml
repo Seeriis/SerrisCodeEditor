@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <Storyboard x:Name="ShowBadgeAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridCircle">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <CircleEase EasingMode="EaseOut"/>
@@ -22,7 +22,7 @@
         </Storyboard>
         <Storyboard x:Name="HideBadgeAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridCircle">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <CircleEase EasingMode="EaseOut"/>

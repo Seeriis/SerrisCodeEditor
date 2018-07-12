@@ -182,6 +182,8 @@ namespace SerrisCodeEditor.Xaml.Components
                         break;
 
                     case ContentType.Folder:
+                        Notification.ShowBadge = false;
+
                         More_Tab.Visibility = Visibility.Visible;
                         TabsListGrid.Visibility = Visibility.Visible;
                         StackInfos.Visibility = Visibility.Collapsed;
