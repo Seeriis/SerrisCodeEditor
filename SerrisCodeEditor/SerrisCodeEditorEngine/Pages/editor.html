@@ -43,6 +43,10 @@
                 didScrollChangeDisposable.dispose();
                 window.external.notify("loaded");
             });
+
+            editor.onKeyDown(function (e) {
+                window.external.notify("change");
+            });
         });
 
     </script>

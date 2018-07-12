@@ -96,7 +96,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             Messenger.Default.Register<STSNotification>(this, async (nm) =>
             {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
                     try
                     {
@@ -106,6 +106,12 @@ namespace SerrisCodeEditor.Xaml.Components
                             switch (nm.Type)
                             {
                                 case TypeUpdateTab.TabUpdated:
+                                    UpdateTabInformations();
+                                    break;
+
+                                case TypeUpdateTab.TabNewModifications:
+                                    current_tab.TabNewModifications = true;
+                                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
                                     UpdateTabInformations();
                                     break;
                             }
@@ -166,6 +172,8 @@ namespace SerrisCodeEditor.Xaml.Components
                         }
                         else
                             More_Tab.Visibility = Visibility.Collapsed;
+
+                        Notification.ShowBadge = current_tab.TabNewModifications;
 
                         TabsListGrid.Visibility = Visibility.Collapsed;
                         TabIcon.Visibility = Visibility.Visible;

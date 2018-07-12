@@ -301,6 +301,7 @@
                     <Grid x:Name="GridInfoLeft" Background="Transparent" Width="60" Height="30" HorizontalAlignment="Left">
                         <Image x:Name="TabIcon" Margin="4" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="FolderIcon" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Collapsed"/>
+                        <local:NotificationBadge x:Name="Notification" VerticalAlignment="Top" HorizontalAlignment="Right" Height="10" Width="10" Margin="0,4,10,0"/>
                     </Grid>
                     <!--<Rectangle x:Name="separator_a" Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" RadiusX="1" RadiusY="3" Grid.Column="1"/>-->
                     <TextBlock x:Name="name_tab" Grid.Column="1" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="0,0,2,0" VerticalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis"/>

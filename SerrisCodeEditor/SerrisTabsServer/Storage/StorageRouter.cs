@@ -1,4 +1,5 @@
 ﻿using SerrisTabsServer.Items;
+using SerrisTabsServer.Manager;
 using SerrisTabsServer.Storage.StorageTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,6 +104,9 @@ namespace SerrisTabsServer.Storage
                 case StorageListTypes.OneDrive:
                     break;
             }
+
+            tab.TabNewModifications = false;
+            await TabsWriteManager.PushUpdateTabAsync(tab, IdList);
         }
 
     }

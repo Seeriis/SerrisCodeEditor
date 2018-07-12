@@ -62,9 +62,15 @@
     "A": 1
   },
   "RoundNotificationColor": {
-    "R": 255,
-    "G": 255,
-    "B": 255,
-    "A": 1
+    "R": 239,
+    "G": 122,
+    "B": 71,
+    "A": 255
+  },
+  "RoundBorderNotificationColor": {
+    "R": 170,
+    "G": 89,
+    "B": 54,
+    "A": 255
   }
 }

@@ -26,6 +26,7 @@ namespace SerrisModulesServer.Type.Theme
         public Color AddonDefaultColor { get; set; }
         public Color AddonDefaultFontColor { get; set; }
 
+        public Color RoundBorderNotificationColor { get; set; }
         public Color RoundNotificationColor { get; set; }
     }
 
@@ -48,6 +49,7 @@ namespace SerrisModulesServer.Type.Theme
         public SolidColorBrush AddonDefaultColor { get; set; }
         public SolidColorBrush AddonDefaultFontColor { get; set; }
 
+        public SolidColorBrush RoundBorderNotificationColor { get; set; }
         public SolidColorBrush RoundNotificationColor { get; set; }
 
         public void SetBrushsAndImageViaThemeModule(ThemeModule theme_content, string path_module)
@@ -73,6 +75,7 @@ namespace SerrisModulesServer.Type.Theme
             AddonDefaultColor = new SolidColorBrush(theme_content.AddonDefaultColor);
             AddonDefaultFontColor = new SolidColorBrush(theme_content.AddonDefaultFontColor);
 
+            RoundBorderNotificationColor = new SolidColorBrush(theme_content.RoundBorderNotificationColor);
             RoundNotificationColor = new SolidColorBrush(theme_content.RoundNotificationColor);
 
             BackgroundImage = new BitmapImage(new Uri(Path.Combine(path_module, theme_content.BackgroundImagePath)));

@@ -568,6 +568,10 @@ namespace SerrisCodeEditorEngine
                     EditorLoaded?.Invoke(this, new EventArgs());
                     break;
 
+                case "change":
+                    EditorCommands?.Invoke(this, new EventSCEE { message = "change" });
+                    break;
+
             }
 
             if (e.Value.Contains("tab_select:///"))

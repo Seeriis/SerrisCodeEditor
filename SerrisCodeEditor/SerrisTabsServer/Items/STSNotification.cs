@@ -3,6 +3,7 @@
     public enum TypeUpdateTab
     {
         TabUpdated,
+        TabNewModifications,
         NewTab,
         TabDeleted,
         NewList,

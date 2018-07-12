@@ -149,6 +149,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 string content = await ContentViewer.GetCode();
                                 await TabsWriteManager.PushTabContentViaIDAsync(GlobalVariables.CurrentIDs, content, false);
                                 Messenger.Default.Send(new SCEENotification { type = SCEENotifType.SaveCurrentTab, answerNotification = true });
+                                ChangePushed = false;
                                 break;
 
                             case SCEENotifType.InjectionAndReturn when !notification_scee.answerNotification:
@@ -438,9 +439,19 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ContentViewer_EditorCommands(object sender, SerrisCodeEditorEngine.Items.EventSCEE e)
         {
-            if (e.message == "click")
+            switch(e.message)
             {
-                UpdateUI(false, false);
+                case "click":
+                    UpdateUI(false, false);
+                    break;
+
+                case "change":
+                    if(!ChangePushed)
+                    {
+                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabNewModifications, ID = GlobalVariables.CurrentIDs });
+                        ChangePushed = true;
+                    }
+                    break;
             }
         }
 
@@ -550,6 +561,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 GlobalVariables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
                 ContentViewer.Code = Queue_Tabs[0].code;
+                ChangePushed = false;
 
                 Queue_Tabs.RemoveAt(0);
                 CanManageQueue = true;
@@ -591,7 +603,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
         double OpenPaneLengthOriginal = 0;
 
     }
