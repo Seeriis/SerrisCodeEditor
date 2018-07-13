@@ -312,11 +312,9 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void LoadSettings()
         {
-
             //LINE NUMBERS
             if (AppSettings.Values.ContainsKey("editor_linenumbers"))
                 ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: " + ((bool)AppSettings.Values["editor_linenumbers"]).ToString().ToLower() + "});");
-
 
             //WRAPPING CODE
             if (AppSettings.Values.ContainsKey("editor_wordwrap"))
@@ -602,11 +600,13 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SheetViewSeparatorLine_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
+            SheetViewSeparatorLine.Opacity = 0.8;
             Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.SizeWestEast, 1);
         }
 
         private void SheetViewSeparatorLine_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+            SheetViewSeparatorLine.Opacity = 1;
             Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
         }
 
