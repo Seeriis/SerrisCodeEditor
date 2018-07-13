@@ -39,7 +39,7 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
         double OpenPaneLengthOriginal = 0;
 
 

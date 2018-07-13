@@ -92,7 +92,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "ui_closepanelauto",
-                        VarSaveDefaultContent = false
+                        VarSaveDefaultContent = true
                     },
 
                     new Setting
