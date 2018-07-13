@@ -315,29 +315,16 @@ namespace SerrisCodeEditor.Xaml.Views
 
             //LINE NUMBERS
             if (AppSettings.Values.ContainsKey("editor_linenumbers"))
-            {
-                if((bool)AppSettings.Values["editor_linenumbers"])
-                {
-                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: true });");
-                }
-                else
-                {
-                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: false });");
-                }
-            }
+                ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: " + ((bool)AppSettings.Values["editor_linenumbers"]).ToString().ToLower() + "});");
+
 
             //WRAPPING CODE
             if (AppSettings.Values.ContainsKey("editor_wordwrap"))
-            {
-                if ((bool)AppSettings.Values["editor_wordwrap"])
-                {
-                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: 'wordWrapColumn', wordWrapMinified: true });");
-                }
-                else
-                {
-                    ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: 'none', wordWrapMinified: false });");
-                }
-            }
+                ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: " + ((bool)AppSettings.Values["editor_wordwrap"]).ToString().ToLower() + "});");
+
+            //MINIMAP
+            if (AppSettings.Values.ContainsKey("editor_minimap"))
+                ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ minimap: { enabled: " + ((bool)AppSettings.Values["editor_minimap"]).ToString().ToLower() + "} });");
 
             //FONT FAMILY
             if (AppSettings.Values.ContainsKey("editor_fontfamily"))

@@ -30,6 +30,15 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
+                        Description = "Show minimap",
+                        Type = SettingType.Checkbox,
+
+                        VarSaveName = "editor_minimap",
+                        VarSaveDefaultContent = true
+                    },
+
+                    new Setting
+                    {
                         Description = "Wrapping code",
                         Type = SettingType.Checkbox,
 
