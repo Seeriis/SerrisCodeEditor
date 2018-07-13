@@ -16,5 +16,8 @@
         public string code { get; set; }
         public string typeCode { get; set; }
         public string typeLanguage { get; set; }
+
+        public int cursorPositionLineNumber { get; set; }
+        public int cursorPositionColumn { get; set; }
     }
 }

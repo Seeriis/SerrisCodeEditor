@@ -191,9 +191,16 @@ namespace SerrisCodeEditor.Xaml.Components
                         TabIcon.Visibility = Visibility.Collapsed;
                         FolderIcon.Visibility = Visibility.Visible;
 
-                        if(TempTabID != current_tab.ID && TabsList.ListID != current_list)
+                        if (TempTabID != current_tab.ID && TabsList.ListID != current_list)
                         {
-                            ShowInfos.Begin();
+                            if(current_tab.FolderOpened)
+                            {
+                                ShowInfos.Begin(); infos_opened = true;
+                            }
+                            else
+                            {
+                                infos_opened = false;
+                            }
 
                             TabsList.ListTabs.Items.Clear();
                             TempTabID = current_tab.ID;
@@ -251,38 +258,56 @@ namespace SerrisCodeEditor.Xaml.Components
             if (infos_opened)
             {
                 RemoveInfos.Begin(); infos_opened = false;
+
+                if(current_tab.TabContentType == ContentType.Folder)
+                {
+                    current_tab.FolderOpened = false;
+                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                }
             }
             else
             {
                 enable_selection = false;
-                try
+
+                switch(current_tab.TabContentType)
                 {
-                    StorageFile file = await StorageFile.GetFileFromPathAsync(current_tab.PathContent);
-                    BasicProperties properties = await file.GetBasicPropertiesAsync();
-
-                    if (properties.Size != 0)
-                    {
-
-                        if (properties.Size > 1024f) //Ko
+                    case ContentType.File:
+                        try
                         {
-                            size_file.Text = String.Format("{0:0.00}", (properties.Size / 1024f)) + " Ko";
+                            StorageFile file = await StorageFile.GetFileFromPathAsync(current_tab.PathContent);
+                            BasicProperties properties = await file.GetBasicPropertiesAsync();
 
-                            if ((properties.Size / 1024f) > 1024f) //Mo
+                            if (properties.Size != 0)
                             {
-                                size_file.Text = String.Format("{0:0.00}", ((properties.Size / 1024f) / 1024f)) + " Mo";
+
+                                if (properties.Size > 1024f) //Ko
+                                {
+                                    size_file.Text = String.Format("{0:0.00}", (properties.Size / 1024f)) + " Ko";
+
+                                    if ((properties.Size / 1024f) > 1024f) //Mo
+                                    {
+                                        size_file.Text = String.Format("{0:0.00}", ((properties.Size / 1024f) / 1024f)) + " Mo";
+                                    }
+                                }
+                                else //Octect
+                                {
+                                    size_file.Text = properties.Size + " Octect(s)";
+                                }
+
                             }
-                        }
-                        else //Octect
-                        {
-                            size_file.Text = properties.Size + " Octect(s)";
-                        }
 
-                    }
+                            modified_file.Text = properties.DateModified.ToString();
+                            created_file.Text = file.DateCreated.ToString();
+                        }
+                        catch { }
 
-                    modified_file.Text = properties.DateModified.ToString();
-                    created_file.Text = file.DateCreated.ToString();
+                        break;
+
+                    case ContentType.Folder:
+                        current_tab.FolderOpened = true;
+                        await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                        break;
                 }
-                catch { }
 
                 ShowInfos.Begin(); infos_opened = true; enable_selection = true;
             }

@@ -113,7 +113,8 @@ namespace SerrisTabsServer.Manager
                             if (file != null)
                             {
                                 StorageApplicationPermissions.FutureAccessList.Add(file);
-                                if(file.ContentType.Contains("text") || file.ContentType.Contains("application/javascript"))
+
+                                if (file.ContentType.Contains("text") || LanguagesHelper.IsFileLanguageIsCompatible(file.Name))
                                 {
                                     var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
@@ -139,7 +140,7 @@ namespace SerrisTabsServer.Manager
 
                     });
                 }
-                await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = list_ids }, IDList, true);
+                await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = list_ids, FolderOpened = true }, IDList, true);
 
             }
 
@@ -160,7 +161,7 @@ namespace SerrisTabsServer.Manager
                     {
                         StorageFile file = (StorageFile)Item;
 
-                        if(file.ContentType.Contains("text") || file.ContentType.Contains("application/javascript"))
+                        if(file.ContentType.Contains("text") || LanguagesHelper.IsFileLanguageIsCompatible(file.Name))
                         {
                             var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
@@ -177,7 +178,7 @@ namespace SerrisTabsServer.Manager
                     }
                 }
 
-                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, TabInvisibleByDefault = true }, IDList, false);
+                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, FolderOpened = true, TabInvisibleByDefault = true }, IDList, false);
             });
         }
 

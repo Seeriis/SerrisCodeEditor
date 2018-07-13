@@ -74,7 +74,7 @@ namespace SerrisCodeEditor.Xaml.Components
                             TabType = tab.TabType.ToUpper();
 
                         if (tab != null)
-                            Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName });
+                            Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName, cursorPositionColumn = tab.TabCursorPosition.column, cursorPositionLineNumber = tab.TabCursorPosition.row });
 
                         AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)ListTabs.SelectedItem).ID_Tab;
                         AppSettings.Values["Tabs_list-selected-index"] = ((TabID)ListTabs.SelectedItem).ID_TabsList;

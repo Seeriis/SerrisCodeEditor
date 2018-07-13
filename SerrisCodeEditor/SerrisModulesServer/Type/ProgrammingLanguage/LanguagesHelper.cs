@@ -27,6 +27,25 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
             return "txt";
         }
 
+        public static bool IsFileLanguageIsCompatible(string Filename)
+        {
+            string Extension = Path.GetExtension(Filename);
+
+            foreach (var Module in ModulesAccessManager.GetSpecificModules(true, ModuleTypesList.ProgrammingLanguage))
+            {
+                if (Module.ProgrammingLanguageFilesExtensions.Contains(Extension))
+                {
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return false;
+        }
+
         public static int GetModuleIDOfLangageType(string LangType)
         {
             string Type = LangType.ToLower();

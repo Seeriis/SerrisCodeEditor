@@ -25,6 +25,7 @@ namespace SerrisTabsServer.Items
 
         //If "TabContentType" == 1
         public List<int> FolderContent { get; set; }
+        public bool FolderOpened { get; set; }
 
         //If "TabContentType" == 0
         public bool TabInvisibleByDefault { get; set; }

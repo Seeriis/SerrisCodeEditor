@@ -26,6 +26,7 @@ using System.Text;
 using Windows.UI.Input;
 using SerrisModulesServer.Type.Theme;
 using Windows.UI.Xaml.Media;
+using SerrisCodeEditorEngine.Items;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -543,8 +544,15 @@ namespace SerrisCodeEditor.Xaml.Views
                 {
                     if (GlobalVariables.CurrentIDs.ID_Tab != 0)
                     {
+                        //Code content
                         string content = await ContentViewer.GetCode();
                         SerrisModulesServer.Manager.AsyncHelpers.RunSync(() => TabsWriteManager.PushTabContentViaIDAsync(GlobalVariables.CurrentIDs, content, false));
+
+                        //Cursor position
+                        PositionSCEE CursorPosition = await ContentViewer.GetCursorPosition();
+                        InfosTab Tab = TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs);
+                        Tab.TabCursorPosition = new CursorPosition { column = CursorPosition.column, row = CursorPosition.row };
+                        await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList);
                     }
                 }
                 catch { }
@@ -563,6 +571,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 GlobalVariables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
                 ContentViewer.Code = Queue_Tabs[0].code;
+                ContentViewer.SetCursorPosition(new PositionSCEE { column = Queue_Tabs[0].cursorPositionColumn, row = Queue_Tabs[0].cursorPositionLineNumber });
                 ChangePushed = false;
 
                 Queue_Tabs.RemoveAt(0);

@@ -371,8 +371,8 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] row = { "'' + editor.getCursorPosition().row" };
-                string[] column = { "'' + editor.getCursorPosition().column" };
+                string[] row = { "'' + editor.getPosition().lineNumber" };
+                string[] column = { "'' + editor.getPosition().column" };
                 return new PositionSCEE
                 {
                     row = int.Parse(await editor_view.InvokeScriptAsync("eval", row)),
@@ -389,7 +389,7 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                string[] set_code = { $"editor.setPosition(new monaco.Position({pos.row},{pos.column}));" };
+                string[] set_code = { $"editor.setPosition(new monaco.Position({pos.row},{pos.column})); editor.revealLineInCenter(editor.getPosition().lineNumber);" };
                 await editor_view.InvokeScriptAsync("eval", set_code);
             }
         }
