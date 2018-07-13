@@ -47,6 +47,7 @@ namespace SerrisCodeEditor.Xaml.Views
         public EditorView()
         {
             InitializeComponent();
+            Application.Current.Suspending += Current_Suspending;
         }
 
         private void EditorViewUI_Loaded(object sender, RoutedEventArgs e)
@@ -58,6 +59,34 @@ namespace SerrisCodeEditor.Xaml.Views
 
             PointerMoved += EditorView_PointerMoved;
             PointerReleased += SeparatorLinePointerReleased;
+        }
+
+        private async void Current_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+            var deferral = e.SuspendingOperation.GetDeferral();
+
+            try
+            {
+                if (GlobalVariables.CurrentIDs.ID_Tab != 0)
+                {
+                    //Code content
+                    string content = await ContentViewer.GetCode();
+                    await TabsWriteManager.PushTabContentViaIDAsync(GlobalVariables.CurrentIDs, content, false);
+
+                    //Cursor position
+                    PositionSCEE CursorPosition = await ContentViewer.GetCursorPosition();
+                    InfosTab Tab = TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs);
+                    Tab.TabCursorPosition = new CursorPosition { column = CursorPosition.column, row = CursorPosition.row };
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList);
+
+                    deferral.Complete();
+                }
+                else
+                {
+                    deferral.Complete();
+                }
+            }
+            catch { deferral.Complete(); }
         }
 
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -569,9 +598,10 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
 
                 GlobalVariables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
+                ContentViewer.CursorPositionColumn = Queue_Tabs[0].cursorPositionColumn;
+                ContentViewer.CursorPositionRow = Queue_Tabs[0].cursorPositionLineNumber;
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
                 ContentViewer.Code = Queue_Tabs[0].code;
-                ContentViewer.SetCursorPosition(new PositionSCEE { column = Queue_Tabs[0].cursorPositionColumn, row = Queue_Tabs[0].cursorPositionLineNumber });
                 ChangePushed = false;
 
                 Queue_Tabs.RemoveAt(0);

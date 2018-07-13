@@ -57,6 +57,20 @@ namespace SerrisCodeEditorEngine
         }
         public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(string), typeof(EditorView), null);
 
+        public int CursorPositionRow
+        {
+            get { return (int)GetValue(CursorPositionRowProperty); }
+            set { SetValue(CursorPositionRowProperty, value); }
+        }
+        public static readonly DependencyProperty CursorPositionRowProperty = DependencyProperty.Register("CursorPositionRow", typeof(int), typeof(EditorView), null);
+
+        public int CursorPositionColumn
+        {
+            get { return (int)GetValue(CursorPositionColumnProperty); }
+            set { SetValue(CursorPositionColumnProperty, value); }
+        }
+        public static readonly DependencyProperty CursorPositionColumnProperty = DependencyProperty.Register("CursorPositionColumn", typeof(int), typeof(EditorView), null);
+
         public string CodeLanguage
         {
             get { return (string)GetValue(CodeLanguageProperty); }
@@ -188,6 +202,8 @@ namespace SerrisCodeEditorEngine
                     string[] set_read = { @"editor.updateOptions({ readOnly: false});" };
                     await editor_view.InvokeScriptAsync("eval", set_read);
                 }
+
+                SetCursorPosition(new PositionSCEE { column = CursorPositionColumn, row = CursorPositionRow });
 
                 /*if (!isWindowsPhone)
                 {
