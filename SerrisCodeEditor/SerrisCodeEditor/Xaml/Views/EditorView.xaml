@@ -31,6 +31,18 @@
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="DeployUIIcon">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="10">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="DeployUIIconCollapsing">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="DeployUIIcon">
@@ -39,6 +51,14 @@
                         <ExponentialEase EasingMode="EaseOut"/>
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="DeployUIIcon">
+                <EasingDoubleKeyFrame KeyTime="0" Value="10"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <ExponentialEase EasingMode="EaseOut"/>
@@ -98,7 +118,7 @@
                         <Rectangle x:Name="ColorSheetView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Gray"/>
 
                         <my:ModuleSheetView x:Name="SheetView" PointerEntered="ModuleSheetView_PointerEntered" PointerExited="ModuleSheetView_PointerExited" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
-                        <Rectangle x:Name="SheetViewSeparatorLine" Grid.Column="1" Width="4" Fill="White" PointerPressed="SeparatorLinePointerPressed"/>
+                        <Rectangle x:Name="SheetViewSeparatorLine" Grid.Column="1" Width="4" Fill="White" PointerPressed="SeparatorLinePointerPressed" PointerEntered="SheetViewSeparatorLine_PointerEntered" PointerExited="SheetViewSeparatorLine_PointerExited"/>
                     </Grid>
                 </SplitView.Pane>
             </SplitView>

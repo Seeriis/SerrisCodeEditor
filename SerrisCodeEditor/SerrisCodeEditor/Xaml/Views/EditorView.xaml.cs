@@ -32,6 +32,17 @@ namespace SerrisCodeEditor.Xaml.Views
 
     public sealed partial class EditorView : Page
     {
+        /* =============
+         * = VARIABLES =
+         * =============
+         */
+
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
+        double OpenPaneLengthOriginal = 0;
+
+
+
         public EditorView()
         {
             InitializeComponent();
@@ -403,6 +414,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         ClosePanelAuto = (bool)AppSettings.Values["ui_closepanelauto"];
                     }
 
+                    //LEFT PANE REDUCED SETTING
                     if (AppSettings.Values.ContainsKey("ui_leftpanelength"))
                     {
                         TopSheetViewSplit.Width = (int)AppSettings.Values["ui_leftpanelength"];
@@ -410,6 +422,11 @@ namespace SerrisCodeEditor.Xaml.Views
                         ContentViewerGrid.Margin = new Thickness((int)AppSettings.Values["ui_leftpanelength"], ContentViewerGrid.Margin.Top, 0, 0);
                     }
 
+                    //LEFT PANE OPENED SETTING
+                    if (AppSettings.Values.ContainsKey("ui_leftpaneopenlength"))
+                    {
+                        SheetViewSplit.OpenPaneLength = (int)AppSettings.Values["ui_leftpaneopenlength"];
+                    }
 
                     TextInfoTitlebar.Text = "Serris Code Editor - " + SCEELibs.SCEInfos.versionName;
                     CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -573,7 +590,7 @@ namespace SerrisCodeEditor.Xaml.Views
             SeparatorClicked = true;
 
             if(OpenPaneLengthOriginal == 0)
-                OpenPaneLengthOriginal = SheetViewSplit.OpenPaneLength;
+                OpenPaneLengthOriginal = 320;
 
             //var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
             //SheetViewSplit.OpenPaneLength = pointerPosition.X + 4;
@@ -591,20 +608,20 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private void SeparatorLinePointerReleased(object sender, PointerRoutedEventArgs e)
-        => SeparatorClicked = false;
+        {
+            SeparatorClicked = false;
+            AppSettings.Values["ui_leftpaneopenlength"] = Convert.ToInt32(SheetViewSplit.OpenPaneLength);
+        }
 
+        private void SheetViewSeparatorLine_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.SizeWestEast, 1);
+        }
 
-
-        /* =============
-         * = VARIABLES =
-         * =============
-         */
-
-
-
-        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = false, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
-        double OpenPaneLengthOriginal = 0;
+        private void SheetViewSeparatorLine_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+        }
 
     }
 

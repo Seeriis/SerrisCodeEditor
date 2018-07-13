@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -273,6 +274,16 @@ namespace SerrisCodeEditor.Xaml.Views
                                 {
                                     TextBlock LinkContent = (TextBlock)e;
                                     await Windows.System.Launcher.LaunchUriAsync(new Uri(LinkContent.Text));
+                                });
+
+                                Link.PointerEntered += ((e, f) =>
+                                {
+                                    Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+                                });
+
+                                Link.PointerExited += ((e, f) =>
+                                {
+                                    Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
                                 });
 
                                 LinkControl.Children.Add(Link);

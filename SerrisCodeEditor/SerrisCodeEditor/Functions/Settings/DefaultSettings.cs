@@ -88,11 +88,20 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Left pane length (in pixel)",
+                        Description = "Left pane reduced length (in pixel)",
                         Type = SettingType.TextboxNumber,
 
                         VarSaveName = "ui_leftpanelength",
                         VarSaveDefaultContent = 60
+                    },
+
+                    new Setting
+                    {
+                        Description = "Left pane open length (in pixel)",
+                        Type = SettingType.TextboxNumber,
+
+                        VarSaveName = "ui_leftpaneopenlength",
+                        VarSaveDefaultContent = 320
                     }
                 }
 
