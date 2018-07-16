@@ -41,6 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
         bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
         double OpenPaneLengthOriginal = 0;
+        string TitlebarText = $"Serris Code Editor ( {SCEELibs.SCEInfos.versionName} )";
 
 
 
@@ -133,6 +134,11 @@ namespace SerrisCodeEditor.Xaml.Views
                             case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
                                 ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
                                 break;
+                        }
+
+                        if (GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.Desktop)
+                        {
+                            SetTilebarText(notification.tabName);
                         }
                     }
                     catch { }
@@ -443,8 +449,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         SheetViewSplit.OpenPaneLength = (int)AppSettings.Values["ui_leftpaneopenlength"];
                     }
 
-                    TextInfoTitlebar.Text = "Serris Code Editor - " + SCEELibs.SCEInfos.versionName;
-                    CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    SetTilebarText("");
                     CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
                     Window.Current.SetTitleBar(focus_titlebar);
@@ -467,6 +472,17 @@ namespace SerrisCodeEditor.Xaml.Views
                 EditorStartModulesEventsLaunched = true;
             }
 
+        }
+
+        public void SetTilebarText(string Text)
+        {
+            string NewText = "";
+
+            if (Text != "")
+                NewText = Text + " - ";
+
+            TextInfoTitlebar.Text = $"{NewText}Serris Code Editor ({SCEELibs.SCEInfos.versionName})";
+            ApplicationView.GetForCurrentView().Title = Text;
         }
 
         private void ContentViewer_EditorCommands(object sender, SerrisCodeEditorEngine.Items.EventSCEE e)

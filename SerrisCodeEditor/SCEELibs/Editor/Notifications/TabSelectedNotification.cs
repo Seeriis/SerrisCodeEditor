@@ -19,5 +19,7 @@
 
         public int cursorPositionLineNumber { get; set; }
         public int cursorPositionColumn { get; set; }
+
+        public string tabName { get; set; }
     }
 }
