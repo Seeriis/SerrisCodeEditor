@@ -179,6 +179,9 @@ namespace SerrisCodeEditor.Xaml.Components
                         TabIcon.Visibility = Visibility.Visible;
                         FolderIcon.Visibility = Visibility.Collapsed;
                         StackInfos.Visibility = Visibility.Visible;
+
+                        MaxHeightAnimShow.Value = 200;
+                        MaxHeightAnimRemove.Value = 200;
                         break;
 
                     case ContentType.Folder:
@@ -221,7 +224,9 @@ namespace SerrisCodeEditor.Xaml.Components
                                 catch { }
                             }
                         }
-                        
+
+                        MaxHeightAnimShow.Value = 1500;
+                        MaxHeightAnimRemove.Value = 1500;
                         break;
                 }
 

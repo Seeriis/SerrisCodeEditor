@@ -352,6 +352,10 @@ namespace SerrisCodeEditor.Xaml.Views
             if (AppSettings.Values.ContainsKey("editor_linenumbers"))
                 ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ lineNumbers: " + ((bool)AppSettings.Values["editor_linenumbers"]).ToString().ToLower() + "});");
 
+            //QUICK SUGGESTIONS
+            if (AppSettings.Values.ContainsKey("editor_quicksuggestions"))
+                ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ quickSuggestions: " + ((bool)AppSettings.Values["editor_quicksuggestions"]).ToString().ToLower() + "});");
+
             //WRAPPING CODE
             if (AppSettings.Values.ContainsKey("editor_wordwrap"))
                 ContentViewer.SendAndExecuteJavaScript("editor.updateOptions({ wordWrap: " + ((bool)AppSettings.Values["editor_wordwrap"]).ToString().ToLower() + "});");

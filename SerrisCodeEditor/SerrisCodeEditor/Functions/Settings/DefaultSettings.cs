@@ -39,6 +39,15 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
+                        Description = "Show quick suggestions",
+                        Type = SettingType.Checkbox,
+
+                        VarSaveName = "editor_quicksuggestions",
+                        VarSaveDefaultContent = true
+                    },
+
+                    new Setting
+                    {
                         Description = "Wrapping code",
                         Type = SettingType.Checkbox,
 

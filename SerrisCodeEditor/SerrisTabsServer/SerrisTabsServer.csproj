@@ -119,6 +119,7 @@
     <Compile Include="Manager\TabsAccessManager.cs" />
     <Compile Include="Manager\TabsCreatorAssistant.cs" />
     <Compile Include="Manager\TabsWriteManager.cs" />
+    <Compile Include="Storage\StorageTypes\OneDrive.cs" />
     <EmbeddedResource Include="Properties\SerrisTabsServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
