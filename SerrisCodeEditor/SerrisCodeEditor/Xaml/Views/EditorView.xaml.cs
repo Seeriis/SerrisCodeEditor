@@ -27,6 +27,7 @@ using Windows.UI.Input;
 using SerrisModulesServer.Type.Theme;
 using Windows.UI.Xaml.Media;
 using SerrisCodeEditorEngine.Items;
+using Windows.UI.Xaml.Navigation;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -39,9 +40,10 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false;
         double OpenPaneLengthOriginal = 0;
         string TitlebarText = $"Serris Code Editor ( {SCEELibs.SCEInfos.versionName} )";
+        IReadOnlyList<IStorageItem> OpenedFiles;
 
 
 
@@ -49,6 +51,24 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             InitializeComponent();
             Application.Current.Suspending += Current_Suspending;
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var args = e.Parameter as Windows.ApplicationModel.Activation.IActivatedEventArgs;
+
+            if (args != null)
+            {
+
+                if (args.Kind == Windows.ApplicationModel.Activation.ActivationKind.File)
+                {
+                    var fileArgs = args as Windows.ApplicationModel.Activation.FileActivatedEventArgs;
+                    OpenedFiles = fileArgs.Files;
+                    FilesWasOpened = true;
+                }
+
+            }
         }
 
         private void EditorViewUI_Loaded(object sender, RoutedEventArgs e)
@@ -623,6 +643,13 @@ namespace SerrisCodeEditor.Xaml.Views
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
                 ContentViewer.Code = Queue_Tabs[0].code;
                 ChangePushed = false;
+
+                //Files opened with files associations
+                if (FilesWasOpened)
+                {
+                    await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
+                    FilesWasOpened = false; OpenedFiles = null;
+                }
 
                 Queue_Tabs.RemoveAt(0);
                 CanManageQueue = true;

@@ -5,6 +5,7 @@
         TabUpdated,
         TabNewModifications,
         NewTab,
+        SelectTab,
         TabDeleted,
         NewList,
         ListDeleted

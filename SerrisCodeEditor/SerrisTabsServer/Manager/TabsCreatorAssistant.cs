@@ -215,5 +215,53 @@ namespace SerrisTabsServer.Manager
 
             return list_ids;
         }
+
+        public static async Task<List<int>> OpenFilesAlreadyOpenedAndCreateNewTabsFiles(int IDList, IReadOnlyList<IStorageItem> files)
+        {
+            var list_ids = new List<int>();
+
+            foreach (StorageFile file in files)
+            {
+                await Task.Run(() =>
+                {
+                    bool FileAlreadyAvailable = false; int IDSelectedFile = 0;
+
+                    if (file != null)
+                    {
+                        foreach (InfosTab Tab in TabsAccessManager.GetTabsListViaID(IDList).tabs)
+                        {
+                            if (Tab.PathContent == file.Path)
+                            {
+                                IDSelectedFile = Tab.ID;
+                                FileAlreadyAvailable = true;
+                                break;
+                            }
+                        }
+
+                        if(!FileAlreadyAvailable)
+                        {
+                            StorageApplicationPermissions.FutureAccessList.Add(file);
+
+                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = StorageListTypes.LocalStorage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+
+                            int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
+                            if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
+                            {
+                                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                            }
+
+                            list_ids.Add(id_tab);
+                        }
+                        else
+                        {
+                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.SelectTab, ID = new TabID { ID_Tab = IDSelectedFile, ID_TabsList = IDList } });
+                        }
+                    }
+
+                });
+            }
+
+            return list_ids;
+        }
     }
 }

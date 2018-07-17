@@ -20,6 +20,64 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="source_code_file">
+            <uap:DisplayName>Source code file</uap:DisplayName>
+            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:InfoTip>Source code file natively compatible with Serris Code Editor</uap:InfoTip>
+            <uap:EditFlags OpenIsSafe="true" />
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="text/plain">.css</uap:FileType>
+              <uap:FileType ContentType="text/plain">.html</uap:FileType>
+              <uap:FileType ContentType="text/plain">.js</uap:FileType>
+              <uap:FileType ContentType="text/plain">.htm</uap:FileType>
+              <uap:FileType ContentType="text/plain">.php</uap:FileType>
+              <uap:FileType ContentType="text/plain">.txt</uap:FileType>
+              <uap:FileType ContentType="text/plain">.cs</uap:FileType>
+              <uap:FileType ContentType="text/plain">.class</uap:FileType>
+              <uap:FileType ContentType="text/plain">.py</uap:FileType>
+              <uap:FileType ContentType="text/plain">.pyc</uap:FileType>
+              <uap:FileType ContentType="text/plain">.pyd</uap:FileType>
+              <uap:FileType ContentType="text/plain">.rb</uap:FileType>
+              <uap:FileType ContentType="text/plain">.coffee</uap:FileType>
+              <uap:FileType ContentType="text/plain">.cpp</uap:FileType>
+              <uap:FileType ContentType="text/plain">.c</uap:FileType>
+              <uap:FileType ContentType="text/plain">.h</uap:FileType>
+              <uap:FileType ContentType="text/plain">.hh</uap:FileType>
+              <uap:FileType ContentType="text/plain">.csp</uap:FileType>
+              <uap:FileType ContentType="text/plain">.dockerfile</uap:FileType>
+              <uap:FileType ContentType="text/plain">.fs</uap:FileType>
+              <uap:FileType ContentType="text/plain">.go</uap:FileType>
+              <uap:FileType ContentType="text/plain">.ini</uap:FileType>
+              <uap:FileType ContentType="text/plain">.less</uap:FileType>
+              <uap:FileType ContentType="text/plain">.lua</uap:FileType>
+              <uap:FileType ContentType="text/plain">.md</uap:FileType>
+              <uap:FileType ContentType="text/plain">.markdown</uap:FileType>
+              <uap:FileType ContentType="text/plain">.msdax</uap:FileType>
+              <uap:FileType ContentType="text/plain">.sql</uap:FileType>
+              <uap:FileType ContentType="text/plain">.m</uap:FileType>
+              <uap:FileType ContentType="text/plain">.mm</uap:FileType>
+              <uap:FileType ContentType="text/plain">.psc1</uap:FileType>
+              <uap:FileType ContentType="text/plain">.pug</uap:FileType>
+              <uap:FileType ContentType="text/plain">.r</uap:FileType>
+              <uap:FileType ContentType="text/plain">.cshtml</uap:FileType>
+              <uap:FileType ContentType="text/plain">.vbhtml</uap:FileType>
+              <uap:FileType ContentType="text/plain">.rdb</uap:FileType>
+              <uap:FileType ContentType="text/plain">.sb</uap:FileType>
+              <uap:FileType ContentType="text/plain">.sb2</uap:FileType>
+              <uap:FileType ContentType="text/plain">.sass</uap:FileType>
+              <uap:FileType ContentType="text/plain">.scss</uap:FileType>
+              <uap:FileType ContentType="text/plain">.sol</uap:FileType>
+              <uap:FileType ContentType="text/plain">.swift</uap:FileType>
+              <uap:FileType ContentType="text/plain">.vb</uap:FileType>
+              <uap:FileType ContentType="text/plain">.xml</uap:FileType>
+              <uap:FileType ContentType="text/plain">.yaml</uap:FileType>
+              <uap:FileType ContentType="text/plain">.json</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

@@ -6,6 +6,7 @@ using SerrisModulesServer;
 using SerrisModulesServer.Items;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Theme;
+using SerrisTabsServer.Manager;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -28,6 +29,72 @@ namespace SerrisCodeEditor
         {
             InitializeComponent();
             Suspending += OnSuspending;
+        }
+
+        protected override async void OnFileActivated(FileActivatedEventArgs args)
+        {
+            var rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame == null)
+            {
+                SMSInitialize.InitializeSMSJson();
+                GlobalVariables.CurrentTheme = await new ThemeReader(ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
+
+                Messenger.Default.Register<SMSNotification>(this, async (notification) =>
+                {
+                    try
+                    {
+                        switch (notification.Type)
+                        {
+                            case TypeUpdateModule.CurrentThemeUpdated:
+                                GlobalVariables.CurrentTheme = await new ThemeReader(notification.ID).GetThemeBrushesContent();
+                                Messenger.Default.Send(new EditorViewNotification { ID = 0, type = EditorViewNotificationType.UpdateUI });
+                                break;
+                        }
+                    }
+                    catch { }
+                });
+
+                Messenger.Default.Register<TempContentNotification>(this, (notification) =>
+                {
+                    try
+                    {
+                        switch (notification.type)
+                        {
+                            case TempContentType.currentIDs when !notification.answerNotification:
+                                Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentIDs, content = GlobalVariables.CurrentIDs });
+                                break;
+
+                            case TempContentType.currentDevice when !notification.answerNotification:
+                                Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentDevice, content = GlobalVariables.CurrentDevice });
+                                break;
+
+                            case TempContentType.currentTheme when !notification.answerNotification:
+                                Messenger.Default.Send(new TempContentNotification { answerNotification = true, type = TempContentType.currentTheme, content = GlobalVariables.CurrentTheme });
+                                break;
+                        }
+                    }
+                    catch { }
+                });
+
+                rootFrame = new Frame();
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+
+                Window.Current.Content = rootFrame;
+
+                if (rootFrame.Content == null)
+                {
+                    rootFrame.Navigate(typeof(EditorView), args);
+                }
+                Window.Current.Activate();
+            }
+            else
+            {
+                await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, args.Files);
+            }
+
+
         }
 
         /// <summary>

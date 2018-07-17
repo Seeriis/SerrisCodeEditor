@@ -118,6 +118,20 @@ namespace SerrisCodeEditor.Xaml.Components
                                     ListTabDeleted?.Invoke(this, notification.ID);
 
                                     break;
+
+                                case TypeUpdateTab.SelectTab:
+                                    int Position = 0;
+                                    foreach (TabID CurrId in ListTabs.Items)
+                                    {
+                                        if (CurrId.ID_Tab == notification.ID.ID_Tab && CurrId.ID_TabsList == notification.ID.ID_TabsList)
+                                        {
+                                            ListTabs.SelectedIndex = Position;
+                                            break;
+                                        }
+
+                                        Position++;
+                                    }
+                                    break;
                             }
 
                         }

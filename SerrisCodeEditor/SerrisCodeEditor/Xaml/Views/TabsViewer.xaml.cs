@@ -255,6 +255,20 @@ namespace SerrisCodeEditor.Xaml.Views
                                     }
                                     break;
 
+                                case TypeUpdateTab.SelectTab:
+                                    int Position = 0;
+                                    foreach(TabID CurrId in Tabs.Items)
+                                    {
+                                        if(CurrId.ID_Tab == notification.ID.ID_Tab && CurrId.ID_TabsList == notification.ID.ID_TabsList)
+                                        {
+                                            Tabs.SelectedIndex = Position;
+                                            break;
+                                        }
+
+                                        Position++;
+                                    }
+                                    break;
+
                                 case TypeUpdateTab.TabDeleted:
                                     if(await TabsWriteManager.DeleteTabAsync(notification.ID))
                                     {
