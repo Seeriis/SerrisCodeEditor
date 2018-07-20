@@ -20,7 +20,6 @@ namespace SerrisTabsServer.Items
     public class InfosTab
     {
         public int ID { get; set; }
-        public string PathContent { get; set; }
         public ContentType TabContentType { get; set; }
 
         //If "TabContentType" == 1
@@ -29,7 +28,7 @@ namespace SerrisTabsServer.Items
 
         //If "TabContentType" == 0
         public bool TabInvisibleByDefault { get; set; }
-        public string TabAccessOriginalContent { get; set; }
+        public string TabOriginalPathContent { get; set; }
         public StorageListTypes TabStorageMode { get; set; }
         public string TabType { get; set; }
         public string TabName { get; set; }

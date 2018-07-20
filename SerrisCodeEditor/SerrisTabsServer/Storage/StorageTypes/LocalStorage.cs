@@ -36,7 +36,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
                     Tab.TabDateModified = date.DateModified.ToString();
                     Tab.TabType = LanguagesHelper.GetLanguageType(file.FileType);
-                    Tab.PathContent = file.Path;
+                    Tab.TabOriginalPathContent = file.Path;
 
                     await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
                 }
@@ -47,21 +47,21 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async void DeleteFile()
         {
-            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.TabOriginalPathContent).AsTask());
             await file.DeleteAsync();
             Tab.TabStorageMode = StorageListTypes.Nothing;
-            Tab.PathContent = "";
+            Tab.TabOriginalPathContent = "";
             await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
         }
 
         public async Task<bool> ReadFile(bool ReplaceEncoding)
         {
-            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.TabOriginalPathContent).AsTask());
             string encode_type = "";
 
             await Task.Run(() =>
             {
-                using (FileStream fs = File.OpenRead(Tab.PathContent))
+                using (FileStream fs = File.OpenRead(Tab.TabOriginalPathContent))
                 {
                     var cdet = new Ude.CharsetDetector();
                     cdet.Feed(fs);
@@ -94,12 +94,12 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task<string> ReadFileAndGetContent()
         {
-            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.PathContent).AsTask());
+            StorageFile file = AsyncHelpers.RunSync(() => StorageFile.GetFileFromPathAsync(Tab.TabOriginalPathContent).AsTask());
             string encode_type = "", content = "";
 
             await Task.Run(() =>
             {
-                using (FileStream fs = File.OpenRead(Tab.PathContent))
+                using (FileStream fs = File.OpenRead(Tab.TabOriginalPathContent))
                 {
                     var cdet = new Ude.CharsetDetector();
                     cdet.Feed(fs);
@@ -126,7 +126,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
             {
                 try
                 {
-                    StorageFile file = await StorageFile.GetFileFromPathAsync(Tab.PathContent);
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(Tab.TabOriginalPathContent);
 
                     if (file != null)
                     {

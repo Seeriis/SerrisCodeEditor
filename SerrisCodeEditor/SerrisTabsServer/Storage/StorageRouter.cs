@@ -10,7 +10,6 @@ namespace SerrisTabsServer.Storage
     {
         Nothing,
         LocalStorage,
-        Network,
         OneDrive
     }
 
@@ -31,10 +30,8 @@ namespace SerrisTabsServer.Storage
                     await new LocalStorage(tab, IdList).CreateFile();
                     break;
 
-                case StorageListTypes.Network:
-                    break;
-
                 case StorageListTypes.OneDrive:
+                    await new OneDrive(tab, IdList).CreateFile();
                     break;
             }
         }
@@ -47,10 +44,8 @@ namespace SerrisTabsServer.Storage
                     new LocalStorage(tab, IdList).DeleteFile();
                     break;
 
-                case StorageListTypes.Network:
-                    break;
-
                 case StorageListTypes.OneDrive:
+                    new OneDrive(tab, IdList).DeleteFile();
                     break;
             }
         }
@@ -62,11 +57,8 @@ namespace SerrisTabsServer.Storage
                 case StorageListTypes.LocalStorage:
                     return await new LocalStorage(tab, IdList).ReadFile(ReplaceEncoding);
 
-                case StorageListTypes.Network:
-                    break;
-
                 case StorageListTypes.OneDrive:
-                    break;
+                    return await new OneDrive(tab, IdList).ReadFile(ReplaceEncoding);
             }
 
             return false;
@@ -79,11 +71,8 @@ namespace SerrisTabsServer.Storage
                 case StorageListTypes.LocalStorage:
                     return await new LocalStorage(tab, IdList).ReadFileAndGetContent();
 
-                case StorageListTypes.Network:
-                    return "";
-
                 case StorageListTypes.OneDrive:
-                    return "";
+                    return await new OneDrive(tab, IdList).ReadFileAndGetContent();
 
                 default:
                     return "";
@@ -98,10 +87,8 @@ namespace SerrisTabsServer.Storage
                     await new LocalStorage(tab, IdList).WriteFile();
                     break;
 
-                case StorageListTypes.Network:
-                    break;
-
                 case StorageListTypes.OneDrive:
+                    await new OneDrive(tab, IdList).WriteFile();
                     break;
             }
 

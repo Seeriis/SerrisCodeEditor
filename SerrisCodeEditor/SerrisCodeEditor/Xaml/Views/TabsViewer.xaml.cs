@@ -41,6 +41,17 @@ namespace SerrisCodeEditor.Xaml.Views
 
     public sealed partial class TabsViewer : UserControl
     {
+        /* =============
+         * = VARIABLES =
+         * =============
+         */
+
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
+        int CurrentCreationType = -1;
+        string TabTemplateContent = "";
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+
+
         public TabsViewer()
         { this.InitializeComponent(); }
 
@@ -415,15 +426,27 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if(CurrentSelectedIDs.ID_Tab != 0)
             {
+                StorageListTypes SelectedType = StorageListTypes.LocalStorage;
+                switch((string)TabStorageType.SelectedValue)
+                {
+                    case "LocalStorage":
+                        SelectedType = StorageListTypes.LocalStorage;
+                        break;
+
+                    case "OneDrive":
+                        SelectedType = StorageListTypes.OneDrive;
+                        break;
+                }
+
                 switch (TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
                 {
                     case ContentType.File:
-                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, SelectedType, TabTemplateContent);
                         break;
 
                     //Create file in the selected folder !
                     case ContentType.Folder:
-                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, SelectedType, TabTemplateContent);
                         break;
                 }
             }
@@ -465,8 +488,20 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
         {
+            StorageListTypes SelectedType = StorageListTypes.LocalStorage;
+            switch ((string)TabStorageType.SelectedValue)
+            {
+                case "LocalStorage":
+                    SelectedType = StorageListTypes.LocalStorage;
+                    break;
+
+                case "OneDrive":
+                    SelectedType = StorageListTypes.OneDrive;
+                    break;
+            }
+
             LoadingGrid.IsLoading = true;
-            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, StorageListTypes.LocalStorage);
+            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, SelectedType);
             LoadingGrid.IsLoading = false;
             ShowCreatorGrid(false);
         }
@@ -549,6 +584,24 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private void TabStorageType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TabStorageType_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach(string StorageType in Enum.GetNames(typeof(StorageListTypes)))
+            {
+                if(StorageType != "Nothing")
+                {
+                    TabStorageType.Items.Add(StorageType);
+                }
+            }
+
+            TabStorageType.SelectedIndex = 0;
+        }
+
         private void BlankTabRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             TabTemplateContent = "";
@@ -574,20 +627,6 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SelectListButton_Click(object sender, RoutedEventArgs e)
         => ChangeCreationType(1);
-
-
-
-        /* =============
-         * = VARIABLES =
-         * =============
-         */
-
-
-
-        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
-        int CurrentCreationType = -1;
-        string TabTemplateContent = "";
-        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
     }
 }

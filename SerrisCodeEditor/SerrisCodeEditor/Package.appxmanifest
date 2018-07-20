@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="23a8b897-ce9c-48d8-8908-2180e39164c2" Publisher="CN=yoshi" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="23a8b897-ce9c-48d8-8908-2180e39164c2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="11528SurvivalisteProject.SerrisCodeEditor-PrivateB" Publisher="CN=85217C41-26BA-4853-BBAF-959FE22764E5" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="c69d51af-5cc0-4b99-9d3e-17b378db5f2f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>SerrisCodeEditor</DisplayName>
-    <PublisherDisplayName>yoshi</PublisherDisplayName>
+    <DisplayName>Serris Code Editor - Private Beta</DisplayName>
+    <PublisherDisplayName>Survivaliste Project</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

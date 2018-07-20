@@ -27,10 +27,10 @@ namespace SCEELibs.Tabs
             newTab.id = id;
             newTab.dateTabContentUpdated = tab.DateTabContentUpdated;
 
-            if(tab.PathContent == null)
+            if(tab.TabOriginalPathContent == null)
                 newTab.pathContent = "";
             else
-                newTab.pathContent = tab.PathContent;
+                newTab.pathContent = tab.TabOriginalPathContent;
 
             switch (tab.TabContentType)
             {

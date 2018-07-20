@@ -730,6 +730,8 @@
             <Rectangle x:Name="SeparatorA" Fill="White" VerticalAlignment="Bottom" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1" Margin="10,0,10,10"/>
 
             <StackPanel x:Name="CreatorGrid" Margin="10,0,10,10" Visibility="Collapsed">
+                <ComboBox x:Name="TabStorageType" FontSize="16" Margin="0,10,0,0" Foreground="White" Loaded="TabStorageType_Loaded" HorizontalAlignment="Center" SelectionChanged="TabStorageType_SelectionChanged" Style="{StaticResource ComboxBoxTabsList}"/>
+
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>

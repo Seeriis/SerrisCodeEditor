@@ -2,14 +2,20 @@
 using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Storage;
+using SerrisTabsServer.Xaml;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace SerrisTabsServer.Manager
 {
@@ -116,7 +122,7 @@ namespace SerrisTabsServer.Manager
 
                                 if (file.ContentType.Contains("text") || LanguagesHelper.IsFileLanguageIsCompatible(file.Name))
                                 {
-                                    var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                                    var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
                                     int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
 
@@ -140,7 +146,7 @@ namespace SerrisTabsServer.Manager
 
                     });
                 }
-                await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = list_ids, FolderOpened = true }, IDList, true);
+                await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, TabOriginalPathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = list_ids, FolderOpened = true }, IDList, true);
 
             }
 
@@ -163,7 +169,7 @@ namespace SerrisTabsServer.Manager
 
                         if(file.ContentType.Contains("text") || LanguagesHelper.IsFileLanguageIsCompatible(file.Name))
                         {
-                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = true, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
                             int id_tab = await TabsWriteManager.CreateTabAsync(tab, IDList, false);
 
@@ -178,7 +184,7 @@ namespace SerrisTabsServer.Manager
                     }
                 }
 
-                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, PathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, FolderOpened = true, TabInvisibleByDefault = true }, IDList, false);
+                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, TabOriginalPathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, FolderOpened = true, TabInvisibleByDefault = true }, IDList, false);
             });
         }
 
@@ -186,31 +192,60 @@ namespace SerrisTabsServer.Manager
         {
             var list_ids = new List<int>();
 
-            var opener = new FileOpenPicker();
-            opener.ViewMode = PickerViewMode.Thumbnail;
-            opener.SuggestedStartLocation = PickerLocationId.ComputerFolder;
-            opener.FileTypeFilter.Add("*");
-
-            IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
-            foreach (StorageFile file in files)
+            switch(type)
             {
-                await Task.Run(() =>
-                {
-                    if (file != null)
+                case StorageListTypes.LocalStorage:
+                    var opener = new FileOpenPicker();
+                    opener.ViewMode = PickerViewMode.Thumbnail;
+                    opener.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+                    opener.FileTypeFilter.Add("*");
+
+                    IReadOnlyList<StorageFile> files = await opener.PickMultipleFilesAsync();
+                    foreach (StorageFile file in files)
                     {
-                        StorageApplicationPermissions.FutureAccessList.Add(file);
-                        var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
-
-                        int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
-                        if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
+                        await Task.Run(() =>
                         {
-                            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
-                        }
+                            if (file != null)
+                            {
+                                StorageApplicationPermissions.FutureAccessList.Add(file);
+                                var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
-                        list_ids.Add(id_tab);
+                                int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
+                                if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
+                                {
+                                    Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                                }
+
+                                list_ids.Add(id_tab);
+                            }
+
+                        });
                     }
+                    break;
 
-                });
+                case StorageListTypes.OneDrive:
+                    var currentAV = ApplicationView.GetForCurrentView(); var newAV = CoreApplication.CreateNewView();
+
+                    await newAV.Dispatcher.RunAsync(
+                                    CoreDispatcherPriority.Normal,
+                                    async () =>
+                                    {
+                                        var newWindow = Window.Current;
+                                        var newAppView = ApplicationView.GetForCurrentView();
+                                        newAppView.Title = "OneDrive explorer";
+
+                                        var frame = new Frame();
+                                        frame.Navigate(typeof(OnedriveExplorer), new Tuple<OnedriveExplorerMode, TabID>(OnedriveExplorerMode.SelectFile, new TabID { ID_TabsList = IDList }));
+                                        newWindow.Content = frame;
+                                        newWindow.Activate();
+
+                                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                                            newAppView.Id,
+                                            ViewSizePreference.UseHalf,
+                                            currentAV.Id,
+                                            ViewSizePreference.UseHalf);
+                                    });
+                    break;
             }
 
             return list_ids;
@@ -230,7 +265,7 @@ namespace SerrisTabsServer.Manager
                     {
                         foreach (InfosTab Tab in TabsAccessManager.GetTabsListViaID(IDList).tabs)
                         {
-                            if (Tab.PathContent == file.Path)
+                            if (Tab.TabOriginalPathContent == file.Path)
                             {
                                 IDSelectedFile = Tab.ID;
                                 FileAlreadyAvailable = true;
@@ -242,7 +277,7 @@ namespace SerrisTabsServer.Manager
                         {
                             StorageApplicationPermissions.FutureAccessList.Add(file);
 
-                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = StorageListTypes.LocalStorage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, PathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = StorageListTypes.LocalStorage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
 
                             int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
                             if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)

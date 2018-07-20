@@ -5,6 +5,7 @@ using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
+using SerrisTabsServer.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -72,13 +73,13 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabComponent_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(current_tab.PathContent) && current_tab.TabContentType == ContentType.File)
+            if (!string.IsNullOrEmpty(current_tab.TabOriginalPathContent) && current_tab.TabContentType == ContentType.File)
                 ShowPath.Begin();
         }
 
         private void TabComponent_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(current_tab.PathContent) && current_tab.TabContentType == ContentType.File)
+            if(!string.IsNullOrEmpty(current_tab.TabOriginalPathContent) && current_tab.TabContentType == ContentType.File)
                 ShowName.Begin();
         }
 
@@ -164,9 +165,19 @@ namespace SerrisCodeEditor.Xaml.Components
                         int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
                         TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
-                        if (!string.IsNullOrEmpty(current_tab.PathContent))
+                        if (!string.IsNullOrEmpty(current_tab.TabOriginalPathContent))
                         {
-                            path_tab.Text = current_tab.PathContent;
+                            switch(current_tab.TabStorageMode)
+                            {
+                                case StorageListTypes.LocalStorage:
+                                    path_tab.Text = current_tab.TabOriginalPathContent;
+                                    break;
+
+                                case StorageListTypes.OneDrive:
+                                    path_tab.Text = "OneDrive file";
+                                    break;
+                            }
+                            
                             encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
                             More_Tab.Visibility = Visibility.Visible;
                         }
@@ -279,30 +290,67 @@ namespace SerrisCodeEditor.Xaml.Components
                     case ContentType.File:
                         try
                         {
-                            StorageFile file = await StorageFile.GetFileFromPathAsync(current_tab.PathContent);
-                            BasicProperties properties = await file.GetBasicPropertiesAsync();
-
-                            if (properties.Size != 0)
+                            switch(current_tab.TabStorageMode)
                             {
+                                case StorageListTypes.LocalStorage:
+                                    StorageFile file = await StorageFile.GetFileFromPathAsync(current_tab.TabOriginalPathContent);
+                                    BasicProperties properties = await file.GetBasicPropertiesAsync();
 
-                                if (properties.Size > 1024f) //Ko
-                                {
-                                    size_file.Text = String.Format("{0:0.00}", (properties.Size / 1024f)) + " Ko";
-
-                                    if ((properties.Size / 1024f) > 1024f) //Mo
+                                    if (properties.Size != 0)
                                     {
-                                        size_file.Text = String.Format("{0:0.00}", ((properties.Size / 1024f) / 1024f)) + " Mo";
-                                    }
-                                }
-                                else //Octect
-                                {
-                                    size_file.Text = properties.Size + " Octect(s)";
-                                }
 
+                                        if (properties.Size > 1024f) //Ko
+                                        {
+                                            size_file.Text = string.Format("{0:0.00}", (properties.Size / 1024f)) + " Ko";
+
+                                            if ((properties.Size / 1024f) > 1024f) //Mo
+                                            {
+                                                size_file.Text = string.Format("{0:0.00}", ((properties.Size / 1024f) / 1024f)) + " Mo";
+                                            }
+                                        }
+                                        else //Octect
+                                        {
+                                            size_file.Text = properties.Size + " Octect(s)";
+                                        }
+
+                                    }
+
+                                    modified_file.Text = properties.DateModified.ToString();
+                                    created_file.Text = file.DateCreated.ToString();
+                                    break;
+
+                                case StorageListTypes.OneDrive:
+                                    if(await OneDriveAuthHelper.OneDriveAuthentification())
+                                    {
+                                        var Item = await TabsDataCache.OneDriveClient.Drive.Items[current_tab.TabOriginalPathContent].Request().GetAsync();
+
+                                        if (Item.Size != 0)
+                                        {
+
+                                            if (Item.Size > 1024f) //Ko
+                                            {
+                                                size_file.Text = string.Format("{0:0.00}", (Item.Size / 1024f)) + " Ko";
+
+                                                if ((Item.Size / 1024f) > 1024f) //Mo
+                                                {
+                                                    size_file.Text = string.Format("{0:0.00}", ((Item.Size / 1024f) / 1024f)) + " Mo";
+                                                }
+                                            }
+                                            else //Octect
+                                            {
+                                                size_file.Text = Item.Size + " Octect(s)";
+                                            }
+
+                                        }
+
+                                        modified_file.Text = Item.LastModifiedDateTime.ToString();
+                                        created_file.Text = Item.CreatedDateTime.ToString();
+                                        
+                                        //path_tab.Text = System.Net.WebUtility.HtmlDecode(Item.ParentReference.Path);
+                                    }
+                                    break;
                             }
 
-                            modified_file.Text = properties.DateModified.ToString();
-                            created_file.Text = file.DateCreated.ToString();
                         }
                         catch { }
 

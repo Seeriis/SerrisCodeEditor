@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Graph;
+using Microsoft.OneDrive.Sdk;
+using Newtonsoft.Json;
 using SerrisTabsServer.Items;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,10 @@ namespace SerrisTabsServer.Manager
 {
     public static class TabsDataCache
     {
+        //ONEDRIVE VARIABLES
+        public static IOneDriveClient OneDriveClient { get; set; }
+        public static IAuthenticationProvider AuthProvider { get; set; }
+
         public static StorageFile TabsListFile;
         public static StorageFolder TabsListFolder;
         public static List<TabsList> TabsListDeserialized;
