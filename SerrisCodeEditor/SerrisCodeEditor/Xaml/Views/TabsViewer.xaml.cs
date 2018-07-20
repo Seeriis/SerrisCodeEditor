@@ -426,17 +426,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if(CurrentSelectedIDs.ID_Tab != 0)
             {
-                StorageListTypes SelectedType = StorageListTypes.LocalStorage;
-                switch((string)TabStorageType.SelectedValue)
-                {
-                    case "LocalStorage":
-                        SelectedType = StorageListTypes.LocalStorage;
-                        break;
-
-                    case "OneDrive":
-                        SelectedType = StorageListTypes.OneDrive;
-                        break;
-                }
+                StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
 
                 switch (TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
                 {
@@ -488,17 +478,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
         {
-            StorageListTypes SelectedType = StorageListTypes.LocalStorage;
-            switch ((string)TabStorageType.SelectedValue)
-            {
-                case "LocalStorage":
-                    SelectedType = StorageListTypes.LocalStorage;
-                    break;
-
-                case "OneDrive":
-                    SelectedType = StorageListTypes.OneDrive;
-                    break;
-            }
+            StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
 
             LoadingGrid.IsLoading = true;
             await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, SelectedType);
@@ -584,19 +564,11 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
-        private void TabStorageType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void TabStorageType_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(string StorageType in Enum.GetNames(typeof(StorageListTypes)))
+            foreach(StorageTypeDefinition StorageType in StorageTypesAvailable.GetStorageTypesAvailable())
             {
-                if(StorageType != "Nothing")
-                {
-                    TabStorageType.Items.Add(StorageType);
-                }
+                TabStorageType.Items.Add(StorageType);
             }
 
             TabStorageType.SelectedIndex = 0;

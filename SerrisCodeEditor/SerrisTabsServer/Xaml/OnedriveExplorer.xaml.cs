@@ -64,23 +64,6 @@ namespace SerrisTabsServer.Xaml
                     OnedriveLoadFinished();
                 }
             }
-            else
-            {
-                if(await OneDriveAuthHelper.OneDriveAuthentification())
-                {
-                    if (OneDriveNavigationHistory.Count == 0)
-                    {
-                        OneDriveLoadStart();
-                        Tabs.Items.Clear(); var root = await OneDriveGetRootFolder();
-                        OneDriveNavigationHistory.Add(new Tuple<string, string>(root.Item1, root.Item2));
-                        foreach (var item in root.Item3)
-                        {
-                            Tabs.Items.Add(item);
-                        }
-                        OnedriveLoadFinished();
-                    }
-                }
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -120,20 +103,9 @@ namespace SerrisTabsServer.Xaml
             OnedriveLoadFinished();
         }
 
-        private async void reload_onedrive_Click(object sender, RoutedEventArgs e)
+        private void reload_onedrive_Click(object sender, RoutedEventArgs e)
         {
-            if (OneDriveNavigationHistory.Count > 0)
-            {
-                Tabs.Items.Clear();
-
-                var tuple = OneDriveNavigationHistory[OneDriveNavigationHistory.Count - 1]; Tabs.Items.Clear();
-                OneDriveLoadStart();
-                foreach (var item in await OneDriveNavigate(tuple.Item2))
-                {
-                    Tabs.Items.Add(item);
-                }
-                OnedriveLoadFinished();
-            }
+            ReloadOnedrive();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -174,6 +146,13 @@ namespace SerrisTabsServer.Xaml
 
             OnedriveLoadFinished();
             try { Window.Current.Close(); } catch { }
+        }
+
+        private async void NewFolder_Create_Click(object sender, RoutedEventArgs e)
+        {
+            Item Folder = new Item { Name = NewFolder_Name.Text, Folder = new Folder() };
+            await TabsDataCache.OneDriveClient.Drive.Items[OneDriveNavigationHistory[OneDriveNavigationHistory.Count - 1].Item2].Children.Request().AddAsync(Folder);
+            ReloadOnedrive();
         }
 
         private async void tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -226,6 +205,22 @@ namespace SerrisTabsServer.Xaml
         {
             back_onedrive.IsEnabled = true; reload_onedrive.IsEnabled = true;
             LoadingGrid.Visibility = Visibility.Collapsed; LoadingGridRing.IsActive = false;
+        }
+
+        private async void ReloadOnedrive()
+        {
+            if (OneDriveNavigationHistory.Count > 0)
+            {
+                Tabs.Items.Clear();
+
+                var tuple = OneDriveNavigationHistory[OneDriveNavigationHistory.Count - 1]; Tabs.Items.Clear();
+                OneDriveLoadStart();
+                foreach (var item in await OneDriveNavigate(tuple.Item2))
+                {
+                    Tabs.Items.Add(item);
+                }
+                OnedriveLoadFinished();
+            }
         }
 
         /*

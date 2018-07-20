@@ -62,6 +62,8 @@ namespace SerrisTabsServer.Storage.StorageTypes
         {
             try
             {
+                await OneDriveAuthHelper.OneDriveAuthentification();
+
                 await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Request().DeleteAsync();
                 Tab.TabStorageMode = StorageListTypes.Nothing;
                 Tab.TabOriginalPathContent = "";
@@ -72,6 +74,8 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task<bool> ReadFile(bool ReplaceEncoding)
         {
+            await OneDriveAuthHelper.OneDriveAuthentification();
+
             var Item = await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Content.Request().GetAsync();
 
             using (StreamReader st = new StreamReader(Item))
@@ -92,6 +96,8 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
         public async Task<string> ReadFileAndGetContent()
         {
+            await OneDriveAuthHelper.OneDriveAuthentification();
+
             var Item = await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Content.Request().GetAsync();
             string Code = "";
             using (StreamReader st = new StreamReader(Item))

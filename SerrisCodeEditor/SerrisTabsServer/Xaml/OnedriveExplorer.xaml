@@ -39,13 +39,35 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                <Button x:Name="back_onedrive" x:Uid="od_back" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" Background="#00000000" Click="back_onedrive_Click" Width="42" ToolTipService.ToolTip="Go back"/>
-                <Button x:Name="home_onedrive" x:Uid="od-home" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" Background="#00000000" Width="42" Click="home_onedrive_Click" ToolTipService.ToolTip="Go home" Margin="5,0,0,0"/>
-                <Button x:Name="reload_onedrive" x:Uid="od-reload" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" HorizontalAlignment="Right" Background="#00000000" Click="reload_onedrive_Click" Width="42" ToolTipService.ToolTip="Refresh" Margin="5,0,0,0"/>
+                <Button x:Name="back_onedrive" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" Background="#00000000" Click="back_onedrive_Click" Width="42" ToolTipService.ToolTip="Go back"/>
+                <Button x:Name="home_onedrive" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" Background="#00000000" Width="42" Click="home_onedrive_Click" ToolTipService.ToolTip="Go home" Margin="5,0,0,0"/>
+                <Button x:Name="reload_onedrive" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" HorizontalAlignment="Right" Background="#00000000" Click="reload_onedrive_Click" Width="42" ToolTipService.ToolTip="Refresh" Margin="5,0,0,0"/>
             </StackPanel>
             <TextBlock x:Name="od_foldername" Text="Root" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" FontWeight="Medium" Margin="10,0"/>
+            <Button x:Name="createfolder_onedrive" VerticalAlignment="Stretch" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="" HorizontalAlignment="Right" Background="#00000000" Width="42" ToolTipService.ToolTip="New folder" Margin="10,0" Grid.Column="2">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBox x:Name="NewFolder_Name" PlaceholderText="Folder name" Width="200" />
+                            <Button x:Name="NewFolder_Create" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Visibility="Visible" Grid.Column="0" Background="Transparent" FontSize="15" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewFolder_Create_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="15"/>
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="Create folder" FontSize="12" Grid.Column="1"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+
+            </Button>
+
         </Grid>
 
         <ListView x:Name="Tabs" SelectionChanged="tabs_SelectionChanged" Loaded="Tabs_Loaded" Visibility="Visible" Grid.Row="1" ItemTemplate="{StaticResource TabOnedrive}">
@@ -66,7 +88,7 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar x:Name="Command_Bar" Background="#CC68217A" Foreground="White">
+        <CommandBar x:Name="Command_Bar" Background="#FF68217A" Foreground="White">
             <AppBarButton x:Uid="onedrivecreator-cancel" x:Name="cancel" Icon="Cancel" Label="Cancel" Click="Cancel_Click" Foreground="White"/>
             <AppBarButton x:Uid="onedrivecreator-create" x:Name="accept" Icon="Accept" Label="Create" Click="Accept_Click" Foreground="White" IsEnabled="False"/>
 
