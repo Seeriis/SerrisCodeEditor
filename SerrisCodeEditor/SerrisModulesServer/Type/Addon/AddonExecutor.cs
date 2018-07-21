@@ -55,7 +55,7 @@ namespace SerrisModulesServer.Type.Addon
 
         }
 
-        private async void IntializeChakraAndExecute(string function_name)
+        private void IntializeChakraAndExecute(string function_name)
         {
             /*
              * =============================

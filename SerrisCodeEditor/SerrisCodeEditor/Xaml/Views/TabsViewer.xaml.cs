@@ -46,7 +46,7 @@ namespace SerrisCodeEditor.Xaml.Views
          * =============
          */
 
-        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, DefaultFunctionsLoaded = false;
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, StorageListIsLoaded = false, DefaultFunctionsLoaded = false;
         int CurrentCreationType = -1;
         string TabTemplateContent = "";
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
@@ -566,12 +566,17 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void TabStorageType_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(StorageTypeDefinition StorageType in StorageTypesAvailable.GetStorageTypesAvailable())
+            if (!StorageListIsLoaded)
             {
-                TabStorageType.Items.Add(StorageType);
-            }
+                foreach (StorageTypeDefinition StorageType in StorageTypesAvailable.GetStorageTypesAvailable())
+                {
+                    TabStorageType.Items.Add(StorageType);
+                }
 
-            TabStorageType.SelectedIndex = 0;
+                TabStorageType.SelectedIndex = 0;
+                StorageListIsLoaded = true;
+            }
+            
         }
 
         private void BlankTabRadioButton_Checked(object sender, RoutedEventArgs e)
