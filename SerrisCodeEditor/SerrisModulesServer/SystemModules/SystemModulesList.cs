@@ -144,7 +144,7 @@ namespace SerrisModulesServer.SystemModules
                     Minor = 0,
                     Revision = 0
                 },
-                ModuleDescription = "Background by Last Sentencer (deviantart)",
+                ModuleDescription = "Default dark theme of SCE !",
                 CanBePinnedToToolBar = false,
                 IsEnabled = true
             },
