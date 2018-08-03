@@ -118,7 +118,7 @@
                     </Grid>
                 </Grid>
 
-                <Button x:Name="InstallButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="InstallButton_Click" Style="{StaticResource RoundCornerButton}">
+                <Button x:Name="InstallButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Collapsed" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="InstallButton_Click" Style="{StaticResource RoundCornerButton}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock x:Name="IconInstallButton" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18" Height="17"/>
                         <TextBlock x:Name="TextInstallButton" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Install new module" FontSize="15" Grid.Column="1" Margin="10,0,0,0"/>

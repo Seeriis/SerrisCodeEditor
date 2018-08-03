@@ -90,7 +90,15 @@ namespace SerrisCodeEditor.Xaml.Components
 
             name_sheet.Visibility = Visibility.Collapsed;
             icon_sheet.Visibility = Visibility.Visible;
-            GridButton.Width = 32;
+
+            if(isSelected)
+            {
+                GridButton.Width = 50;
+            }
+            else
+            {
+                GridButton.Width = 32;
+            }
         }
 
         private void close_sheet_Click(object sender, RoutedEventArgs e)
@@ -138,11 +146,15 @@ namespace SerrisCodeEditor.Xaml.Components
                                 {
                                     isSelected = true;
                                     GridButton.Opacity = 1;
+
+                                    if(close_sheet.Visibility == Visibility.Collapsed)
+                                        GridButton.Width = 50;
                                 }
                                 else
                                 {
                                     isSelected = false;
                                     GridButton.Opacity = 0.7;
+                                    GridButton.Width = 32;
                                 }
                                 break;
 
