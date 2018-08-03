@@ -16,6 +16,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -155,6 +156,19 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
             }
 
+        }
+
+        private void Tabs_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+        }
+
+        private async void Tabs_Drop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, await e.DataView.GetStorageItemsAsync());
+            }
         }
 
         private void SetTheme()
@@ -510,18 +524,18 @@ namespace SerrisCodeEditor.Xaml.Views
             if (ShowIt)
             {
                 //Open CreatorGrid...
+                ShowCreatorHeader.Begin();
                 CreateIcon.Text = "";
                 Tabs.Visibility = Visibility.Collapsed;
-                SeparatorA.Visibility = Visibility.Collapsed;
                 CreatorGrid.Visibility = Visibility.Visible;
             }
             else
             {
                 //Close CreatorGrid and show Tabs...
+                HideCreatorHeader.Begin();
                 CreateIcon.Text = "";
                 CreatorGrid.Visibility = Visibility.Collapsed;
                 Tabs.Visibility = Visibility.Visible;
-                SeparatorA.Visibility = Visibility.Visible;
             }
         }
 
