@@ -32,8 +32,8 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button x:Name="ModuleOptions" Visibility="Collapsed" Content="" FontFamily="Segoe MDL2 Assets" Foreground="{Binding ForegroundColor}" BorderBrush="{Binding ForegroundColor}" Click="ModuleOptions_Click" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
-                    <Button x:Name="ModulePin" Margin="5,0,0,0" IsEnabled="{Binding Module.CanBePinnedToToolBar}" Content="" FontFamily="Segoe MDL2 Assets" Foreground="{Binding ForegroundColor}" BorderBrush="{Binding ForegroundColor}" Click="ModulePin_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
-                    <Button x:Name="ModuleDelete" Visibility="{Binding DeleteButtonVisibility}" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF343434" Grid.Column="2" Background="#CCFFFFFF" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15">
+                    <Button x:Name="ModulePin" ToolTipService.ToolTip="Pin/unpin module to the toolbar" Margin="5,0,0,0" IsEnabled="{Binding Module.CanBePinnedToToolBar}" Content="" FontFamily="Segoe MDL2 Assets" Foreground="{Binding ForegroundColor}" BorderBrush="{Binding ForegroundColor}" Click="ModulePin_Click" Visibility="Visible" Grid.Column="2" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15"/>
+                    <Button x:Name="ModuleDelete" ToolTipService.ToolTip="Delete module" Visibility="{Binding DeleteButtonVisibility}" Margin="5,0,0,0" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF343434" Grid.Column="2" Background="#CCFFFFFF" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15">
                         <Button.Flyout>
                             <Flyout x:Name="FlyoutDeleteList">
                                 <StackPanel>
@@ -95,25 +95,25 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid x:Name="AddonsButton" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
+                    <Grid x:Name="AddonsButton" ToolTipService.ToolTip="Addons" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
                         <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Rectangle x:Name="ButtonsSeparator" Grid.Column="1" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                    <Grid x:Name="ThemesButton" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
+                    <Grid x:Name="ThemesButton" ToolTipService.ToolTip="Themes" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
                         <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                    <Grid x:Name="ProgLanguagesButton" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
+                    <Grid x:Name="ProgLanguagesButton" ToolTipService.ToolTip="Programming languages" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
                         <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Rectangle x:Name="ButtonsSeparatorC" Grid.Column="5" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                    <Grid x:Name="ProjectTypesButton" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
+                    <Grid x:Name="ProjectTypesButton" ToolTipService.ToolTip="Projects/files template" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
                         <TextBlock x:Name="ProjectTypesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>

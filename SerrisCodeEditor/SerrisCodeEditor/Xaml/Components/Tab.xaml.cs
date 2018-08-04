@@ -159,6 +159,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
                 name_tab.Text = current_tab.TabName;
 
+                //Tooltip name
+                ToolTip ButtonTooltip = new ToolTip();
+                ButtonTooltip.Content = current_tab.TabName;
+                ToolTipService.SetToolTip(IconAndTabNameGrid, ButtonTooltip);
+
                 switch (current_tab.TabContentType)
                 {
                     case ContentType.File:

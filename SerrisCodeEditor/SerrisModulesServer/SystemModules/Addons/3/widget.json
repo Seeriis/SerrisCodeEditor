@@ -4,13 +4,15 @@
     "WidgetName": "undo",
     "FunctionName": "undo",
     "IconButton": "",
-    "PlaceHolderText": null
+    "PlaceHolderText": null,
+    "TooltipText":  "Undo action (Ctrl + Z)"
   },
   {
     "Type": 0,
     "WidgetName": "redo",
     "FunctionName": "redo",
     "IconButton": "",
-    "PlaceHolderText": null
+    "PlaceHolderText": null,
+    "TooltipText": "Redo action (Ctrl + Y)"
   }
 ]

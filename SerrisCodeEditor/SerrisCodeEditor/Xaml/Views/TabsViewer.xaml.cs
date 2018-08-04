@@ -512,15 +512,29 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (e.KeyStatus.RepeatCount == 1)
             {
-                if (e.Key == Windows.System.VirtualKey.Enter)
+                if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrWhiteSpace(TextBoxNewFileProject.Text))
                 {
                     CreateListOrTab();
                 }
             }
         }
 
+        private void TextBoxNewFileProject_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(TextBoxNewFileProject.Text))
+            {
+                NewTabAcceptButton.IsEnabled = false;
+            }
+            else
+            {
+                NewTabAcceptButton.IsEnabled = true;
+            }
+        }
+
         private void ShowCreatorGrid(bool ShowIt)
         {
+            ToolTip ButtonTooltip = new ToolTip();
+
             if (ShowIt)
             {
                 //Open CreatorGrid...
@@ -528,6 +542,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 CreateIcon.Text = "";
                 Tabs.Visibility = Visibility.Collapsed;
                 CreatorGrid.Visibility = Visibility.Visible;
+                ButtonTooltip.Content = "Go back";
             }
             else
             {
@@ -536,7 +551,10 @@ namespace SerrisCodeEditor.Xaml.Views
                 CreateIcon.Text = "";
                 CreatorGrid.Visibility = Visibility.Collapsed;
                 Tabs.Visibility = Visibility.Visible;
+                ButtonTooltip.Content = "Add new tab(s)/list(s)";
             }
+
+            ToolTipService.SetToolTip(CreateButton, ButtonTooltip);
         }
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)

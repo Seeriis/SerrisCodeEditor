@@ -4,13 +4,15 @@
     "WidgetName": "save",
     "FunctionName": "save",
     "IconButton": "",
-    "PlaceHolderText": null
+    "PlaceHolderText": null,
+    "TooltipText":  "Save file (Ctrl + S)"
   },
   {
     "Type": 0,
     "WidgetName": "saveas",
     "FunctionName": "saveas",
     "IconButton": "",
-    "PlaceHolderText": null
+    "PlaceHolderText": null,
+    "TooltipText": "Clone current tab"
   }
 ]

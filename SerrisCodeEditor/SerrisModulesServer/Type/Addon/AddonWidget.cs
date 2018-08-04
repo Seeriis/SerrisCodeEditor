@@ -23,5 +23,8 @@ namespace SerrisModulesServer.Type.Addon
 
         //TextBox
         public string PlaceHolderText { get; set; }
+
+        //Tooltip text
+        public string TooltipText { get; set; }
     }
 }

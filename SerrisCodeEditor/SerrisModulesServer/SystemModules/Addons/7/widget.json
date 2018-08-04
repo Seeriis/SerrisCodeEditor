@@ -3,6 +3,7 @@
     "Type": 0,
     "WidgetName": "information",
     "FunctionName": "openSheetInformation",
-    "IconButton": ""
+    "IconButton": "",
+    "TooltipText": "Click here for more informations about SCE"
   }
 ]

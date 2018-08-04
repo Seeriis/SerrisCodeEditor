@@ -778,7 +778,7 @@
                 <ComboBox x:Name="Lists" Grid.Column="0" Padding="5" Background="White" SelectionChanged="Lists_SelectionChanged" Loaded="Lists_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemListStyle}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A" FontWeight="SemiBold" VerticalAlignment="Stretch"/>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Height="32" VerticalAlignment="Center">
-                    <Button x:Name="NewListFlyout" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="14" Margin="5,0,0,0" BorderBrush="Transparent" BorderThickness="0">
+                    <Button x:Name="NewListFlyout" ToolTipService.ToolTip="List/project settings" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="14" Margin="5,0,0,0" BorderBrush="Transparent" BorderThickness="0">
                         <Button.Flyout>
                             <Flyout x:Name="FlyoutDeleteList">
                                 <StackPanel>
@@ -810,7 +810,7 @@
 
                 <TextBox x:Name="Box_Search" Grid.Column="0" VerticalAlignment="Top" PlaceholderText="Search tab..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="0,5" Foreground="White" Background="#B23C097A" FontSize="14"/>
 
-                <Button x:Name="CreateButton" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,0,5" Height="30" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="CreateButton_Click">
+                <Button x:Name="CreateButton" ToolTipService.ToolTip="Add new tab(s)/list(s)" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,0,5" Height="30" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="CreateButton_Click">
                     <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </Grid>
@@ -830,7 +830,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="OpenFilesButton" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFilesButton_Click">
+                        <Button x:Name="OpenFilesButton" ToolTipService.ToolTip="Import file(s)" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFilesButton_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -840,7 +840,7 @@
                                 <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="File(s)" FontSize="14" Grid.Column="1"/>
                             </Grid>
                         </Button>
-                        <Button x:Name="OpenFolderButton" IsEnabled="true" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
+                        <Button x:Name="OpenFolderButton" ToolTipService.ToolTip="Import folder content" IsEnabled="true" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -875,8 +875,8 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="TextBoxNewFileProject" PlaceholderText="Example: toothless.js" FontSize="12" KeyDown="TextBoxNewFileProject_KeyDown" Style="{StaticResource TextBoxNewTab}" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" BorderBrush="#FF8D8D8D"/>
-                    <Button x:Name="NewTabAcceptButton" Grid.Column="1" HorizontalAlignment="Stretch" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageOpenButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewTabAcceptButton_Click">
+                    <TextBox x:Name="TextBoxNewFileProject" PlaceholderText="Example: toothless.js" FontSize="12" KeyDown="TextBoxNewFileProject_KeyDown" TextChanged="TextBoxNewFileProject_TextChanged" Style="{StaticResource TextBoxNewTab}" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" BorderBrush="#FF8D8D8D"/>
+                    <Button x:Name="NewTabAcceptButton" IsEnabled="False" ToolTipService.ToolTip="Create tab/list" Grid.Column="1" HorizontalAlignment="Stretch" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageOpenButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="NewTabAcceptButton_Click">
                         <TextBlock x:Name="IconCreateTab" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 

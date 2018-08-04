@@ -3,18 +3,21 @@
     "Type": 0,
     "WidgetName": "copy",
     "FunctionName": "copy",
-    "IconButton": ""
+    "IconButton": "",
+    "TooltipText":  "Copy content (Ctrl + C)"
   },
   {
     "Type": 0,
     "WidgetName": "paste",
     "FunctionName": "paste",
-    "IconButton": ""
+    "IconButton": "",
+    "TooltipText": "Paste content (Ctrl + V)"
   },
   {
     "Type": 0,
     "WidgetName": "cut",
     "FunctionName": "cut",
-    "IconButton": ""
+    "IconButton": "",
+    "TooltipText": "Cut content (Ctrl + X)"
   }
 ]

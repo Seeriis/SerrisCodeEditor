@@ -71,6 +71,10 @@ namespace SerrisModulesServer.Type.Addon
                                         Task.Run(() => new AddonExecutor(ModuleID, sceelibs).ExecutePersonalizedFunction(widget.FunctionName));
                                     });
 
+                                    ToolTip ButtonTooltip = new ToolTip();
+                                    ButtonTooltip.Content = widget.TooltipText;
+                                    ToolTipService.SetToolTip(new_button, ButtonTooltip);
+
                                     widget_content.Children.Add(new_button);
 
                                     break;
