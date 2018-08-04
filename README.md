@@ -24,4 +24,4 @@ Created by DeerisLeGris - Théo Ferreira (Seeriis) under the MIT license.
 - UWP Community Toolkit by Microsoft: https://github.com/Microsoft/UWPCommunityToolkit (with MIT license)
 - Monaco Editor by Microsoft: https://github.com/Microsoft/monaco-editor (with MIT license)
 - SerialQueue by Orion Edwards: https://github.com/borland/SerialQueue (with MIT license)
-- Devicon by Konpa: https://github.com/Seeris/SerrisCodeEditor/edit/master/README.md (with MIT license)
+- Devicon by Konpa: https://github.com/konpa/devicon/ (with MIT license)
