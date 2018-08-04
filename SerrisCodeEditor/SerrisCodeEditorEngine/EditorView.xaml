@@ -16,8 +16,8 @@
         <!--<WebView x:Name="editor_view" Visibility="Visible" NavigationFailed="editor_view_NavigationFailed" ScriptNotify="editor_view_ScriptNotify" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>-->
 
         <!-- LOADING GRID -->
-        <Grid x:Name="LoadingScreen" Background="{Binding BackgroundWait, ElementName=userControl}">
-            <ProgressRing x:Name="loading_ring" IsActive="False" Height="50" Width="50" Foreground="{Binding ForegroundWait, ElementName=userControl}"/>
+        <Grid x:Name="LoadingScreen" Background="Transparent">
+            <ProgressRing x:Name="loading_ring" IsActive="False" Height="50" Width="50" Foreground="{Binding BackgroundWait, ElementName=userControl}"/>
         </Grid>
         
     </Grid>

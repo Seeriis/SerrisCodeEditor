@@ -137,6 +137,10 @@
     <Content Include="Monaco\vs\editor\editor.main.nls.zh-cn.js" />
     <Content Include="Monaco\vs\editor\editor.main.nls.zh-tw.js" />
     <Content Include="Monaco\vs\editor\standalone\browser\quickOpen\symbol-sprite.svg" />
+    <Content Include="Monaco\vs\language\css\cssMode.js" />
+    <Content Include="Monaco\vs\language\css\cssWorker.js" />
+    <Content Include="Monaco\vs\language\html\htmlMode.js" />
+    <Content Include="Monaco\vs\language\html\htmlWorker.js" />
     <Content Include="Monaco\vs\language\json\jsonMode.js" />
     <Content Include="Monaco\vs\language\json\jsonWorker.js" />
     <Content Include="Monaco\vs\language\typescript\lib\typescriptServices.js" />

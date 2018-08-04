@@ -438,19 +438,16 @@ namespace SerrisCodeEditor.Xaml.Views
                         {
                             ContentViewerGrid.Margin = new Thickness(60, ColorPrincipalUI.ActualHeight, 0, 0);
                             DeployUIDetector.Visibility = Visibility.Visible;
-                            BackgroundPrincipalUIControl.Color = Colors.Transparent;
                         }
                         else
                         {
                             ContentViewerGrid.Margin = new Thickness(60, 0, 0, 0);
                             DeployUIDetector.Visibility = Visibility.Collapsed;
-                            BackgroundPrincipalUIControl.Color = Colors.Black;
                         }
                     }
                     else
                     {
                         ContentViewerGrid.Margin = new Thickness(60, ColorPrincipalUI.ActualHeight, 0, 0);
-                        BackgroundPrincipalUIControl.Color = Colors.Transparent;
                     }
 
                     //CLOSE PANEL AUTOMATICALLY

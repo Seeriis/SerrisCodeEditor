@@ -220,6 +220,9 @@
     <Content Include="SystemModules\ProgrammingLanguages\10\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\10\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\10\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\49\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\49\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\49\logo.png" />
     <Content Include="SystemModules\Templates\48\icon.png" />
     <Content Include="SystemModules\Templates\48\main.js" />
     <Content Include="SystemModules\Templates\48\logo.png" />

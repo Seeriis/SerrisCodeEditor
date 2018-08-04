@@ -1017,6 +1017,27 @@ namespace SerrisModulesServer.SystemModules
                 ProgrammingLanguageMonacoCompletionAvailable = false
             },
 
+            new InfosModule
+            {
+                ID = 49,
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "JSON",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Default tab language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "json",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".json" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
             /* =============
              * = TEMPLATES =
              * =============
