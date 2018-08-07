@@ -93,5 +93,39 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
 
             return LanguagesAvailable;
         }
+
+        public static string GetLanguageTypeViaName(string LanguageName)
+        {
+            foreach (var Module in ModulesAccessManager.GetSpecificModules(true, ModuleTypesList.ProgrammingLanguage))
+            {
+                if (Module.ModuleName == LanguageName)
+                {
+                    return Module.ProgrammingLanguageMonacoDefinitionName;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return "txt";
+        }
+
+        public static string GetLanguageNameViaType(string Type)
+        {
+            foreach (var Module in ModulesAccessManager.GetSpecificModules(true, ModuleTypesList.ProgrammingLanguage))
+            {
+                if (Module.ProgrammingLanguageMonacoDefinitionName == Type)
+                {
+                    return Module.ModuleName;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return "txt";
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
@@ -30,7 +31,7 @@ namespace SerrisCodeEditor.Xaml.Components
 {
     public sealed partial class Tab : UserControl
     {
-        InfosTab current_tab = new InfosTab(); int current_list; bool infos_opened = false, enable_selection = false;
+        InfosTab current_tab = new InfosTab(); int current_list; bool infos_opened = false, enable_selection = false, loaded = false;
         TabID CurrentIDs;
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
@@ -67,7 +68,19 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabComponent_Loaded(object sender, RoutedEventArgs e)
         {
-            SetMessenger();
+            if(!loaded)
+            {
+                SetMessenger();
+                SetTheme();
+
+                foreach (string Language in LanguagesHelper.GetLanguagesNames())
+                {
+                    list_types.Items.Add(Language);
+                }
+
+                loaded = true;
+            }
+
             //UpdateTabInformations();
         }
 
@@ -95,6 +108,20 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SetMessenger()
         {
+            Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        SetTheme();
+                    }
+                    catch { }
+
+                });
+
+            });
+
             Messenger.Default.Register<STSNotification>(this, async (nm) =>
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
@@ -149,6 +176,17 @@ namespace SerrisCodeEditor.Xaml.Components
             });
         }
 
+        private void SetTheme()
+        {
+            TextBoxRename.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            TextBoxRename.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            TextBoxRename.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            RenameAcceptButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            RenameAcceptButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            RenameAcceptButtonIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+        }
+
         int TempTabID = 0;
         private async void UpdateTabInformations()
         {
@@ -184,10 +222,23 @@ namespace SerrisCodeEditor.Xaml.Components
                             }
                             
                             encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-                            More_Tab.Visibility = Visibility.Visible;
+
+                            Encoding_Stackpanel.Visibility = Visibility.Visible;
+                            Size_Stackpanel.Visibility = Visibility.Visible;
+                            Modified_Stackpanel.Visibility = Visibility.Visible;
+                            Created_Stackpanel.Visibility = Visibility.Visible;
+
+                            Rename_Tab.IsEnabled = false;
                         }
                         else
-                            More_Tab.Visibility = Visibility.Collapsed;
+                        {
+                            Encoding_Stackpanel.Visibility = Visibility.Collapsed;
+                            Size_Stackpanel.Visibility = Visibility.Collapsed;
+                            Modified_Stackpanel.Visibility = Visibility.Collapsed;
+                            Created_Stackpanel.Visibility = Visibility.Collapsed;
+
+                            Rename_Tab.IsEnabled = true;
+                        }
 
                         Notification.ShowBadge = current_tab.TabNewModifications;
 
@@ -202,6 +253,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                     case ContentType.Folder:
                         Notification.ShowBadge = false;
+                        Rename_Tab.IsEnabled = false;
 
                         More_Tab.Visibility = Visibility.Visible;
                         TabsListGrid.Visibility = Visibility.Visible;
@@ -269,9 +321,71 @@ namespace SerrisCodeEditor.Xaml.Components
             catch { }
         }
 
-        private void list_types_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void list_types_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(list_types.SelectedIndex != -1 && (string)list_types.SelectedItem != current_tab.TabType)
+            {
+                current_tab.TabType = LanguagesHelper.GetLanguageTypeViaName((string)list_types.SelectedItem);
+                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+            }
+        }
 
+        private void Rename_Tab_Click(object sender, RoutedEventArgs e)
+        {
+            if(RenameGrid.Visibility == Visibility.Collapsed)
+            {
+                TextBoxRename.Text = current_tab.TabName;
+                name_tab.Visibility = Visibility.Collapsed;
+                RenameGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                name_tab.Visibility = Visibility.Visible;
+                RenameGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void TextBoxRename_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.KeyStatus.RepeatCount == 1)
+            {
+                if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrWhiteSpace(TextBoxRename.Text))
+                {
+                    RenameTab();
+                }
+            }
+        }
+
+        private void TextBoxRename_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextBoxRename.Text))
+            {
+                RenameAcceptButton.IsEnabled = false;
+            }
+            else
+            {
+                RenameAcceptButton.IsEnabled = true;
+            }
+        }
+
+        private void RenameAcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            RenameTab();
+        }
+
+        private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private async void RenameTab()
+        {
+            current_tab.TabName = TextBoxRename.Text;
+            await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+            RenameGrid.Visibility = Visibility.Collapsed;
+            name_tab.Visibility = Visibility.Visible;
         }
 
         private async void More_Tab_Click(object sender, RoutedEventArgs e)
@@ -295,7 +409,9 @@ namespace SerrisCodeEditor.Xaml.Components
                     case ContentType.File:
                         try
                         {
-                            switch(current_tab.TabStorageMode)
+                            list_types.SelectedItem = LanguagesHelper.GetLanguageNameViaType(current_tab.TabType);
+
+                            switch (current_tab.TabStorageMode)
                             {
                                 case StorageListTypes.LocalStorage:
                                     StorageFile file = await StorageFile.GetFileFromPathAsync(current_tab.TabOriginalPathContent);
