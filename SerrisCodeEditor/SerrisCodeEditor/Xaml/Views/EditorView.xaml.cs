@@ -110,20 +110,41 @@ namespace SerrisCodeEditor.Xaml.Views
             catch { deferral.Complete(); }
         }
 
+        bool ToolbarCanBeResized = true;
+        int RightWidth = 200;
         private void EditorViewUI_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (GlobalVariables.CurrentDevice != CurrentDevice.WindowsMobile)
             {
-                if (Toolbar.ActualWidth > FirstBar.ActualWidth - 272)
+                if(Toolbar.IsScrollable)
                 {
                     ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
-                    FocusTitlebarWidth.Width = new GridLength(272, GridUnitType.Pixel);
+                    FocusTitlebarWidth.Width = new GridLength(RightWidth, GridUnitType.Pixel);
+                    TextInfoTitlebar.Visibility = Visibility.Collapsed;
+                    ToolbarCanBeResized = false;
                 }
                 else
                 {
-                    ToolbarWidth.Width = new GridLength(1, GridUnitType.Auto);
-                    FocusTitlebarWidth.Width = new GridLength(1, GridUnitType.Star);
+                    if (Toolbar.ActualWidth > (FirstBar.ActualWidth - RightWidth) && ToolbarCanBeResized)
+                    {
+                        ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
+                        FocusTitlebarWidth.Width = new GridLength(RightWidth, GridUnitType.Pixel);
+                        TextInfoTitlebar.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        ToolbarWidth.Width = new GridLength(1, GridUnitType.Auto);
+                        FocusTitlebarWidth.Width = new GridLength(1, GridUnitType.Star);
+                        TextInfoTitlebar.Visibility = Visibility.Visible;
+
+                        if (Toolbar.IsScrollable)
+                            ToolbarCanBeResized = false;
+                        else if(((FirstBar.ActualWidth - RightWidth) - Toolbar.ActualWidth) > 5)
+                            ToolbarCanBeResized = true;
+                    }
                 }
+
+
             }
         }
 
@@ -263,6 +284,10 @@ namespace SerrisCodeEditor.Xaml.Views
 
                             PrincipalUI.Visibility = Visibility.Visible;
                             break;
+
+                        case CurrentDevice.WindowsMobile:
+                            DeployUIIconDeploying.Begin();
+                            break;
                     }
 
                     SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline; SheetViewSplit.IsPaneOpen = true;
@@ -298,6 +323,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                         case CurrentDevice.WindowsMobile:
                             SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
+                            DeployUIIconCollapsing.Begin();
                             break;
                     }
 
@@ -420,11 +446,14 @@ namespace SerrisCodeEditor.Xaml.Views
                     Console.Height = 30;
                     SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
                     Grid.SetColumnSpan(Toolbar, 1);
-                    //Toolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
                     TextInfoTitlebar.Margin = new Thickness(0);
                     ContentViewerGrid.Margin = new Thickness(0, 0, 0, 75);
+                    SheetViewSplit.Margin = new Thickness(0, 0, 0, 75);
                     TextInfoTitlebar.Visibility = Visibility.Collapsed;
                     TopSheetViewSplit.Visibility = Visibility.Collapsed;
+
+                    ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
+                    FocusTitlebarWidth.Width = new GridLength(0, GridUnitType.Pixel);
 
                     StatusBar.GetForCurrentView().ProgressIndicator.Text = "Serris Code Editor MLV";
                     UpdateUI(true, true);

@@ -817,7 +817,10 @@
 
             <Rectangle x:Name="SeparatorA" Fill="White" VerticalAlignment="Bottom" Height="2" RadiusX="1" RadiusY="3" Grid.Column="1" Margin="10,0,10,10"/>
 
-            <StackPanel x:Name="CreatorGrid" Margin="10,0,10,10" Visibility="Collapsed">
+        </StackPanel>
+
+        <ScrollViewer x:Name="CreatorGrid" Grid.Row="1" Margin="10,0,10,10" VerticalScrollBarVisibility="Hidden" Visibility="Collapsed">
+            <StackPanel>
 
                 <StackPanel Margin="0,30,0,5" Orientation="Horizontal">
                     <TextBlock Text="" Margin="5,0" Grid.Column="2" Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="18,667"/>
@@ -947,12 +950,7 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-
-        </StackPanel>
-
-        <controls:Loading x:Name="LoadingGrid" IsLoading="False" Background="#B2000000" Grid.RowSpan="2" Visibility="Collapsed">
-            <ProgressRing IsActive="True" Foreground="White" Height="40" Width="40"/>
-        </controls:Loading>
+        </ScrollViewer>
 
         <ListView Grid.Row="1" x:Name="Tabs" ItemTemplate="{StaticResource Tab}" SelectionChanged="Tabs_SelectionChanged" DragOver="Tabs_DragOver" Drop="Tabs_Drop" ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="0,4,0,0" AllowDrop="True">
             <ListView.ItemContainerStyle>
@@ -977,6 +975,9 @@
             </ListView.GroupStyle>
         </ListView>
 
-
+        <controls:Loading x:Name="LoadingGrid" IsLoading="False" Background="#B2000000" Grid.RowSpan="2" Visibility="Visible">
+            <ProgressRing IsActive="True" Foreground="White" Height="40" Width="40"/>
+        </controls:Loading>
+        
     </Grid>
 </UserControl>

@@ -49,6 +49,24 @@ namespace SerrisCodeEditor.Xaml.Components
 
 
 
+        public bool IsScrollable
+        {
+            get
+            {
+                if(ToolbarContent.ActualWidth > ScrollMaster.ActualWidth)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static readonly DependencyProperty IsScrollableProperty = DependencyProperty.Register("IsScrollable", typeof(bool), typeof(ModulesToolbar), new PropertyMetadata(0));
+
+
+
         /* =============
          * = FUNCTIONS =
          * =============

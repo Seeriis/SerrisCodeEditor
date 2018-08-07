@@ -183,7 +183,7 @@
                     <ColumnDefinition x:Name="FocusTitlebarWidth" Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40"/>
+                <my:ModulesToolbar x:Name="Toolbar" Grid.Column="0" Height="40" Margin="-15,0,0,0"/>
                 <Grid x:Name="focus_titlebar" Grid.Column="1" Height="40" Background="Transparent">
                     <TextBlock x:Name="TextInfoTitlebar" Text="Serris Code Editor" Margin="0,0,172,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiLight" FontSize="14"/>
                 </Grid>
