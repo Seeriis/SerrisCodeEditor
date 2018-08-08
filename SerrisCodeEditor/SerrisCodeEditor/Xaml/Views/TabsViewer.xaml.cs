@@ -127,11 +127,13 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Tabs.SelectedItem != null)
+            ListView List = sender as ListView;
+
+            if (List.SelectedItem != null)
             {
-                if(((TabID)Tabs.SelectedItem).ID_Tab != GlobalVariables.CurrentIDs.ID_Tab)
+                if(((TabID)List.SelectedItem).ID_Tab != GlobalVariables.CurrentIDs.ID_Tab)
                 {
-                    CurrentSelectedIDs = (TabID)Tabs.SelectedItem;
+                    CurrentSelectedIDs = (TabID)List.SelectedItem;
                     var tab = TabsAccessManager.GetTabViaID(CurrentSelectedIDs);
 
                     if(tab.TabContentType == ContentType.File)
@@ -150,8 +152,8 @@ namespace SerrisCodeEditor.Xaml.Views
                         if (tab != null)
                             Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName, cursorPositionColumn = tab.TabCursorPosition.column, cursorPositionLineNumber = tab.TabCursorPosition.row, tabName = tab.TabName });
 
-                        AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)Tabs.SelectedItem).ID_Tab;
-                        AppSettings.Values["Tabs_list-selected-index"] = ((TabID)Tabs.SelectedItem).ID_TabsList;
+                        AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)List.SelectedItem).ID_Tab;
+                        AppSettings.Values["Tabs_list-selected-index"] = ((TabID)List.SelectedItem).ID_TabsList;
                     }
                 }
             }
@@ -251,6 +253,11 @@ namespace SerrisCodeEditor.Xaml.Views
                             case SheetViewMode.Minimized:
                                 TabsViewerControls.Visibility = Visibility.Collapsed;
                                 ShowCreatorGrid(false);
+
+                                if(!string.IsNullOrWhiteSpace(Box_Search.Text))
+                                {
+                                    Tabs.Visibility = Visibility.Collapsed;
+                                }
                                 break;
                         }
                     }
@@ -487,7 +494,34 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void Box_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if(string.IsNullOrWhiteSpace(Box_Search.Text))
+            {
+                TabsResult.Visibility = Visibility.Collapsed;
+                Tabs.Visibility = Visibility.Visible;
 
+                TabsResult.Items.Clear();
+            }
+            else
+            {
+                TabsResult.Visibility = Visibility.Visible;
+                Tabs.Visibility = Visibility.Collapsed;
+
+                TabsResult.Items.Clear();
+                foreach (InfosTab Tab in TabsAccessManager.GetTabs(GlobalVariables.CurrentIDs.ID_TabsList))
+                {
+                    if (Tab.TabName.Contains(Box_Search.Text))
+                    {
+                        TabsResult.Items.Add(new TabID { ID_Tab = Tab.ID, ID_TabsList = GlobalVariables.CurrentIDs.ID_TabsList });
+                    }
+                    else if(!string.IsNullOrWhiteSpace(Tab.TabOriginalPathContent))
+                    {
+                        if(Tab.TabOriginalPathContent.Contains(Box_Search.Text))
+                        {
+                            TabsResult.Items.Add(new TabID { ID_Tab = Tab.ID, ID_TabsList = GlobalVariables.CurrentIDs.ID_TabsList });
+                        }
+                    }
+                }
+            }
         }
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)

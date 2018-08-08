@@ -975,6 +975,19 @@
             </ListView.GroupStyle>
         </ListView>
 
+        <ListView x:Name="TabsResult" Visibility="Collapsed" Grid.Row="1" ItemTemplate="{StaticResource Tab}" SelectionChanged="Tabs_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="0,4,0,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="-12,0,-12,0"/>
+                    <Setter Property="MaxHeight" Value="500"/>
+                    <Setter Property="MinHeight" Value="30"/>
+                    <!-- -12, 0-->
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
         <controls:Loading x:Name="LoadingGrid" IsLoading="False" Background="#B2000000" Grid.RowSpan="2" Visibility="Visible">
             <ProgressRing IsActive="True" Foreground="White" Height="40" Width="40"/>
         </controls:Loading>
