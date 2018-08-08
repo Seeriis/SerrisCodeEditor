@@ -656,9 +656,9 @@
             </Grid>
 
             <StackPanel x:Name="StackInfos" Margin="60,0,0,0">
-                <StackPanel Orientation="Horizontal" Margin="10,0,10,5">
-                    <TextBlock x:Name="type_info" x:Uid="fileinfo-encoding" Text="Type: " Foreground="White" FontSize="14" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Top"/>
+                <StackPanel Orientation="Horizontal" Margin="10,0,10,2">
+                    <TextBlock x:Name="type_info" x:Uid="fileinfo-encoding" Text="Type: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,3"/>
+                    <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel x:Name="Encoding_Stackpanel" Orientation="Horizontal" Margin="10,0,10,5">
                     <TextBlock x:Name="encoding_info" x:Uid="fileinfo-encoding" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
