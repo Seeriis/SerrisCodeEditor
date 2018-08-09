@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="11528SurvivalisteProject.SerrisCodeEditor-PrivateB" Publisher="CN=85217C41-26BA-4853-BBAF-959FE22764E5" Version="1.1.0.0" />
+  <Identity Name="11528SurvivalisteProject.SerrisCodeEditor-PrivateB" Publisher="CN=85217C41-26BA-4853-BBAF-959FE22764E5" Version="2.4.0.0" />
   <mp:PhoneIdentity PhoneProductId="c69d51af-5cc0-4b99-9d3e-17b378db5f2f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Serris Code Editor - Private Beta</DisplayName>
@@ -16,9 +16,9 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SerrisCodeEditor.App">
       <uap:VisualElements DisplayName="Serris Code Editor" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="SerrisCodeEditor" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#5C106C" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
