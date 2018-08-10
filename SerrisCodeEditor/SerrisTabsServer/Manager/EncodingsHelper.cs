@@ -19,7 +19,7 @@ namespace SerrisTabsServer.Manager
         {
             new EncodingType
             {
-                EncodingName = "UTF-8",
+                EncodingName = "UTF-8 (default)",
                 EncodingCodepage = Encoding.UTF8.CodePage
             },
 

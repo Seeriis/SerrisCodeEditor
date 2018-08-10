@@ -184,7 +184,7 @@ namespace SerrisTabsServer.Manager
                     }
                 }
 
-                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, TabOriginalPathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, FolderOpened = true, TabInvisibleByDefault = true }, IDList, false);
+                return await TabsWriteManager.CreateTabAsync(new InfosTab { TabName = Folder.Name, TabOriginalPathContent = Folder.Path, TabContentType = ContentType.Folder, FolderContent = FolderItemIDs, FolderOpened = false, TabInvisibleByDefault = true }, IDList, false);
             });
         }
 
