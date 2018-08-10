@@ -34,6 +34,11 @@
                 <TextBlock Text="{Binding ListName}" Grid.Column="1" FontSize="16" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontFamily="Segoe UI" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="ItemEncodingType">
+            <Grid Margin="0,5,5,5">
+                <TextBlock Text="{Binding EncodingName}" FontSize="14" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontFamily="Segoe UI" FontWeight="Normal" Margin="10,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+        </DataTemplate>
 
         <DataTemplate x:Key="TabTemplateItem">
             <Grid>
@@ -913,6 +918,8 @@
                 </Grid>
 
                 <StackPanel x:Name="CreationTabOptions" Margin="15,10,15,0" Visibility="Visible">
+                    <TextBlock HorizontalAlignment="Left" FontFamily="Segoe UI" FontWeight="SemiBold" Text="File encoding" FontSize="14" Margin="0,0,0,5" Foreground="White"/>
+                    <ComboBox x:Name="EncodingList" Grid.Column="0" Padding="5" Background="White" Loaded="EncodingList_Loaded" HorizontalAlignment="Stretch" BorderBrush="#FF3C097A" ItemTemplate="{StaticResource ItemEncodingType}" Style="{StaticResource ComboxBoxTabsList}" FocusVisualSecondaryBrush="Transparent" Foreground="#FF3C097A" FontWeight="SemiBold" VerticalAlignment="Stretch" Margin="0,0,0,10"/>
                     <RadioButton x:Name="BlankTabRadioButton" GroupName="TabContentType" Content="Blank tab" IsChecked="True" Checked="BlankTabRadioButton_Checked"/>
                     <RadioButton x:Name="TabTemplateRadioButton" GroupName="TabContentType" Content="Use tab template" Checked="TabTemplateRadioButton_Checked"/>
                     <ListView x:Name="TabTemplatesListView" Background="Transparent" MaxHeight="300" Foreground="White" ItemsSource="{Binding Source={StaticResource TabTemplatesList}}" Loaded="TabTemplatesListView_Loaded" SelectionChanged="TabTemplatesListView_SelectionChanged" ItemTemplate="{StaticResource TabTemplateItem}" SelectedIndex="-1" BorderBrush="White" BorderThickness="2" Visibility="Collapsed" Margin="0,5,0,0">

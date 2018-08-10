@@ -47,7 +47,7 @@ namespace SerrisCodeEditor.Xaml.Views
          * =============
          */
 
-        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, StorageListIsLoaded = false, DefaultFunctionsLoaded = false;
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, StorageListIsLoaded = false, DefaultFunctionsLoaded = false, EncodingsListLoaded = false;
         int CurrentCreationType = -1;
         string TabTemplateContent = "";
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
@@ -160,6 +160,20 @@ namespace SerrisCodeEditor.Xaml.Views
 
         }
 
+        private void EncodingList_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!EncodingsListLoaded)
+            {
+                foreach (EncodingType Encoding in EncodingsHelper.EncodingsAvailable)
+                {
+                    EncodingList.Items.Add(Encoding);
+                }
+
+                EncodingList.SelectedIndex = 0;
+                EncodingsListLoaded = true;
+            }
+        }
+
         private void Tabs_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
@@ -216,6 +230,8 @@ namespace SerrisCodeEditor.Xaml.Views
             OpenProjectButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
             OpenProjectButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
             OpenProjectButton.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            EncodingList.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
             TabTemplatesListView.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             //Update buttons colors
@@ -445,25 +461,27 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void CreateTab()
         {
-            if(CurrentSelectedIDs.ID_Tab != 0)
+            EncodingType SelectedEncoding = (EncodingType)EncodingList.SelectedItem;
+
+            if (CurrentSelectedIDs.ID_Tab != 0)
             {
                 StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
 
                 switch (TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
                 {
                     case ContentType.File:
-                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, SelectedType, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
                         break;
 
                     //Create file in the selected folder !
                     case ContentType.Folder:
-                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.UTF8, SelectedType, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
                         break;
                 }
             }
             else
             {
-                TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.UTF8, StorageListTypes.LocalStorage, TabTemplateContent);
+                TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), StorageListTypes.LocalStorage, TabTemplateContent);
             }
 
 

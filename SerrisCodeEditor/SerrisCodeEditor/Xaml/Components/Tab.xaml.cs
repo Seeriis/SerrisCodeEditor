@@ -208,6 +208,8 @@ namespace SerrisCodeEditor.Xaml.Components
                         int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
                         TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
+                        encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
+
                         if (!string.IsNullOrEmpty(current_tab.TabOriginalPathContent))
                         {
                             switch(current_tab.TabStorageMode)
@@ -221,9 +223,6 @@ namespace SerrisCodeEditor.Xaml.Components
                                     break;
                             }
                             
-                            encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-
-                            Encoding_Stackpanel.Visibility = Visibility.Visible;
                             Size_Stackpanel.Visibility = Visibility.Visible;
                             Modified_Stackpanel.Visibility = Visibility.Visible;
                             Created_Stackpanel.Visibility = Visibility.Visible;
@@ -232,7 +231,6 @@ namespace SerrisCodeEditor.Xaml.Components
                         }
                         else
                         {
-                            Encoding_Stackpanel.Visibility = Visibility.Collapsed;
                             Size_Stackpanel.Visibility = Visibility.Collapsed;
                             Modified_Stackpanel.Visibility = Visibility.Collapsed;
                             Created_Stackpanel.Visibility = Visibility.Collapsed;

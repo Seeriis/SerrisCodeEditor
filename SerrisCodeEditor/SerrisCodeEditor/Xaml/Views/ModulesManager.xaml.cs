@@ -66,6 +66,15 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SetTheme()
         {
+            TitleBG.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            TextTitle.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            IconTitleBG.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            IconTitle.Foreground = GlobalVariables.CurrentTheme.SecondaryColor;
+
+            BorderFlyout.Stroke = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            BorderTitle.Fill = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
             BackgroundList.Fill = GlobalVariables.CurrentTheme.MainColor;
             MenuButtons.Background = GlobalVariables.CurrentTheme.SecondaryColor;
 

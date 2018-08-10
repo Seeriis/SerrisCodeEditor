@@ -112,6 +112,7 @@
     <Compile Include="Items\OneDriveItem.cs" />
     <Compile Include="Items\STSNotification.cs" />
     <Compile Include="Items\TabsList.cs" />
+    <Compile Include="Manager\EncodingsHelper.cs" />
     <Compile Include="Manager\OneDriveAuthHelper.cs" />
     <Compile Include="Manager\TabsDataCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

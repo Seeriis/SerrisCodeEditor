@@ -60,72 +60,98 @@
 
     <Grid x:Name="PrincipalGrid" Background="Transparent">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-        </Grid>
+        <Rectangle x:Name="BackgroundList" Fill="#CC000000" Grid.RowSpan="2" Grid.Row="1" Stroke="Black">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
+            </interactivity:Interaction.Behaviors>
+        </Rectangle>
 
-        <Grid Grid.Row="1">
-            <Rectangle x:Name="BackgroundList" Fill="#CC000000">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
-                </interactivity:Interaction.Behaviors>
-            </Rectangle>
+        <Grid x:Name="TitleBG" Background="#FFF3F3F3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Path x:Name="IconTitleBG" Stroke="Black" StrokeThickness="0" Fill="White" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="0,0" >
+                                <PathFigure.Segments>
+                                    <LineSegment Point="0,0"></LineSegment>
+                                    <LineSegment Point="36,0"></LineSegment>
+                                    <ArcSegment Size="40,40" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="36,30"/>
+                                    <LineSegment Point="0,30"></LineSegment>
+                                    <LineSegment Point="0,0"></LineSegment>
+                                </PathFigure.Segments>
+                            </PathFigure >
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+            <TextBlock x:Name="IconTitle" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TextTitle" FontFamily="Segoe UI" Foreground="#FF666666" Text="Modules manager" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Margin="5,0,0,2" FontWeight="SemiLight"/>
+            <Rectangle x:Name="BorderTitle" Height="2" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Fill="White"/>
+        </Grid>
+        
+        <Rectangle x:Name="BorderFlyout" Stroke="White" StrokeThickness="2" Grid.Row="0" Grid.RowSpan="3"/>
+
+        <Grid Grid.Row="2">
             <ListView x:Name="ListModules" SelectionChanged="ListModules_SelectionChanged" Padding="0,10,0,0" ItemTemplate="{StaticResource ItemModule}" Width="325" Height="400">
 
             </ListView>
         </Grid>
 
-        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="3.0" Color="Black">
-            <StackPanel x:Name="MenuButtons" Background="#FFF3F3F3">
-                <Grid x:Name="ButtonsGrid" MinHeight="50" MinWidth="320" Background="Transparent">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="10" ShadowOpacity="0.8" OffsetX="0" OffsetY="0" Color="Black" Margin="10" Grid.Row="1">
+            <Rectangle Height="50" Fill="Black" RadiusX="20" RadiusY="20"/>
+        </controls:DropShadowPanel>
 
-                    <Grid x:Name="AddonsButton" ToolTipService.ToolTip="Addons" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
-                        <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
+        <StackPanel x:Name="MenuButtons" Background="#FFF3F3F3" CornerRadius="20" Margin="10" Grid.Row="1">
+            <Grid x:Name="ButtonsGrid" MinHeight="50" MinWidth="320" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Rectangle x:Name="ButtonsSeparator" Grid.Column="1" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
-
-                    <Grid x:Name="ThemesButton" ToolTipService.ToolTip="Themes" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
-                        <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-
-                    <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
-
-                    <Grid x:Name="ProgLanguagesButton" ToolTipService.ToolTip="Programming languages" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
-                        <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-
-                    <Rectangle x:Name="ButtonsSeparatorC" Grid.Column="5" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
-
-                    <Grid x:Name="ProjectTypesButton" ToolTipService.ToolTip="Projects/files template" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
-                        <TextBlock x:Name="ProjectTypesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
+                <Grid x:Name="AddonsButton" ToolTipService.ToolTip="Addons" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
+                    <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
 
-                <Button x:Name="InstallButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Collapsed" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="InstallButton_Click" Style="{StaticResource RoundCornerButton}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock x:Name="IconInstallButton" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18" Height="17"/>
-                        <TextBlock x:Name="TextInstallButton" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Install new module" FontSize="15" Grid.Column="1" Margin="10,0,0,0"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+                <Rectangle x:Name="ButtonsSeparator" Grid.Column="1" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-        </controls:DropShadowPanel>
+                <Grid x:Name="ThemesButton" ToolTipService.ToolTip="Themes" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
+                    <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
+
+                <Grid x:Name="ProgLanguagesButton" ToolTipService.ToolTip="Programming languages" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
+                    <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Rectangle x:Name="ButtonsSeparatorC" Grid.Column="5" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
+
+                <Grid x:Name="ProjectTypesButton" ToolTipService.ToolTip="Projects/files template" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
+                    <TextBlock x:Name="ProjectTypesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Grid>
+
+            <Button x:Name="InstallButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Collapsed" Grid.Column="0" Background="#7FFFFFFF" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="InstallButton_Click" Style="{StaticResource RoundCornerButton}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock x:Name="IconInstallButton" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="18" Height="17"/>
+                    <TextBlock x:Name="TextInstallButton" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="#FF3C097A" Text="Install new module" FontSize="15" Grid.Column="1" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
     </Grid>
 </Page>

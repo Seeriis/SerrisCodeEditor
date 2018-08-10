@@ -655,29 +655,32 @@
                 <local:TabsList x:Name="TabsList" Margin="0" MaxHeight="500" ListTabDeleted="TabsList_ListTabDeleted" Grid.Column="1"></local:TabsList>
             </Grid>
 
-            <StackPanel x:Name="StackInfos" Margin="60,0,0,0">
-                <StackPanel Orientation="Horizontal" Margin="10,0,10,2">
+            <StackPanel x:Name="StackInfos" Margin="60,5,0,10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                    <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="type_info" x:Uid="fileinfo-encoding" Text="Type: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,3"/>
                     <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
                 </StackPanel>
-                <StackPanel x:Name="Encoding_Stackpanel" Orientation="Horizontal" Margin="10,0,10,5">
+                <StackPanel x:Name="Encoding_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
+                    <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="encoding_info" x:Uid="fileinfo-encoding" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="encoding_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
-                <StackPanel x:Name="Size_Stackpanel" Orientation="Horizontal" Margin="10,0,10,5">
+                <StackPanel x:Name="Size_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
+                    <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="size_info" x:Uid="fileinfo-size" Text="Size: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="size_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
-                <StackPanel x:Name="Modified_Stackpanel" Orientation="Horizontal" Margin="10,0,10,5">
+                <StackPanel x:Name="Modified_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
+                    <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="modified_info" x:Uid="fileinfo-modified_at" Text="Modified at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="modified_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
-                <StackPanel x:Name="Created_Stackpanel" Orientation="Horizontal" Margin="10,0,10,5">
+                <StackPanel x:Name="Created_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
+                    <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="created_info" x:Uid="fileinfo-created_at" Text="Created at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="created_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
-
-                <Rectangle Fill="#7FFFFFFF" VerticalAlignment="Bottom" Height="0.5" Margin="5,0,60,0" RadiusX="1" RadiusY="3" Grid.ColumnSpan="2"/>
             </StackPanel>
         </StackPanel>
     </Grid>
