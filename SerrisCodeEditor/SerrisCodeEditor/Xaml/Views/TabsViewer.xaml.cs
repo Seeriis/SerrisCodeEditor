@@ -135,6 +135,16 @@ namespace SerrisCodeEditor.Xaml.Views
                 {
                     CurrentSelectedIDs = (TabID)List.SelectedItem;
                     var tab = TabsAccessManager.GetTabViaID(CurrentSelectedIDs);
+                    string MonacoID;
+
+                    if(string.IsNullOrEmpty(tab.TabMonacoModelID))
+                    {
+                        MonacoID = Guid.NewGuid().ToString();
+                    }
+                    else
+                    {
+                        MonacoID = tab.TabMonacoModelID;
+                    }
 
                     if(tab.TabContentType == ContentType.File)
                     {
@@ -150,7 +160,7 @@ namespace SerrisCodeEditor.Xaml.Views
                             TabType = tab.TabType.ToUpper();
 
                         if (tab != null)
-                            Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName, cursorPositionColumn = tab.TabCursorPosition.column, cursorPositionLineNumber = tab.TabCursorPosition.row, tabName = tab.TabName });
+                            Messenger.Default.Send(new TabSelectedNotification { tabID = CurrentSelectedIDs.ID_Tab, tabsListID = CurrentSelectedIDs.ID_TabsList, code = await TabsAccessManager.GetTabContentViaIDAsync(CurrentSelectedIDs), contactType = ContactTypeSCEE.SetCodeForEditor, typeLanguage = TabType, typeCode = Encoding.GetEncoding(EncodingType).EncodingName, cursorPositionColumn = tab.TabCursorPosition.column, cursorPositionLineNumber = tab.TabCursorPosition.row, tabName = tab.TabName, monacoModelID = MonacoID });
 
                         AppSettings.Values["Tabs_tab-selected-index"] = ((TabID)List.SelectedItem).ID_Tab;
                         AppSettings.Values["Tabs_list-selected-index"] = ((TabID)List.SelectedItem).ID_TabsList;
@@ -467,7 +477,7 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
 
-                switch (TabsAccessManager.GetTabViaID(CurrentSelectedIDs).TabContentType)
+                switch (TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs).TabContentType)
                 {
                     case ContentType.File:
                         TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
@@ -475,7 +485,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                     //Create file in the selected folder !
                     case ContentType.Folder:
-                        TabsCreatorAssistant.CreateNewTabInFolder(CurrentSelectedIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTabInFolder(GlobalVariables.CurrentIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
                         break;
                 }
             }

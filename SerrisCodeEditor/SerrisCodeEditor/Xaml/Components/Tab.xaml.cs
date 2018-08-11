@@ -139,7 +139,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                                 case TypeUpdateTab.TabNewModifications:
                                     current_tab.TabNewModifications = true;
-                                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
                                     UpdateTabInformations();
                                     break;
                             }
@@ -306,7 +306,7 @@ namespace SerrisCodeEditor.Xaml.Components
             if(current_tab != null)
             {
                 current_tab.FolderContent.Remove(e.ID_Tab);
-                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
             }
         }
 
@@ -324,7 +324,7 @@ namespace SerrisCodeEditor.Xaml.Components
             if(list_types.SelectedIndex != -1 && (string)list_types.SelectedItem != current_tab.TabType)
             {
                 current_tab.TabType = LanguagesHelper.GetLanguageTypeViaName((string)list_types.SelectedItem);
-                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, true);
             }
         }
 
@@ -381,7 +381,7 @@ namespace SerrisCodeEditor.Xaml.Components
         private async void RenameTab()
         {
             current_tab.TabName = TextBoxRename.Text;
-            await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+            await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
             RenameGrid.Visibility = Visibility.Collapsed;
             name_tab.Visibility = Visibility.Visible;
         }
@@ -395,7 +395,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 if(current_tab.TabContentType == ContentType.Folder)
                 {
                     current_tab.FolderOpened = false;
-                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
                 }
             }
             else
@@ -477,7 +477,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
                     case ContentType.Folder:
                         current_tab.FolderOpened = true;
-                        await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list);
+                        await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
                         break;
                 }
 

@@ -93,7 +93,7 @@ namespace SerrisTabsServer.Storage
             }
 
             tab.TabNewModifications = false;
-            await TabsWriteManager.PushUpdateTabAsync(tab, IdList);
+            await TabsWriteManager.PushUpdateTabAsync(tab, IdList, false);
         }
 
     }

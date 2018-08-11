@@ -41,21 +41,31 @@ namespace SerrisCodeEditorEngine
 
                 if(Initialized)
                 {
-                    Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                     SetCode(value);
+                    Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                 }
                 else
                 {
                     EditorLoaded += (e, f) =>
                     {
-                        Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                         SetCode(value);
+                        Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
                     };
                 }
 
             }
         }
         public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(string), typeof(EditorView), null);
+
+
+
+        public string MonacoModelID
+        {
+            get { return (string)GetValue(MonacoModelIDProperty); }
+            set { SetValue(MonacoModelIDProperty, value); }
+        }
+
+        public static readonly DependencyProperty MonacoModelIDProperty = DependencyProperty.Register("MonacoModelID", typeof(string), typeof(EditorView), null);
 
         public int CursorPositionRow
         {
@@ -190,7 +200,8 @@ namespace SerrisCodeEditorEngine
         {
             if (Initialized)
             {
-                await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.setValue('" + JavaScriptEncode(code) + "');" });
+                //await editor_view.InvokeScriptAsync("eval", new string[] { @"editor.setValue('" + JavaScriptEncode(code) + "');" });
+                await editor_view.InvokeScriptAsync("eval", new string[] { @"var createNewModel = true; if(selectedID.length != 0) { modelsList[selectedIDIndex].model = editor.getModel(); modelsList[selectedIDIndex].state = editor.saveViewState(); } for(var i = 0; i < (modelsList.length - 1); i++) { if(modelsList[i].id.includes('" + MonacoModelID + "')) { editor.setModel(modelsList[i].model); editor.restoreViewState(modelsList[i].state); createNewModel = false; selectedID = '" + MonacoModelID + "'; selectedIDIndex = i; editor.focus(); break; } } if(createNewModel) { modelsList.push({ id: '" + MonacoModelID + "', model: monaco.editor.createModel('" + JavaScriptEncode(code) + "'), state: null }); editor.setModel(modelsList[modelsList.length - 1].model); selectedID = '" + MonacoModelID + "'; selectedIDIndex =  modelsList.length - 1; editor.focus(); }" });
 
                 if (isReadOnly)
                 {

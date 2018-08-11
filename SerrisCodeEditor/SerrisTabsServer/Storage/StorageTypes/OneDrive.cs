@@ -67,7 +67,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Request().DeleteAsync();
                 Tab.TabStorageMode = StorageListTypes.Nothing;
                 Tab.TabOriginalPathContent = "";
-                await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
+                await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, false);
             }
             catch { }
         }
@@ -85,7 +85,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 if (ReplaceEncoding)
                 {
                     Tab.TabEncoding = st.CurrentEncoding.CodePage;
-                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true);
                 }
 
                 st.Dispose();

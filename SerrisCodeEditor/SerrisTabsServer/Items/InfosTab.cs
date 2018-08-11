@@ -41,6 +41,8 @@ namespace SerrisTabsServer.Items
         [JsonIgnore]
         public string TabContentTemporary { get; set; }
 
+        public string TabMonacoModelID { get; set; }
+
         public bool CanBeDeleted { get; set; }
         public bool CanBeModified { get; set; }
     }

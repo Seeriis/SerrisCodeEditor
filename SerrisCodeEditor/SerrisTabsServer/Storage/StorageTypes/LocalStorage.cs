@@ -38,7 +38,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                     Tab.TabType = LanguagesHelper.GetLanguageType(file.FileType);
                     Tab.TabOriginalPathContent = file.Path;
 
-                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true);
                 }
 
             });
@@ -51,7 +51,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
             await file.DeleteAsync();
             Tab.TabStorageMode = StorageListTypes.Nothing;
             Tab.TabOriginalPathContent = "";
-            await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
+            await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, false);
         }
 
         public async Task<bool> ReadFile(bool ReplaceEncoding)
@@ -83,7 +83,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 if (ReplaceEncoding)
                 {
                     Tab.TabEncoding = Encoding.GetEncoding(encode_type).CodePage;
-                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true);
                 }
 
                 st.Dispose();

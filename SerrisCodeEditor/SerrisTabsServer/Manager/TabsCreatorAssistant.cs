@@ -70,7 +70,7 @@ namespace SerrisTabsServer.Manager
 
                     InfosTab Folder = TabsAccessManager.GetTabViaID(FolderIDs);
                     Folder.FolderContent.Add(id_tab);
-                    Task.Run(async () => { await TabsWriteManager.PushUpdateTabAsync(Folder, FolderIDs.ID_TabsList); });
+                    Task.Run(async () => { await TabsWriteManager.PushUpdateTabAsync(Folder, FolderIDs.ID_TabsList, false); });
 
                 }
             });

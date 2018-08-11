@@ -104,6 +104,7 @@ namespace SerrisTabsServer.Manager
             try
             {
                 tab.ID = new Random().Next(999999);
+                tab.TabMonacoModelID = Guid.NewGuid().ToString();
                 TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == id_list);
 
                 if (list_tabs.tabs == null)
@@ -219,7 +220,7 @@ namespace SerrisTabsServer.Manager
         /// <param name="tab">Tab infos you want to update</param>
         /// <param name="id_list">ID of the tabs list where is the tab</param>
         /// <returns></returns>
-        public static async Task<bool> PushUpdateTabAsync(InfosTab tab, int id_list)
+        public static async Task<bool> PushUpdateTabAsync(InfosTab tab, int id_list, bool UpdateMonacoID)
         {
             TabsDataCache.LoadTabsData();
 
@@ -228,6 +229,11 @@ namespace SerrisTabsServer.Manager
                 TabsList list_tabs = TabsDataCache.TabsListDeserialized.First(m => m.ID == id_list);
                 InfosTab _tab = list_tabs.tabs.First(m => m.ID == tab.ID);
                 int index_list = TabsDataCache.TabsListDeserialized.IndexOf(list_tabs), index_tab = list_tabs.tabs.IndexOf(_tab);
+
+                if(UpdateMonacoID)
+                {
+                    tab.TabMonacoModelID = Guid.NewGuid().ToString();
+                }
 
                 TabsDataCache.TabsListDeserialized[index_list].tabs[index_tab] = tab;
 

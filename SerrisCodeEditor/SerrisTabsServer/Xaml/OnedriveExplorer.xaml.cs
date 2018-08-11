@@ -130,7 +130,7 @@ namespace SerrisTabsServer.Xaml
 
                     RequestedTab.TabOriginalPathContent = file.Id;
                     RequestedTab.TabDateModified = file.LastModifiedDateTime.ToString();
-                    await TabsWriteManager.PushUpdateTabAsync(RequestedTab, TabIDRequest.ID_TabsList);
+                    await TabsWriteManager.PushUpdateTabAsync(RequestedTab, TabIDRequest.ID_TabsList, false);
                     break;
 
                 case OnedriveExplorerMode.SelectFile:

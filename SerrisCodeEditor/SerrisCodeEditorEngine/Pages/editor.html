@@ -29,7 +29,7 @@
     <div id="editor" style="width:100%; height: 100%; overflow: hidden;"></div>
 
     <script>
-        var editor;
+        var editor, modelsList = [], selectedID = "", selectedIDIndex = 0;
 
         require.config({ paths: { 'vs': '../Monaco/vs' } });
         require(['vs/editor/editor.main'], function () {

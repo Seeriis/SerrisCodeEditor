@@ -53,7 +53,7 @@ namespace SerrisCodeEditor.Xaml.Views
             Application.Current.Suspending += Current_Suspending;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var args = e.Parameter as Windows.ApplicationModel.Activation.IActivatedEventArgs;
@@ -98,7 +98,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     PositionSCEE CursorPosition = await ContentViewer.GetCursorPosition();
                     InfosTab Tab = TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs);
                     Tab.TabCursorPosition = new CursorPosition { column = CursorPosition.column, row = CursorPosition.row };
-                    await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList);
+                    await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList, false);
 
                     deferral.Complete();
                 }
@@ -173,7 +173,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 break;
 
                             case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
-                                ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
+                                ContentViewer.MonacoModelID = notification.monacoModelID; ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
                                 break;
                         }
 
@@ -647,7 +647,7 @@ namespace SerrisCodeEditor.Xaml.Views
                         PositionSCEE CursorPosition = await ContentViewer.GetCursorPosition();
                         InfosTab Tab = TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs);
                         Tab.TabCursorPosition = new CursorPosition { column = CursorPosition.column, row = CursorPosition.row };
-                        await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList);
+                        await TabsWriteManager.PushUpdateTabAsync(Tab, GlobalVariables.CurrentIDs.ID_TabsList, false);
                     }
                 }
                 catch { }
@@ -664,6 +664,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 }
 
                 GlobalVariables.CurrentIDs = new TabID { ID_Tab = Queue_Tabs[0].tabID, ID_TabsList = Queue_Tabs[0].tabsListID };
+                ContentViewer.MonacoModelID = Queue_Tabs[0].monacoModelID;
                 ContentViewer.CursorPositionColumn = Queue_Tabs[0].cursorPositionColumn;
                 ContentViewer.CursorPositionRow = Queue_Tabs[0].cursorPositionLineNumber;
                 ContentViewer.CodeLanguage = Queue_Tabs[0].typeLanguage;
