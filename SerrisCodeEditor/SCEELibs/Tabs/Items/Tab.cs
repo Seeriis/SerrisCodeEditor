@@ -59,7 +59,11 @@ namespace SCEELibs.Tabs.Items
 
         public IAsyncOperation<string> getContent()
         {
-            return TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }).AsAsyncOperation();
+            try
+            {
+                return TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }).AsAsyncOperation();
+            }
+            catch { return Task.Run(() => { return ""; }).AsAsyncOperation(); }
         }
     }
 }

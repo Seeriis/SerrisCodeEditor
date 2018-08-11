@@ -198,9 +198,9 @@ namespace SerrisCodeEditor
         /// <param name="e">Détails de la requête de suspension.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
+            //SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             //TODO: enregistrez l'état de l'application et arrêtez toute activité en arrière-plan
-            deferral.Complete();
+            //deferral.Complete();
         }
     }
 }

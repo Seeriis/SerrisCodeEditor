@@ -107,7 +107,10 @@ namespace SerrisCodeEditor.Xaml.Views
                     deferral.Complete();
                 }
             }
-            catch { deferral.Complete(); }
+            catch
+            {
+                deferral.Complete();
+            }
         }
 
         bool ToolbarCanBeResized = true;
@@ -671,14 +674,15 @@ namespace SerrisCodeEditor.Xaml.Views
                 ContentViewer.Code = Queue_Tabs[0].code;
                 ChangePushed = false;
 
+                Queue_Tabs.RemoveAt(0);
+
                 //Files opened with files associations
-                if (FilesWasOpened)
+                if (FilesWasOpened && Queue_Tabs.Count == 0)
                 {
                     await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
                     FilesWasOpened = false; OpenedFiles = null;
                 }
 
-                Queue_Tabs.RemoveAt(0);
                 CanManageQueue = true;
             }
         }

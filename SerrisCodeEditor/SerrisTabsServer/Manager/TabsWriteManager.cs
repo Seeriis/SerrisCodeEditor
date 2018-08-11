@@ -181,34 +181,31 @@ namespace SerrisTabsServer.Manager
                 TabsDataCache.LoadTabsData();
                 StorageFile file_content = await TabsDataCache.TabsListFolder.CreateFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json", CreationCollisionOption.OpenIfExists);
 
-                using (var reader = new StreamReader(await file_content.OpenStreamForReadAsync()))
-                using (JsonReader JsonReader = new JsonTextReader(reader))
+                try
                 {
-                    try
+                    if (content != null)
                     {
-                        ContentTab _content = new JsonSerializer().Deserialize<ContentTab>(JsonReader);
-
-                        if (content != null)
+                        string ContentToBeWritenn = JsonConvert.SerializeObject(new ContentTab { ID = id.ID_Tab, Content = content }, Formatting.Indented);
+                        using (var writer = new StreamWriter(await file_content.OpenStreamForWriteAsync()))
                         {
-                            _content.Content = content;
-                            await FileIO.WriteTextAsync(file_content, JsonConvert.SerializeObject(_content, Formatting.Indented));
-
-                            if (sendnotification)
-                            {
-                                foreach (CoreApplicationView view in CoreApplication.Views)
-                                {
-                                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                                    {
-                                        Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = id });
-                                    });
-                                }
-                            }
-
-                            return true;
+                            writer.Write(ContentToBeWritenn);
                         }
+
+                        if (sendnotification)
+                        {
+                            foreach (CoreApplicationView view in CoreApplication.Views)
+                            {
+                                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                {
+                                    Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.TabUpdated, ID = id });
+                                });
+                            }
+                        }
+
+                        return true;
                     }
-                    catch { }
                 }
+                catch { }
             }
             catch { }
             return false;
