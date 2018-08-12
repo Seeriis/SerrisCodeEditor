@@ -75,8 +75,8 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             SetMessenger();
-            SetTheme();
             SetInterface();
+            SetTheme();
 
             PointerMoved += EditorView_PointerMoved;
             PointerReleased += SeparatorLinePointerReleased;
@@ -395,6 +395,18 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private void RectangleBackgroundPrinciapalUI_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Background loading bug fixed
+            BackgroundPrinciapalUI.ImageSource = GlobalVariables.CurrentTheme.BackgroundImage;
+        }
+
+        private void RectangleBackgroundSheetView_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Background loading bug fixed
+            BackgroundSheetView.ImageSource = GlobalVariables.CurrentTheme.BackgroundImage;
+        }
+
         private void LoadSettings()
         {
             //LINE NUMBERS
@@ -627,6 +639,7 @@ namespace SerrisCodeEditor.Xaml.Views
         //For manage tabs content
         List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>();
         bool CanManageQueue = true;
+
         public async void ManageQueueTabs()
         {
             while (!CanManageQueue)

@@ -110,7 +110,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Rectangle x:Name="RectangleBackgroundSheetView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="RectangleBackgroundSheetView_Loaded">
                             <Rectangle.Fill>
                                 <ImageBrush x:Name="BackgroundSheetView" Stretch="UniformToFill"/>
                             </Rectangle.Fill>
@@ -136,7 +136,7 @@
             </Grid.ColumnDefinitions>
 
             <controls:DropShadowPanel x:Name="BackgroundPrincipalUIControl" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="80" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="2.0" Color="Black">
-                <Rectangle Grid.RowSpan="2" Height="80" VerticalAlignment="Top">
+                <Rectangle x:Name="RectangleBackgroundPrinciapalUI" Grid.RowSpan="2" Height="80" VerticalAlignment="Top" Loaded="RectangleBackgroundPrinciapalUI_Loaded">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
                     </interactivity:Interaction.Behaviors>
