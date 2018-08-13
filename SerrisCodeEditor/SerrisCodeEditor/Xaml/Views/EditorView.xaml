@@ -159,8 +159,8 @@
                                         <PathFigure.Segments>
                                             <LineSegment Point="0,0"></LineSegment>
                                             <LineSegment Point="60,0"></LineSegment>
-                                            <ArcSegment Size="80,80" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="60,78"/>
-                                            <LineSegment Point="0,78"></LineSegment>
+                                            <ArcSegment Size="80,80" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="60,80"/>
+                                            <LineSegment Point="0,80"></LineSegment>
                                             <LineSegment Point="0,0"></LineSegment>
                                         </PathFigure.Segments>
                                     </PathFigure >
@@ -199,9 +199,9 @@
                 <my:Console x:Name="Console" Height="240" VerticalAlignment="Top" Margin="-15,0,0,0" Canvas.ZIndex="89"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Height="30" Padding="5,0,0,0">
 
-                    <Button x:Name="NotificationsButton" HorizontalAlignment="Right" BorderThickness="1" IsEnabled="False" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
                     <Button x:Name="DownloadButton" HorizontalAlignment="Right" BorderThickness="1" IsEnabled="False" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
-                    
+                    <Button x:Name="NotificationsButton" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
+
                     <Button x:Name="SettingsButton" ToolTipService.ToolTip="Settings" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
                         <Button.Flyout>
                             <Flyout Placement="Bottom">
@@ -211,6 +211,7 @@
                                     <Style TargetType="FlyoutPresenter">
                                         <Setter Property="Padding" Value="0"/>
                                         <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
                                     </Style>
                                 </Flyout.FlyoutPresenterStyle>
                             </Flyout>

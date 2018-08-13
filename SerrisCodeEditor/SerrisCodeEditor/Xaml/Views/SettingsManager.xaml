@@ -25,27 +25,25 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
         </Grid>
+        <Rectangle x:Name="BackgroundList" Fill="#CC000000" Grid.RowSpan="2">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
+            </interactivity:Interaction.Behaviors>
+        </Rectangle>
 
-        <Grid Grid.Row="1">
-            <Rectangle x:Name="BackgroundList" Fill="#CC000000">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
-                </interactivity:Interaction.Behaviors>
-            </Rectangle>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="MenuControls" Padding="25,0,25,15">
 
-            <ScrollViewer>
-                <StackPanel x:Name="MenuControls" Padding="15">
-
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-
-        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Height="50" BlurRadius="6.0" ShadowOpacity="0.70" OffsetX="0" OffsetY="3.0" Color="Black">
-            <Grid x:Name="ButtonsGrid" Height="50" Background="#FFF3F3F3" Width="350">
-
-            </Grid>
-
+            </StackPanel>
+        </ScrollViewer>
+        
+        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="10" ShadowOpacity="0.8" OffsetX="0" OffsetY="0" Color="Black" Margin="10,10,10,0" Grid.Row="0">
+            <Rectangle Height="50" Fill="Black" RadiusX="25" RadiusY="25"/>
         </controls:DropShadowPanel>
+
+        <Grid x:Name="ButtonsGrid" Height="50" Background="#FFF3F3F3" Margin="10,10,10,0" CornerRadius="25">
+
+        </Grid>
     </Grid>
 
 </Page>

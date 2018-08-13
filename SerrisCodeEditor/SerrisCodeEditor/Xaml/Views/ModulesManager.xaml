@@ -60,45 +60,15 @@
 
     <Grid x:Name="PrincipalGrid" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle x:Name="BackgroundList" Fill="#CC000000" Grid.RowSpan="2" Grid.Row="1" Stroke="Black">
+        <Rectangle x:Name="BackgroundList" Fill="#CC000000" Grid.RowSpan="2" Grid.Row="0" Stroke="Black">
             <interactivity:Interaction.Behaviors>
                 <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
             </interactivity:Interaction.Behaviors>
         </Rectangle>
-
-        <Grid x:Name="TitleBG" Background="#FFF3F3F3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Path x:Name="IconTitleBG" Stroke="Black" StrokeThickness="0" Fill="White" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round">
-                <Path.Data>
-                    <PathGeometry>
-                        <PathGeometry.Figures>
-                            <PathFigure StartPoint="0,0" >
-                                <PathFigure.Segments>
-                                    <LineSegment Point="0,0"></LineSegment>
-                                    <LineSegment Point="36,0"></LineSegment>
-                                    <ArcSegment Size="40,40" RotationAngle="45" IsLargeArc="False" SweepDirection="Clockwise" Point="36,30"/>
-                                    <LineSegment Point="0,30"></LineSegment>
-                                    <LineSegment Point="0,0"></LineSegment>
-                                </PathFigure.Segments>
-                            </PathFigure >
-                        </PathGeometry.Figures>
-                    </PathGeometry>
-                </Path.Data>
-            </Path>
-            <TextBlock x:Name="IconTitle" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock x:Name="TextTitle" FontFamily="Segoe UI" Foreground="#FF666666" Text="Modules manager" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Margin="5,0,0,2" FontWeight="SemiLight"/>
-            <Rectangle x:Name="BorderTitle" Height="2" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Fill="White"/>
-        </Grid>
-        
-        <Rectangle x:Name="BorderFlyout" Stroke="White" StrokeThickness="2" Grid.Row="0" Grid.RowSpan="3"/>
 
         <Grid Grid.Row="2">
             <ListView x:Name="ListModules" SelectionChanged="ListModules_SelectionChanged" Padding="0,10,0,0" ItemTemplate="{StaticResource ItemModule}" Width="325" Height="400">
@@ -106,11 +76,11 @@
             </ListView>
         </Grid>
 
-        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="10" ShadowOpacity="0.8" OffsetX="0" OffsetY="0" Color="Black" Margin="10" Grid.Row="1">
+        <controls:DropShadowPanel VerticalAlignment="Top" HorizontalContentAlignment="Stretch" BlurRadius="10" ShadowOpacity="0.8" OffsetX="0" OffsetY="0" Color="Black" Margin="10,10,10,0" Grid.Row="0">
             <Rectangle Height="50" Fill="Black" RadiusX="20" RadiusY="20"/>
         </controls:DropShadowPanel>
 
-        <StackPanel x:Name="MenuButtons" Background="#FFF3F3F3" CornerRadius="20" Margin="10" Grid.Row="1">
+        <StackPanel x:Name="MenuButtons" Background="#FFF3F3F3" CornerRadius="20" Margin="10,10,10,0" Grid.Row="0">
             <Grid x:Name="ButtonsGrid" MinHeight="50" MinWidth="320" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

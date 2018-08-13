@@ -147,6 +147,9 @@
     <Compile Include="Xaml\Views\SettingsManager.xaml.cs">
       <DependentUpon>SettingsManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Xaml\Views\WindowFlyout.xaml.cs">
+      <DependentUpon>WindowFlyout.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -241,6 +244,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Xaml\Views\SettingsManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\WindowFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

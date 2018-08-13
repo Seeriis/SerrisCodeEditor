@@ -633,7 +633,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            FrameSettings.Navigate(typeof(SettingsManager));
+            FrameSettings.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(SettingsManager), WindowIcon = "", WindowTitle = "Settings" });
         }
 
         //For manage tabs content
