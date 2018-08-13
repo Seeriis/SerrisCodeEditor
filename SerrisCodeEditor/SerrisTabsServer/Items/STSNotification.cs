@@ -8,7 +8,8 @@
         SelectTab,
         TabDeleted,
         NewList,
-        ListDeleted
+        ListDeleted,
+        RefreshCurrentList
     }
 
     public class STSNotification

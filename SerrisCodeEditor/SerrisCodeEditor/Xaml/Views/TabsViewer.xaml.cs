@@ -303,6 +303,10 @@ namespace SerrisCodeEditor.Xaml.Views
 
                             switch (notification.Type)
                             {
+                                case TypeUpdateTab.RefreshCurrentList:
+                                    ChangeSelectedList(CurrentSelectedIDs.ID_TabsList);
+                                    break;
+                               
                                 case TypeUpdateTab.NewTab:
                                     if(!TabsAccessManager.GetTabViaID(notification.ID).TabInvisibleByDefault)
                                     {

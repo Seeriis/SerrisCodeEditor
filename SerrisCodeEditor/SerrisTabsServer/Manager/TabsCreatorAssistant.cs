@@ -254,6 +254,7 @@ namespace SerrisTabsServer.Manager
         public static async Task<List<int>> OpenFilesAlreadyOpenedAndCreateNewTabsFiles(int IDList, IReadOnlyList<IStorageItem> files)
         {
             var list_ids = new List<int>();
+            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.RefreshCurrentList, ID = new TabID { ID_TabsList = IDList } });
 
             foreach (StorageFile file in files)
             {
