@@ -34,6 +34,21 @@ namespace SerrisCodeEditor.Xaml.Components
 
     public sealed partial class Console : UserControl
     {
+        /* =============
+         * = VARIABLES =
+         * =============
+         */
+
+        List<ConsoleNotificationContent> errors_list = new List<ConsoleNotificationContent>(), informations_list = new List<ConsoleNotificationContent>(), results_list = new List<ConsoleNotificationContent>(), warnings_list = new List<ConsoleNotificationContent>();
+        public ObservableCollection<ConsoleNotificationContent> CurrentNotifications = new ObservableCollection<ConsoleNotificationContent>();
+        List<string> commands_list = new List<string>();
+
+        int commands_list_index = -1;
+        bool isFlyoutOpened = false;
+        bool ShowErrors = true, ShowInformations = true, ShowResults = true, ShowWarnings = true;
+
+
+
         public Console()
         {
             this.InitializeComponent();
@@ -144,6 +159,9 @@ namespace SerrisCodeEditor.Xaml.Components
             InformationsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
             ResultsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
             WarningsStackPanel.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+
+            ClearButton.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+            ClearButton.Foreground = GlobalVariables.CurrentTheme.MainColor;
 
             if (ShowInformations)
             {
@@ -322,6 +340,24 @@ namespace SerrisCodeEditor.Xaml.Components
             RefreshNotificationsList();
         }
 
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ShowErrors)
+                errors_list.Clear();
+
+            if (ShowInformations)
+                informations_list.Clear();
+
+            if (ShowResults)
+                results_list.Clear();
+
+            if (ShowWarnings)
+                warnings_list.Clear();
+
+            RefreshNotificationsList();
+            UpdateNotifsNumber();
+        }
+
         private void CurrentListNotifications_Loaded(object sender, RoutedEventArgs e)
         {
             CurrentListNotifications.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = CurrentNotifications });
@@ -375,21 +411,6 @@ namespace SerrisCodeEditor.Xaml.Components
             temp_list.Sort((a, b) => b.notifDate.CompareTo(a.notifDate));
             foreach (var element in temp_list) { CurrentNotifications.Add(element); }
         }
-
-
-
-        /* =============
-         * = VARIABLES =
-         * =============
-         */
-
-
-
-        List<ConsoleNotificationContent> errors_list = new List<ConsoleNotificationContent>(), informations_list = new List<ConsoleNotificationContent>(), results_list = new List<ConsoleNotificationContent>(), warnings_list = new List<ConsoleNotificationContent>();
-        public ObservableCollection<ConsoleNotificationContent> CurrentNotifications = new ObservableCollection<ConsoleNotificationContent>();
-        List<string> commands_list = new List<string>(); int commands_list_index = -1;
-        bool isFlyoutOpened = false;
-        bool ShowErrors = true, ShowInformations = true, ShowResults = true, ShowWarnings = true;
 
     }
 }

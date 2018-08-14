@@ -184,6 +184,8 @@
                     </StackPanel>
                 </StackPanel>
 
+                <Button x:Name="ClearButton" ToolTipService.ToolTip="Clear console" Click="ClearButton_Click" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FF3E2159" Visibility="Visible" Background="#003E2159" Style="{StaticResource Round_Button}" Width="30" Height="30" FontSize="16" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderBrush="#FF3E2159"/>
+
                 <Rectangle Fill="#A5A5A5" Width="0.5" HorizontalAlignment="Right"/>
             </Grid>
 
