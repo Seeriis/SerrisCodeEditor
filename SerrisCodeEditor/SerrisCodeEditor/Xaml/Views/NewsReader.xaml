@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="SerrisCodeEditor.Xaml.Views.NewsReader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SerrisCodeEditor.Xaml.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="ContentGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Image x:Name="HeaderImage" Stretch="UniformToFill"/>
+            <Rectangle Fill="#CC000000"/>
+            <TextBlock x:Name="TitleContent" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,50"/>
+            <StackPanel VerticalAlignment="Bottom">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10">
+                        <Grid BorderBrush="White" Width="22" Height="22" BorderThickness="1" CornerRadius="90">
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" />
+                        </Grid>
+                        <TextBlock x:Name="AuthorContent" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="SemiLight" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10">
+                        <TextBlock x:Name="DateContent" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="SemiLight" Margin="0,0,5,0" />
+                        <Grid BorderBrush="White" Width="22" Height="22" BorderThickness="1" CornerRadius="90">
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <Button x:Name="ShowCommentsButton" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Grid.Column="0" Background="White" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="ShowCommentsButton_Click" Style="{StaticResource RoundCornerButton}" FocusVisualPrimaryBrush="White">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="18" Height="17"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="See comments" FontSize="15" Grid.Column="1" Margin="10,0,0,0" FocusVisualPrimaryBrush="Black" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            
+
+            <WebView x:Name="ContentView" Grid.Row="1"/>
+        </Grid>
+
+        <Grid x:Name="CommentsGrid" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Background="#FF404040">
+                <Button x:Name="GoBackButton" Content="" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Foreground="White" Background="#00000000" FontSize="18" VerticalAlignment="Stretch" Width="50" Click="GoBackButton_Click"/>
+                <TextBlock Text="Comments" HorizontalAlignment="Right" TextWrapping="Wrap" Foreground="White" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,5"/>
+            </Grid>
+            
+            <WebView x:Name="CommentsView" Grid.Row="1"/>
+        </Grid>
+    </Grid>
+</Page>

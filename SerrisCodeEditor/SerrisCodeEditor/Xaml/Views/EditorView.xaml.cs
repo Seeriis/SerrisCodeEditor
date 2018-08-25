@@ -360,7 +360,7 @@ namespace SerrisCodeEditor.Xaml.Views
             SolidColorBrush ColorSettingsButtons = new SolidColorBrush(Windows.UI.Color.FromArgb(150, GlobalVariables.CurrentTheme.SecondaryColor.Color.R, GlobalVariables.CurrentTheme.SecondaryColor.Color.G, GlobalVariables.CurrentTheme.SecondaryColor.Color.B));
 
             SettingsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
-            NotificationsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+            NewsButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             DownloadButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
             switch (GlobalVariables.CurrentDevice)
@@ -639,6 +639,11 @@ namespace SerrisCodeEditor.Xaml.Views
         //For manage tabs content
         List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>();
         bool CanManageQueue = true;
+
+        private void NewsButton_Click(object sender, RoutedEventArgs e)
+        {
+            FrameNews.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(NewsViewer), WindowIcon = "", WindowTitle = "News" });
+        }
 
         public async void ManageQueueTabs()
         {

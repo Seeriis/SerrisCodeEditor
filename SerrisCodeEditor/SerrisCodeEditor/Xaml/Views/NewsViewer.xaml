@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="SerrisCodeEditor.Xaml.Views.NewsViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SerrisCodeEditor.Xaml.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+    <Page.Resources>
+        <DataTemplate x:Key="NewsItem">
+            <StackPanel HorizontalAlignment="Center" Padding="0,15">
+                <Grid>
+                    <Rectangle Height="100" Width="325" RadiusX="10" RadiusY="10">
+                        <Rectangle.Fill>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding HeaderImage}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Fill="#B2000000" RadiusX="10" RadiusY="10"/>
+                    <TextBlock Text="{Binding NewsItem.Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap" FontWeight="SemiBold" />
+                </Grid>
+                <Grid Margin="10,5,10,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Grid BorderBrush="White" Width="22" Height="22" BorderThickness="1" CornerRadius="90">
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" />
+                        </Grid>
+                        <TextBlock Text="{Binding NewsItem.Author}" VerticalAlignment="Center" Foreground="White" FontSize="12" FontWeight="SemiLight" Margin="5,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding NewsItem.Date}" VerticalAlignment="Center" Foreground="White" FontSize="12" FontWeight="SemiLight" Margin="0,0,5,0" />
+                        <Grid BorderBrush="White" Width="22" Height="22" BorderThickness="1" CornerRadius="90">
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="Transparent">
+        <Rectangle x:Name="BackgroundBlur" Fill="#CC000000" Grid.RowSpan="2">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior" Value="5" Duration="0" Delay="0" AutomaticallyStart="True"/>
+            </interactivity:Interaction.Behaviors>
+        </Rectangle>
+
+        <ScrollViewer x:Name="ListNewsGrid" VerticalScrollBarVisibility="Auto" MinHeight="400">
+            <StackPanel>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleSwitch x:Name="ToggleNotifications" Header="News notifications" VerticalAlignment="Center" Foreground="White" Margin="10" Style="{StaticResource SwitchControl}" Loaded="ToggleNotifications_Loaded" Toggled="ToggleNotifications_Toggled"/>
+                    <Button x:Name="RefreshButton" Content="" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Foreground="White" Background="#00000000" FontSize="18" VerticalAlignment="Stretch" Width="60" Click="RefreshButton_Click"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <ListView x:Name="NewsList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="10" Width="350" ItemTemplate="{StaticResource NewsItem}" Loaded="NewsList_Loaded" SelectionChanged="NewsList_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="-12,0,-12,0"/>
+                                <!-- -12, 0-->
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <controls:Loading x:Name="LoadingGrid" IsLoading="False" Background="#B2000000" Visibility="Visible">
+            <ProgressRing IsActive="True" Foreground="White" Height="40" Width="40"/>
+        </controls:Loading>
+    </Grid>
+</Page>

@@ -103,6 +103,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Functions\ModulesPinned.cs" />
+    <Compile Include="Functions\News\NewsDef.cs" />
+    <Compile Include="Functions\News\NewsHelper.cs" />
     <Compile Include="Functions\Settings\DefaultSettings.cs" />
     <Compile Include="Functions\Settings\SettingsDef.cs" />
     <Compile Include="Functions\Settings\SettingsNotification.cs" />
@@ -132,6 +134,12 @@
     <Compile Include="Xaml\Components\TabsList.xaml.cs">
       <DependentUpon>TabsList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Xaml\Views\NewsReader.xaml.cs">
+      <DependentUpon>NewsReader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Xaml\Views\NewsViewer.xaml.cs">
+      <DependentUpon>NewsViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\Views\TabsViewer.xaml.cs">
       <DependentUpon>TabsViewer.xaml</DependentUpon>
     </Compile>
@@ -157,6 +165,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\news.png" />
     <Content Include="Assets\Icons\modules_installer.png" />
     <Content Include="Assets\Icons\tabs.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
@@ -224,6 +233,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Xaml\Components\TabsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\NewsReader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\NewsViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
