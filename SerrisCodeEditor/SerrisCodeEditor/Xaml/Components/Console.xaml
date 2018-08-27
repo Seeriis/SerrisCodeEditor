@@ -140,7 +140,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid Height="30" VerticalAlignment="Top" x:Name="MasterGrid" Background="White" CornerRadius="0,15,15,0" Padding="15,0,0,0" BorderBrush="Black" BorderThickness="1">
+        <Grid Height="30" VerticalAlignment="Top" x:Name="MasterGrid" Background="White" CornerRadius="0,15,15,0" Padding="15,0,0,0" BorderBrush="Black" BorderThickness="1" PointerEntered="MasterGrid_PointerEntered" PointerExited="MasterGrid_PointerExited">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>

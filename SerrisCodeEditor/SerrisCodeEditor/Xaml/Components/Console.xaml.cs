@@ -14,6 +14,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -339,6 +340,12 @@ namespace SerrisCodeEditor.Xaml.Components
 
             RefreshNotificationsList();
         }
+
+        private void MasterGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+
+        private void MasterGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
