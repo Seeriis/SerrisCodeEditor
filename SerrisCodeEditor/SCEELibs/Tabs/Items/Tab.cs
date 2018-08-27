@@ -57,13 +57,13 @@ namespace SCEELibs.Tabs.Items
             await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }), id.listID).WriteFile();
         }
 
-        public IAsyncOperation<string> getContent()
+        public string getContent()
         {
             try
             {
-                return TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID }).AsAsyncOperation();
+                return TabsAccessManager.GetTabContentViaID(new TabID { ID_Tab = id.tabID, ID_TabsList = id.listID });
             }
-            catch { return Task.Run(() => { return ""; }).AsAsyncOperation(); }
+            catch { return ""; }
         }
     }
 }

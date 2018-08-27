@@ -14,10 +14,7 @@ function save()
 function saveas()
 {
     var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID());
-    tab.getContent().then(function (content)
-    {
-        sceelibs.tabsManager.createNewTabInTheCurrentList("Copy_" + tab.tabName, content);
-    });
+    sceelibs.tabsManager.createNewTabInTheCurrentList("Copy_" + tab.tabName, tab.getContent());
 }
 
 function onEditorViewReady()

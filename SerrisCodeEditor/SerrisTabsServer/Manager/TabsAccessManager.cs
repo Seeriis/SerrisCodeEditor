@@ -178,6 +178,38 @@ namespace SerrisTabsServer.Manager
             }
         }
 
+        public static string GetTabContentViaID(TabID id)
+        {
+            try
+            {
+                StorageFile file_content = Task.Run(async () => { return await TabsDataCache.TabsListFolder.GetFileAsync(id.ID_TabsList + "_" + id.ID_Tab + ".json"); }).Result;
+
+                using (var reader = new StreamReader(Task.Run(async () => { return await file_content.OpenStreamForReadAsync(); }).Result))
+                using (JsonReader JsonReader = new JsonTextReader(reader))
+                {
+                    try
+                    {
+                        ContentTab content = new JsonSerializer().Deserialize<ContentTab>(JsonReader);
+
+                        if (content != null)
+                        {
+                            return content.Content;
+                        }
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public static void UpdateTabRef(ref InfosTab tab, int id_list)
         {
             TabsDataCache.LoadTabsData();
