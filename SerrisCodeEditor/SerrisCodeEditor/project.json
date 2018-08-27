@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.5",
     "Microsoft.Toolkit.Uwp": "2.1.1",
+    "Microsoft.Toolkit.Uwp.Notifications": "4.0.0",
     "Microsoft.Toolkit.Uwp.UI": "2.1.1",
     "Microsoft.Toolkit.Uwp.UI.Animations": "2.1.1",
     "Microsoft.Toolkit.Uwp.UI.Controls": "2.1.1",

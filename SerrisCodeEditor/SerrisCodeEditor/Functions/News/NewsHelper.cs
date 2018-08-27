@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.Web.Http;
 
 namespace SerrisCodeEditor.Functions.News
@@ -22,12 +24,64 @@ namespace SerrisCodeEditor.Functions.News
             NewsListFile = NewsListFile ?? Task.Run(async () => { return await ApplicationData.Current.LocalFolder.CreateFileAsync("news.json", CreationCollisionOption.OpenIfExists); }).Result;
         }
 
+        private async static void NotificationFunc()
+        {
+            List<News> List = await GetNewsList();
+
+            if (List.Count != 0)
+            {
+
+                ToastContent toastContent = new ToastContent()
+                {
+                    Visual = new ToastVisual()
+                    {
+                        BindingGeneric = new ToastBindingGeneric()
+                        {
+                            HeroImage = new ToastGenericHeroImage()
+                            {
+                                Source = List[0].HeaderImage
+                            },
+
+                            AppLogoOverride = new ToastGenericAppLogo()
+                            {
+                                Source = "ms-appx:///Assets/Icons/news.png",
+                                HintCrop = ToastGenericAppLogoCrop.Circle
+                            },
+
+                            Children =
+                            {
+                                new AdaptiveText()
+                                {
+                                    Text = "News: " + List[0].Title
+                                }
+                            }
+                        }
+                    }
+
+                };
+
+                ToastNotification toast = new ToastNotification(toastContent.GetXml());
+                ToastNotificationManager.CreateToastNotifier().Show(toast);
+            }
+        }
+
         private static void SendNewsNotification()
         {
+            if (AppSettings.Values.ContainsKey("news_notifications"))
+            {
+                if((bool)AppSettings.Values["news_notifications"])
+                {
+                    NotificationFunc();
+                }
+            }
+            else
+            {
+                NotificationFunc();
+            }
 
         }
 
-        private async static Task<int> GetCurrentNewsToken()
+        public async static Task<int> GetCurrentNewsToken()
         {
             try
             {

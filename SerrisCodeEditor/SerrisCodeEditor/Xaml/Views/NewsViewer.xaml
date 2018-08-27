@@ -22,7 +22,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                     <Rectangle Fill="#B2000000" RadiusX="10" RadiusY="10"/>
-                    <TextBlock Text="{Binding NewsItem.Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding NewsItem.Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap" FontWeight="SemiBold" TextAlignment="Center" />
                 </Grid>
                 <Grid Margin="10,5,10,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">

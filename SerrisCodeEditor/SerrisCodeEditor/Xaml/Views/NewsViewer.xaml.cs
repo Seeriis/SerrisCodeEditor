@@ -89,8 +89,13 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if(NewsList.SelectedIndex != -1)
             {
-                NewsItemList item = NewsList.SelectedItem as NewsItemList;
-                Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = $"News - {item.NewsItem.Title}", type = ModuleSheetNotificationType.NewSheet, sheetContent = new NewsReader(await NewsHelper.GetNewsContent(item.NewsItem.ArticleID)), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/news.png")), sheetSystem = false });
+                try
+                {
+                    NewsItemList item = NewsList.SelectedItem as NewsItemList;
+                    Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = $"News - {item.NewsItem.Title}", type = ModuleSheetNotificationType.NewSheet, sheetContent = new NewsReader(await NewsHelper.GetNewsContent(item.NewsItem.ArticleID)), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/news.png")), sheetSystem = false });
+                    Messenger.Default.Send(SheetViewerNotification.DeployViewer);
+                }
+                catch { }
             }
         }
 

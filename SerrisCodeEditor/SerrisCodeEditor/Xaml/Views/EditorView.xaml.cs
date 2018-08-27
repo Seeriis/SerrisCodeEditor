@@ -28,6 +28,7 @@ using SerrisModulesServer.Type.Theme;
 using Windows.UI.Xaml.Media;
 using SerrisCodeEditorEngine.Items;
 using Windows.UI.Xaml.Navigation;
+using SerrisCodeEditor.Functions.News;
 
 namespace SerrisCodeEditor.Xaml.Views
 {
@@ -197,6 +198,29 @@ namespace SerrisCodeEditor.Xaml.Views
                     {
                         SetTheme();
                         SetMonacoTheme();
+                    }
+                    catch { }
+
+                });
+
+            });
+
+            Messenger.Default.Register<SheetViewerNotification>(this, async (notification_ui) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        switch(notification_ui)
+                        {
+                            case SheetViewerNotification.DeployViewer:
+                                UpdateUI(true, false);
+                                break;
+
+                            case SheetViewerNotification.MinimizeViewer:
+                                UpdateUI(false, false);
+                                break;
+                        }
                     }
                     catch { }
 
@@ -619,7 +643,7 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
-        private void ContentViewer_EditorLoaded(object sender, EventArgs e)
+        private async void ContentViewer_EditorLoaded(object sender, EventArgs e)
         {
             if(!EditorIsLoaded)
             {
@@ -628,6 +652,19 @@ namespace SerrisCodeEditor.Xaml.Views
                 EditorIsLoaded = true;
                 //SheetsManager.AddTabsListSheet();
                 SetMonacoTheme();
+
+                if (AppSettings.Values.ContainsKey("news_token"))
+                {
+                    if ((int)AppSettings.Values["news_token"] != await NewsHelper.GetCurrentNewsToken())
+                    {
+                        NewsNotification.ShowBadge = true;
+                    }
+                }
+                else
+                {
+                    NewsNotification.ShowBadge = true;
+                }
+                NewsHelper.CheckNewsUpdate();
             }
         }
 
@@ -642,6 +679,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
+            NewsNotification.ShowBadge = false;
             FrameNews.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(NewsViewer), WindowIcon = "", WindowTitle = "News" });
         }
 

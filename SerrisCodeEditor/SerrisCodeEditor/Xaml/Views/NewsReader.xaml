@@ -16,7 +16,7 @@
             
             <Image x:Name="HeaderImage" Stretch="UniformToFill"/>
             <Rectangle Fill="#CC000000"/>
-            <TextBlock x:Name="TitleContent" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,50"/>
+            <TextBlock x:Name="TitleContent" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,50" TextAlignment="Center"/>
             <StackPanel VerticalAlignment="Bottom">
                 <Grid>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10">

@@ -118,6 +118,7 @@
     <Compile Include="Editor\Notifications\EditorViewNotification.cs" />
     <Compile Include="Editor\Notifications\ModuleSheetNotification.cs" />
     <Compile Include="Editor\Notifications\SCEENotification.cs" />
+    <Compile Include="Editor\Notifications\SheetViewerNotification.cs" />
     <Compile Include="Editor\Notifications\SheetViewNotification.cs" />
     <Compile Include="Editor\Notifications\TabSelectedNotification.cs" />
     <Compile Include="Editor\Notifications\TempContentNotification.cs" />

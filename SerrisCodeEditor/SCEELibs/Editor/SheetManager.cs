@@ -31,6 +31,7 @@ namespace SCEELibs.Editor
                 ModuleHTMLView view = new ModuleHTMLView();
                 view.LoadPage(pathHTMLPage, id);
                 Messenger.Default.Send(new ModuleSheetNotification { id = id, sheetName = sheetName, type = ModuleSheetNotificationType.NewSheet, sheetContent = view, sheetIcon = await ModulesAccessManager.GetModuleIconViaIDAsync(id, ModulesAccessManager.GetModuleViaID(id).ModuleSystem), sheetSystem = false });
+                Messenger.Default.Send(SheetViewerNotification.DeployViewer);
             });
 
         }
