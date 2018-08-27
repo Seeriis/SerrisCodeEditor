@@ -223,9 +223,13 @@
     <Content Include="SystemModules\ProgrammingLanguages\49\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\49\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\49\logo.png" />
+    <Content Include="SystemModules\Templates\50\icon.png" />
+    <Content Include="SystemModules\Templates\50\logo.png" />
+    <Content Include="SystemModules\Templates\50\main.js" />
     <Content Include="SystemModules\Templates\48\icon.png" />
     <Content Include="SystemModules\Templates\48\main.js" />
     <Content Include="SystemModules\Templates\48\logo.png" />
+    <Content Include="SystemModules\Templates\48\TemplateFiles\page.html" />
     <Content Include="SystemModules\Themes\0\background.jpg" />
     <Content Include="SystemModules\Themes\0\theme.js" />
     <Content Include="SystemModules\Addons\1\HTML\test.html" />
@@ -269,6 +273,8 @@
     <Content Include="SystemModules\Addons\7\logo.png" />
     <Content Include="SystemModules\Addons\7\main.js" />
     <Content Include="SystemModules\Addons\7\widget.json" />
+    <Content Include="SystemModules\Templates\50\TemplateFiles\main.lua" />
+    <Content Include="SystemModules\Templates\50\TemplateFiles\love.conf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager\ModulesDataCache.cs" />
@@ -300,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SystemModules\Templates\48\ProjectTemplate\" />
+    <Folder Include="SystemModules\Templates\50\ProjectTemplate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SystemModules\Themes\0\logo.png" />

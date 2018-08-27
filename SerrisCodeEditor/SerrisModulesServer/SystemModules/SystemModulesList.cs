@@ -1065,7 +1065,35 @@ namespace SerrisModulesServer.SystemModules
                 TemplateProjectTypeName = "Default",
                 TemplateFilesInfos = new List<TemplatesFileInfos>
                 {
-                    new TemplatesFileInfos { Name = "C# class", Description = "An default C# class", SuggestedTemplateName = "sample.cs", TemplateFileModulePath = "class.cs"  }
+                    new TemplatesFileInfos { Name = "C# class", Description = "Default C# class", SuggestedTemplateName = "sample.cs", TemplateFileModulePath = "class.cs"  },
+                    new TemplatesFileInfos { Name = "HTML page", Description = "Default HTML page", SuggestedTemplateName = "page.html", TemplateFileModulePath = "page.html"  }
+                }
+            },
+
+            new InfosModule
+            {
+                ID = 50,
+                ModuleType = ModuleTypesList.Templates,
+                ModuleName = "LÖVE 2D project",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Files for LÖVE 2D projects",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>(),
+                TemplateContainProjectTemplate = false,
+                TemplateContainTemplateFiles = true,
+                TemplateProjectTypeName = "LÖVE 2D",
+                TemplateFilesInfos = new List<TemplatesFileInfos>
+                {
+                    new TemplatesFileInfos { Name = "LÖVE conf", Description = "LÖVE configuration file", SuggestedTemplateName = "love.conf", TemplateFileModulePath = "love.conf" },
+                    new TemplatesFileInfos { Name = "LÖVE main file", Description = "Main file of the project", SuggestedTemplateName = "main.lua", TemplateFileModulePath = "main.lua" }
                 }
             }
         };

@@ -41,7 +41,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="TabTemplateItem">
-            <Grid>
+            <Grid Margin="0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="*"/>
