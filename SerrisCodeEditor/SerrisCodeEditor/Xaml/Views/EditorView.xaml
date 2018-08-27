@@ -16,7 +16,7 @@
     xmlns:engine="using:SerrisCodeEditorEngine"
     xmlns:my="using:SerrisCodeEditor.Xaml.Components"
     
-    Loaded="EditorViewUI_Loaded" SizeChanged="EditorViewUI_SizeChanged" PointerExited="EditorViewUI_PointerExited">
+    Loaded="EditorViewUI_Loaded" SizeChanged="EditorViewUI_SizeChanged" PointerExited="EditorViewUI_PointerExited" PointerMoved="EditorViewUI_PointerMoved">
     <Page.Resources>
         <Storyboard x:Name="DeployUIIconDeploying">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="DeployUIIcon">

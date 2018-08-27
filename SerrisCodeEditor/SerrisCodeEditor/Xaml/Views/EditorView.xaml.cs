@@ -683,6 +683,19 @@ namespace SerrisCodeEditor.Xaml.Views
             FrameNews.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(NewsViewer), WindowIcon = "", WindowTitle = "News" });
         }
 
+        private void EditorViewUI_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            var pointerPosition = e.GetCurrentPoint(MasterGrid);
+
+            if (pointerPosition.Position.X <= 75 && pointerPosition.Position.Y <= 80)
+            {
+                if(!isUIDeployed)
+                {
+                    UpdateUI(true, false);
+                }
+            }
+        }
+
         public async void ManageQueueTabs()
         {
             while (!CanManageQueue)
