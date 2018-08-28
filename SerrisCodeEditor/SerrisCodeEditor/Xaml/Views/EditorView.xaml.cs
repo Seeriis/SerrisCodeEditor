@@ -689,10 +689,31 @@ namespace SerrisCodeEditor.Xaml.Views
 
             if (pointerPosition.Position.X <= 75 && pointerPosition.Position.Y <= 80)
             {
-                if(!isUIDeployed)
+                if (AppSettings.Values.ContainsKey("ui_extendedview"))
                 {
-                    UpdateUI(true, false);
+                    if (!(bool)AppSettings.Values["ui_extendedview"])
+                    {
+                        if (!isUIDeployed && GlobalVariables.CurrentDevice != CurrentDevice.WindowsMobile)
+                        {
+                            UpdateUI(true, false);
+                        }
+                    }
+                    else if(pointerPosition.Position.X <= 60)
+                    {
+                        if (!isUIDeployed && GlobalVariables.CurrentDevice != CurrentDevice.WindowsMobile)
+                        {
+                            UpdateUI(true, false);
+                        }
+                    }
                 }
+                else
+                {
+                    if (!isUIDeployed && GlobalVariables.CurrentDevice != CurrentDevice.WindowsMobile)
+                    {
+                        UpdateUI(true, false);
+                    }
+                }
+                
             }
         }
 
