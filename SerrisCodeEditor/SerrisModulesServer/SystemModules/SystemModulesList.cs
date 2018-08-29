@@ -28,7 +28,7 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = false,
                 IsEnabled = true
             },
-            new InfosModule
+            /*new InfosModule
             {
                 ID = 1,
                 ModuleType = ModuleTypesList.Addon,
@@ -68,7 +68,7 @@ namespace SerrisModulesServer.SystemModules
                 {
                     "libs/test.js"
                 }
-            },
+            },*/
             new InfosModule
             {
                 ID = 3,
@@ -169,6 +169,26 @@ namespace SerrisModulesServer.SystemModules
                 {
                     "libs/notification.js"
                 }
+            },
+            new InfosModule
+            {
+                ID = 51,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Web browser",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "The internal web browser of SCE !",
+                CanBePinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
             },
 
 

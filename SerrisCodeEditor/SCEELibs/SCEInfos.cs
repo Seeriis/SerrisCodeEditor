@@ -5,10 +5,11 @@
     public static class SCEInfos
     {
         //SCE Version information
-        public static string versionName { get => "Val d'Europe build"; }
-        public static string versionNumber { get => "1.5"; }
+        public static string versionName { get => "Marne-la-Vallée build"; }
+        public static string versionNumber { get => "1.6"; }
 
         /*History: 
+         * Marne-la-Vallée build ("1.6")
          * Val d'Europe build ("1.5")
          * Torcy build ("1.4")
          * Bry sur Marne build ("1.3")

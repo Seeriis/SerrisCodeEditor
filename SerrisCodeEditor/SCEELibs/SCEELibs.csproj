@@ -111,6 +111,9 @@
     <Compile Include="Editor\Components\ModuleHTMLView.xaml.cs">
       <DependentUpon>ModuleHTMLView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\Components\WebBrowser.xaml.cs">
+      <DependentUpon>WebBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editor\ConsoleManager.cs" />
     <Compile Include="Editor\CurrentDevice.cs" />
     <Compile Include="Editor\EditorEngine.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="Editor\Notifications\ToolbarNotification.cs" />
     <Compile Include="Editor\SheetManager.cs" />
     <Compile Include="Editor\Components\Widget.cs" />
+    <Compile Include="Editor\WebBrowserManager.cs" />
     <Compile Include="Editor\WidgetManager.cs" />
     <Compile Include="Helpers\Clipboard.cs" />
     <Compile Include="Modules\Manager.cs" />
@@ -151,6 +155,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Editor\Components\ModuleHTMLView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editor\Components\WebBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

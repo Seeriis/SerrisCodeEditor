@@ -11,7 +11,7 @@ namespace SerrisTabsServer.Storage
     {
         public static List<StorageTypeDefinition> StorageTypes = new List<StorageTypeDefinition>
         {
-            new StorageTypeDefinition { StorageTypeName = "Local storage", StorageTypeIcon = "", Type = StorageListTypes.LocalStorage, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile } },
+            new StorageTypeDefinition { StorageTypeName = "Local storage", StorageTypeIcon = "", Type = StorageListTypes.LocalStorage, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens } },
             new StorageTypeDefinition { StorageTypeName = "OneDrive", StorageTypeIcon = "", Type = StorageListTypes.OneDrive, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens, DevicesAvailable.Xbox } }
         };
 

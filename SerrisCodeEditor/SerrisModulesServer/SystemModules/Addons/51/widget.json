@@ -1,0 +1,9 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "openBrowser",
+    "FunctionName": "openBrowser",
+    "IconButton": "",
+    "TooltipText": "Open the web browser"
+  }
+]

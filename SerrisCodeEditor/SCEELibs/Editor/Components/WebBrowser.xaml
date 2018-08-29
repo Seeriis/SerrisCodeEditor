@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="SCEELibs.Editor.Components.WebBrowser"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SCEELibs.Editor.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#00000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="#FF5F5F5F">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="BackButton" Content="" ToolTipService.ToolTip="Go back" Height="30" Width="30" Margin="5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="BackButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
+                <Button x:Name="ForwardButton" Content="" ToolTipService.ToolTip="Go Forward" Height="30" Width="30" Margin="0,0,5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="ForwardButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
+                <Button x:Name="RefreshButton" Content="" ToolTipService.ToolTip="Refresh" Height="30" Width="30" Margin="0,0,5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="RefreshButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
+
+            </StackPanel>
+
+            <TextBox x:Name="URLBox" PlaceholderText="Enter an address here" Grid.Column="1" Margin="5,10" Background="White" Style="{StaticResource RoundTextBox}" VerticalAlignment="Center" KeyDown="URLBox_KeyDown"/>
+        </Grid>
+        
+        <WebView x:Name="View" Grid.Row="1" NavigationCompleted="View_NavigationCompleted"/>
+    </Grid>
+</Page>

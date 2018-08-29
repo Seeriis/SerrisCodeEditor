@@ -70,6 +70,9 @@ namespace SCEELibs
         Editor.EditorEngine _editorEngine = new Editor.EditorEngine();
         public EditorEngine editorEngine { get => _editorEngine; }
 
+        WebBrowserManager _webBrowserManager = new WebBrowserManager();
+        public WebBrowserManager webBrowserManager { get => _webBrowserManager; }
+
         public string versionNumber { get => SCEInfos.versionNumber; }
         public string versionName { get => SCEInfos.versionName; }
 

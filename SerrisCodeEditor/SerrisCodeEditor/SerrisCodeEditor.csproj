@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>SerrisCodeEditor_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>24CB8598436B33A53FF501F0AF3799D301BBB66B</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>C:\Users\yoshi\Documents\Windows store packages\SCE - Torcy build\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\yoshi\Documents\Windows store packages\SCE - Val d%27Europe build\</AppxPackageDir>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
@@ -165,6 +165,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\web_browser.png" />
     <Content Include="Assets\Icons\news.png" />
     <Content Include="Assets\Icons\modules_installer.png" />
     <Content Include="Assets\Icons\tabs.png" />
