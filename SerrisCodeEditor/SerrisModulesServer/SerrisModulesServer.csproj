@@ -106,6 +106,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="SystemModules\Addons\52\icon.png" />
+    <Content Include="SystemModules\Addons\52\logo.png" />
+    <Content Include="SystemModules\Addons\52\main.js" />
     <Content Include="SystemModules\Addons\51\icon.png" />
     <Content Include="SystemModules\Addons\51\logo.png" />
     <Content Include="SystemModules\Addons\51\main.js" />
@@ -279,6 +282,7 @@
     <Content Include="SystemModules\Templates\50\TemplateFiles\main.lua" />
     <Content Include="SystemModules\Templates\50\TemplateFiles\love.conf" />
     <Content Include="SystemModules\Addons\51\widget.json" />
+    <Content Include="SystemModules\Addons\52\widget.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager\ModulesDataCache.cs" />

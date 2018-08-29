@@ -190,6 +190,26 @@ namespace SerrisModulesServer.SystemModules
                 JSFilesPathList = new List<string>
                 { }
             },
+            new InfosModule
+            {
+                ID = 52,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "StackOverflow search",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "Widget for searching easily on StackOverflow",
+                CanBePinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
+            },
 
 
             /* =============
