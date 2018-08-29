@@ -1,5 +1,6 @@
 ﻿function main()
 {
+    sceelibs.webBrowserManager.openWebBrowser();
 }
 
 function openBrowser()
