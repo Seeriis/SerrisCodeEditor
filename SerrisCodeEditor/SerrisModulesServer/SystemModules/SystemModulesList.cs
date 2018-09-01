@@ -210,6 +210,26 @@ namespace SerrisModulesServer.SystemModules
                 JSFilesPathList = new List<string>
                 { }
             },
+            new InfosModule
+            {
+                ID = 53,
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Shortcuts manager",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "This addon add many shortcuts to the editor and also give informations about them",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
+            },
 
 
             /* =============

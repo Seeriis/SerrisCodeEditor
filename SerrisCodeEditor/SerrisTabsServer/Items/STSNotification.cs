@@ -6,15 +6,20 @@
         TabNewModifications,
         NewTab,
         SelectTab,
+        SelectTabViaNumber,
         TabDeleted,
         NewList,
         ListDeleted,
-        RefreshCurrentList
+        RefreshCurrentList,
+
+        OpenTabsCreator,
+        OpenNewFiles
     }
 
     public class STSNotification
     {
         public TypeUpdateTab Type { get; set; }
         public TabID ID { get; set; }
+        public int TabNumber { get; set; }
     }
 }

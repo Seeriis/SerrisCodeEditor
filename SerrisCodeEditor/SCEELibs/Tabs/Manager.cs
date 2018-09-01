@@ -93,5 +93,25 @@ namespace SCEELibs.Tabs
         public void createNewTabInTheCurrentList(string fileName, string content)
         => TabsCreatorAssistant.CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
 
+        public void focusTabViaPosition(int tabNumber)
+        {
+            TabIDs IDs = getCurrentSelectedTabAndTabsListID();
+            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.SelectTabViaNumber, TabNumber = tabNumber, ID = new TabID { ID_Tab = IDs.tabID, ID_TabsList = IDs.listID} });
+        }
+
+        public void focusTabViaID(int ID)
+        => Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.SelectTab, ID = new TabID { ID_TabsList = getCurrentSelectedTabAndTabsListID().listID, ID_Tab = ID } });
+
+        public void openFilesDialog()
+        {
+            Messenger.Default.Send(SheetViewerNotification.DeployViewer);
+            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.OpenNewFiles });
+        }
+
+        public void openTabsCreator()
+        {
+            Messenger.Default.Send(SheetViewerNotification.DeployViewer);
+            Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.OpenTabsCreator });
+        }
     }
 }

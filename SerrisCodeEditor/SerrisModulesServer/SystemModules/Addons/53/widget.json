@@ -1,0 +1,9 @@
+﻿[
+  {
+    "Type": 1,
+    "WidgetName": "stackoverflowSearch",
+    "FunctionName": "stackoverflowTextbox",
+    "IconButton": null,
+    "PlaceHolderText": "Search on StackOverflow"
+  }
+]

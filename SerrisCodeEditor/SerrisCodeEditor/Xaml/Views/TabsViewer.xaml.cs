@@ -331,6 +331,13 @@ namespace SerrisCodeEditor.Xaml.Views
                                     }
                                     break;
 
+                                case TypeUpdateTab.SelectTabViaNumber:
+                                    if(Tabs.Items.Count >= notification.TabNumber)
+                                    {
+                                        Tabs.SelectedIndex = (notification.TabNumber - 1);
+                                    }
+                                    break;
+
                                 case TypeUpdateTab.TabDeleted:
                                     if(await TabsWriteManager.DeleteTabAsync(notification.ID))
                                     {
@@ -362,6 +369,14 @@ namespace SerrisCodeEditor.Xaml.Views
                                 case TypeUpdateTab.ListDeleted:
                                     Lists.Items.RemoveAt(Lists.SelectedIndex);
                                     break;
+
+                                case TypeUpdateTab.OpenTabsCreator:
+                                    ShowCreatorGrid(true);
+                                    break;
+
+                                case TypeUpdateTab.OpenNewFiles:
+                                    OpenFiles();
+                                    break;
                             }
 
                         }
@@ -376,6 +391,14 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 case TypeUpdateTab.ListDeleted:
                                     Lists.Items.RemoveAt(Lists.SelectedIndex);
+                                    break;
+
+                                case TypeUpdateTab.OpenTabsCreator:
+                                    ShowCreatorGrid(true);
+                                    break;
+
+                                case TypeUpdateTab.OpenNewFiles:
+                                    OpenFiles();
                                     break;
                             }
                     }
@@ -558,12 +581,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
         {
-            StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
-
-            LoadingGrid.IsLoading = true;
-            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, SelectedType);
-            LoadingGrid.IsLoading = false;
-            ShowCreatorGrid(false);
+            OpenFiles();
         }
 
         private async void OpenFolderButton_Click(object sender, RoutedEventArgs e)
@@ -595,6 +613,16 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 NewTabAcceptButton.IsEnabled = true;
             }
+        }
+
+        private async void OpenFiles()
+        {
+            StorageListTypes SelectedType = ((StorageTypeDefinition)TabStorageType.SelectedValue).Type;
+
+            LoadingGrid.IsLoading = true;
+            await TabsCreatorAssistant.OpenFilesAndCreateNewTabsFiles(CurrentSelectedIDs.ID_TabsList, SelectedType);
+            LoadingGrid.IsLoading = false;
+            ShowCreatorGrid(false);
         }
 
         private void ShowCreatorGrid(bool ShowIt)
