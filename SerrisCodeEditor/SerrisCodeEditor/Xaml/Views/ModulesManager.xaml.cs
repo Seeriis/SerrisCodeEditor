@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
 using SerrisModulesServer.Items;
@@ -87,6 +88,36 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             if (currentSelectedButton != newSelectedButton)
             {
+                switch(newSelectedButton)
+                {
+                    case 0:
+                        AddonsIcon.Light(distance: 50, duration: 1500, delay: 0).Start();
+                        ThemesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProgLanguagesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProjectTypesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        break;
+
+                    case 1:
+                        AddonsIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ThemesIcon.Light(distance: 50, duration: 1500, delay: 0).Start();
+                        ProgLanguagesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProjectTypesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        break;
+
+                    case 2:
+                        AddonsIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ThemesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProgLanguagesIcon.Light(distance: 50, duration: 1500, delay: 0).Start();
+                        ProjectTypesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        break;
+
+                    case 3:
+                        AddonsIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ThemesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProgLanguagesIcon.Light(distance: 10, duration: 1500, delay: 0).Start();
+                        ProjectTypesIcon.Light(distance: 50, duration: 1500, delay: 0).Start();
+                        break;
+                }
                 currentSelectedButton = newSelectedButton;
                 LoadModules();
             }
