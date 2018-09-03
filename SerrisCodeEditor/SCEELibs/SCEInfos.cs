@@ -7,6 +7,7 @@
         //SCE Version information
         public static string versionName { get => "Marne-la-Vallée build"; }
         public static string versionNumber { get => "1.6"; }
+        public static bool preReleaseVersion { get => true; }
 
         /*History: 
          * Marne-la-Vallée build ("1.6")

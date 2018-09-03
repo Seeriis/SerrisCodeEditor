@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -119,32 +120,29 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 {
                    await CreateFile().ContinueWith(async (e) => 
                    {
-                       //await WriteFile();
+                       await WriteFile();
                    });
                 }
                 else
                 {
                     try
                     {
-                        if(await OneDriveAuthHelper.OneDriveAuthentification())
-                        {
-                            using (var stream = new MemoryStream(Encoding.GetEncoding(Tab.TabEncoding).GetBytes(await TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }))))
-                            {
-                                await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Content.Request().PutAsync<Item>(stream);
+                        await OneDriveAuthHelper.OneDriveAuthentification();
 
-                            }
-                        }
+                        MemoryStream stream = new MemoryStream();
+                        StreamWriter writer = new StreamWriter(stream, Encoding.GetEncoding(Tab.TabEncoding));
+                        writer.Write(await TabsAccessManager.GetTabContentViaIDAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID }));
+                        writer.Flush();
+                        stream.Position = 0;
 
+                        var item = await TabsDataCache.OneDriveClient.Drive.Items[Tab.TabOriginalPathContent].Content.Request().PutAsync<Item>(stream);
                     }
                     catch
                     {
-                        await CreateFile().ContinueWith(async (e) =>
-                        {
-                            //await WriteFile();
-                        });
+                        await new MessageDialog("Please verify your internet connection or verify if the file still exist in your OneDrive or if you have enough stockage for saving the file.", "OneDrive error").ShowAsync();
                     }
                 }
-                
+
 
             });
 

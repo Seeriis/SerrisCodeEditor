@@ -10,17 +10,19 @@ function openSheetInformation()
 
 function onEditorStart()
 {
-    if (sceelibs.modulesStorageManager.checkAppSettingAvailable("build_version")) {
+    if (sceelibs.preReleaseVersion) {
+        if (sceelibs.modulesStorageManager.checkAppSettingAvailable("build_version")) {
 
-        if (sceelibs.modulesStorageManager.readAppSettingContent("build_version") != sceelibs.versionName) {
+            if (sceelibs.modulesStorageManager.readAppSettingContent("build_version") != sceelibs.versionName) {
+                generatePopup();
+                sceelibs.modulesStorageManager.writeAppSetting("build_version", sceelibs.versionName);
+            }
+
+        }
+        else {
             generatePopup();
             sceelibs.modulesStorageManager.writeAppSetting("build_version", sceelibs.versionName);
         }
-
-    }
-    else {
-        generatePopup();
-        sceelibs.modulesStorageManager.writeAppSetting("build_version", sceelibs.versionName);
     }
 }
 

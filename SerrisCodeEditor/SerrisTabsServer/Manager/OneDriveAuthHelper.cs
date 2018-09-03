@@ -43,10 +43,13 @@ namespace SerrisTabsServer.Manager
                     TabsDataCache.AuthProvider = msaAuthenticationProvider;
                     return true;
                 }
+                else
+                {
+                    return true;
+                }
             }
             catch { return false; }
 
-            return false;
         }
 
         /*

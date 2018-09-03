@@ -848,7 +848,7 @@
                                 <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI" Text="File(s)" FontSize="14" Grid.Column="1"/>
                             </Grid>
                         </Button>
-                        <Button x:Name="OpenFolderButton" ToolTipService.ToolTip="Import folder content" IsEnabled="true" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
+                        <Button x:Name="OpenFolderButton" IsEnabled="False" ToolTipService.ToolTip="Import folder content" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Height="30" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="OpenFolderButton_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
