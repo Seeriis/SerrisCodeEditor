@@ -118,9 +118,9 @@ namespace SerrisTabsServer.Storage.StorageTypes
             {
                 if(string.IsNullOrWhiteSpace(Tab.TabOriginalPathContent))
                 {
-                   await CreateFile().ContinueWith(async (e) => 
+                   await CreateFile().ContinueWith( (e) => 
                    {
-                       await WriteFile();
+                       //await WriteFile();
                    });
                 }
                 else
