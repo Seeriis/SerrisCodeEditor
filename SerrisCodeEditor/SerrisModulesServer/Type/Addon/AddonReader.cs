@@ -19,7 +19,7 @@ namespace SerrisModulesServer.Type.Addon
 {
     public class AddonReader : ModuleReader
     {
-        public AddonReader(int ID) : base(ID) { }
+        public AddonReader(string ID) : base(ID) { }
 
         public async Task<string> GetAddonMainJsViaIDAsync()
         {

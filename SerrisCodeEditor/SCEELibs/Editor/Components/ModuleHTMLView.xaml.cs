@@ -22,7 +22,7 @@ namespace SCEELibs.Editor.Components
 {
     public sealed partial class ModuleHTMLView : UserControl
     {
-        WebView html_view; bool isLoaded = false; int current_id;
+        WebView html_view; bool isLoaded = false; string current_id;
 
         public ModuleHTMLView()
         {
@@ -48,7 +48,7 @@ namespace SCEELibs.Editor.Components
 
 
 
-        public void LoadPage(string path, int id)
+        public void LoadPage(string path, string id)
         {
             if (!isLoaded)
             {

@@ -6,7 +6,7 @@ namespace SerrisTabsServer.Items
     public class TabsList
     {
         public int ID { get; set; }
-        public int TabsListProjectTypeID { get; set; } = SMSInfos.DefaultTemplatesID;
+        public string TabsListProjectTypeID { get; set; } = SMSInfos.DefaultTemplatesID;
         public string name { get; set; }
         public List<InfosTab> tabs { get; set; }
     }

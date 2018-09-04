@@ -312,6 +312,66 @@ namespace SerrisCodeEditor.Xaml.Views
                                 MenuControls.Children.Add(DescriptionControl);
                                 break;
 
+                            case SettingType.Separator:
+                                Grid SeparatorControl = new Grid();
+                                SeparatorControl.Margin = new Thickness(0, 20, 0, 0);
+                                SeparatorControl.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                                SeparatorControl.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                                SeparatorControl.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                                TextBlock TitleSeparator = new TextBlock();
+                                TitleSeparator.FontSize = 17;
+                                TitleSeparator.FontWeight = FontWeights.SemiBold;
+                                TitleSeparator.Text = SettingControl.Description;
+                                TitleSeparator.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                                SeparatorControl.Children.Add(TitleSeparator);
+
+                                Rectangle RectSeparator = new Rectangle();
+                                Grid.SetColumn(RectSeparator, 1);
+                                RectSeparator.Height = 2;
+                                RectSeparator.Margin = new Thickness(5, 2, 0, 0);
+                                RectSeparator.VerticalAlignment = VerticalAlignment.Center;
+                                RectSeparator.HorizontalAlignment = HorizontalAlignment.Stretch;
+                                RectSeparator.Fill = GlobalVariables.CurrentTheme.MainColorFont;
+
+                                SeparatorControl.Children.Add(RectSeparator);
+                                MenuControls.Children.Add(SeparatorControl);
+                                break;
+
+                            case SettingType.License:
+                                StackPanel LicenseControl = new StackPanel();
+                                LicenseControl.Margin = new Thickness(0, 20, 0, 0);
+
+                                TextBlock TitleLicense = new TextBlock();
+                                TitleLicense.FontSize = 15;
+                                TitleLicense.Text = SettingControl.Description;
+                                TitleLicense.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                                LicenseControl.Children.Add(TitleLicense);
+
+                                TextBlock Author = new TextBlock();
+                                Author.Margin = new Thickness(5, 5, 0, 0);
+                                Author.FontSize = 12;
+                                Author.FontWeight = FontWeights.Light;
+                                Author.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+                                Author.Text = ((Tuple<string, string>)SettingControl.Parameter).Item1;
+
+                                LicenseControl.Children.Add(Author);
+
+                                Button LicenseButton = new Button();
+                                LicenseButton.Margin = new Thickness(0, 5, 0, 0);
+                                LicenseButton.Content = "See the GitHub (and the license)";
+                                LicenseButton.FontSize = 14;
+                                LicenseButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+                                LicenseButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                                LicenseButton.Click += (async (e, f) => await Windows.System.Launcher.LaunchUriAsync(new Uri(((Tuple<string, string>)SettingControl.Parameter).Item2)));
+                                LicenseControl.Children.Add(LicenseButton);
+
+                                MenuControls.Children.Add(LicenseControl);
+                                break;
+
                             case SettingType.ComboBox:
                                 StackPanel ListControl = new StackPanel();
                                 ListControl.Margin = new Thickness(0, 20, 0, 0);

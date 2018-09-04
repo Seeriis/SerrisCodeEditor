@@ -20,7 +20,7 @@ namespace SCEELibs.Editor.Notifications
 
     public sealed class ModuleSheetNotification
     {
-        public int id { get; set; }
+        public string id { get; set; }
 
         public string sheetName { get; set; }
         public BitmapImage sheetIcon { get; set; }

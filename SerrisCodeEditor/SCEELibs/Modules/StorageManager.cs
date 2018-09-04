@@ -12,10 +12,10 @@ namespace SCEELibs.Modules
     [AllowForWeb]
     public sealed class StorageManager
     {
-        int currentID;
+        string currentID;
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
 
-        public StorageManager(int id)
+        public StorageManager(string id)
         => currentID = id;
 
         private string generateSettingName(string name)

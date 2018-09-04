@@ -34,7 +34,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             await Task.Run(async () => 
             {
-                foreach (int id in await ModulesPinned.GetModulesPinned())
+                foreach (string id in await ModulesPinned.GetModulesPinned())
                 {
                     await AddModule(id);
                 }
@@ -212,7 +212,7 @@ namespace SerrisCodeEditor.Xaml.Components
             ButtonListModules.Foreground = GlobalVariables.CurrentTheme.ToolbarRoundButtonColorFont;
         }
 
-        private async Task AddModule(int ID)
+        private async Task AddModule(string ID)
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
@@ -225,7 +225,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         }
 
-        private void RemoveModule(int ID)
+        private void RemoveModule(string ID)
         => ToolbarContent.Children.Remove((UIElement)ToolbarContent.FindName("" + ID));
 
         private void ButtonListModules_Click(object sender, RoutedEventArgs e)

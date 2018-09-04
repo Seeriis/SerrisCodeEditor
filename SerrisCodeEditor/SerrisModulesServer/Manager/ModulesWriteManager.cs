@@ -24,7 +24,26 @@ namespace SerrisModulesServer.Manager
 
             return Task.Run(async () => 
             {
-                int id = new Random().Next(999999);
+                string id = Guid.NewGuid().ToString();
+                using (ZipArchive zip_content = ZipFile.OpenRead(module_zip.Path))
+                {
+                    ZipArchiveEntry InfosJson = zip_content.GetEntry("infos.json");
+
+                    if (InfosJson != null)
+                    {
+                        using (var reader = new StreamReader(InfosJson.Open()))
+                        using (JsonReader JsonReader = new JsonTextReader(reader))
+                        {
+                            InfosModule module = new JsonSerializer().Deserialize<InfosModule>(JsonReader);
+                            if (module != null)
+                            {
+                                id = module.ID;
+                            }
+                        }
+                    }
+
+                }
+
                 StorageFolder folder_addon = await ModulesDataCache.ModulesListFolder.CreateFolderAsync(id + "", CreationCollisionOption.OpenIfExists);
 
                 ZipFile.ExtractToDirectory(module_zip.Path, folder_addon.Path);
@@ -91,7 +110,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<bool> DeleteModuleViaIDAsync(int id)
+        public static async Task<bool> DeleteModuleViaIDAsync(string id)
         {
             ModulesDataCache.LoadModulesData();
 
@@ -149,7 +168,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<bool> SetCurrentThemeIDAsync(int id, bool SendNotification)
+        public static async Task<bool> SetCurrentThemeIDAsync(string id, bool SendNotification)
         {
             ModulesDataCache.LoadModulesData();
 
@@ -178,7 +197,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<bool> SetCurrentMonacoThemeIDAsync(int id, bool SendNotification)
+        public static async Task<bool> SetCurrentMonacoThemeIDAsync(string id, bool SendNotification)
         {
             ModulesDataCache.LoadModulesData();
 

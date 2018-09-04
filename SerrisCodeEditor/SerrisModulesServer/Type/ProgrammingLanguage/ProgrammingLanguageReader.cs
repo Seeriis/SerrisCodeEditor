@@ -10,7 +10,7 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
 {
     public class ProgrammingLanguageReader : ModuleReader
     {
-        public ProgrammingLanguageReader(int ID) : base(ID) { }
+        public ProgrammingLanguageReader(string ID) : base(ID) { }
 
         public async Task<string> GetLanguageDefinitionContent()
         {

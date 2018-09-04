@@ -205,7 +205,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 switch (current_tab.TabContentType)
                 {
                     case ContentType.File:
-                        int ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
+                        string ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
                         TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
                         encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;

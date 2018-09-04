@@ -13,9 +13,9 @@ namespace SCEELibs.Editor.Components
     public sealed class Widget
     {
         private StackPanel widget_content = new StackPanel();
-        private int id;
+        private string id;
 
-        public Widget(int ID)
+        public Widget(string ID)
         {
             widget_content.Padding = new Thickness(5, 0, 5, 0);
             widget_content.Orientation = Orientation.Horizontal;

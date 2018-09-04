@@ -10,14 +10,14 @@ namespace SerrisModulesServer.Type
     public abstract class ModuleReader
     {
         public ModuleTypesList ModuleType;
-        public int ModuleID;
+        public string ModuleID;
         public bool IsSystemModule;
         public string ModuleFolderPath
         {
             get => ModulesAccessManager.GetModuleFolderPath(ModuleID, IsSystemModule);
         }
 
-        protected ModuleReader(int ID)
+        protected ModuleReader(string ID)
         {
             var ModuleContent = ModulesAccessManager.GetModuleViaID(ID);
 

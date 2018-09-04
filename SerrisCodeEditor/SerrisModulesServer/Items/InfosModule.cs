@@ -20,7 +20,7 @@ namespace SerrisModulesServer.Items
 
     public class InfosModule
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         public ModuleVersion ModuleVersion { get; set; }
         public string ModuleName { get; set; }
@@ -57,7 +57,7 @@ namespace SerrisModulesServer.Items
 
     public sealed class PinnedModule
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         public string ModuleName { get; set; }
         public ModuleTypesList ModuleType { get; set; }

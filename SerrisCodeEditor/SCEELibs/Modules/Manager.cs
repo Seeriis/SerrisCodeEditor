@@ -25,7 +25,7 @@ namespace SCEELibs.Modules
     [AllowForWeb]
     public sealed class ModuleInfo
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public bool moduleSystem { get; set; }
 
         public ModuleInfoVersion moduleVersion { get; set; }
@@ -70,7 +70,7 @@ namespace SCEELibs.Modules
             return list_addons_final;
         }
 
-        public ModuleInfo getModuleInfosViaID(int ID)
+        public ModuleInfo getModuleInfosViaID(string ID)
         {
             var module = ModulesAccessManager.GetModuleViaID(ID);
             return new ModuleInfo { ID = module.ID, moduleSystem = module.ModuleSystem, moduleName = module.ModuleName, moduleAuthor = module.ModuleAuthor, moduleDescription = module.ModuleDescription, moduleWebsiteLink = module.ModuleWebsiteLink, containMonacoTheme = module.ContainMonacoTheme, isEnabled = module.IsEnabled, isPinnedToToolbar = module.CanBePinnedToToolBar, moduleVersion = new ModuleInfoVersion { major = module.ModuleVersion.Major, minor = module.ModuleVersion.Minor, revision = module.ModuleVersion.Revision } };
@@ -105,7 +105,7 @@ namespace SCEELibs.Modules
 
         }
 
-        public async void deleteModule(int ID)
+        public async void deleteModule(string ID)
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
             async () =>

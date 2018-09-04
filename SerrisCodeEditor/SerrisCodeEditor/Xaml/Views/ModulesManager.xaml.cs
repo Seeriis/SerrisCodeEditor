@@ -127,7 +127,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private async void LoadModules()
         {
             ListModules.Items.Clear();
-            int IDThemeMonaco = ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = ModulesAccessManager.GetCurrentThemeID();
+            string IDThemeMonaco = ModulesAccessManager.GetCurrentThemeMonacoID(), IDTheme = ModulesAccessManager.GetCurrentThemeID();
 
             switch(currentSelectedButton)
             {
@@ -201,7 +201,7 @@ namespace SerrisCodeEditor.Xaml.Views
         {
             ModuleInfosShow module = (ModuleInfosShow)(sender as Button).DataContext;
 
-            List<int> list = await ModulesPinned.GetModulesPinned();
+            List<string> list = await ModulesPinned.GetModulesPinned();
 
             if (list.Contains(module.Module.ID))
                 ModulesPinned.RemoveModule(module.Module.ID);
@@ -212,7 +212,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = "Module installer", type = ModuleSheetNotificationType.NewSheet, sheetContent = new ModulesInstaller(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/modules_installer.png")), sheetSystem = false });
+            Messenger.Default.Send(new ModuleSheetNotification { id = "-1", sheetName = "Module installer", type = ModuleSheetNotificationType.NewSheet, sheetContent = new ModulesInstaller(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/modules_installer.png")), sheetSystem = false });
         }
 
         private async void DeleteAcceptButton_Click(object sender, RoutedEventArgs e)

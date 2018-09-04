@@ -12,6 +12,6 @@
     public class SMSNotification
     {
         public TypeUpdateModule Type { get; set; }
-        public int ID { get; set; }
+        public string ID { get; set; }
     }
 }

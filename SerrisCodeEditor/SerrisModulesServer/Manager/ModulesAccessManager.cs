@@ -73,7 +73,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static int GetCurrentThemeID()
+        public static string GetCurrentThemeID()
         {
             ModulesDataCache.LoadModulesData();
 
@@ -85,16 +85,16 @@ namespace SerrisModulesServer.Manager
                 }
                 else
                 {
-                    return 0;
+                    return SMSInfos.DefaultThemeID;
                 }
             }
             catch
             {
-                return 0;
+                return SMSInfos.DefaultThemeID;
             }
         }
 
-        public static int GetCurrentThemeMonacoID()
+        public static string GetCurrentThemeMonacoID()
         {
             ModulesDataCache.LoadModulesData();
 
@@ -106,12 +106,12 @@ namespace SerrisModulesServer.Manager
                 }
                 else
                 {
-                    return 0;
+                    return SMSInfos.DefaultMonacoThemeID;
                 }
             }
             catch
             {
-                return 0;
+                return SMSInfos.DefaultMonacoThemeID;
             }
         }
 
@@ -155,7 +155,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static InfosModule GetModuleViaID(int id)
+        public static InfosModule GetModuleViaID(string id)
         {
             ModulesDataCache.LoadModulesData();
 
@@ -176,7 +176,7 @@ namespace SerrisModulesServer.Manager
             return null;
         }
 
-        public static async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(int id, bool IsSystemModule)
+        public static async Task<BitmapImage> GetModuleDefaultLogoViaIDAsync(string id, bool IsSystemModule)
         {
 
             try
@@ -198,7 +198,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static async Task<BitmapImage> GetModuleIconViaIDAsync(int id, bool IsSystemModule)
+        public static async Task<BitmapImage> GetModuleIconViaIDAsync(string id, bool IsSystemModule)
         {
 
             try
@@ -208,7 +208,7 @@ namespace SerrisModulesServer.Manager
                 if(IconFile.Path == null)
                 {
                     //Default tab language module
-                    IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(GetModuleFolderPath(47, true) + "icon.png"));
+                    IconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(GetModuleFolderPath(SMSInfos.DefaultLanguageID, true) + "icon.png"));
                 }
 
                 using (var reader = (FileRandomAccessStream)await IconFile.OpenAsync(FileAccessMode.Read))
@@ -226,7 +226,7 @@ namespace SerrisModulesServer.Manager
 
         }
 
-        public static string GetModuleFolderPath(int ModuleID, bool IsSystemModule)
+        public static string GetModuleFolderPath(string ModuleID, bool IsSystemModule)
         {
             string ModulePath = "";
 

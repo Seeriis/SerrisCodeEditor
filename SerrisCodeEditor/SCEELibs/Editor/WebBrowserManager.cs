@@ -25,7 +25,7 @@ namespace SCEELibs.Editor
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                Messenger.Default.Send(new ModuleSheetNotification { id = -1, sheetName = "Web browser", type = ModuleSheetNotificationType.NewSheet, sheetContent = new WebBrowser(url), sheetIcon = new BitmapImage(new Uri("ms-appx://SerrisCodeEditor/Assets/Icons/web_browser.png")), sheetSystem = false });
+                Messenger.Default.Send(new ModuleSheetNotification { id = "-1", sheetName = "Web browser", type = ModuleSheetNotificationType.NewSheet, sheetContent = new WebBrowser(url), sheetIcon = new BitmapImage(new Uri("ms-appx://SerrisCodeEditor/Assets/Icons/web_browser.png")), sheetSystem = false });
                 Messenger.Default.Send(SheetViewerNotification.DeployViewer);
             });
         }

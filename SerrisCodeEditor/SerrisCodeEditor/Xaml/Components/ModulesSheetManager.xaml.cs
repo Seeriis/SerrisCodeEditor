@@ -22,7 +22,7 @@ namespace SerrisCodeEditor.Xaml.Components
 {
     public sealed partial class ModulesSheetManager : UserControl
     {
-        int sheet_tabslist = 123456789;
+        string sheet_tabslist = "123456789";
 
         public ModulesSheetManager()
         {
@@ -87,7 +87,6 @@ namespace SerrisCodeEditor.Xaml.Components
             {
                 name = "" + (int.Parse(name) + 1);
             }
-            notif.id = int.Parse(name);
 
             ModuleSheet button = new ModuleSheet();
             button.DataContext = notif;
@@ -104,7 +103,7 @@ namespace SerrisCodeEditor.Xaml.Components
         public void AddTabsListSheet()
         { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
 
-        private void RemoveModule(int ID)
+        private void RemoveModule(string ID)
         { ModulesSheetContent.Children.Remove((UIElement)ModulesSheetContent.FindName("" + ID)); }
 
     }

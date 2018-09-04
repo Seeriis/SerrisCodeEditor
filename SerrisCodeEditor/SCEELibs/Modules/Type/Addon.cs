@@ -16,7 +16,7 @@ namespace SCEELibs.Modules.Type
     [AllowForWeb]
     public sealed class Addon
     {
-        public async void executeAddonViaID(int ID, AddonFunction typefunc)
+        public async void executeAddonViaID(string ID, AddonFunction typefunc)
         {
 
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
@@ -40,7 +40,7 @@ namespace SCEELibs.Modules.Type
 
         }
 
-        public async void executeCustomFunctionViaID(int ID, string func_name)
+        public async void executeCustomFunctionViaID(string ID, string func_name)
         {
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, 
                 () => new AddonExecutor(ID, new SCEELibs(ID)).ExecutePersonalizedFunction(func_name));

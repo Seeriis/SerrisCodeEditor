@@ -14,7 +14,7 @@ namespace SCEELibs
     [AllowForWeb]
     public sealed class SCEELibs
     {
-        public SCEELibs(int id)
+        public SCEELibs(string id)
         {
             _currentID = id;
 
@@ -25,8 +25,8 @@ namespace SCEELibs
 
         public SCEELibs() { }
 
-        int _currentID = -1;
-        public int currentID { get { return _currentID; } } 
+        string _currentID = "-1";
+        public string currentID { get { return _currentID; } } 
 
 
         /* ===========
@@ -81,17 +81,17 @@ namespace SCEELibs
          * = FUNCTIONS FOR WEBVIEW (SCEELIBS WITHOUT ID) =
          * ===============================================
          */
-        public WidgetManager getWidgetManagerViaID(int id)
+        public WidgetManager getWidgetManagerViaID(string id)
         {
             return new WidgetManager(id);
         }
 
-        public SheetManager getSheetManagerViaID(int id)
+        public SheetManager getSheetManagerViaID(string id)
         {
             return new SheetManager(id);
         }
 
-        public StorageManager getStorageManager(int id)
+        public StorageManager getStorageManager(string id)
         {
             return new StorageManager(id);
         }

@@ -13,8 +13,8 @@ namespace SCEELibs.Editor
     [AllowForWeb]
     public sealed class WidgetManager
     {
-        int currentID;
-        public WidgetManager(int ID)
+        string currentID;
+        public WidgetManager(string ID)
         {
             currentID = ID;
         }

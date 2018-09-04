@@ -45,7 +45,7 @@ namespace SerrisCodeEditor.Xaml.Components
         List<string> commands_list = new List<string>();
 
         int commands_list_index = -1;
-        bool isFlyoutOpened = false;
+        bool isFlyoutOpened = false, disableOpening = false;
         bool ShowErrors = true, ShowInformations = true, ShowResults = true, ShowWarnings = true;
 
 
@@ -57,11 +57,19 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void ConsoleUI_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); SetTheme(); }
+        {
+            SetMessenger(); SetTheme();
+
+            if(GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.WindowsMobile)
+            {
+                SymbolOpened.Visibility = Visibility.Collapsed;
+                disableOpening = true;
+            }
+        }
 
         private void ConsoleUI_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (!isFlyoutOpened) { OpenConsole(); }
+            if (!isFlyoutOpened && !disableOpening) { OpenConsole(); }
         }
 
         private void ConsoleUI_PointerExited(object sender, PointerRoutedEventArgs e)

@@ -13,7 +13,7 @@ namespace SCEELibs.Modules.Type
     public sealed class Theme
     {
 
-        public async void setUITheme(int ID)
+        public async void setUITheme(string ID)
         {
 
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
@@ -24,7 +24,7 @@ namespace SCEELibs.Modules.Type
 
         }
 
-        public async void setMonacoEditorTheme(int ID)
+        public async void setMonacoEditorTheme(string ID)
         {
 
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,

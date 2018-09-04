@@ -11,7 +11,7 @@ namespace SerrisModulesServer.SystemModules
         {
             new InfosModule
             {
-                ID = 0,
+                ID = "0",
                 ModuleType = ModuleTypesList.Theme,
                 ContainMonacoTheme = true,
                 ModuleMonacoThemeName = "lightTheme",
@@ -71,7 +71,7 @@ namespace SerrisModulesServer.SystemModules
             },*/
             new InfosModule
             {
-                ID = 3,
+                ID = "3",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "Undo'n Redo module",
@@ -91,7 +91,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 4,
+                ID = "4",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "Save module",
@@ -111,7 +111,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 5,
+                ID = "5",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "Clipboard module",
@@ -131,7 +131,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 6,
+                ID = "6",
                 ModuleType = ModuleTypesList.Theme,
                 ContainMonacoTheme = true,
                 ModuleMonacoThemeName = "darkTheme",
@@ -150,7 +150,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 7,
+                ID = "7",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "SCE Marne-la-Vallée informations",
@@ -172,7 +172,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 51,
+                ID = "51",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "Web browser",
@@ -192,7 +192,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 52,
+                ID = "52",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "StackOverflow search",
@@ -212,7 +212,7 @@ namespace SerrisModulesServer.SystemModules
             },
             new InfosModule
             {
-                ID = 53,
+                ID = "53",
                 ModuleType = ModuleTypesList.Addon,
                 ContainMonacoTheme = false,
                 ModuleName = "Shortcuts manager",
@@ -239,7 +239,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 8,
+                ID = "8",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "CSS",
                 ModuleSystem = true,
@@ -260,7 +260,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 9,
+                ID = "9",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "C#",
                 ModuleSystem = true,
@@ -281,7 +281,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 10,
+                ID = "10",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "HTML",
                 ModuleSystem = true,
@@ -302,7 +302,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 11,
+                ID = "11",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Java",
                 ModuleSystem = true,
@@ -323,7 +323,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 12,
+                ID = "12",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Javascript",
                 ModuleSystem = true,
@@ -344,7 +344,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 13,
+                ID = "13",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Python",
                 ModuleSystem = true,
@@ -365,7 +365,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 14,
+                ID = "14",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Ruby",
                 ModuleSystem = true,
@@ -386,7 +386,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 15,
+                ID = "15",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Batch script (BAT)",
                 ModuleSystem = true,
@@ -407,7 +407,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 16,
+                ID = "16",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Coffee script",
                 ModuleSystem = true,
@@ -428,7 +428,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 17,
+                ID = "17",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "C / C++",
                 ModuleSystem = true,
@@ -449,7 +449,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 18,
+                ID = "18",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "CSP",
                 ModuleSystem = true,
@@ -470,7 +470,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 19,
+                ID = "19",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Docker file",
                 ModuleSystem = true,
@@ -491,7 +491,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 20,
+                ID = "20",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "F#",
                 ModuleSystem = true,
@@ -512,7 +512,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 21,
+                ID = "21",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Go",
                 ModuleSystem = true,
@@ -533,7 +533,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 22,
+                ID = "22",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Handlebars (HTML templating)",
                 ModuleSystem = true,
@@ -554,7 +554,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 23,
+                ID = "23",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "INI file",
                 ModuleSystem = true,
@@ -575,7 +575,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 24,
+                ID = "24",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Less",
                 ModuleSystem = true,
@@ -596,7 +596,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 25,
+                ID = "25",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Lua",
                 ModuleSystem = true,
@@ -617,7 +617,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 26,
+                ID = "26",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Markdown",
                 ModuleSystem = true,
@@ -638,7 +638,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 27,
+                ID = "27",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "MsDAX",
                 ModuleSystem = true,
@@ -659,7 +659,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 28,
+                ID = "28",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "MySQL",
                 ModuleSystem = true,
@@ -680,7 +680,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 29,
+                ID = "29",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Objective-C",
                 ModuleSystem = true,
@@ -701,7 +701,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 30,
+                ID = "30",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "PostgreSQL",
                 ModuleSystem = true,
@@ -722,7 +722,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 31,
+                ID = "31",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "PHP",
                 ModuleSystem = true,
@@ -743,7 +743,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 32,
+                ID = "32",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "ATS",
                 ModuleSystem = true,
@@ -764,7 +764,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 33,
+                ID = "33",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "PowerShell",
                 ModuleSystem = true,
@@ -785,7 +785,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 34,
+                ID = "34",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Pug (HTML templating)",
                 ModuleSystem = true,
@@ -806,7 +806,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 35,
+                ID = "35",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "R",
                 ModuleSystem = true,
@@ -827,7 +827,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 36,
+                ID = "36",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "ASP.NET Razor",
                 ModuleSystem = true,
@@ -848,7 +848,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 37,
+                ID = "37",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Redis",
                 ModuleSystem = true,
@@ -869,7 +869,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 38,
+                ID = "38",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Amazon Redshift",
                 ModuleSystem = true,
@@ -890,7 +890,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 39,
+                ID = "39",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Scratch",
                 ModuleSystem = true,
@@ -911,7 +911,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 40,
+                ID = "40",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Sass / Scss",
                 ModuleSystem = true,
@@ -932,7 +932,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 41,
+                ID = "41",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Solidity",
                 ModuleSystem = true,
@@ -953,7 +953,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 42,
+                ID = "42",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "SQL",
                 ModuleSystem = true,
@@ -974,7 +974,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 43,
+                ID = "43",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Swift",
                 ModuleSystem = true,
@@ -995,7 +995,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 44,
+                ID = "44",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "VB(.net)",
                 ModuleSystem = true,
@@ -1016,7 +1016,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 45,
+                ID = "45",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "XML",
                 ModuleSystem = true,
@@ -1037,7 +1037,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 46,
+                ID = "46",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "YAML",
                 ModuleSystem = true,
@@ -1058,7 +1058,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 47,
+                ID = "47",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "Text tab (default)",
                 ModuleSystem = true,
@@ -1079,7 +1079,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 49,
+                ID = "49",
                 ModuleType = ModuleTypesList.ProgrammingLanguage,
                 ModuleName = "JSON",
                 ModuleSystem = true,
@@ -1105,7 +1105,7 @@ namespace SerrisModulesServer.SystemModules
             
             new InfosModule
             {
-                ID = 48,
+                ID = "48",
                 ModuleType = ModuleTypesList.Templates,
                 ModuleName = "Default list",
                 ModuleSystem = true,
@@ -1132,7 +1132,7 @@ namespace SerrisModulesServer.SystemModules
 
             new InfosModule
             {
-                ID = 50,
+                ID = "50",
                 ModuleType = ModuleTypesList.Templates,
                 ModuleName = "LÖVE 2D project",
                 ModuleSystem = true,

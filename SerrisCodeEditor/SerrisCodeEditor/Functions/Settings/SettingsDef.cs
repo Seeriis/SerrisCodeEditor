@@ -13,7 +13,9 @@ namespace SerrisCodeEditor.Functions.Settings
         TextboxNumber,
         SecondDescription,
         Link,
-        ComboBox
+        ComboBox,
+        License,
+        Separator
     }
 
     public class SettingsMenu

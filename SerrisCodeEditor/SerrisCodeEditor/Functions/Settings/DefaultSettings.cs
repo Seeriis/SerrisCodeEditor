@@ -135,6 +135,12 @@ namespace SerrisCodeEditor.Functions.Settings
                 {
                     new Setting
                     {
+                        Description = "About the application",
+                        Type = SettingType.Separator
+                    },
+
+                    new Setting
+                    {
                         Description = "Serris Code Editor",
                         Type = SettingType.SecondDescription,
 
@@ -163,7 +169,69 @@ namespace SerrisCodeEditor.Functions.Settings
                         Type = SettingType.Link,
 
                         Parameter = "https://github.com/Seeris/SerrisCodeEditor"
-                    }
+                    },
+
+                    new Setting
+                    {
+                        Description = "Licenses",
+                        Type = SettingType.Separator
+                    },
+
+                    new Setting
+                    {
+                        Description = "JsBridge",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by deltakosh (with Apache License 2.0)", "https://github.com/deltakosh/JsBridge")
+                    },
+
+                    new Setting
+                    {
+                        Description = "MVVMLight",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Laurent Bugnion (GalaSoft) (with MIT license)", "https://github.com/lbugnion/mvvmlight")
+                    },
+
+                    new Setting
+                    {
+                        Description = "Newtonsoft.Json",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by James Newton-King (with MIT license)", "https://github.com/JamesNK/Newtonsoft.Json")
+                    },
+
+                    new Setting
+                    {
+                        Description = "UWP Community Toolkit",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "https://github.com/Microsoft/UWPCommunityToolkit")
+                    },
+
+                    new Setting
+                    {
+                        Description = "Monaco Editor",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "https://github.com/Microsoft/monaco-editor")
+                    },
+
+                    new Setting
+                    {
+                        Description = "SerialQueue",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Orion Edwards (with MIT license)", "https://github.com/borland/SerialQueue")
+                    },
+
+                    new Setting
+                    {
+                        Description = "Devicon",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Konpa (with MIT license)", "https://github.com/konpa/devicon/")
+                    },
                 }
 
             }

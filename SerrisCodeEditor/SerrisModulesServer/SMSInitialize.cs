@@ -37,8 +37,8 @@ namespace SerrisModulesServer
         {
             var new_list = new ModulesList
             {
-                CurrentThemeMonacoID = 0,
-                CurrentThemeID = 0,
+                CurrentThemeMonacoID = SMSInfos.DefaultMonacoThemeID,
+                CurrentThemeID = SMSInfos.DefaultThemeID,
                 Modules = new List<InfosModule>()
             };
 

@@ -16,9 +16,9 @@ namespace SCEELibs.Editor
     [AllowForWeb]
     public sealed class SheetManager
     {
-        int id;
+        string id;
 
-        public SheetManager(int ID)
+        public SheetManager(string ID)
         {
             id = ID;
         }
@@ -36,7 +36,7 @@ namespace SCEELibs.Editor
 
         }
 
-        public void closeSheet(int id)
+        public void closeSheet(string id)
         {
             Messenger.Default.Send(new ModuleSheetNotification { id = id, type = ModuleSheetNotificationType.RemoveSheet, sheetSystem = false });
         }

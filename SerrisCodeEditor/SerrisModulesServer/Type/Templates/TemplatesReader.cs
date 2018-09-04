@@ -13,7 +13,7 @@ namespace SerrisModulesServer.Type.Templates
     {
         public InfosModule ModuleContent;
 
-        public TemplatesReader(int ID) : base(ID)
+        public TemplatesReader(string ID) : base(ID)
         {
             ModuleContent = ModulesAccessManager.GetModuleViaID(ID);
         }

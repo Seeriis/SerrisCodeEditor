@@ -21,9 +21,9 @@ namespace SerrisModulesServer.Type.Addon
     {
 
         private ChakraSMS host;
-        private int _id; private object _SCEELibs;
+        private string _id; private object _SCEELibs;
 
-        public AddonExecutor(int ID, object SCEELibs)
+        public AddonExecutor(string ID, object SCEELibs)
         {
             _id = ID; _SCEELibs = SCEELibs;
             //InitializeExecutor(ID, FuncType, SCEELibs);

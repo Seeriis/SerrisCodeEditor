@@ -19,16 +19,16 @@ namespace SerrisCodeEditor.Functions
 
     public class ModulesPinnedNotification
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public ModulesPinedModification Modification { get; set; }
     }
 
     public static class ModulesPinned
     {
-        static int[] DefaultModulesPinned = { 7, 4, 3 };
+        static string[] DefaultModulesPinned = { "7", "4", "3", "5" };
         static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_pinned.json", CreationCollisionOption.OpenIfExists).AsTask());
 
-        public static async Task<List<int>> GetModulesPinned()
+        public static async Task<List<string>> GetModulesPinned()
         {
 
             using (var reader = new StreamReader(await file.OpenStreamForReadAsync()))
@@ -36,15 +36,15 @@ namespace SerrisCodeEditor.Functions
             {
                 try
                 {
-                    List<int> list = new JsonSerializer().Deserialize<List<int>>(JsonReader);
+                    List<string> list = new JsonSerializer().Deserialize<List<string>>(JsonReader);
                     if (list != null)
                     {
                         return list;
                     }
                     else
                     {
-                        list = new List<int>();
-                        foreach (int id in DefaultModulesPinned)
+                        list = new List<string>();
+                        foreach (string id in DefaultModulesPinned)
                         {
                             list.Add(id);
                         }
@@ -62,18 +62,18 @@ namespace SerrisCodeEditor.Functions
 
         }
 
-        public static async void AddNewModule(int id)
+        public static async void AddNewModule(string id)
         {
-            List<int> List = await GetModulesPinned();
+            List<string> List = await GetModulesPinned();
             List.Add(id);
 
             await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(List, Formatting.Indented));
             Messenger.Default.Send<ModulesPinnedNotification>(new ModulesPinnedNotification { ID = id, Modification = ModulesPinedModification.Added });
         }
 
-        public static async void RemoveModule(int id)
+        public static async void RemoveModule(string id)
         {
-            List<int> List = await GetModulesPinned();
+            List<string> List = await GetModulesPinned();
             List.Remove(id);
 
             await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(List, Formatting.Indented));

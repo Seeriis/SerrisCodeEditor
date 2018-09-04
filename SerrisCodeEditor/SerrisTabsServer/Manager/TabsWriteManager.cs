@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
+using SerrisModulesServer;
 using SerrisTabsServer.Items;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace SerrisTabsServer.Manager
         /// </summary>
         /// <param name="new_name">Name of your tabs list</param>
         /// <returns>ID of the new tabs list created</returns>
-        public static async Task<int> CreateTabsListAsync(string new_name, int TabsListTypeID = 48)
+        public static async Task<int> CreateTabsListAsync(string new_name, string TabsListTypeID = "48")
         {
             TabsDataCache.LoadTabsData();
 

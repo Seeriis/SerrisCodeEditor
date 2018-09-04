@@ -11,7 +11,7 @@ namespace SerrisModulesServer.Type.Theme
 {
     public class ThemeReader : ModuleReader
     {
-        public ThemeReader(int ID) : base (ID) { }
+        public ThemeReader(string ID) : base (ID) { }
 
         /// <summary>
         /// Get the JavaScript content of the monaco theme

@@ -6,7 +6,6 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
 {
     public static class LanguagesHelper
     {
-        public static readonly int DefaultLanguageModuleID = 47;
 
         public static string GetLanguageType(string Filename)
         {
@@ -46,7 +45,7 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
             return false;
         }
 
-        public static int GetModuleIDOfLangageType(string LangType)
+        public static string GetModuleIDOfLangageType(string LangType)
         {
             string Type = LangType.ToLower();
 
@@ -62,7 +61,7 @@ namespace SerrisModulesServer.Type.ProgrammingLanguage
                 }
             }
 
-            return DefaultLanguageModuleID;
+            return SMSInfos.DefaultLanguageID;
         }
 
         public static List<string> GetLanguageExtensions(string Filetype)
