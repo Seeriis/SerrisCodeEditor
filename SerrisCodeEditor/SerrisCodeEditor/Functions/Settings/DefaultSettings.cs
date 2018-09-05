@@ -168,7 +168,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_scegithub"),
                         Type = SettingType.Link,
 
-                        Parameter = "https://github.com/Seeris/SerrisCodeEditor"
+                        Parameter = "https://github.com/Seeriis/SerrisCodeEditor"
                     },
 
                     new Setting
