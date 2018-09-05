@@ -13,7 +13,7 @@ function onEditorStart()
     if (sceelibs.preReleaseVersion) {
         if (sceelibs.modulesStorageManager.checkAppSettingAvailable("build_version")) {
 
-            if (sceelibs.modulesStorageManager.readAppSettingContent("build_version") != sceelibs.versionName) {
+            if (sceelibs.modulesStorageManager.readAppSettingContent("build_version") !== sceelibs.versionName) {
                 generatePopup();
                 sceelibs.modulesStorageManager.writeAppSetting("build_version", sceelibs.versionName);
             }
@@ -27,5 +27,5 @@ function onEditorStart()
 }
 
 function generatePopup() {
-    createWindowsNotification('Welcome to the version "' + sceelibs.versionName + '" of Serris Code Editor ! Of course, the editor is still in work in progress !');
+    createWindowsNotification('Welcome to the pre-release build "' + sceelibs.versionName + '" of Serris Code Editor !');
 }

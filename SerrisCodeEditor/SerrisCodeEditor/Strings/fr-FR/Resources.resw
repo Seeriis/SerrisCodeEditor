@@ -120,6 +120,9 @@
   <data name="console-clearbuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Nettoyer la console</value>
   </data>
+  <data name="console-commandboxplaceholder.PlaceholderText" xml:space="preserve">
+    <value>Exécuter une commande JavaScript...</value>
+  </data>
   <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Erreur(s)</value>
   </data>
@@ -163,7 +166,7 @@
     <value>Notifications d'actualités</value>
   </data>
   <data name="news-refreshlistbutton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Rafraichir les actualités</value>
+    <value>Rafraîchir les actualités</value>
   </data>
   <data name="news-seecommentstext.Text" xml:space="preserve">
     <value>Voir les commentaires</value>
@@ -236,6 +239,12 @@
   </data>
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
     <value>Largeur du panneau de gauche ouvert (en pixel)</value>
+  </data>
+  <data name="storages-localstorage" xml:space="preserve">
+    <value>Stockage local</value>
+  </data>
+  <data name="storages-onedrive" xml:space="preserve">
+    <value>OneDrive</value>
   </data>
   <data name="tab-createdattext.Text" xml:space="preserve">
     <value>Créer à : </value>

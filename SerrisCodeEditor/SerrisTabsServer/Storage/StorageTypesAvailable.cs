@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.System.Profile;
 
 namespace SerrisTabsServer.Storage
@@ -11,8 +12,8 @@ namespace SerrisTabsServer.Storage
     {
         public static List<StorageTypeDefinition> StorageTypes = new List<StorageTypeDefinition>
         {
-            new StorageTypeDefinition { StorageTypeName = "Local storage", StorageTypeIcon = "", Type = StorageListTypes.LocalStorage, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens } },
-            new StorageTypeDefinition { StorageTypeName = "OneDrive", StorageTypeIcon = "", Type = StorageListTypes.OneDrive, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens, DevicesAvailable.Xbox } }
+            new StorageTypeDefinition { StorageTypeName = new ResourceLoader().GetString("storages-localstorage"), StorageTypeIcon = "", Type = StorageListTypes.LocalStorage, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens } },
+            new StorageTypeDefinition { StorageTypeName = new ResourceLoader().GetString("storages-onedrive"), StorageTypeIcon = "", Type = StorageListTypes.OneDrive, DevicesCompatible = new List<DevicesAvailable> { DevicesAvailable.Desktop, DevicesAvailable.Mobile, DevicesAvailable.Hololens, DevicesAvailable.Xbox } }
         };
 
         public static List<StorageTypeDefinition> GetStorageTypesAvailable()

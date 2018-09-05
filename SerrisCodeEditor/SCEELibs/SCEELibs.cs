@@ -75,6 +75,7 @@ namespace SCEELibs
 
         public string versionNumber { get => SCEInfos.versionNumber; }
         public string versionName { get => SCEInfos.versionName; }
+        public bool preReleaseVersion { get => SCEInfos.preReleaseVersion; }
 
 
         /* ===============================================

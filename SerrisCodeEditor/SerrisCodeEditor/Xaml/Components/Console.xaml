@@ -150,7 +150,7 @@
                 <TextBlock x:Name="LastNotifInfos_Icon" Text="" Grid.Column="1" Foreground="#3E2159" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
                 <TextBlock x:Name="LastNotifInfos_Text" Text="Serris Code Editor" Grid.Column="1" Foreground="#3E2159" Margin="10,0,0,3" VerticalAlignment="Center" FontSize="15" FontWeight="Light" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
-            <TextBox x:Name="Command_box" KeyDown="Command_box_KeyDown" BorderThickness="0" Padding="15,5,0,0" Height="30" Visibility="Collapsed" Background="Transparent" FontWeight="Light" FontStyle="Italic" IsSpellCheckEnabled="False" PlaceholderText="Execute a JavaScript command..." Style="{StaticResource CommandBox}"/>
+            <TextBox x:Name="Command_box" x:Uid="console-commandboxplaceholder" KeyDown="Command_box_KeyDown" BorderThickness="0" Padding="15,5,0,0" Height="30" Visibility="Collapsed" Background="Transparent" FontWeight="Light" FontStyle="Italic" IsSpellCheckEnabled="False" PlaceholderText="Execute a JavaScript command..." Style="{StaticResource CommandBox}"/>
 
             <TextBlock x:Name="SymbolOpened" Text="" Grid.Column="1" Foreground="Black" Margin="10,0,10,0" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" FontSize="12"/>
         </Grid>

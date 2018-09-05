@@ -570,7 +570,15 @@ namespace SerrisCodeEditor.Xaml.Views
             if (Text != "")
                 NewText = Text + " - ";
 
-            TextInfoTitlebar.Text = $"{NewText}Serris Code Editor ({SCEELibs.SCEInfos.versionName})";
+            if(SCEELibs.SCEInfos.preReleaseVersion)
+            {
+                TextInfoTitlebar.Text = $"{NewText}Serris Code Editor ({SCEELibs.SCEInfos.versionName})";
+            }
+            else
+            {
+                TextInfoTitlebar.Text = $"{NewText}Serris Code Editor";
+            }
+            
             ApplicationView.GetForCurrentView().Title = Text;
         }
 

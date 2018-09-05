@@ -120,6 +120,9 @@
   <data name="console-clearbuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Clear console</value>
   </data>
+  <data name="console-commandboxplaceholder.PlaceholderText" xml:space="preserve">
+    <value>Execute a JavaScript command...</value>
+  </data>
   <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Error(s)</value>
   </data>
@@ -236,6 +239,12 @@
   </data>
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
     <value>Left pane open length (in pixel)</value>
+  </data>
+  <data name="storages-localstorage" xml:space="preserve">
+    <value>Local storage</value>
+  </data>
+  <data name="storages-onedrive" xml:space="preserve">
+    <value>OneDrive</value>
   </data>
   <data name="tab-createdattext.Text" xml:space="preserve">
     <value>Created at : </value>
