@@ -622,8 +622,8 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="TextBoxRename" PlaceholderText="Example: toothless.js" FontSize="11" KeyDown="TextBoxRename_KeyDown" TextChanged="TextBoxRename_TextChanged" Style="{StaticResource TextBoxRename}" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" BorderBrush="#FF8D8D8D"/>
-                        <Button x:Name="RenameAcceptButton" IsEnabled="False" ToolTipService.ToolTip="Accept rename" Grid.Column="1" HorizontalAlignment="Stretch" Width="45" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource ButtonRename}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="RenameAcceptButton_Click">
+                        <TextBox x:Name="TextBoxRename" x:Uid="tab-renameplaceholder" PlaceholderText="Example: toothless.js" FontSize="11" KeyDown="TextBoxRename_KeyDown" TextChanged="TextBoxRename_TextChanged" Style="{StaticResource TextBoxRename}" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" BorderBrush="#FF8D8D8D"/>
+                        <Button x:Name="RenameAcceptButton" x:Uid="tab-renameaccepttooltip" IsEnabled="False" ToolTipService.ToolTip="Accept rename" Grid.Column="1" HorizontalAlignment="Stretch" Width="45" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource ButtonRename}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="RenameAcceptButton_Click">
                             <TextBlock x:Name="RenameAcceptButtonIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
 
@@ -631,17 +631,17 @@
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Background="Transparent">
-                    <Button x:Name="Rename_Tab" ToolTipService.ToolTip="Rename tab" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Collapsed" Grid.Column="1" Background="#00000000" Click="Rename_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
+                    <Button x:Name="Rename_Tab" x:Uid="tab-renametabtooltip" ToolTipService.ToolTip="Rename tab" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Collapsed" Grid.Column="1" Background="#00000000" Click="Rename_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <CompositeTransform/>
                         </Button.RenderTransform>
                     </Button>
-                    <Button x:Name="More_Tab" ToolTipService.ToolTip="Show more informations" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="#00000000" Click="More_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
+                    <Button x:Name="More_Tab" x:Uid="tab-moreinfostooltip" ToolTipService.ToolTip="Show more informations" HorizontalAlignment="Right" VerticalAlignment="Center" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="#00000000" Click="More_Tab_Click" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="2,0" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <CompositeTransform/>
                         </Button.RenderTransform>
                     </Button>
-                    <Button x:Name="Close_Tab" ToolTipService.ToolTip="Delete tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FFFF6060" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#00FF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="0,0,8,0" BorderBrush="Transparent" BorderThickness="2"/>
+                    <Button x:Name="Close_Tab" x:Uid="tab-deletetabtooltip" ToolTipService.ToolTip="Delete tab" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="#FFFF6060" Click="Close_Tab_Click" Visibility="Visible" Grid.Column="1" Background="#00FF0000" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="0,0,8,0" BorderBrush="Transparent" BorderThickness="2"/>
                 </StackPanel>
 
             </Grid>
@@ -658,27 +658,27 @@
             <StackPanel x:Name="StackInfos" Margin="60,5,0,10">
                 <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
-                    <TextBlock x:Name="type_info" x:Uid="fileinfo-encoding" Text="Type: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,3"/>
+                    <TextBlock x:Name="type_info" x:Uid="tab-typetext" Text="Type: " Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,0,3"/>
                     <ComboBox x:Name="list_types" Background="Transparent" BorderBrush="#00000000" SelectionChanged="list_types_SelectionChanged" Margin="5,0,0,0" FontSize="11" Height="25" Foreground="White" Style="{StaticResource ComboBox_Encoding}" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel x:Name="Encoding_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
-                    <TextBlock x:Name="encoding_info" x:Uid="fileinfo-encoding" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="encoding_info" x:Uid="tab-encodingtext" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="encoding_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Size_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
-                    <TextBlock x:Name="size_info" x:Uid="fileinfo-size" Text="Size: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="size_info" x:Uid="tab-sizetext" Text="Size: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="size_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Modified_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
-                    <TextBlock x:Name="modified_info" x:Uid="fileinfo-modified_at" Text="Modified at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="modified_info" x:Uid="tab-modifiedattext" Text="Modified at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="modified_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Created_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
-                    <TextBlock x:Name="created_info" x:Uid="fileinfo-created_at" Text="Created at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="created_info" x:Uid="tab-createdattext" Text="Created at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
                     <TextBlock x:Name="created_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
             </StackPanel>

@@ -362,7 +362,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 Button LicenseButton = new Button();
                                 LicenseButton.Margin = new Thickness(0, 5, 0, 0);
-                                LicenseButton.Content = "See the GitHub (and the license)";
+                                LicenseButton.Content = GlobalVariables.GlobalizationRessources.GetString("settings-buttonlicense");
                                 LicenseButton.FontSize = 14;
                                 LicenseButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
                                 LicenseButton.Background = GlobalVariables.CurrentTheme.MainColor;

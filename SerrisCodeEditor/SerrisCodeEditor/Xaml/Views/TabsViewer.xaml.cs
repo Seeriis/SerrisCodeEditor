@@ -75,7 +75,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         private void CreateDefaultTab()
-        => TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, "New tab", Encoding.UTF8, StorageListTypes.LocalStorage, "");
+        => TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, GlobalVariables.GlobalizationRessources.GetString("tabslist-defaulttabname"), Encoding.UTF8, StorageListTypes.LocalStorage, "");
 
         private async void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -86,7 +86,7 @@ namespace SerrisCodeEditor.Xaml.Views
             else if(Lists.Items.Count > 0)
                 Lists.SelectedIndex = 0;
             else
-                await TabsWriteManager.CreateTabsListAsync("Default list");
+                await TabsWriteManager.CreateTabsListAsync(GlobalVariables.GlobalizationRessources.GetString("tabslist-defaultlistname"));
 
         }
 
@@ -111,7 +111,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                 if (Lists.Items.Count == 0)
                 {
-                    await TabsWriteManager.CreateTabsListAsync("Default list");
+                    await TabsWriteManager.CreateTabsListAsync(GlobalVariables.GlobalizationRessources.GetString("tabslist-defaultlistname"));
                 }
                 else
                 {
@@ -459,8 +459,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (CurrentCreationType)
                 {
                     case 0:
-                        TextBoxNewFileProject.PlaceholderText = "Example: toothless.js";
-                        CreatorGridTitle.Text = "Create new tab";
+                        TextBoxNewFileProject.PlaceholderText = GlobalVariables.GlobalizationRessources.GetString("tabslist-placeholderfileexample");
+                        CreatorGridTitle.Text = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttoncreatetab");
 
                         SelectTabButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
                         SelectTabButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
@@ -475,8 +475,8 @@ namespace SerrisCodeEditor.Xaml.Views
                         break;
 
                     case 1:
-                        TextBoxNewFileProject.PlaceholderText = "Example: project csharp";
-                        CreatorGridTitle.Text = "Create new list / project";
+                        TextBoxNewFileProject.PlaceholderText = GlobalVariables.GlobalizationRessources.GetString("tabslist-placeholderprojectexample");
+                        CreatorGridTitle.Text = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttoncreatelist");
 
                         SelectListButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
                         SelectListButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
@@ -579,7 +579,7 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
-        private async void OpenFilesButton_Click(object sender, RoutedEventArgs e)
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFiles();
         }
@@ -636,7 +636,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 CreateIcon.Text = "";
                 Tabs.Visibility = Visibility.Collapsed;
                 CreatorGrid.Visibility = Visibility.Visible;
-                ButtonTooltip.Content = "Go back";
+                ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttongoback");
             }
             else
             {
@@ -645,7 +645,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 CreateIcon.Text = "";
                 CreatorGrid.Visibility = Visibility.Collapsed;
                 Tabs.Visibility = Visibility.Visible;
-                ButtonTooltip.Content = "Add new tab(s)/list(s)";
+                ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttonaddtabslists");
             }
 
             ToolTipService.SetToolTip(CreateButton, ButtonTooltip);

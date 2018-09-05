@@ -14,14 +14,14 @@ namespace SerrisCodeEditor.Functions.Settings
             //EDITOR
             new SettingsMenu
             {
-                Name = "Editor",
+                Name = GlobalVariables.GlobalizationRessources.GetString("settings-editor"),
                 Icon = "",
 
                 Settings = new List<Setting>
                 {
                     new Setting
                     {
-                        Description = "Show line numbers",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_showline"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "editor_linenumbers",
@@ -30,7 +30,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Show minimap",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_showminimap"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "editor_minimap",
@@ -39,7 +39,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Show quick suggestions",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_quicksuggests"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "editor_quicksuggestions",
@@ -48,7 +48,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Wrapping code",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_wrappingcode"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "editor_wordwrap",
@@ -57,7 +57,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Font size (in pixel)",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_fontsize"),
                         Type = SettingType.TextboxNumber,
 
                         VarSaveName = "editor_fontsize",
@@ -66,7 +66,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Font family",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-editor_fontfamily"),
                         Type = SettingType.ComboBox,
 
                         VarSaveName = "editor_fontfamily",
@@ -81,14 +81,14 @@ namespace SerrisCodeEditor.Functions.Settings
             //UI
             new SettingsMenu
             {
-                Name = "UI",
+                Name = GlobalVariables.GlobalizationRessources.GetString("settings-ui"),
                 Icon = "",
 
                 Settings = new List<Setting>
                 {
                     new Setting
                     {
-                        Description = "UI extended view mode",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-ui_extendedview"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "ui_extendedview",
@@ -97,7 +97,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Close the left panel automatically",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-ui_closepanelauto"),
                         Type = SettingType.Checkbox,
 
                         VarSaveName = "ui_closepanelauto",
@@ -106,7 +106,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Left pane reduced length (in pixel)",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-ui_leftpanelength"),
                         Type = SettingType.TextboxNumber,
 
                         VarSaveName = "ui_leftpanelength",
@@ -115,7 +115,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Left pane open length (in pixel)",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-ui_leftpaneopenlength"),
                         Type = SettingType.TextboxNumber,
 
                         VarSaveName = "ui_leftpaneopenlength",
@@ -128,14 +128,14 @@ namespace SerrisCodeEditor.Functions.Settings
             //CREDITS
             new SettingsMenu
             {
-                Name = "Credits",
+                Name = GlobalVariables.GlobalizationRessources.GetString("settings-credits"),
                 Icon = "",
 
                 Settings = new List<Setting>
                 {
                     new Setting
                     {
-                        Description = "About the application",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_aboutapp"),
                         Type = SettingType.Separator
                     },
 
@@ -144,12 +144,12 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Serris Code Editor",
                         Type = SettingType.SecondDescription,
 
-                        Parameter = "By Seeriis"
+                        Parameter = GlobalVariables.GlobalizationRessources.GetString("settings-credits_byseeriis")
                     },
 
                     new Setting
                     {
-                        Description = "Main developer",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_maindev"),
                         Type = SettingType.SecondDescription,
 
                         Parameter = "DeerisLeGris (France)"
@@ -157,7 +157,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Version",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_version"),
                         Type = SettingType.SecondDescription,
 
                         Parameter = SCEELibs.SCEInfos.versionName
@@ -165,7 +165,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Become a SCE developer on GitHub !",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_scegithub"),
                         Type = SettingType.Link,
 
                         Parameter = "https://github.com/Seeris/SerrisCodeEditor"
@@ -173,7 +173,7 @@ namespace SerrisCodeEditor.Functions.Settings
 
                     new Setting
                     {
-                        Description = "Licenses",
+                        Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_licenses"),
                         Type = SettingType.Separator
                     },
 

@@ -201,7 +201,7 @@
 
                     <Button x:Name="DownloadButton" HorizontalAlignment="Right" BorderThickness="1" IsEnabled="False" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0"/>
                     <Grid Width="25" Height="25" Margin="10,0">
-                        <Button x:Name="NewsButton" ToolTipService.ToolTip="News" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Click="NewsButton_Click">
+                        <Button x:Name="NewsButton" x:Uid="news-buttontooltip" ToolTipService.ToolTip="News" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Click="NewsButton_Click">
                             <Button.Flyout>
                                 <Flyout Placement="Bottom">
                                     <Frame x:Name="FrameNews"/>
@@ -219,7 +219,7 @@
                         <my:NotificationBadge x:Name="NewsNotification" VerticalAlignment="Top" HorizontalAlignment="Right" Height="10" Width="10" Margin="0,2,2,0" ShowBadge="False" IsHitTestVisible="False"/>
                     </Grid>
 
-                    <Button x:Name="SettingsButton" ToolTipService.ToolTip="Settings" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
+                    <Button x:Name="SettingsButton" x:Uid="settings-buttontooltip" ToolTipService.ToolTip="Settings" HorizontalAlignment="Right" BorderThickness="1" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Visibility="Visible" Grid.Column="1" Background="Transparent" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="10,0" Click="SettingsButton_Click">
                         <Button.Flyout>
                             <Flyout Placement="Bottom">
                                 <Frame x:Name="FrameSettings"/>

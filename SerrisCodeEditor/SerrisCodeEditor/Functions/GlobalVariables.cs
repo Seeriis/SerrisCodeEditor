@@ -2,6 +2,7 @@
 using SerrisModulesServer.Manager;
 using SerrisModulesServer.Type.Theme;
 using SerrisTabsServer.Items;
+using Windows.ApplicationModel.Resources;
 using Windows.System.Profile;
 using Windows.UI.Xaml.Controls;
 
@@ -30,6 +31,7 @@ namespace SerrisCodeEditor.Functions
 
         public static ThemeModuleBrush CurrentTheme { get; set; }
 
+        public static ResourceLoader GlobalizationRessources { get; set; }
     }
 
 }

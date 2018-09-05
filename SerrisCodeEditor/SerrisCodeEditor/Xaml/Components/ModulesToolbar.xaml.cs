@@ -229,7 +229,7 @@ namespace SerrisCodeEditor.Xaml.Components
         => ToolbarContent.Children.Remove((UIElement)ToolbarContent.FindName("" + ID));
 
         private void ButtonListModules_Click(object sender, RoutedEventArgs e)
-        => FrameListModules.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(ModulesManager), WindowIcon = "", WindowTitle = "Modules manager" });
+        => FrameListModules.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(ModulesManager), WindowIcon = "", WindowTitle = GlobalVariables.GlobalizationRessources.GetString("modulesmanager-titleflyout") });
 
         private void ScrollViewer_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {

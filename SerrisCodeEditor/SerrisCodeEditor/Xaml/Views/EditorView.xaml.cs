@@ -670,7 +670,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            FrameSettings.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(SettingsManager), WindowIcon = "", WindowTitle = "Settings" });
+            FrameSettings.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(SettingsManager), WindowIcon = "", WindowTitle = GlobalVariables.GlobalizationRessources.GetString("settings-titleflyout") });
         }
 
         //For manage tabs content
@@ -680,7 +680,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
             NewsNotification.ShowBadge = false;
-            FrameNews.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(NewsViewer), WindowIcon = "", WindowTitle = "News" });
+            FrameNews.Navigate(typeof(WindowFlyout), new WindowFlyoutContent { Content = typeof(NewsViewer), WindowIcon = "", WindowTitle = GlobalVariables.GlobalizationRessources.GetString("news-titleflyout") });
         }
 
         private void EditorViewUI_PointerMoved(object sender, PointerRoutedEventArgs e)

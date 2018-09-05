@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="console-clearbuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Clear console</value>
+  </data>
+  <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Error(s)</value>
+  </data>
+  <data name="console-informationstooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Information(s)</value>
+  </data>
+  <data name="console-resultstooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Result(s)</value>
+  </data>
+  <data name="console-warningstooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Warning(s)</value>
+  </data>
+  <data name="modulesmanager-addons.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Addons</value>
+  </data>
+  <data name="modulesmanager-openingmanagertooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show modules manager</value>
+  </data>
+  <data name="modulesmanager-pinmodules.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Pin/unpin module to the toolbar</value>
+  </data>
+  <data name="modulesmanager-proglanguages.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Programming languages</value>
+  </data>
+  <data name="modulesmanager-templates.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Projects/files template</value>
+  </data>
+  <data name="modulesmanager-themes.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="modulesmanager-titleflyout" xml:space="preserve">
+    <value>Modules manager</value>
+  </data>
+  <data name="news-buttontooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="news-commentstext.Text" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="news-notificationsswitch.Header" xml:space="preserve">
+    <value>News notifications</value>
+  </data>
+  <data name="news-refreshlistbutton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Refresh news</value>
+  </data>
+  <data name="news-seecommentstext.Text" xml:space="preserve">
+    <value>See comments</value>
+  </data>
+  <data name="news-titleflyout" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="settings-buttonlicense" xml:space="preserve">
+    <value>See the GitHub (and the license)</value>
+  </data>
+  <data name="settings-buttontooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="settings-credits" xml:space="preserve">
+    <value>Credits</value>
+  </data>
+  <data name="settings-credits_aboutapp" xml:space="preserve">
+    <value>About the application</value>
+  </data>
+  <data name="settings-credits_byseeriis" xml:space="preserve">
+    <value>By Seeriis</value>
+  </data>
+  <data name="settings-credits_licenses" xml:space="preserve">
+    <value>Licenses</value>
+  </data>
+  <data name="settings-credits_maindev" xml:space="preserve">
+    <value>Main developer</value>
+  </data>
+  <data name="settings-credits_scegithub" xml:space="preserve">
+    <value>Become a SCE developer on GitHub !</value>
+  </data>
+  <data name="settings-credits_version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="settings-editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="settings-editor_fontfamily" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="settings-editor_fontsize" xml:space="preserve">
+    <value>Font size (in pixel)</value>
+  </data>
+  <data name="settings-editor_quicksuggests" xml:space="preserve">
+    <value>Show quick suggestions</value>
+  </data>
+  <data name="settings-editor_showline" xml:space="preserve">
+    <value>Show line numbers</value>
+  </data>
+  <data name="settings-editor_showminimap" xml:space="preserve">
+    <value>Show minimap</value>
+  </data>
+  <data name="settings-editor_wrappingcode" xml:space="preserve">
+    <value>Wrapping code</value>
+  </data>
+  <data name="settings-titleflyout" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="settings-ui" xml:space="preserve">
+    <value>UI</value>
+  </data>
+  <data name="settings-ui_closepanelauto" xml:space="preserve">
+    <value>Close the left panel automatically</value>
+  </data>
+  <data name="settings-ui_extendedview" xml:space="preserve">
+    <value>UI extended view mode</value>
+  </data>
+  <data name="settings-ui_leftpanelength" xml:space="preserve">
+    <value>Left pane reduced length (in pixel)</value>
+  </data>
+  <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
+    <value>Left pane open length (in pixel)</value>
+  </data>
+  <data name="tab-createdattext.Text" xml:space="preserve">
+    <value>Created at : </value>
+  </data>
+  <data name="tab-deletetabtooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete tab</value>
+  </data>
+  <data name="tab-encodingtext.Text" xml:space="preserve">
+    <value>Encoding : </value>
+  </data>
+  <data name="tab-modifiedattext.Text" xml:space="preserve">
+    <value>Modified at : </value>
+  </data>
+  <data name="tab-moreinfostooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show more informations</value>
+  </data>
+  <data name="tab-renameaccepttooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Accept rename</value>
+  </data>
+  <data name="tab-renameplaceholder.PlaceholderText" xml:space="preserve">
+    <value>Example: toothless.js</value>
+  </data>
+  <data name="tab-renametabtooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rename tab</value>
+  </data>
+  <data name="tab-sizetext.Text" xml:space="preserve">
+    <value>Size : </value>
+  </data>
+  <data name="tab-typetext.Text" xml:space="preserve">
+    <value>Type : </value>
+  </data>
+  <data name="tabslist-blanktabradiobutton.Content" xml:space="preserve">
+    <value>Blank tab</value>
+  </data>
+  <data name="tabslist-buttonaddtabslists" xml:space="preserve">
+    <value>Add new tab(s)/list(s)</value>
+  </data>
+  <data name="tabslist-buttoncreatelist" xml:space="preserve">
+    <value>Create new list / project</value>
+  </data>
+  <data name="tabslist-buttoncreatetab" xml:space="preserve">
+    <value>Create new tab</value>
+  </data>
+  <data name="tabslist-buttongoback" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="tabslist-createnewtabtitle.Text" xml:space="preserve">
+    <value>Create new tab</value>
+  </data>
+  <data name="tabslist-defaultlistname" xml:space="preserve">
+    <value>Default list</value>
+  </data>
+  <data name="tabslist-defaulttabname" xml:space="preserve">
+    <value>New Tab</value>
+  </data>
+  <data name="tabslist-deletelistbutton.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="tabslist-fileencodingtitle.Text" xml:space="preserve">
+    <value>File encoding</value>
+  </data>
+  <data name="tabslist-importfilestextbutton.Text" xml:space="preserve">
+    <value>File(s)</value>
+  </data>
+  <data name="tabslist-importfilestooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Import file(s)</value>
+  </data>
+  <data name="tabslist-listsettingsplaceholder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>List/project settings</value>
+  </data>
+  <data name="tabslist-newfileprojectcreatebuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Create tab/list</value>
+  </data>
+  <data name="tabslist-newprojectradiobutton.Content" xml:space="preserve">
+    <value>New project</value>
+  </data>
+  <data name="tabslist-newtabslistradiobutton.Content" xml:space="preserve">
+    <value>New tabs list</value>
+  </data>
+  <data name="tabslist-opentitle.Text" xml:space="preserve">
+    <value>Open...</value>
+  </data>
+  <data name="tabslist-placeholderfileexample" xml:space="preserve">
+    <value>Example: toothless.js</value>
+  </data>
+  <data name="tabslist-placeholderprojectexample" xml:space="preserve">
+    <value>Example: project csharp</value>
+  </data>
+  <data name="tabslist-searchboxplaceholder.PlaceholderText" xml:space="preserve">
+    <value>Search tab...</value>
+  </data>
+  <data name="tabslist-selectlistbutton.Text" xml:space="preserve">
+    <value>List/project</value>
+  </data>
+  <data name="tabslist-selecttabbutton.Text" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="tabslist-tabtemplateradiobutton.Content" xml:space="preserve">
+    <value>Use tab template</value>
+  </data>
+  <data name="tabslist-titlesheet" xml:space="preserve">
+    <value>Tabs list</value>
+  </data>
+  <data name="tabslist-warningdeletelisttext.Text" xml:space="preserve">
+    <value>Are you sure to delete this list ?</value>
+  </data>
+</root>

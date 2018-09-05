@@ -58,8 +58,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <ToggleSwitch x:Name="ToggleNotifications" Header="News notifications" VerticalAlignment="Center" Foreground="White" Margin="10" Style="{StaticResource SwitchControl}" Loaded="ToggleNotifications_Loaded" Toggled="ToggleNotifications_Toggled"/>
-                    <Button x:Name="RefreshButton" Content="" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Foreground="White" Background="#00000000" FontSize="18" VerticalAlignment="Stretch" Width="60" Click="RefreshButton_Click"/>
+                    <ToggleSwitch x:Name="ToggleNotifications" x:Uid="news-notificationsswitch" Header="News notifications" VerticalAlignment="Center" Foreground="White" Margin="10" Style="{StaticResource SwitchControl}" Loaded="ToggleNotifications_Loaded" Toggled="ToggleNotifications_Toggled"/>
+                    <Button x:Name="RefreshButton" x:Uid="news-refreshlistbutton" Content="" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Foreground="White" Background="#00000000" FontSize="18" VerticalAlignment="Stretch" Width="60" Click="RefreshButton_Click"/>
                 </Grid>
 
                 <Grid Grid.Row="1">

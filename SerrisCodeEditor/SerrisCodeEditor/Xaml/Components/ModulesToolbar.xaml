@@ -141,7 +141,7 @@
 
     <ScrollViewer x:Name="ScrollMaster" MinHeight="30" Background="Transparent" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" PointerWheelChanged="ScrollViewer_PointerWheelChanged" Style="{StaticResource Scroller}">
         <StackPanel x:Name="ToolbarContent" VerticalAlignment="Center" Orientation="Horizontal" Loaded="ToolbarContent_Loaded" HorizontalAlignment="Left">
-            <Button x:Name="ButtonListModules" ToolTipService.ToolTip="Show modules manager" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="Black" Click="ButtonListModules_Click" Visibility="Visible" Grid.Column="1" Background="White" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="25,0,10,0">
+            <Button x:Name="ButtonListModules" x:Uid="modulesmanager-openingmanagertooltip" ToolTipService.ToolTip="Show modules manager" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="Black" Click="ButtonListModules_Click" Visibility="Visible" Grid.Column="1" Background="White" Style="{StaticResource Round_Button}" Width="25" Height="25" FontSize="15" Margin="25,0,10,0">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
                         <Frame x:Name="FrameListModules"/>

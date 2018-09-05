@@ -36,7 +36,7 @@
                 <Button x:Name="ShowCommentsButton" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Grid.Column="0" Background="White" FontSize="15" Margin="10,10,10,10" BorderBrush="Transparent" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="10" Click="ShowCommentsButton_Click" Style="{StaticResource RoundCornerButton}" FocusVisualPrimaryBrush="White">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock FontFamily="Segoe MDL2 Assets" Foreground="Black" Text="" FontSize="18" Height="17"/>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="See comments" FontSize="15" Grid.Column="1" Margin="10,0,0,0" FocusVisualPrimaryBrush="Black" FontWeight="SemiBold"/>
+                        <TextBlock x:Uid="news-seecommentstext" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI" Foreground="Black" Text="See comments" FontSize="15" Grid.Column="1" Margin="10,0,0,0" FocusVisualPrimaryBrush="Black" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -53,7 +53,7 @@
 
             <Grid Background="#FF404040">
                 <Button x:Name="GoBackButton" Content="" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Foreground="White" Background="#00000000" FontSize="18" VerticalAlignment="Stretch" Width="50" Click="GoBackButton_Click"/>
-                <TextBlock Text="Comments" HorizontalAlignment="Right" TextWrapping="Wrap" Foreground="White" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBlock x:Uid="news-commentstext" Text="Comments" HorizontalAlignment="Right" TextWrapping="Wrap" Foreground="White" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,5"/>
             </Grid>
             
             <WebView x:Name="CommentsView" Grid.Row="1"/>

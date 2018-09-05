@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using SerrisCodeEditor.Xaml.Views;
 using System;
 using System.Collections.Generic;
@@ -98,10 +99,10 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         public void SelectTabsListSheet()
-        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.TriggerSheet, sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
+        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = GlobalVariables.GlobalizationRessources.GetString("tabslist-titlesheet"), type = ModuleSheetNotificationType.TriggerSheet, sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
 
         public void AddTabsListSheet()
-        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = "Tabs list", type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
+        { Messenger.Default.Send(new ModuleSheetNotification { id = sheet_tabslist, sheetName = GlobalVariables.GlobalizationRessources.GetString("tabslist-titlesheet"), type = ModuleSheetNotificationType.NewSheet, sheetContent = new TabsViewer(), sheetIcon = new BitmapImage(new Uri(this.BaseUri, "/Assets/Icons/tabs.png")), sheetSystem = true }); }
 
         private void RemoveModule(string ID)
         { ModulesSheetContent.Children.Remove((UIElement)ModulesSheetContent.FindName("" + ID)); }

@@ -10,6 +10,7 @@ using SerrisTabsServer.Manager;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -37,6 +38,7 @@ namespace SerrisCodeEditor
 
             if (rootFrame == null)
             {
+                GlobalVariables.GlobalizationRessources = new ResourceLoader();
                 SMSInitialize.InitializeSMSJson();
                 GlobalVariables.CurrentTheme = await new ThemeReader(ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
 
@@ -107,6 +109,7 @@ namespace SerrisCodeEditor
             var rootFrame = Window.Current.Content as Frame;
 
             //Serris Modules Server !
+            GlobalVariables.GlobalizationRessources = new ResourceLoader();
             SMSInitialize.InitializeSMSJson();
             GlobalVariables.CurrentTheme = await new ThemeReader(ModulesAccessManager.GetCurrentThemeID()).GetThemeBrushesContent();
 
