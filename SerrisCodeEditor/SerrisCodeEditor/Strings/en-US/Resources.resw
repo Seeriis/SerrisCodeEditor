@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bonjour-betausersmessage.Text" xml:space="preserve">
-    <value>With this final version, Serris Code Editor use a new tabs system, so you will need to open again your files. And tools like Serris Web Render or Themes creator will be back soon !</value>
+    <value>With this final version, Serris Code Editor use a new tabs system, so you will need to open again your files. Tools like Serris Web Render or Themes creator will be back soon !</value>
   </data>
   <data name="bonjour-betauserswarning.Text" xml:space="preserve">
-    <value>For beta users of SCE</value>
+    <value>For SCE beta users</value>
   </data>
   <data name="bonjour-buttonchangelogtext.Text" xml:space="preserve">
     <value>See the changelog</value>
@@ -163,7 +163,7 @@
     <value>Programming languages</value>
   </data>
   <data name="modulesmanager-templates.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Projects/files template</value>
+    <value>Projects/files templates</value>
   </data>
   <data name="modulesmanager-themes.ToolTipService.ToolTip" xml:space="preserve">
     <value>Themes</value>
@@ -211,7 +211,7 @@
     <value>Main developer</value>
   </data>
   <data name="settings-credits_scegithub" xml:space="preserve">
-    <value>Become a SCE developer on GitHub !</value>
+    <value>Become a SCE contributor on GitHub !</value>
   </data>
   <data name="settings-credits_version" xml:space="preserve">
     <value>Version</value>
@@ -253,7 +253,7 @@
     <value>Left pane reduced length (in pixel)</value>
   </data>
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
-    <value>Left pane open length (in pixel)</value>
+    <value>Left pane opened length (in pixel)</value>
   </data>
   <data name="storages-localstorage" xml:space="preserve">
     <value>Local storage</value>
@@ -298,7 +298,7 @@
     <value>Add new tab(s)/list(s)</value>
   </data>
   <data name="tabslist-buttoncreatelist" xml:space="preserve">
-    <value>Create new list / project</value>
+    <value>Create new list/project</value>
   </data>
   <data name="tabslist-buttoncreatetab" xml:space="preserve">
     <value>Create new tab</value>

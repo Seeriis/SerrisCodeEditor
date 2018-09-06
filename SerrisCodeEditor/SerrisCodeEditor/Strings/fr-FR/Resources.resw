@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bonjour-betausersmessage.Text" xml:space="preserve">
-    <value>Avec cette version finale, Serris Code Editor utilise un nouveau système d'onglets, donc vous devrez re ouvrir vos fichiers dans l'application. Et les outils comme Serris Web Render ou Themes creator vont revenir bientôt !</value>
+    <value>Avec cette version finale, Serris Code Editor utilise un nouveau système d'onglets, donc vous devrez ouvrir à nouveau vos fichiers dans l'application. Les outils comme Serris Web Render ou Themes creator seront bientôt de retour !</value>
   </data>
   <data name="bonjour-betauserswarning.Text" xml:space="preserve">
     <value>Pour les utilisateurs de la bêta de SCE</value>
@@ -178,7 +178,7 @@
     <value>Commentaires</value>
   </data>
   <data name="news-notificationsswitch.Header" xml:space="preserve">
-    <value>Notifications d'actualités</value>
+    <value>Notifications d'actualité</value>
   </data>
   <data name="news-refreshlistbutton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Rafraîchir les actualités</value>
@@ -211,7 +211,7 @@
     <value>Développeur principal</value>
   </data>
   <data name="settings-credits_scegithub" xml:space="preserve">
-    <value>Devenez un développeur SCE sur GitHub !</value>
+    <value>Devenez un contributeur SCE sur GitHub !</value>
   </data>
   <data name="settings-credits_version" xml:space="preserve">
     <value>Version</value>
@@ -247,7 +247,7 @@
     <value>Fermez le panneau de gauche auto.</value>
   </data>
   <data name="settings-ui_extendedview" xml:space="preserve">
-    <value>Interface étendu</value>
+    <value>Interface étendue</value>
   </data>
   <data name="settings-ui_leftpanelength" xml:space="preserve">
     <value>Largeur du panneau de gauche réduit (en pixel) </value>
@@ -277,7 +277,7 @@
     <value>Afficher plus d'informations</value>
   </data>
   <data name="tab-renameaccepttooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Renommer l'onglet</value>
+    <value>Renommer</value>
   </data>
   <data name="tab-renameplaceholder.PlaceholderText" xml:space="preserve">
     <value>Exemple : toothless.js</value>
@@ -328,7 +328,7 @@
     <value>Importer des fichier(s)</value>
   </data>
   <data name="tabslist-listsettingsplaceholder.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Paramètre de la liste/projet</value>
+    <value>Paramètre de la liste/du projet</value>
   </data>
   <data name="tabslist-newfileprojectcreatebuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Créer l'onglet/la liste</value>
