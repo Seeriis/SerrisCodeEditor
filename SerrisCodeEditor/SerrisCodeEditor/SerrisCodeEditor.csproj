@@ -136,6 +136,9 @@
     <Compile Include="Xaml\Components\TabsList.xaml.cs">
       <DependentUpon>TabsList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Xaml\Views\BonjourView.xaml.cs">
+      <DependentUpon>BonjourView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\Views\NewsReader.xaml.cs">
       <DependentUpon>NewsReader.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Xaml\Components\TabsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\BonjourView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -239,5 +239,8 @@
             </Grid>
         </Grid>
 
+        <Grid x:Name="PopupGrid" Background="#7F000000" Padding="40" Visibility="Collapsed">
+            <Frame x:Name="FrameBonjourView"/>
+        </Grid>
     </Grid>
 </Page>

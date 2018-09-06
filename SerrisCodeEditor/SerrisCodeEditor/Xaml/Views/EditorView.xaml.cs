@@ -79,6 +79,19 @@ namespace SerrisCodeEditor.Xaml.Views
             SetInterface();
             SetTheme();
 
+            //Show bonjour view ?
+            if (AppSettings.Values.ContainsKey("version_sce"))
+            {
+                if ((string)AppSettings.Values["version_sce"] != SCEELibs.SCEInfos.versionNumber)
+                {
+                    ShowBonjourView();
+                }
+            }
+            else
+            {
+                ShowBonjourView();
+            }
+
             PointerMoved += EditorView_PointerMoved;
             PointerReleased += SeparatorLinePointerReleased;
         }
@@ -205,6 +218,21 @@ namespace SerrisCodeEditor.Xaml.Views
 
             });
 
+            Messenger.Default.Register<BonjourViewControl>(this, async (notification_bjrview) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        PopupGrid.Visibility = Visibility.Collapsed;
+                        FrameBonjourView.Content = null;
+                    }
+                    catch { }
+
+                });
+
+            });
+
             Messenger.Default.Register<SheetViewerNotification>(this, async (notification_ui) =>
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
@@ -283,6 +311,12 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ContentViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
         => UpdateUI(false, false);
+
+        private void ShowBonjourView()
+        {
+            FrameBonjourView.Navigate(typeof(BonjourView));
+            PopupGrid.Visibility = Visibility.Visible;
+        }
 
         private void UpdateUI(bool isDeployed, bool ForceUpdate)
         {

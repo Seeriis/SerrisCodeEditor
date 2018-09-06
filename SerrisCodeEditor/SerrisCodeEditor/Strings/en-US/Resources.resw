@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="bonjour-betausersmessage.Text" xml:space="preserve">
+    <value>With this final version, Serris Code Editor use a new tabs system, so you will need to open again your files. And tools like Serris Web Render or Themes creator will be back soon !</value>
+  </data>
+  <data name="bonjour-betauserswarning.Text" xml:space="preserve">
+    <value>For beta users of SCE</value>
+  </data>
+  <data name="bonjour-buttonchangelogtext.Text" xml:space="preserve">
+    <value>See the changelog</value>
+  </data>
+  <data name="bonjour-closebutton.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="bonjour-nowversiontext.Text" xml:space="preserve">
+    <value>You are now on the version</value>
+  </data>
   <data name="console-clearbuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Clear console</value>
   </data>
