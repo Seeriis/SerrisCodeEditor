@@ -5,11 +5,13 @@
     public static class SCEInfos
     {
         //SCE Version information
-        public static string versionName { get => "Marne-la-Vallée build"; }
-        public static string versionNumber { get => "1.6"; }
-        public static bool preReleaseVersion { get => true; }
+        public static string versionName { get => "Marne-la-Vallée (1.0)"; }
+        public static string versionNumber { get => "2.0"; }
+        public static bool preReleaseVersion { get => false; }
 
         /*History: 
+         * Marne-la-Vallée ("2.0")
+         * 
          * Marne-la-Vallée build ("1.6")
          * Val d'Europe build ("1.5")
          * Torcy build ("1.4")
