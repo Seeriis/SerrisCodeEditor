@@ -72,6 +72,17 @@ namespace SerrisCodeEditor.Xaml.Components
                                     SelectTabsListSheet();
 
                                 break;
+
+                            case ModuleSheetNotificationType.SelectSheet:
+                                if(notification.id == sheet_tabslist)
+                                {
+                                    Messenger.Default.Send(SheetViewerNotification.EnableAutoDeployer);
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send(SheetViewerNotification.DisableAutoDeployer);
+                                }
+                                break;
                         }
                     }
                     catch { }

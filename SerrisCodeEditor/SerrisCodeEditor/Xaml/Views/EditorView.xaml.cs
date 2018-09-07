@@ -41,7 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false, AutoDeployerEnabled = true;
         double OpenPaneLengthOriginal = 0;
         string TitlebarText = $"Serris Code Editor ( {SCEELibs.SCEInfos.versionName} )";
         IReadOnlyList<IStorageItem> OpenedFiles;
@@ -247,6 +247,14 @@ namespace SerrisCodeEditor.Xaml.Views
 
                             case SheetViewerNotification.MinimizeViewer:
                                 UpdateUI(false, false);
+                                break;
+
+                            case SheetViewerNotification.DisableAutoDeployer:
+                                AutoDeployerEnabled = false;
+                                break;
+
+                            case SheetViewerNotification.EnableAutoDeployer:
+                                AutoDeployerEnabled = true;
                                 break;
                         }
                     }
@@ -644,7 +652,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void ModuleSheetView_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (!isUIDeployed)
+            if (!isUIDeployed && AutoDeployerEnabled)
             {
                 if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength - 15) || e.GetCurrentPoint(MasterGrid).Position.Y <= 75 || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {
@@ -657,7 +665,8 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void SheetsManager_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (ClosePanelAuto && isUIDeployed)
+            //ClonePanelAuto = settings for enabling the auto closing of the left panel || AutoDeployerEnabled = variable changed if the current sheet selected is not the tabs list
+            if (ClosePanelAuto && isUIDeployed && AutoDeployerEnabled)
             {
                 if (e.GetCurrentPoint(MasterGrid).Position.X >= (SheetViewSplit.OpenPaneLength + 5) || e.GetCurrentPoint(MasterGrid).Position.X <= 0)
                 {

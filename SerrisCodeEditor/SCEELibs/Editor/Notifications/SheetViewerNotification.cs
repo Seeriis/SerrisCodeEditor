@@ -9,6 +9,8 @@ namespace SCEELibs.Editor.Notifications
     public enum SheetViewerNotification
     {
         DeployViewer,
-        MinimizeViewer
+        MinimizeViewer,
+        DisableAutoDeployer,
+        EnableAutoDeployer
     }
 }
