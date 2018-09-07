@@ -41,7 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            //ApplicationData.Current.LocalSettings.Values["version_sce"] = SCEELibs.SCEInfos.versionNumber;
+            ApplicationData.Current.LocalSettings.Values["version_sce"] = SCEELibs.SCEInfos.versionNumber;
             Messenger.Default.Send(BonjourViewControl.CloseView);
         }
 

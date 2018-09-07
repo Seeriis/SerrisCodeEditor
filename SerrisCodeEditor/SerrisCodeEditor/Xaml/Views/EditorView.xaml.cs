@@ -80,18 +80,21 @@ namespace SerrisCodeEditor.Xaml.Views
             SetTheme();
 
             //Show bonjour view ?
-            if (AppSettings.Values.ContainsKey("version_sce"))
+            if(!SCEELibs.SCEInfos.preReleaseVersion)
             {
-                if ((string)AppSettings.Values["version_sce"] != SCEELibs.SCEInfos.versionNumber)
+                if (AppSettings.Values.ContainsKey("version_sce"))
+                {
+                    if ((string)AppSettings.Values["version_sce"] != SCEELibs.SCEInfos.versionNumber)
+                    {
+                        ShowBonjourView();
+                    }
+                }
+                else
                 {
                     ShowBonjourView();
                 }
             }
-            else
-            {
-                ShowBonjourView();
-            }
-
+            
             PointerMoved += EditorView_PointerMoved;
             PointerReleased += SeparatorLinePointerReleased;
         }
