@@ -27,5 +27,5 @@ function onEditorStart()
 }
 
 function generatePopup() {
-    createWindowsNotification('Welcome to the pre-release build "' + sceelibs.versionName + '" of Serris Code Editor !');
+    createWindowsNotification('Welcome to the pre-release "' + sceelibs.versionName + '" of Serris Code Editor !');
 }
