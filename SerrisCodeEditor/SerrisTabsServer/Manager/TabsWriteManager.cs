@@ -28,7 +28,7 @@ namespace SerrisTabsServer.Manager
 
             try
             {
-                int id = new Random().Next(999999);
+                int id = new Random().Next(999999999);
 
                 TabsDataCache.TabsListDeserialized.Add(new TabsList { ID = id, name = new_name, tabs = new List<InfosTab>(), TabsListProjectTypeID = TabsListTypeID });
                 TabsDataCache.WriteTabsListContentFile();

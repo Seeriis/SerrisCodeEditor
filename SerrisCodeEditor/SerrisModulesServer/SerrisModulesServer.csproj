@@ -116,6 +116,9 @@
     <Content Include="SystemModules\Addons\51\icon.png" />
     <Content Include="SystemModules\Addons\51\logo.png" />
     <Content Include="SystemModules\Addons\51\main.js" />
+    <Content Include="SystemModules\Addons\7\HTML\background.jpg" />
+    <Content Include="SystemModules\Addons\7\HTML\icon_sce.png" />
+    <Content Include="SystemModules\Addons\7\HTML\paypal.png" />
     <Content Include="SystemModules\ProgrammingLanguages\47\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\47\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\47\logo.png" />
