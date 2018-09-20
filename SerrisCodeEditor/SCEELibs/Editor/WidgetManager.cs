@@ -37,7 +37,10 @@ namespace SCEELibs.Editor
 
             Messenger.Default.Send(new ToolbarNotification { id = currentID, uiElementName = element_name, propertie = ToolbarProperties.IsButtonEnabled, answerNotification = false });
 
-            while (!notif_received) ;
+            while (!notif_received)
+            {
+                Task.Delay(10);
+            }
             return result;
         }
 
@@ -59,7 +62,10 @@ namespace SCEELibs.Editor
 
             Messenger.Default.Send(new ToolbarNotification { id = currentID, guid = guid, uiElementName = element_name, propertie = ToolbarProperties.GetTextBoxContent, answerNotification = false });
 
-            while (!notif_received) ;
+            while (!notif_received)
+            {
+                Task.Delay(10);
+            }
             return result;
         }
 

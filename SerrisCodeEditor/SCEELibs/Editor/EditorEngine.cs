@@ -49,7 +49,10 @@ namespace SCEELibs.Editor
 
             Messenger.Default.Send(new SCEENotification { type = SCEENotifType.InjectionAndReturn, answerNotification = false, content = content });
 
-            while (!notif_received) ;
+            while (!notif_received)
+            {
+                Task.Delay(10);
+            }
 
             return result;
 

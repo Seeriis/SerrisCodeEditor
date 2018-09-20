@@ -68,7 +68,10 @@ namespace SCEELibs.Tabs
 
             Messenger.Default.Send(new TempContentNotification { answerNotification = false, type = TempContentType.currentIDs });
 
-            while (!notif_received) ;
+            while (!notif_received)
+            {
+                Task.Delay(10);
+            }
 
             return result;
         }

@@ -51,7 +51,7 @@ namespace SerrisCodeEditor.Xaml.Views
         public EditorView()
         {
             //FOR TESTING ONLY !
-            //Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES";
+            //Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-US";
 
             InitializeComponent();
             Application.Current.Suspending += Current_Suspending;
