@@ -49,7 +49,7 @@ namespace SerrisCodeEditor.Xaml.Views
         => await Launcher.LaunchUriAsync(new Uri("https://yoshilegris.wordpress.com/2017/06/04/join-the-private-beta-of-serris-code-editor-marne-la-vallee-update-1-0/"));
 
         private void VideoChangelog_Loaded(object sender, RoutedEventArgs e)
-        => VideoChangelog.Navigate(new Uri("https://www.youtube.com/embed/U4U19zwFENs"));
+        => VideoChangelog.Navigate(new Uri("https://www.youtube.com/embed/G1IbRujko-A"));
 
         private void VideoChangelog_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         => VideoShowAnimation.Begin();

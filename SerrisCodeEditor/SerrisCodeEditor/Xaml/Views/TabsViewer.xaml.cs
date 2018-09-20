@@ -637,6 +637,8 @@ namespace SerrisCodeEditor.Xaml.Views
                 Tabs.Visibility = Visibility.Collapsed;
                 CreatorGrid.Visibility = Visibility.Visible;
                 ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttongoback");
+
+                TextBoxNewFileProject.Focus(FocusState.Programmatic);
             }
             else
             {
