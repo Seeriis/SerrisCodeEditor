@@ -137,6 +137,10 @@ namespace SerrisCodeEditor.Xaml.Components
                                     UpdateTabInformations();
                                     break;
 
+                                case TypeUpdateTab.TabDeleted:
+                                    ShowName.Begin();
+                                    break;
+
                                 case TypeUpdateTab.TabNewModifications:
                                     current_tab.TabNewModifications = true;
                                     await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
