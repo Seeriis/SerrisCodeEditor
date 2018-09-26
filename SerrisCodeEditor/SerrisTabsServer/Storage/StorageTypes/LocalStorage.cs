@@ -18,8 +18,10 @@ namespace SerrisTabsServer.Storage.StorageTypes
             Tab = tab; ListTabsID = _ListTabsID;
         }
 
-        public async Task CreateFile()
+        public async Task<bool> CreateFile()
         {
+            bool result = false;
+
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
                 var folderPicker = new FolderPicker();
@@ -39,10 +41,13 @@ namespace SerrisTabsServer.Storage.StorageTypes
                     Tab.TabOriginalPathContent = file.Path;
 
                     await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true);
+
+                    result = true;
                 }
 
             });
 
+            return result;
         }
 
         public async void DeleteFile()
@@ -143,7 +148,10 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 {
                     await CreateFile().ContinueWith(async (e) => 
                     {
-                        await WriteFile();
+                        if(e.Result)
+                        {
+                            await WriteFile();
+                        }
                     });
                 }
 
