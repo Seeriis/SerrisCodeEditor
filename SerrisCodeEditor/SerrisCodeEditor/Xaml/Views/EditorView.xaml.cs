@@ -268,14 +268,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 SheetViewSplit.DisplayMode = SplitViewDisplayMode.Inline;
                                 SheetsManager.Visibility = Visibility.Collapsed;
 
-                                if (AppSettings.Values.ContainsKey("ui_leftpaneopenlength"))
-                                {
-                                    ContentViewerGrid.Margin = new Thickness((int)AppSettings.Values["ui_leftpaneopenlength"], BackgroundPrincipalUIControl.ActualHeight, 0, 0);
-                                }
-                                else
-                                {
-                                    ContentViewerGrid.Margin = new Thickness(350, BackgroundPrincipalUIControl.ActualHeight, 0, 0);
-                                }
+                                ContentViewerGrid.Margin = new Thickness(SheetViewSplit.OpenPaneLength, BackgroundPrincipalUIControl.ActualHeight, 0, 0);
                                 break;
 
                             case SheetViewerNotification.UnpinViewer:

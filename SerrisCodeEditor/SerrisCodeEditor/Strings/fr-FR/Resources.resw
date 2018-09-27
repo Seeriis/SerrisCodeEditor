@@ -255,6 +255,12 @@
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
     <value>Largeur du panneau de gauche ouvert (en pixel)</value>
   </data>
+  <data name="sheet-pintooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Épingler la vue</value>
+  </data>
+  <data name="sheetview-unpintooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Détacher la vue</value>
+  </data>
   <data name="storages-localstorage" xml:space="preserve">
     <value>Stockage local</value>
   </data>

@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="GridUnpin" Background="SlateGray" Height="40" Visibility="Collapsed">
-            <TextBlock x:Name="FrameName" Text="test" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="White" FontSize="14"/>
-            <Button x:Name="UnpinButton" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="40" Padding="0" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Foreground="White" Click="UnpinButton_Click"/>
+            <TextBlock x:Name="FrameName" Text="test" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,45,0" Foreground="White" FontSize="14" TextTrimming="CharacterEllipsis"/>
+            <Button x:Name="UnpinButton" x:Uid="sheetview-unpintooltip" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="40" Padding="0" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Foreground="White" Click="UnpinButton_Click"/>
         </Grid>
 
         <Frame x:Name="FrameView" Background="Transparent" Grid.Row="1">

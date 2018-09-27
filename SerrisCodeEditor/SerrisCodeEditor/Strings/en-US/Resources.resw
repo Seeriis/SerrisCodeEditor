@@ -255,6 +255,12 @@
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
     <value>Left pane opened length (in pixel)</value>
   </data>
+  <data name="sheet-pintooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Pin the view</value>
+  </data>
+  <data name="sheetview-unpintooltip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Unpin the view</value>
+  </data>
   <data name="storages-localstorage" xml:space="preserve">
     <value>Local storage</value>
   </data>

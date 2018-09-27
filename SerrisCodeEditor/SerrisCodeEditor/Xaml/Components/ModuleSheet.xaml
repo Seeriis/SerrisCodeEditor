@@ -22,7 +22,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="pin_sheet" VerticalAlignment="Stretch" Width="30" BorderThickness="2" FontFamily="Segoe MDL2 Assets" Content="" Foreground="White" FontSize="16" Padding="0" Visibility="Collapsed" Click="pin_sheet_Click"/>
+        <Button x:Name="pin_sheet" x:Uid="sheet-pintooltip" VerticalAlignment="Stretch" Width="30" BorderThickness="2" FontFamily="Segoe MDL2 Assets" Content="" Foreground="White" FontSize="16" Padding="0" Visibility="Collapsed" Click="pin_sheet_Click"/>
         <Image x:Name="icon_sheet" Height="32" Width="28" Margin="2,0,2,0" Grid.Column="1"/>
         <TextBlock x:Name="name_sheet" Visibility="Collapsed" Text="" FontSize="16" Foreground="White" FontFamily="Segoe UI Light" Margin="5,0,5,0" VerticalAlignment="Center" FontWeight="Light" TextTrimming="CharacterEllipsis" Grid.Column="1"/>
         <Button x:Name="close_sheet" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="" FontFamily="Segoe MDL2 Assets" Foreground="White" Click="close_sheet_Click" Visibility="Collapsed" Grid.Column="0" Background="#00FF0000" Style="{StaticResource Round_Button}" Width="20" Height="20" FontSize="12" Margin="35,0,2,0" BorderBrush="White" BorderThickness="1"/>
