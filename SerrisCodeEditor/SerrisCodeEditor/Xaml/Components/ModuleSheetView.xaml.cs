@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
+using SerrisCodeEditor.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,7 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void SheetView_Loaded(object sender, RoutedEventArgs e)
-        { SetMessenger(); }
+        => SetMessenger();
 
         private void SetMessenger()
         {
@@ -39,6 +40,7 @@ namespace SerrisCodeEditor.Xaml.Components
                         if (notification.type == ModuleSheetNotificationType.SelectSheet)
                         {
                             FrameView.Content = notification.sheetContent;
+                            FrameName.Text = notification.sheetName;
                         }
                     }
                     catch { }
@@ -46,6 +48,32 @@ namespace SerrisCodeEditor.Xaml.Components
 
             });
 
+            Messenger.Default.Register<SheetViewerNotification>(this, async (notification) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    switch(notification)
+                    {
+                        case SheetViewerNotification.PinViewer:
+                            GridUnpin.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+                            FrameName.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+                            UnpinButton.Background = GlobalVariables.CurrentTheme.MainColor;
+                            UnpinButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+                            GridUnpin.Visibility = Visibility.Visible;
+                            break;
+
+                        case SheetViewerNotification.UnpinViewer:
+                            GridUnpin.Visibility = Visibility.Collapsed;
+                            break;
+                    }
+                });
+
+            });
         }
+
+        private void UnpinButton_Click(object sender, RoutedEventArgs e)
+        => Messenger.Default.Send(SheetViewerNotification.UnpinViewer);
     }
 }

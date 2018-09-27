@@ -11,6 +11,8 @@ namespace SCEELibs.Editor.Notifications
         DeployViewer,
         MinimizeViewer,
         DisableAutoDeployer,
-        EnableAutoDeployer
+        EnableAutoDeployer,
+        PinViewer,
+        UnpinViewer
     }
 }

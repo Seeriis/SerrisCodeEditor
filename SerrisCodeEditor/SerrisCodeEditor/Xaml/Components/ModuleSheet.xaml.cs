@@ -93,7 +93,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
             if(isSelected)
             {
-                GridButton.Width = 50;
+                GridButton.Width = 67;
             }
             else
             {
@@ -107,6 +107,9 @@ namespace SerrisCodeEditor.Xaml.Components
             Messenger.Default.Send(current_sheet);
         }
 
+        private void pin_sheet_Click(object sender, RoutedEventArgs e)
+        => Messenger.Default.Send(SheetViewerNotification.PinViewer);
+
         private void SetTheme()
         {
             GridButton.Background = GlobalVariables.CurrentTheme.MainColor;
@@ -114,6 +117,10 @@ namespace SerrisCodeEditor.Xaml.Components
 
             close_sheet.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
             close_sheet.BorderBrush = GlobalVariables.CurrentTheme.MainColorFont;
+
+            pin_sheet.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            pin_sheet.BorderBrush = GlobalVariables.CurrentTheme.MainColor;
+            pin_sheet.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
         }
 
         private void SetMessenger()
@@ -147,14 +154,18 @@ namespace SerrisCodeEditor.Xaml.Components
                                     isSelected = true;
                                     GridButton.Opacity = 1;
 
-                                    if(close_sheet.Visibility == Visibility.Collapsed)
-                                        GridButton.Width = 50;
+                                    pin_sheet.Visibility = Visibility.Visible;
+                                    GridButton.Width = 67;
+                                    icon_sheet.Margin = new Thickness(5, 0, 2, 0);
+
                                 }
                                 else
                                 {
                                     isSelected = false;
                                     GridButton.Opacity = 0.7;
                                     GridButton.Width = 32;
+                                    icon_sheet.Margin = new Thickness(2, 0, 2, 0);
+                                    pin_sheet.Visibility = Visibility.Collapsed;
                                 }
                                 break;
 

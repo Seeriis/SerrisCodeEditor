@@ -11,7 +11,20 @@
     d:DesignWidth="400"
     Loaded="SheetView_Loaded">
 
-    <Frame x:Name="FrameView" Background="Transparent">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    </Frame>
+        <Grid x:Name="GridUnpin" Background="SlateGray" Height="40" Visibility="Collapsed">
+            <TextBlock x:Name="FrameName" Text="test" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="White" FontSize="14"/>
+            <Button x:Name="UnpinButton" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="40" Padding="0" FontFamily="Segoe MDL2 Assets" Content="" FontSize="14" Foreground="White" Click="UnpinButton_Click"/>
+        </Grid>
+
+        <Frame x:Name="FrameView" Background="Transparent" Grid.Row="1">
+
+        </Frame>
+    </Grid>
+
 </UserControl>
