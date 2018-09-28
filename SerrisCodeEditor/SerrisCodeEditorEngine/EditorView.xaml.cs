@@ -281,6 +281,17 @@ namespace SerrisCodeEditorEngine
         }
 
         ///<summary>
+        ///Force to update the language in the editor - ex: component_name.ForceUpdateLanguage();
+        ///</summary>
+        public void ForceUpdateLanguage()
+        {
+            if (Initialized)
+            {
+                Languages.GetActualLanguage(CodeLanguage.ToLower(), editor_view);
+            }
+        }
+
+        ///<summary>
         ///Set the code on the document, but he didn't clear undo/redo history - ex: component_name.SetCodeButNoClearHistory("Toothless say hi !");
         ///</summary>
         public async void SetCodeButNoClearHistory(string setcode)

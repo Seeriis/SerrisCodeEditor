@@ -193,16 +193,29 @@ namespace SerrisCodeEditor.Xaml.Views
                             case ContactTypeSCEE.SetCodeForEditor:
                                 Queue_Tabs.Add(notification);
                                 ManageQueueTabs();
+
+                                if (GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.Desktop)
+                                {
+                                    SetTilebarText(notification.tabName);
+                                }
                                 break;
 
                             case ContactTypeSCEE.SetCodeForEditorWithoutUpdate:
                                 ContentViewer.MonacoModelID = notification.monacoModelID; ContentViewer.CodeLanguage = notification.typeCode; ContentViewer.Code = notification.code;
-                                break;
-                        }
 
-                        if (GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.Desktop)
-                        {
-                            SetTilebarText(notification.tabName);
+                                if (GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.Desktop)
+                                {
+                                    SetTilebarText(notification.tabName);
+                                }
+                                break;
+
+                            case ContactTypeSCEE.ReloadLanguage:
+                                if(GlobalVariables.CurrentIDs.ID_Tab == notification.tabID && GlobalVariables.CurrentIDs.ID_TabsList == notification.tabsListID)
+                                {
+                                    ContentViewer.CodeLanguage = notification.typeLanguage;
+                                    ContentViewer.ForceUpdateLanguage();
+                                }
+                                break;
                         }
                     }
                     catch { }

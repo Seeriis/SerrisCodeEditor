@@ -4,7 +4,8 @@
     {
         GetCodeForTab,
         SetCodeForEditor,
-        SetCodeForEditorWithoutUpdate
+        SetCodeForEditorWithoutUpdate,
+        ReloadLanguage
     }
 
     public sealed class TabSelectedNotification

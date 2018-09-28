@@ -325,10 +325,19 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private async void list_types_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(list_types.SelectedIndex != -1 && (string)list_types.SelectedItem != current_tab.TabType)
+            if(list_types.SelectedIndex != -1)
             {
-                current_tab.TabType = LanguagesHelper.GetLanguageTypeViaName((string)list_types.SelectedItem);
-                await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, true);
+                string LanguageType = LanguagesHelper.GetLanguageTypeViaName((string)list_types.SelectedItem);
+
+                if (LanguageType != current_tab.TabType)
+                {
+                    current_tab.TabType = LanguageType;
+                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
+
+                    if (current_tab != null && GlobalVariables.CurrentIDs.ID_Tab == current_tab.ID && GlobalVariables.CurrentIDs.ID_TabsList == current_list)
+                        Messenger.Default.Send(new TabSelectedNotification { tabID = current_tab.ID, tabsListID = current_list, contactType = ContactTypeSCEE.ReloadLanguage, typeLanguage = current_tab.TabType });
+
+                }
             }
         }
 
