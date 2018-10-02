@@ -44,7 +44,7 @@
                 window.external.notify("loaded");
             });
 
-            editor.onKeyDown(function (e) {
+            editor.onDidChangeModelContent(function (e) {
                 window.external.notify("change");
             });
         });

@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>SerrisCodeEditor_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>24CB8598436B33A53FF501F0AF3799D301BBB66B</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>C:\Users\yoshi\Documents\Windows store packages\SCE - Marne-la-Vallée\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\yoshi\Documents\Windows store packages\SCE - Marne-la-Vallée %28bis%29\</AppxPackageDir>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
