@@ -145,9 +145,29 @@ namespace SerrisCodeEditor.Functions.News
         {
             LoadNewsData();
 
-            if (AppSettings.Values.ContainsKey("news_token"))
+            try
             {
-                if ((int)AppSettings.Values["news_token"] != await GetCurrentNewsToken())
+                if (AppSettings.Values.ContainsKey("news_token"))
+                {
+                    if ((int)AppSettings.Values["news_token"] != await GetCurrentNewsToken())
+                    {
+                        JObject Content = JObject.Parse(await NewsClient.GetStringAsync(new Uri("https://sce.seeriis.net/")));
+
+                        //Token
+                        AppSettings.Values["news_token"] = Content.GetValue("Token").ToObject<int>();
+
+                        //News list
+                        List<News> NewsList = Content.GetValue("News").ToObject<List<News>>();
+                        await FileIO.WriteTextAsync(NewsListFile, JsonConvert.SerializeObject(NewsList, Formatting.Indented));
+
+                        return await GetNewsOnLocalFile();
+                    }
+                    else
+                    {
+                        return await GetNewsOnLocalFile();
+                    }
+                }
+                else
                 {
                     JObject Content = JObject.Parse(await NewsClient.GetStringAsync(new Uri("https://sce.seeriis.net/")));
 
@@ -160,24 +180,12 @@ namespace SerrisCodeEditor.Functions.News
 
                     return await GetNewsOnLocalFile();
                 }
-                else
-                {
-                    return await GetNewsOnLocalFile();
-                }
             }
-            else
+            catch
             {
-                JObject Content = JObject.Parse(await NewsClient.GetStringAsync(new Uri("https://sce.seeriis.net/")));
-
-                //Token
-                AppSettings.Values["news_token"] = Content.GetValue("Token").ToObject<int>();
-
-                //News list
-                List<News> NewsList = Content.GetValue("News").ToObject<List<News>>();
-                await FileIO.WriteTextAsync(NewsListFile, JsonConvert.SerializeObject(NewsList, Formatting.Indented));
-
-                return await GetNewsOnLocalFile();
+                return new List<News>();
             }
+            
         }
 
         public async static Task<NewsContent> GetNewsContent(int ArticleID)
