@@ -46,7 +46,7 @@ namespace SerrisCodeEditor.Xaml.Views
         }
 
         private async void ChangelogButton_Click(object sender, RoutedEventArgs e)
-        => await Launcher.LaunchUriAsync(new Uri("https://yoshilegris.wordpress.com/2017/06/04/join-the-private-beta-of-serris-code-editor-marne-la-vallee-update-1-0/"));
+        => await Launcher.LaunchUriAsync(new Uri("https://yoshilegris.wordpress.com/2018/10/06/changelog-serris-code-editor-1-0-marne-la-vallee/"));
 
         private void VideoChangelog_Loaded(object sender, RoutedEventArgs e)
         => VideoChangelog.Navigate(new Uri("https://www.youtube.com/embed/G1IbRujko-A"));
