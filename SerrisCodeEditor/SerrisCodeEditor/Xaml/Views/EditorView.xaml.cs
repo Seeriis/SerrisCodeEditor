@@ -578,7 +578,6 @@ namespace SerrisCodeEditor.Xaml.Views
                     ColorPrincipalUI.VerticalAlignment = VerticalAlignment.Bottom;
                     BackgroundPrincipalUIControl.VerticalAlignment = VerticalAlignment.Bottom;
                     Console.Height = 30;
-                    SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth - 40;
                     Grid.SetColumnSpan(Toolbar, 1);
                     TextInfoTitlebar.Margin = new Thickness(0);
                     ContentViewerGrid.Margin = new Thickness(0, 0, 0, 75);
@@ -586,10 +585,15 @@ namespace SerrisCodeEditor.Xaml.Views
                     TextInfoTitlebar.Visibility = Visibility.Collapsed;
                     TopSheetViewSplit.Visibility = Visibility.Collapsed;
 
+                    SheetViewSeparatorLine.Visibility = Visibility.Collapsed;
+                    SheetViewSplit.OpenPaneLength = MasterGrid.ActualWidth;
+                    SheetsManager.Visibility = Visibility.Collapsed;
+
                     ToolbarWidth.Width = new GridLength(1, GridUnitType.Star);
                     FocusTitlebarWidth.Width = new GridLength(0, GridUnitType.Pixel);
 
                     StatusBar.GetForCurrentView().ProgressIndicator.Text = "Serris Code Editor MLV";
+                    await StatusBar.GetForCurrentView().ShowAsync();
                     UpdateUI(true, true);
                     break;
 

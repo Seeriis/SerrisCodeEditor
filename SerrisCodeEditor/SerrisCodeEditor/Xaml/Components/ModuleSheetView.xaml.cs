@@ -27,7 +27,15 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void SheetView_Loaded(object sender, RoutedEventArgs e)
-        => SetMessenger();
+        {
+            if(GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.WindowsMobile)
+            {
+                ShowUnpinGrid();
+                UnpinButton.Visibility = Visibility.Collapsed;
+            }
+
+            SetMessenger();
+        }
 
         private void SetMessenger()
         {
@@ -55,13 +63,7 @@ namespace SerrisCodeEditor.Xaml.Components
                     switch(notification)
                     {
                         case SheetViewerNotification.PinViewer:
-                            GridUnpin.Background = GlobalVariables.CurrentTheme.SecondaryColor;
-                            FrameName.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
-
-                            UnpinButton.Background = GlobalVariables.CurrentTheme.MainColor;
-                            UnpinButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
-
-                            GridUnpin.Visibility = Visibility.Visible;
+                            ShowUnpinGrid();
                             break;
 
                         case SheetViewerNotification.UnpinViewer:
@@ -75,5 +77,17 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void UnpinButton_Click(object sender, RoutedEventArgs e)
         => Messenger.Default.Send(SheetViewerNotification.UnpinViewer);
+
+        private void ShowUnpinGrid()
+        {
+            GridUnpin.Background = GlobalVariables.CurrentTheme.SecondaryColor;
+            FrameName.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+
+            UnpinButton.Background = GlobalVariables.CurrentTheme.MainColor;
+            UnpinButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
+
+            GridUnpin.Visibility = Visibility.Visible;
+
+        }
     }
 }

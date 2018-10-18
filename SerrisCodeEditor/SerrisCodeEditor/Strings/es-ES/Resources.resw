@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -127,22 +127,22 @@
     <value>Ver el registro de cambios</value>
   </data>
   <data name="bonjour-closebutton.Text" xml:space="preserve">
-    <value>Cerca</value>
+    <value>Cerrar</value>
   </data>
   <data name="bonjour-nowversiontext.Text" xml:space="preserve">
     <value>Ahora estás en la versión</value>
   </data>
   <data name="console-clearbuttontooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Limpia la consola</value>
+    <value>Despejar la consola</value>
   </data>
   <data name="console-commandboxplaceholder.PlaceholderText" xml:space="preserve">
-    <value>Ejecute un comando de JavaScript...</value>
+    <value>Ejecutar un comando de JavaScript...</value>
   </data>
   <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Error(s)</value>
+    <value>Error(es)</value>
   </data>
   <data name="console-informationstooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Información(s)</value>
+    <value>Información(es)</value>
   </data>
   <data name="console-resultstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Resultado(s)</value>
@@ -193,7 +193,7 @@
     <value>Ver el GitHub (y la licencia)</value>
   </data>
   <data name="settings-buttontooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Configuraciones</value>
+    <value>Configuracion</value>
   </data>
   <data name="settings-credits" xml:space="preserve">
     <value>Créditos</value>
@@ -211,7 +211,7 @@
     <value>Desarrollador principal</value>
   </data>
   <data name="settings-credits_scegithub" xml:space="preserve">
-    <value>¡Conviértase en un socio de SCE en GitHub!</value>
+    <value>¡Contribuye a SCE en GitHub!</value>
   </data>
   <data name="settings-credits_version" xml:space="preserve">
     <value>Versión</value>
@@ -238,7 +238,7 @@
     <value>Vuelta a la línea</value>
   </data>
   <data name="settings-titleflyout" xml:space="preserve">
-    <value>Configuraciones</value>
+    <value>Configuracion</value>
   </data>
   <data name="settings-ui" xml:space="preserve">
     <value>GUI</value>
@@ -250,10 +250,10 @@
     <value>Interfaz extendida</value>
   </data>
   <data name="settings-ui_leftpanelength" xml:space="preserve">
-    <value>Panel izquierdo longitud reducida (en píxeles)</value>
+    <value>Tama~no del panel izquierdo reducido (en píxeles)</value>
   </data>
   <data name="settings-ui_leftpaneopenlength" xml:space="preserve">
-    <value>Longitud abierta del panel izquierdo (en píxeles)</value>
+    <value>Tama~no del panel izquierdo abierto (en píxeles)</value>
   </data>
   <data name="sheet-pintooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Alfiler la vista</value>
@@ -268,7 +268,7 @@
     <value>OneDrive</value>
   </data>
   <data name="tab-createdattext.Text" xml:space="preserve">
-    <value>Creado en :</value>
+    <value>Creado :</value>
   </data>
   <data name="tab-deletetabtooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Eliminar pestaña</value>
@@ -277,19 +277,19 @@
     <value>Codificación :</value>
   </data>
   <data name="tab-modifiedattext.Text" xml:space="preserve">
-    <value>Modificado en :</value>
+    <value>Modificado :</value>
   </data>
   <data name="tab-moreinfostooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mostrar más informaciones</value>
+    <value>Mostrar más información</value>
   </data>
   <data name="tab-renameaccepttooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Aceptar renombrar</value>
+    <value>Renombrar</value>
   </data>
   <data name="tab-renameplaceholder.PlaceholderText" xml:space="preserve">
     <value>Ejemplo: toothless.js</value>
   </data>
   <data name="tab-renametabtooltip.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Cambiar el nombre de la pestaña</value>
+    <value>Renombrar pestaña</value>
   </data>
   <data name="tab-sizetext.Text" xml:space="preserve">
     <value>Tamaño : </value>
@@ -298,7 +298,7 @@
     <value>Tipo : </value>
   </data>
   <data name="tabslist-blanktabradiobutton.Content" xml:space="preserve">
-    <value>Pestaña en blanco</value>
+    <value>Pestaña vacia</value>
   </data>
   <data name="tabslist-buttonaddtabslists" xml:space="preserve">
     <value>Agregar nueva pestaña(s)/lista(s)</value>
@@ -325,7 +325,7 @@
     <value>Borrar</value>
   </data>
   <data name="tabslist-fileencodingtitle.Text" xml:space="preserve">
-    <value>Codificación de archivo</value>
+    <value>Codificación del archivo</value>
   </data>
   <data name="tabslist-importfilestextbutton.Text" xml:space="preserve">
     <value>Archivo(s)</value>
@@ -346,7 +346,7 @@
     <value>Nueva lista de pestañas</value>
   </data>
   <data name="tabslist-opentitle.Text" xml:space="preserve">
-    <value>Abierto...</value>
+    <value>Abrir...</value>
   </data>
   <data name="tabslist-placeholderfileexample" xml:space="preserve">
     <value>Ejemplo: toothless.js</value>
@@ -364,7 +364,7 @@
     <value>Pestaña</value>
   </data>
   <data name="tabslist-tabtemplateradiobutton.Content" xml:space="preserve">
-    <value>Usar plantilla de pestaña</value>
+    <value>Usar modelo de pestaña</value>
   </data>
   <data name="tabslist-titlesheet" xml:space="preserve">
     <value>Lista de pestañas</value>

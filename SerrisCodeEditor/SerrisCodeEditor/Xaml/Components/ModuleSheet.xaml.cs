@@ -21,7 +21,7 @@ namespace SerrisCodeEditor.Xaml.Components
 {
     public sealed partial class ModuleSheet : UserControl
     {
-        bool isSelected = false, isInitialized = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
+        bool isSelected = false, isInitialized = false, isMobile = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
 
         public ModuleSheet()
         {
@@ -30,6 +30,11 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void SheetButton_Loaded(object sender, RoutedEventArgs e)
         {
+            if (GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.WindowsMobile)
+            {
+                isMobile = true;
+            }
+
             SetMessenger();
             SetTheme();
 
@@ -39,6 +44,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 current_sheet = (ModuleSheetNotification)DataContext; current_sheet.type = ModuleSheetNotificationType.SelectSheet;
                 Messenger.Default.Send(current_sheet);
             }
+
         }
 
         private void SheetButton_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -154,7 +160,10 @@ namespace SerrisCodeEditor.Xaml.Components
                                     isSelected = true;
                                     GridButton.Opacity = 1;
 
-                                    pin_sheet.Visibility = Visibility.Visible;
+                                    if(!isMobile)
+                                    {
+                                        pin_sheet.Visibility = Visibility.Visible;
+                                    }
                                     GridButton.Width = 67;
                                     icon_sheet.Margin = new Thickness(5, 0, 2, 0);
 
@@ -166,6 +175,12 @@ namespace SerrisCodeEditor.Xaml.Components
                                     GridButton.Width = 32;
                                     icon_sheet.Margin = new Thickness(2, 0, 2, 0);
                                     pin_sheet.Visibility = Visibility.Collapsed;
+
+                                    if(GlobalVariables.CurrentDevice == SCEELibs.Editor.CurrentDevice.WindowsMobile && !current_sheet.sheetSystem)
+                                    {
+                                        current_sheet.type = ModuleSheetNotificationType.RemoveSheet;
+                                        Messenger.Default.Send(current_sheet);
+                                    }
                                 }
                                 break;
 
