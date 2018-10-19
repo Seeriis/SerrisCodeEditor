@@ -42,6 +42,7 @@ namespace SerrisCodeEditor.Xaml.Views
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             ApplicationData.Current.LocalSettings.Values["version_sce"] = SCEELibs.SCEInfos.versionNumber;
+            VideoChangelog.NavigateToString("");
             Messenger.Default.Send(BonjourViewControl.CloseView);
         }
 
@@ -49,7 +50,7 @@ namespace SerrisCodeEditor.Xaml.Views
         => await Launcher.LaunchUriAsync(new Uri("https://yoshilegris.wordpress.com/2018/10/06/changelog-serris-code-editor-1-0-marne-la-vallee/"));
 
         private void VideoChangelog_Loaded(object sender, RoutedEventArgs e)
-        => VideoChangelog.Navigate(new Uri("https://www.youtube.com/embed/G1IbRujko-A"));
+        => VideoChangelog.Navigate(new Uri("https://www.youtube.com/embed/rLD1qIqvdIg"));
 
         private void VideoChangelog_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         => VideoShowAnimation.Begin();
