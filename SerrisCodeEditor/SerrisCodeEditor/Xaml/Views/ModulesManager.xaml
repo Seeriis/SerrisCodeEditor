@@ -92,25 +92,25 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="AddonsButton" x:Uid="modulesmanager-addons" ToolTipService.ToolTip="Addons" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed">
+                <Grid x:Name="AddonsButton" x:Uid="modulesmanager-addons" ToolTipService.ToolTip="Addons" Grid.Column="0" Background="Transparent" PointerPressed="AddonsButton_PointerPressed" PointerEntered="MenuButton_Entered" PointerExited="MenuButton_Exited">
                     <TextBlock x:Name="AddonsIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
 
                 <Rectangle x:Name="ButtonsSeparator" Grid.Column="1" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                <Grid x:Name="ThemesButton" x:Uid="modulesmanager-themes" ToolTipService.ToolTip="Themes" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed">
+                <Grid x:Name="ThemesButton" x:Uid="modulesmanager-themes" ToolTipService.ToolTip="Themes" Grid.Column="2" Background="Transparent" PointerPressed="ThemesButton_PointerPressed" PointerEntered="MenuButton_Entered" PointerExited="MenuButton_Exited">
                     <TextBlock x:Name="ThemesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
 
                 <Rectangle x:Name="ButtonsSeparatorB" Grid.Column="3" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                <Grid x:Name="ProgLanguagesButton" x:Uid="modulesmanager-proglanguages" ToolTipService.ToolTip="Programming languages" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed">
+                <Grid x:Name="ProgLanguagesButton" x:Uid="modulesmanager-proglanguages" ToolTipService.ToolTip="Programming languages" Grid.Column="4" Background="Transparent" PointerPressed="ProgLanguagesButton_PointerPressed" PointerEntered="MenuButton_Entered" PointerExited="MenuButton_Exited">
                     <TextBlock x:Name="ProgLanguagesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
 
                 <Rectangle x:Name="ButtonsSeparatorC" Grid.Column="5" Fill="#FF666666" Width="2" Margin="0,15,0,15" RadiusX="2" RadiusY="1"/>
 
-                <Grid x:Name="ProjectTypesButton" x:Uid="modulesmanager-templates" ToolTipService.ToolTip="Projects/files template" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed">
+                <Grid x:Name="ProjectTypesButton" x:Uid="modulesmanager-templates" ToolTipService.ToolTip="Projects/files template" Grid.Column="6" Background="Transparent" PointerPressed="ProjectTypesButton_PointerPressed" PointerEntered="MenuButton_Entered" PointerExited="MenuButton_Exited">
                     <TextBlock x:Name="ProjectTypesIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF666666" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </Grid>

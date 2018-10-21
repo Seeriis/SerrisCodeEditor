@@ -18,6 +18,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -382,6 +383,18 @@ namespace SerrisCodeEditor.Xaml.Components
         private void RenameAcceptButton_Click(object sender, RoutedEventArgs e)
         {
             RenameTab();
+        }
+
+        private void TabComponent_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control && e.GetCurrentPoint(TabComponent).Properties.IsMiddleButtonPressed)
+            {
+                try
+                {
+                    Messenger.Default.Send(new STSNotification { ID = new TabID { ID_Tab = current_tab.ID, ID_TabsList = current_list }, Type = TypeUpdateTab.TabDeleted });
+                }
+                catch { }
+            }
         }
 
         private void Grid_Holding(object sender, HoldingRoutedEventArgs e)

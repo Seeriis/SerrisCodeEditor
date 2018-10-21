@@ -54,6 +54,17 @@ namespace SerrisCodeEditor.Xaml.Views
                     SelectMenu(menu.Name);
                 });
 
+                ButtonMenu.PointerEntered += ((a, f) =>
+                {
+                    Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+                });
+
+                ButtonMenu.PointerExited += ((a, f) =>
+                {
+                    Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+                });
+
+
                 //BUTTON CONTENT
                 StackPanel ButtonContent = new StackPanel();
                 ButtonContent.HorizontalAlignment = HorizontalAlignment.Center;

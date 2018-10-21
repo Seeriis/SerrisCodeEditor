@@ -9,6 +9,7 @@ using SerrisModulesServer.Type.Addon;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -237,6 +238,12 @@ namespace SerrisCodeEditor.Xaml.Views
         private void ProjectTypesButton_PointerPressed(object sender, PointerRoutedEventArgs e)
         => ChangeSelectedButton(3);
 
+        private void MenuButton_Entered(object sender, PointerRoutedEventArgs e)
+        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+
+        private void MenuButton_Exited(object sender, PointerRoutedEventArgs e)
+        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+
 
 
 
@@ -248,6 +255,5 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         int currentSelectedButton = -1;
-
     }
 }
