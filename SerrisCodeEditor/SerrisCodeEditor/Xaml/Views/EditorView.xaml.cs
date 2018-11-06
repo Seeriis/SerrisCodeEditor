@@ -41,7 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false, AutoDeployerEnabled = true, SheetViewerPinned = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false, AutoDeployerEnabled = true, SheetViewerPinned = false, TabsSystemAvailable = false;
         double OpenPaneLengthOriginal = 0;
         string TitlebarText = $"Serris Code Editor ( {SCEELibs.SCEInfos.versionName} )";
         IReadOnlyList<IStorageItem> OpenedFiles;
@@ -57,7 +57,7 @@ namespace SerrisCodeEditor.Xaml.Views
             Application.Current.Suspending += Current_Suspending;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var args = e.Parameter as Windows.ApplicationModel.Activation.IActivatedEventArgs;
@@ -68,8 +68,17 @@ namespace SerrisCodeEditor.Xaml.Views
                 if (args.Kind == Windows.ApplicationModel.Activation.ActivationKind.File)
                 {
                     var fileArgs = args as Windows.ApplicationModel.Activation.FileActivatedEventArgs;
-                    OpenedFiles = fileArgs.Files;
-                    FilesWasOpened = true;
+
+                    if(TabsSystemAvailable)
+                    {
+                        await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, fileArgs.Files);
+                    }
+                    else
+                    {
+                        OpenedFiles = fileArgs.Files;
+                        FilesWasOpened = false;
+                    }
+
                 }
 
             }
@@ -254,12 +263,22 @@ namespace SerrisCodeEditor.Xaml.Views
 
             Messenger.Default.Register<SheetViewerNotification>(this, async (notification_ui) =>
             {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
                     try
                     {
                         switch(notification_ui)
                         {
+                            case SheetViewerNotification.TabsSystemInitialized:
+                                TabsSystemAvailable = true;
+
+                                if (!FilesWasOpened)
+                                {
+                                    await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
+                                    FilesWasOpened = true;
+                                }
+                                break;
+
                             case SheetViewerNotification.DeployViewer:
                                 UpdateUI(true, false);
                                 break;
@@ -873,13 +892,6 @@ namespace SerrisCodeEditor.Xaml.Views
                 ChangePushed = false;
 
                 Queue_Tabs.RemoveAt(0);
-
-                //Files opened with files associations
-                if (FilesWasOpened && Queue_Tabs.Count == 0)
-                {
-                    await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
-                    FilesWasOpened = false; OpenedFiles = null;
-                }
 
                 CanManageQueue = true;
             }

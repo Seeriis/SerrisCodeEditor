@@ -13,6 +13,7 @@ namespace SCEELibs.Editor.Notifications
         DisableAutoDeployer,
         EnableAutoDeployer,
         PinViewer,
-        UnpinViewer
+        UnpinViewer,
+        TabsSystemInitialized
     }
 }
