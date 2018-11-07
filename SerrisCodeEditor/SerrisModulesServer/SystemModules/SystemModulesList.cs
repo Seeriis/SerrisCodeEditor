@@ -7,6 +7,8 @@ namespace SerrisModulesServer.SystemModules
 {
     public static class SystemModulesList
     {
+        //55
+
         public static InfosModule[] Modules =
         {
             new InfosModule
@@ -337,7 +339,7 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "java",
-                ProgrammingLanguageFilesExtensions = new List<string> { ".class" },
+                ProgrammingLanguageFilesExtensions = new List<string> { ".class", ".java" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
             },
 
@@ -1110,11 +1112,32 @@ namespace SerrisModulesServer.SystemModules
                     Minor = 0,
                     Revision = 0
                 },
-                ModuleDescription = "Default tab language",
+                ModuleDescription = "JSON language",
                 CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "json",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".json" },
+                ProgrammingLanguageMonacoCompletionAvailable = false
+            },
+
+            new InfosModule
+            {
+                ID = "55",
+                ModuleType = ModuleTypesList.ProgrammingLanguage,
+                ModuleName = "TypeScript",
+                ModuleSystem = true,
+                ModuleAuthor = "Microsoft",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "TypeScript language",
+                CanBePinnedToToolBar = false,
+                IsEnabled = true,
+                ProgrammingLanguageMonacoDefinitionName = "typescript",
+                ProgrammingLanguageFilesExtensions = new List<string> { ".ts" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
             },
 

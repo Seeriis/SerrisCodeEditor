@@ -243,6 +243,9 @@
     <Content Include="SystemModules\ProgrammingLanguages\49\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\49\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\49\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\55\icon.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\55\language.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\55\logo.png" />
     <Content Include="SystemModules\Templates\50\icon.png" />
     <Content Include="SystemModules\Templates\50\logo.png" />
     <Content Include="SystemModules\Templates\50\main.js" />
