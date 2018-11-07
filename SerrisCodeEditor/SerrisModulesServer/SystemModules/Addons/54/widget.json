@@ -1,0 +1,9 @@
+﻿[
+  {
+    "Type": 0,
+    "WidgetName": "widgetcolorpicker",
+    "FunctionName": "main",
+    "IconButton": "",
+    "TooltipText": "Show the color picker"
+  }
+]

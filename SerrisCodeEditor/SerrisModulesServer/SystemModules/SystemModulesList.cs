@@ -230,6 +230,26 @@ namespace SerrisModulesServer.SystemModules
                 JSFilesPathList = new List<string>
                 { }
             },
+            new InfosModule
+            {
+                ID = "54",
+                ModuleType = ModuleTypesList.Addon,
+                ContainMonacoTheme = false,
+                ModuleName = "Color picker",
+                ModuleSystem = true,
+                ModuleAuthor = "[SP] DeerisLeGris",
+                ModuleVersion = new ModuleVersion
+                {
+                    Major = 1,
+                    Minor = 0,
+                    Revision = 0
+                },
+                ModuleDescription = "RGB and CSS color picker",
+                CanBePinnedToToolBar = true,
+                IsEnabled = true,
+                JSFilesPathList = new List<string>
+                { }
+            },
 
 
             /* =============

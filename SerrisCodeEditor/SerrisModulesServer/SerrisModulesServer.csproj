@@ -116,6 +116,13 @@
     <Content Include="SystemModules\Addons\51\icon.png" />
     <Content Include="SystemModules\Addons\51\logo.png" />
     <Content Include="SystemModules\Addons\51\main.js" />
+    <Content Include="SystemModules\Addons\54\HTML\assets\jquery.js" />
+    <Content Include="SystemModules\Addons\54\HTML\assets\spectrum.css" />
+    <Content Include="SystemModules\Addons\54\HTML\assets\spectrum.js" />
+    <Content Include="SystemModules\Addons\54\HTML\index.html" />
+    <Content Include="SystemModules\Addons\54\icon.png" />
+    <Content Include="SystemModules\Addons\54\logo.png" />
+    <Content Include="SystemModules\Addons\54\main.js" />
     <Content Include="SystemModules\Addons\7\HTML\background.jpg" />
     <Content Include="SystemModules\Addons\7\HTML\icon_sce.png" />
     <Content Include="SystemModules\Addons\7\HTML\paypal.png" />
@@ -291,6 +298,7 @@
     <Content Include="SystemModules\Addons\51\widget.json" />
     <Content Include="SystemModules\Addons\52\widget.json" />
     <Content Include="SystemModules\Addons\53\widget.json" />
+    <Content Include="SystemModules\Addons\54\widget.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager\ModulesDataCache.cs" />

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+    <!-- SPECTRUM -->
+    <script type="text/javascript" src="assets/jquery.js"></script>
+    <link rel="stylesheet" href="assets/spectrum.css" type="text/css">
+    <script type="text/javascript" src="assets/spectrum.js"></script>
+
+    <style>
+        body {
+            background-color: #323232;
+            color: white;
+            font-family: Segoe UI;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            -ms-high-contrast-adjust: none;
+        }
+
+        input {
+            height: 30px;
+            width: 40px;
+            vertical-align: middle;
+        }
+
+        a:link {
+            color: lightgrey;
+            background-color: transparent;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div style="background-color: rgba(0, 0, 0, 0.5);">
+        <p style="text-align: center"><input type='text' id="flat" /></p>
+    </div>
+    <div style="height: 20px; width: 100%; background-color: grey;" id="color_show"></div>
+
+    <h3 style="margin-top: 20px; margin-left: 5px;">
+        Red : <input type="text" id="color_red" value="" style="margin-left: 19px; border: 2px white; border-radius: 4px; background-color: white; margin-top: 5px; color: #3E2159;" readonly>
+        <br style="margin-top: 5px;" />
+        Green : <input type="text" id="color_green" style="border: 2px white; border-radius: 4px; background-color: white; margin-top: 5px; color: #3E2159;" value="" readonly>
+        <br/>
+        Blue : <input type="text" id="color_blue" value="" style="margin-left: 14px; border: 2px white; border-radius: 4px; background-color: white; margin-top: 5px; color: #3E2159;" readonly>
+    </h3>
+
+    <p style="margin-top: 22px; margin-left: 5px;">CSS rgba :</p>
+    <input type="text" id="css_rgba" value="" style="height: 20px; width: 151px; margin-left: 5px; border: 2px solid white; border-radius: 4px; background-color: white; color: #3E2159;" readonly>
+
+    <p style="text-align:center; margin: 5px;">This addon works thanks to <a href="https://github.com/bgrins/spectrum">spectrum.js (by Brian Grinstead)</a>. The MIT license is <a href="https://github.com/bgrins/spectrum/blob/master/LICENSE">available here</a>.</p>
+    <script>
+    //Function found on Stackoverflow !
+    function hexToRgb(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    $("#flat").spectrum({
+        flat: true,
+        showInput: true,
+        preferredFormat: "hex",
+        move: function (color) {
+            var color_hex = hexToRgb(color.toHexString());
+
+            $("#color_red").val(color_hex.r);
+            $("#color_green").val(color_hex.g);
+            $("#color_blue").val(color_hex.b);
+
+            $("#color_show").css('background-color', color.toHexString());
+            $("#css_rgba").val("rgba(" + color_hex.r + ", " + color_hex.g + ", " + color_hex.b + ", 1);");
+        }
+    });
+    </script>
+</body>
+
+</html>
