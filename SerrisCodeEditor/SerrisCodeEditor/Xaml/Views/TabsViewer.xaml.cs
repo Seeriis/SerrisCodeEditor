@@ -47,7 +47,7 @@ namespace SerrisCodeEditor.Xaml.Views
          * =============
          */
 
-        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, StorageListIsLoaded = false, DefaultFunctionsLoaded = false, EncodingsListLoaded = false, TabsSystemLoadedNotificationSent = false;
+        public TabID CurrentSelectedIDs; bool isLoaded = false, LastTabLoaded = false, StorageListIsLoaded = false, DefaultFunctionsLoaded = false, EncodingsListLoaded = false;
         int CurrentCreationType = -1;
         string TabTemplateContent = "";
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
@@ -165,11 +165,6 @@ namespace SerrisCodeEditor.Xaml.Views
                         AppSettings.Values["Tabs_list-selected-index"] = ((TabID)List.SelectedItem).ID_TabsList;
                     }
 
-                    if(!TabsSystemLoadedNotificationSent)
-                    {
-                        Messenger.Default.Send(SheetViewerNotification.TabsSystemInitialized);
-                        TabsSystemLoadedNotificationSent = true;
-                    }
                 }
             }
 

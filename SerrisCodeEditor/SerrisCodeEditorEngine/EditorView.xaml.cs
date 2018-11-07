@@ -228,6 +228,7 @@ namespace SerrisCodeEditorEngine
                 }*/
 
                 IsLoading(false);
+                EditorCodeLoaded?.Invoke(this, new EventArgs());
             }
         }
 
@@ -538,7 +539,7 @@ namespace SerrisCodeEditorEngine
 
 
 
-        public event EventHandler EditorTextChanged, EditorLoaded;
+        public event EventHandler EditorLoaded, EditorCodeLoaded;
         public event EventHandler<EventSCEE> EditorCommands, EditorTextShortcutTabs;
 
         private void userControl_Loaded(object sender, RoutedEventArgs e)

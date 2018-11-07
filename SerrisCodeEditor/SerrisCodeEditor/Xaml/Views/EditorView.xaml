@@ -80,7 +80,7 @@
 
         <!-- FIRST LAYER -->
         <Grid x:Name="ContentViewerGrid" Margin="65,0,0,0" PointerEntered="ContentViewerGrid_PointerEntered">
-            <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands" EditorLoaded="ContentViewer_EditorLoaded"/>
+            <engine:EditorView x:Name="ContentViewer" BackgroundWait="{ThemeResource CheckBoxCheckBackgroundFillChecked}" ForegroundWait="White" PointerPressed="ContentViewer_PointerPressed" EditorCommands="ContentViewer_EditorCommands" EditorLoaded="ContentViewer_EditorLoaded" EditorCodeLoaded="ContentViewer_EditorCodeLoaded"/>
         </Grid>
 
         <!-- SECOND LAYER -->

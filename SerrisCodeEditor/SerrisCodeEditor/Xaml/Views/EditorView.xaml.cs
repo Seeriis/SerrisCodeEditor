@@ -41,7 +41,7 @@ namespace SerrisCodeEditor.Xaml.Views
          */
 
         ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
-        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false, AutoDeployerEnabled = true, SheetViewerPinned = false, TabsSystemAvailable = false;
+        bool isUIDeployed = false, EditorIsLoaded = false, ClosePanelAuto = true, SeparatorClicked = false, EditorStartModulesEventsLaunched = false, ChangePushed = false, FilesWasOpened = false, AutoDeployerEnabled = true, SheetViewerPinned = false, EditorIsReady = false;
         double OpenPaneLengthOriginal = 0;
         string TitlebarText = $"Serris Code Editor ( {SCEELibs.SCEInfos.versionName} )";
         IReadOnlyList<IStorageItem> OpenedFiles;
@@ -69,14 +69,14 @@ namespace SerrisCodeEditor.Xaml.Views
                 {
                     var fileArgs = args as Windows.ApplicationModel.Activation.FileActivatedEventArgs;
 
-                    if(TabsSystemAvailable)
+                    if(EditorIsReady)
                     {
                         await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, fileArgs.Files);
                     }
                     else
                     {
                         OpenedFiles = fileArgs.Files;
-                        FilesWasOpened = false;
+                        FilesWasOpened = true;
                     }
 
                 }
@@ -269,16 +269,6 @@ namespace SerrisCodeEditor.Xaml.Views
                     {
                         switch(notification_ui)
                         {
-                            case SheetViewerNotification.TabsSystemInitialized:
-                                TabsSystemAvailable = true;
-
-                                if (!FilesWasOpened)
-                                {
-                                    await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
-                                    FilesWasOpened = true;
-                                }
-                                break;
-
                             case SheetViewerNotification.DeployViewer:
                                 UpdateUI(true, false);
                                 break;
@@ -751,6 +741,18 @@ namespace SerrisCodeEditor.Xaml.Views
             }
         }
 
+        private async void ContentViewer_EditorCodeLoaded(object sender, EventArgs e)
+        {
+            if(!EditorIsReady)
+                EditorIsReady = true;
+
+            if (FilesWasOpened)
+            {
+                await TabsCreatorAssistant.OpenFilesAlreadyOpenedAndCreateNewTabsFiles(GlobalVariables.CurrentIDs.ID_TabsList, OpenedFiles);
+                FilesWasOpened = false;
+            }
+        }
+
         private void ContentViewerGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (!isUIDeployed && !SheetViewerPinned)
@@ -802,6 +804,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
         //For manage tabs content
         List<TabSelectedNotification> Queue_Tabs = new List<TabSelectedNotification>();
+
         bool CanManageQueue = true;
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
