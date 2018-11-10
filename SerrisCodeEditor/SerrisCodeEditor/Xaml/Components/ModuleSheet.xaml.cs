@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using SCEELibs.Editor.Notifications;
 using SerrisCodeEditor.Functions;
+using SerrisCodeEditor.Functions.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,7 +23,8 @@ namespace SerrisCodeEditor.Xaml.Components
 {
     public sealed partial class ModuleSheet : UserControl
     {
-        bool isSelected = false, isInitialized = false, isMobile = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
+        ApplicationDataContainer AppSettings = ApplicationData.Current.LocalSettings;
+        bool isSelected = false, isInitialized = false, isMobile = false, FullViewEnabled = false; ModuleSheetNotification current_sheet = new ModuleSheetNotification();
 
         public ModuleSheet()
         {
@@ -45,6 +48,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 Messenger.Default.Send(current_sheet);
             }
 
+            CheckFullViewMode();
         }
 
         private void SheetButton_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -129,6 +133,24 @@ namespace SerrisCodeEditor.Xaml.Components
             pin_sheet.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
         }
 
+        private void CheckFullViewMode()
+        {
+            if (AppSettings.Values.ContainsKey("ui_extendedview"))
+            {
+                FullViewEnabled = (bool)AppSettings.Values["ui_extendedview"];
+
+                if ((bool)AppSettings.Values["ui_extendedview"])
+                    pin_sheet.Visibility = Visibility.Collapsed;
+                else
+                    pin_sheet.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                FullViewEnabled = false;
+                pin_sheet.Visibility = Visibility.Visible;
+            }
+        }
+
         private void SetMessenger()
         {
             Messenger.Default.Register<EditorViewNotification>(this, async (notification_ui) =>
@@ -138,6 +160,20 @@ namespace SerrisCodeEditor.Xaml.Components
                     try
                     {
                         SetTheme();
+                    }
+                    catch { }
+
+                });
+
+            });
+
+            Messenger.Default.Register<SettingsNotification>(this, async (notification_settings) =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    try
+                    {
+                        CheckFullViewMode();
                     }
                     catch { }
 
@@ -160,7 +196,7 @@ namespace SerrisCodeEditor.Xaml.Components
                                     isSelected = true;
                                     GridButton.Opacity = 1;
 
-                                    if(!isMobile)
+                                    if(!FullViewEnabled && !isMobile)
                                     {
                                         pin_sheet.Visibility = Visibility.Visible;
                                     }
