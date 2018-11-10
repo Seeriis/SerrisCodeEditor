@@ -389,6 +389,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                     switch (GlobalVariables.CurrentDevice)
                     {
+                        case CurrentDevice.Hololens:
                         case CurrentDevice.Desktop:
                             if (AppSettings.Values.ContainsKey("ui_extendedview"))
                             {
@@ -424,6 +425,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                     switch (GlobalVariables.CurrentDevice)
                     {
+                        case CurrentDevice.Hololens:
                         case CurrentDevice.Desktop:
 
                             if (AppSettings.Values.ContainsKey("ui_extendedview"))
@@ -606,6 +608,7 @@ namespace SerrisCodeEditor.Xaml.Views
                     UpdateUI(true, true);
                     break;
 
+                case CurrentDevice.Hololens:
                 case CurrentDevice.Desktop:
 
                     if (AppSettings.Values.ContainsKey("ui_extendedview"))
