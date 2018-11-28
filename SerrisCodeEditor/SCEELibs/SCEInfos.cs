@@ -1,4 +1,6 @@
-﻿namespace SCEELibs
+﻿using Windows.ApplicationModel;
+
+namespace SCEELibs
 {
 
     [Windows.Foundation.Metadata.AllowForWeb]
@@ -8,6 +10,14 @@
         public static string versionName { get => "Marne-la-Vallée (1.0)"; }
         public static string versionNumber { get => "2.0"; }
         public static bool preReleaseVersion { get => false; }
+
+        //https://stackoverflow.com/questions/28635208/retrieve-the-current-app-version-from-package
+        public static string getBuildVersion()
+        {
+            PackageVersion version = Package.Current.Id.Version;
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+        }
+
 
         /*History: 
          * Marne-la-Vallée ("2.0")

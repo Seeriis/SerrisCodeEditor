@@ -160,7 +160,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = GlobalVariables.GlobalizationRessources.GetString("settings-credits_version"),
                         Type = SettingType.SecondDescription,
 
-                        Parameter = SCEELibs.SCEInfos.versionName
+                        Parameter = SCEELibs.SCEInfos.versionName + " - BUILD: " + SCEELibs.SCEInfos.getBuildVersion()
                     },
 
                     new Setting
