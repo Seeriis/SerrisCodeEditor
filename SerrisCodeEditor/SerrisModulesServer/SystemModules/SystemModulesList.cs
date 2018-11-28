@@ -1074,7 +1074,7 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "yaml",
-                ProgrammingLanguageFilesExtensions = new List<string> { ".yaml" },
+                ProgrammingLanguageFilesExtensions = new List<string> { ".yaml", ".yml" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
             },
 

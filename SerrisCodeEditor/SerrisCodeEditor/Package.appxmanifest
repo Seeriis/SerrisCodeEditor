@@ -76,6 +76,7 @@
               <uap:FileType ContentType="text/plain">.json</uap:FileType>
               <uap:FileType ContentType="text/plain">.java</uap:FileType>
               <uap:FileType ContentType="text/plain">.ts</uap:FileType>
+              <uap:FileType ContentType="text/plain">.yml</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
