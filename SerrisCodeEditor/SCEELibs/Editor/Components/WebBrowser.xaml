@@ -26,7 +26,7 @@
 
             </StackPanel>
 
-            <TextBox x:Name="URLBox" PlaceholderText="Enter an address here" Grid.Column="1" Margin="5,10" Background="White" Style="{StaticResource RoundTextBox}" VerticalAlignment="Center" KeyDown="URLBox_KeyDown"/>
+            <TextBox x:Name="URLBox" PlaceholderText="Enter an address here" Grid.Column="1" Margin="5,10" Background="White" Style="{StaticResource RoundTextBox}" VerticalAlignment="Center" KeyDown="URLBox_KeyDown" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" InputScope="Url"/>
         </Grid>
         
         <WebView x:Name="View" Grid.Row="1" NavigationCompleted="View_NavigationCompleted"/>
