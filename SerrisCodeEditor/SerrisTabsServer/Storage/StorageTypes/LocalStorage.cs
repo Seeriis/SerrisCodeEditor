@@ -3,6 +3,7 @@ using SerrisModulesServer.Type.ProgrammingLanguage;
 using SerrisTabsServer.Items;
 using SerrisTabsServer.Manager;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,21 +25,38 @@ namespace SerrisTabsServer.Storage.StorageTypes
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                var folderPicker = new FolderPicker();
-                StorageFolder folder;
-                folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
-                folderPicker.FileTypeFilter.Add("*");
+                FileSavePicker filePicker = new FileSavePicker();
+                filePicker.SuggestedStartLocation = PickerLocationId.Desktop;
+                filePicker.SuggestedFileName = Path.GetFileNameWithoutExtension(Tab.TabName);
 
-                folder = await folderPicker.PickSingleFolderAsync();
-                if (folder != null)
+                string Extension = Path.GetExtension(Tab.TabName);
+                if(Extension != "")
                 {
-                    StorageFile file = await folder.CreateFileAsync(Tab.TabName, CreationCollisionOption.OpenIfExists);
+                    filePicker.FileTypeChoices.Add("File", new List<string> { Extension });
+                }
+
+                foreach (string name in LanguagesHelper.GetLanguagesNames())
+                {
+                    List<string> Types = LanguagesHelper.GetLanguageExtensions(LanguagesHelper.GetLanguageTypeViaName(name));
+
+                    if (Types.Count == 0)
+                    {
+                        Types.Add(".txt");
+                    }
+
+                    filePicker.FileTypeChoices.Add(name, Types);
+                }
+
+                StorageFile file = await filePicker.PickSaveFileAsync();
+                if (file != null)
+                {
                     Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
                     Windows.Storage.FileProperties.BasicProperties date = await file.GetBasicPropertiesAsync();
 
                     Tab.TabDateModified = date.DateModified.ToString();
                     Tab.TabType = LanguagesHelper.GetLanguageType(file.FileType);
                     Tab.TabOriginalPathContent = file.Path;
+                    Tab.TabName = file.Name;
 
                     await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true);
 
