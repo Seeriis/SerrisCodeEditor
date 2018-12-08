@@ -26,7 +26,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
                 FileSavePicker filePicker = new FileSavePicker();
-                filePicker.SuggestedStartLocation = PickerLocationId.Desktop;
+                filePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
                 filePicker.SuggestedFileName = Path.GetFileNameWithoutExtension(Tab.TabName);
 
                 string Extension = Path.GetExtension(Tab.TabName);

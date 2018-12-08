@@ -90,11 +90,16 @@ namespace SCEELibs.Tabs
             return list_ids;
         }
 
+        public TabIDs createTabIDs(int tabid, int listid)
+        {
+            return new TabIDs { listID = listid, tabID = tabid };
+        }
+
         public async void createNewList(string listName)
         => await TabsWriteManager.CreateTabsListAsync(listName);
 
-        public void createNewTabInTheCurrentList(string fileName, string content)
-        => TabsCreatorAssistant.CreateNewTab(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content);
+        public int createNewTabInTheCurrentList(string fileName, string content)
+        { return TabsCreatorAssistant.CreateNewTabReturn(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content); }
 
         public void focusTabViaPosition(int tabNumber)
         {

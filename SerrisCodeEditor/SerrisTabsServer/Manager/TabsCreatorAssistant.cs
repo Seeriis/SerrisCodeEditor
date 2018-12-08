@@ -47,6 +47,33 @@ namespace SerrisTabsServer.Manager
 
         }
 
+        public static int CreateNewTabReturn(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
+        {
+            var newtab = new InfosTab
+            {
+                TabName = FileName,
+                TabStorageMode = type,
+                TabEncoding = encoding.CodePage,
+                TabContentType = ContentType.File,
+                CanBeDeleted = true,
+                CanBeModified = true,
+                TabType = LanguagesHelper.GetLanguageType(FileName),
+                TabInvisibleByDefault = false
+            };
+
+            int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(newtab, IDList, false); }).Result;
+            if (Task.Run(async () => { return await TabsWriteManager.PushTabContentViaIDAsync(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }, content, false); }).Result)
+            {
+                Messenger.Default.Send(new STSNotification { Type = TypeUpdateTab.NewTab, ID = new TabID { ID_Tab = id_tab, ID_TabsList = IDList } });
+                return id_tab;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
         public static void CreateNewTabInFolder(int IDList, TabID FolderIDs, string FileName, Encoding encoding, StorageListTypes type, string content)
         {
             var newtab = new InfosTab
