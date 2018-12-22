@@ -22,13 +22,16 @@
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="BackButton" Content="" ToolTipService.ToolTip="Go back" Height="30" Width="30" Margin="5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="BackButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
                 <Button x:Name="ForwardButton" Content="" ToolTipService.ToolTip="Go Forward" Height="30" Width="30" Margin="0,0,5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="ForwardButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
-                <Button x:Name="RefreshButton" Content="" ToolTipService.ToolTip="Refresh" Height="30" Width="30" Margin="0,0,5,0" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="RefreshButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
+                <Grid Margin="0,0,5,0" VerticalAlignment="Center">
+                    <Button x:Name="RefreshButton" Content="" ToolTipService.ToolTip="Refresh" Height="30" Width="30" Background="Transparent" FontFamily="Segoe MDL2 Assets" FontSize="16" Padding="0" Click="RefreshButton_Click" Style="{StaticResource Round_Button}" Foreground="White"/>
+                    <ProgressRing x:Name="ProgressLoading" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsActive="False" IsHitTestVisible="False" Foreground="White"/>
+                </Grid>
 
             </StackPanel>
 
             <TextBox x:Name="URLBox" PlaceholderText="Enter an address here" Grid.Column="1" Margin="5,10" Background="White" Style="{StaticResource RoundTextBox}" VerticalAlignment="Center" KeyDown="URLBox_KeyDown" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" InputScope="Url"/>
         </Grid>
         
-        <WebView x:Name="View" Grid.Row="1" NavigationCompleted="View_NavigationCompleted"/>
+        <WebView x:Name="View" Grid.Row="1" NavigationCompleted="View_NavigationCompleted" NavigationStarting="View_NavigationStarting"/>
     </Grid>
 </Page>

@@ -46,6 +46,7 @@ namespace SCEELibs.Editor.Components
             ForwardButton.IsEnabled = View.CanGoForward;
 
             URLBox.Text = args.Uri.AbsoluteUri;
+            ProgressLoading.IsActive = false;
         }
 
         private void URLBox_KeyDown(object sender, KeyRoutedEventArgs f)
@@ -70,6 +71,10 @@ namespace SCEELibs.Editor.Components
             }
         }
 
+        private void View_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            ProgressLoading.IsActive = true;
+        }
     }
 
 }

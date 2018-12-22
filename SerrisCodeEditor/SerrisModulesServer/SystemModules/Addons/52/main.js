@@ -13,5 +13,5 @@ function stackoverflowTextbox() {
 }
 
 function onEditorViewReady() {
-    sceelibs.editorEngine.injectJS("editor.addAction({ id: 'stackoverflow_button', label: 'Search on StackOverflow', contextMenuGroupId: 'searching', contextMenuOrder: 1.5, run: function(ed) { sceelibs.webBrowserManager.openWebBrowserWithURL('https://stackoverflow.com/search?q=' + editor.getModel().getValueInRange(window.editor.getSelection())); } });");
+    sceelibs.editorEngine.injectJS("editor.addAction({ id: 'stackoverflow_button', label: 'Search on StackOverflow...', contextMenuGroupId: 'searching', contextMenuOrder: 1.5, run: function(ed) { sceelibs.webBrowserManager.openWebBrowserWithURL('https://stackoverflow.com/search?q=' + editor.getModel().getValueInRange(window.editor.getSelection())); } });");
 }
