@@ -816,7 +816,7 @@
                 <TextBox x:Name="Box_Search" x:Uid="tabslist-searchboxplaceholder" Grid.Column="0" VerticalAlignment="Top" PlaceholderText="Search tab..." Style="{StaticResource TextBoxSearch}" IsSpellCheckEnabled="False" IsTextPredictionEnabled="False" TextChanged="Box_Search_TextChanged" BorderBrush="White" Margin="0,5" Foreground="White" Background="#B23C097A" FontSize="14"/>
 
                 <Button x:Name="CreateButton" ToolTipService.ToolTip="Add new tab(s)/list(s)" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,0,5" Height="30" Width="65" VerticalAlignment="Stretch" Foreground="#FFF7F7F7" Visibility="Visible" Background="Transparent" FontSize="14" BorderBrush="#FF3C097A" BorderThickness="1" Style="{StaticResource TabsManageButtonStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="5" Click="CreateButton_Click">
-                    <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="CreateIcon" FontFamily="Segoe MDL2 Assets" Foreground="#FF3C097A" Text="" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </Grid>
 

@@ -19,7 +19,7 @@
     "Type": 0,
     "WidgetName": "clone",
     "FunctionName": "clone",
-    "IconButton": "",
+    "IconButton": "",
     "PlaceHolderText": null,
     "TooltipText": "Clone current tab"
   }

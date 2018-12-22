@@ -644,7 +644,7 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 //Close CreatorGrid and show Tabs...
                 HideCreatorHeader.Begin();
-                CreateIcon.Text = "";
+                CreateIcon.Text = "";
                 CreatorGrid.Visibility = Visibility.Collapsed;
                 Tabs.Visibility = Visibility.Visible;
                 ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttonaddtabslists");
