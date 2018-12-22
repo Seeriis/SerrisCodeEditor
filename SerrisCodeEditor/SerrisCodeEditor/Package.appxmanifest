@@ -35,7 +35,6 @@
               <uap:FileType ContentType="text/plain">.php</uap:FileType>
               <uap:FileType ContentType="text/plain">.txt</uap:FileType>
               <uap:FileType ContentType="text/plain">.cs</uap:FileType>
-              <uap:FileType ContentType="text/plain">.class</uap:FileType>
               <uap:FileType ContentType="text/plain">.py</uap:FileType>
               <uap:FileType ContentType="text/plain">.pyc</uap:FileType>
               <uap:FileType ContentType="text/plain">.pyd</uap:FileType>

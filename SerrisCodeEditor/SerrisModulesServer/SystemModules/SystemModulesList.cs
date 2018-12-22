@@ -339,7 +339,7 @@ namespace SerrisModulesServer.SystemModules
                 CanBePinnedToToolBar = false,
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "java",
-                ProgrammingLanguageFilesExtensions = new List<string> { ".class", ".java" },
+                ProgrammingLanguageFilesExtensions = new List<string> { ".java" },
                 ProgrammingLanguageMonacoCompletionAvailable = false
             },
 
