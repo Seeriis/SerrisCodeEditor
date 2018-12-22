@@ -215,6 +215,7 @@ namespace SerrisCodeEditor.Xaml.Views
             CreateButton.BorderBrush = GlobalVariables.CurrentTheme.SecondaryColorFont;
             CreateButton.Background = GlobalVariables.CurrentTheme.SecondaryColor;
             CreateIcon.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
+            CreateIconB.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
 
             TextBoxNewFileProject.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(200, GlobalVariables.CurrentTheme.SecondaryColor.Color.R, GlobalVariables.CurrentTheme.SecondaryColor.Color.G, GlobalVariables.CurrentTheme.SecondaryColor.Color.B));
             TextBoxNewFileProject.Foreground = GlobalVariables.CurrentTheme.SecondaryColorFont;
@@ -634,6 +635,7 @@ namespace SerrisCodeEditor.Xaml.Views
                 //Open CreatorGrid...
                 ShowCreatorHeader.Begin();
                 CreateIcon.Text = "";
+                CreateIconB.Text = "";
                 Tabs.Visibility = Visibility.Collapsed;
                 CreatorGrid.Visibility = Visibility.Visible;
                 ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttongoback");
@@ -644,7 +646,8 @@ namespace SerrisCodeEditor.Xaml.Views
             {
                 //Close CreatorGrid and show Tabs...
                 HideCreatorHeader.Begin();
-                CreateIcon.Text = "";
+                CreateIcon.Text = "";
+                CreateIconB.Text = "";
                 CreatorGrid.Visibility = Visibility.Collapsed;
                 Tabs.Visibility = Visibility.Visible;
                 ButtonTooltip.Content = GlobalVariables.GlobalizationRessources.GetString("tabslist-buttonaddtabslists");
