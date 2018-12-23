@@ -664,22 +664,22 @@
                 <StackPanel x:Name="Encoding_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="encoding_info" x:Uid="tab-encodingtext" Text="Encoding: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="encoding_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
+                    <TextBlock x:Name="encoding_file" Text="[file not found]" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Size_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="size_info" x:Uid="tab-sizetext" Text="Size: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="size_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
+                    <TextBlock x:Name="size_file" Text="[file not found]" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Modified_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="modified_info" x:Uid="tab-modifiedattext" Text="Modified at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="modified_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
+                    <TextBlock x:Name="modified_file" Text="[file not found]" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
                 <StackPanel x:Name="Created_Stackpanel" Orientation="Horizontal" Margin="0,0,10,5">
                     <TextBlock Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontFamily="Segoe MDL2 Assets"/>
                     <TextBlock x:Name="created_info" x:Uid="tab-createdattext" Text="Created at: " Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="created_file" Text="~" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
+                    <TextBlock x:Name="created_file" Text="[file not found]" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" MaxWidth="250" TextWrapping="Wrap" FontSize="12" FontWeight="Light"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
