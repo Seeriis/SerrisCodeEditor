@@ -126,6 +126,11 @@
     <Content Include="SystemModules\Addons\7\HTML\background.jpg" />
     <Content Include="SystemModules\Addons\7\HTML\icon_sce.png" />
     <Content Include="SystemModules\Addons\7\HTML\paypal.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\11\completion.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\13\completion.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\17\completion.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\25\completion.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\31\completion.js" />
     <Content Include="SystemModules\ProgrammingLanguages\47\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\47\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\47\logo.png" />
@@ -246,6 +251,8 @@
     <Content Include="SystemModules\ProgrammingLanguages\55\icon.png" />
     <Content Include="SystemModules\ProgrammingLanguages\55\language.js" />
     <Content Include="SystemModules\ProgrammingLanguages\55\logo.png" />
+    <Content Include="SystemModules\ProgrammingLanguages\8\completion.js" />
+    <Content Include="SystemModules\ProgrammingLanguages\9\completion.js" />
     <Content Include="SystemModules\Templates\50\icon.png" />
     <Content Include="SystemModules\Templates\50\logo.png" />
     <Content Include="SystemModules\Templates\50\main.js" />

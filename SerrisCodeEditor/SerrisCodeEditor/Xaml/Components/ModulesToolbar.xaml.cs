@@ -216,8 +216,21 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                ToolbarContent.Children.Add(await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID), GlobalVariables.CurrentTheme));
+                StackPanel Widget = await new AddonReader(ID).GetAddonWidgetViaIDAsync(new SCEELibs.SCEELibs(ID), GlobalVariables.CurrentTheme);
+                Widget.PointerReleased += ((e, f) =>
+                {
+                    MenuFlyout Flyout = new MenuFlyout();
+                    MenuFlyoutItem UnpinButton = new MenuFlyoutItem { Text = "Unpin this widget" };
+                    UnpinButton.Click += ((a, c) => 
+                    {
+                        ModulesPinned.RemoveModule(ID);
+                    });
 
+                    Flyout.Items.Add(UnpinButton);
+                    Flyout.ShowAt((FrameworkElement)e);
+                });
+
+                ToolbarContent.Children.Add(Widget);
             });
 
             SCEELibs.SCEELibs Libs = new SCEELibs.SCEELibs(ID);

@@ -98,6 +98,6 @@
             [/@escapes/, 'string.escape'],
             [/\\./, 'string.escape.invalid'],
             [/"/, 'string', '@pop']
-        ],
-    },
+        ]
+    }
 }

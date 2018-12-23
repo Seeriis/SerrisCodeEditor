@@ -277,7 +277,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "css",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".css" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -298,7 +298,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "csharp",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".cs" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -340,7 +340,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "java",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".java" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -382,7 +382,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "python",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".py", ".pyc", ".pyd" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -466,7 +466,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "cpp",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".cpp", ".c", ".h", ".hh" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -634,7 +634,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "lua",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".lua" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
@@ -760,7 +760,7 @@ namespace SerrisModulesServer.SystemModules
                 IsEnabled = true,
                 ProgrammingLanguageMonacoDefinitionName = "php",
                 ProgrammingLanguageFilesExtensions = new List<string> { ".php" },
-                ProgrammingLanguageMonacoCompletionAvailable = false
+                ProgrammingLanguageMonacoCompletionAvailable = true
             },
 
             new InfosModule
