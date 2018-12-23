@@ -165,6 +165,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 TextBlock TitleTextBox = new TextBlock();
                                 TitleTextBox.FontSize = 15;
+                                TitleTextBox.TextWrapping = TextWrapping.Wrap;
                                 TitleTextBox.Text = SettingControl.Description;
                                 TitleTextBox.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
@@ -198,6 +199,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 TextBlock TitleTextBoxNmb = new TextBlock();
                                 TitleTextBoxNmb.FontSize = 15;
+                                TitleTextBoxNmb.TextWrapping = TextWrapping.Wrap;
                                 TitleTextBoxNmb.Text = SettingControl.Description;
                                 TitleTextBoxNmb.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
@@ -263,6 +265,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 TextBlock TitleLink = new TextBlock();
                                 TitleLink.FontSize = 15;
+                                TitleLink.TextWrapping = TextWrapping.Wrap;
                                 TitleLink.Text = SettingControl.Description;
                                 TitleLink.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
@@ -271,6 +274,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 TextBlock Link = new TextBlock();
                                 Link.Margin = new Thickness(5, 5, 0, 0);
                                 Link.FontSize = 12;
+                                Link.TextWrapping = TextWrapping.Wrap;
                                 Link.FontStyle = FontStyle.Italic;
                                 Link.FontWeight = FontWeights.Light;
                                 Link.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
@@ -307,6 +311,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 TextBlock TitleDescription = new TextBlock();
                                 TitleDescription.FontSize = 15;
+                                TitleDescription.TextWrapping = TextWrapping.Wrap;
                                 TitleDescription.Text = SettingControl.Description;
                                 TitleDescription.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
 
@@ -314,6 +319,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
                                 TextBlock Description = new TextBlock();
                                 Description.Margin = new Thickness(5, 5, 0, 0);
+                                Description.TextWrapping = TextWrapping.Wrap;
                                 Description.FontSize = 13;
                                 Description.FontWeight = FontWeights.Light;
                                 Description.Text = (string)SettingControl.Parameter;
@@ -356,6 +362,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 LicenseControl.Margin = new Thickness(0, 20, 0, 0);
 
                                 TextBlock TitleLicense = new TextBlock();
+                                TitleLicense.TextWrapping = TextWrapping.Wrap;
                                 TitleLicense.FontSize = 15;
                                 TitleLicense.Text = SettingControl.Description;
                                 TitleLicense.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
@@ -363,6 +370,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 LicenseControl.Children.Add(TitleLicense);
 
                                 TextBlock Author = new TextBlock();
+                                Author.TextWrapping = TextWrapping.Wrap;
                                 Author.Margin = new Thickness(5, 5, 0, 0);
                                 Author.FontSize = 12;
                                 Author.FontWeight = FontWeights.Light;
@@ -388,6 +396,7 @@ namespace SerrisCodeEditor.Xaml.Views
                                 ListControl.Margin = new Thickness(0, 20, 0, 0);
 
                                 TextBlock TitleList = new TextBlock();
+                                TitleList.TextWrapping = TextWrapping.Wrap;
                                 TitleList.FontSize = 15;
                                 TitleList.Text = SettingControl.Description;
                                 TitleList.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
