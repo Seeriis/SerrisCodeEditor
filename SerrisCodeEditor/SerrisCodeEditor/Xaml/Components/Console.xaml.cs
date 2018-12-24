@@ -352,10 +352,20 @@ namespace SerrisCodeEditor.Xaml.Components
         }
 
         private void MasterGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+        {
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 1);
+
+            if(!isFlyoutOpened)
+                MasterGrid.BorderThickness = new Thickness(3);
+        }
 
         private void MasterGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-        => Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+        {
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+
+            if (!isFlyoutOpened)
+                MasterGrid.BorderThickness = new Thickness(1);
+        }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
