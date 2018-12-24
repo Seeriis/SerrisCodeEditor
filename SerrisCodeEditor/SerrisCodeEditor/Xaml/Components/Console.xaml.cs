@@ -239,7 +239,9 @@ namespace SerrisCodeEditor.Xaml.Components
 
                         Task.Run(() => 
                         {
-                            ChakraSMS executor = new ChakraSMS(); executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "Console");
+                            ChakraSMS executor = new ChakraSMS();
+                            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "Console");
+                            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.SCEELibs(), "sceelibs");
                             executor.Chakra.RunScript(CommandContent);
                         });
                     }
