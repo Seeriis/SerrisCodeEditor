@@ -5,5 +5,12 @@
     "FunctionName": "openSheetInformation",
     "IconButton": "",
     "TooltipText": "Click here for more informations about SCE"
+  },
+  {
+    "Type": 0,
+    "WidgetName": "report",
+    "FunctionName": "openReportForm",
+    "IconButton": "",
+    "TooltipText": "Report a problem"
   }
 ]

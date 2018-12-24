@@ -25,7 +25,7 @@ namespace SerrisCodeEditor.Functions
 
     public static class ModulesPinned
     {
-        static string[] DefaultModulesPinned = { "7", "4", "3", "5" };
+        static string[] DefaultModulesPinned = { "7", "4", "3", "5", "52" };
         static StorageFile file = AsyncHelpers.RunSync(() => ApplicationData.Current.LocalFolder.CreateFileAsync("modules_pinned.json", CreationCollisionOption.OpenIfExists).AsTask());
 
         public static async Task<List<string>> GetModulesPinned()

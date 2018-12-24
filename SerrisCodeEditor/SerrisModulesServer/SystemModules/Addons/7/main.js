@@ -8,6 +8,11 @@ function openSheetInformation()
     sceelibs.sheetManager.createNewSheet("SCE Marne-la-Vallée Informations", "HTML/infos.html");
 }
 
+function openReportForm()
+{
+    sceelibs.webBrowserManager.openWebBrowserWithURL("https://goo.gl/forms/iE18Eg3R3N3axQF12");
+}
+
 function onEditorStart()
 {
     if (sceelibs.preReleaseVersion) {

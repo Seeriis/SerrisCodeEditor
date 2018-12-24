@@ -85,7 +85,7 @@ namespace SerrisModulesServer.Type.Addon
 
                                     new_textbox.Name = widget.WidgetName + ModuleID; new_textbox.Style = (Style)Application.Current.Resources["RoundTextBox"];
                                     //new_textbox.Padding = new Thickness(0);
-                                    new_textbox.Width = 150; new_textbox.Height = 25;
+                                    new_textbox.Width = 175; new_textbox.Height = 25;
                                     new_textbox.PlaceholderText = widget.PlaceHolderText;
                                     new_textbox.FontSize = 14; new_textbox.Background = theme.ToolbarColorFont; new_textbox.Foreground = theme.ToolbarColor;
                                     new_textbox.KeyDown += (async (e, f) =>
