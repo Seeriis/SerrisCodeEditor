@@ -11,6 +11,13 @@ namespace SerrisTabsServer.Items
         Folder
     }
 
+    public enum EncodingReplacingRequest
+    {
+        NotRequested,
+        MaybeLater,
+        Never
+    }
+
     public struct CursorPosition
     {
         public int row { get; set; }
@@ -33,6 +40,8 @@ namespace SerrisTabsServer.Items
         public string TabType { get; set; }
         public string TabName { get; set; }
         public int TabEncoding { get; set; }
+        public bool TabEncodingWithBOM { get; set; }
+        public EncodingReplacingRequest TabEncodingReplacingRequest { get; set; }
         public bool TabNewModifications { get; set; }
         public DateTimeOffset DateTabContentUpdated { get; set; }
         public string TabDateModified { get; set; }

@@ -75,7 +75,7 @@ namespace SerrisCodeEditor.Xaml.Views
 
 
         private void CreateDefaultTab()
-        => TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, GlobalVariables.GlobalizationRessources.GetString("tabslist-defaulttabname"), Encoding.UTF8, StorageListTypes.LocalStorage, "");
+        => TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, GlobalVariables.GlobalizationRessources.GetString("tabslist-defaulttabname"), Encoding.GetEncoding(EncodingsHelper.EncodingsAvailable[0].EncodingCodepage), EncodingsHelper.EncodingsAvailable[0].EncodingBOM, StorageListTypes.LocalStorage, "");
 
         private async void Lists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -508,18 +508,18 @@ namespace SerrisCodeEditor.Xaml.Views
                 switch (TabsAccessManager.GetTabViaID(GlobalVariables.CurrentIDs).TabContentType)
                 {
                     case ContentType.File:
-                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedEncoding.EncodingBOM, SelectedType, TabTemplateContent);
                         break;
 
                     //Create file in the selected folder !
                     case ContentType.Folder:
-                        TabsCreatorAssistant.CreateNewTabInFolder(GlobalVariables.CurrentIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedType, TabTemplateContent);
+                        TabsCreatorAssistant.CreateNewTabInFolder(GlobalVariables.CurrentIDs.ID_TabsList, CurrentSelectedIDs, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedEncoding.EncodingBOM, SelectedType, TabTemplateContent);
                         break;
                 }
             }
             else
             {
-                TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), StorageListTypes.LocalStorage, TabTemplateContent);
+                TabsCreatorAssistant.CreateNewTab(CurrentSelectedIDs.ID_TabsList, TextBoxNewFileProject.Text, Encoding.GetEncoding(SelectedEncoding.EncodingCodepage), SelectedEncoding.EncodingBOM, StorageListTypes.LocalStorage, TabTemplateContent);
             }
 
 

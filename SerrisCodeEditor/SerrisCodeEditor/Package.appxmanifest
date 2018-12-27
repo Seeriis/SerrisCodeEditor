@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="11528SurvivalisteProject.SerrisCodeEditor-PrivateB" Publisher="CN=85217C41-26BA-4853-BBAF-959FE22764E5" Version="2.6.5.0" />
+  <Identity Name="11528SurvivalisteProject.SerrisCodeEditor-PrivateB" Publisher="CN=85217C41-26BA-4853-BBAF-959FE22764E5" Version="2.6.6.0" />
   <mp:PhoneIdentity PhoneProductId="c69d51af-5cc0-4b99-9d3e-17b378db5f2f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Serris Code Editor - Private Beta</DisplayName>

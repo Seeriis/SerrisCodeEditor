@@ -9,7 +9,7 @@ function save()
     sceelibs.editorEngine.saveCurrentSelectedTab();
     tab.saveContentToFile();
     if (tab.pathContent !== '') {
-        sceelibs.consoleManager.sendConsoleInformationNotification('"' + tab.tabName + '" has been saved at ' + tab.pathContent + ' !');
+        sceelibs.consoleManager.sendConsoleInformationNotification('"' + tab.tabName + '" has been saved at ' + tab.pathContent + ' (' + tab.encoding + ') !');
     }
 }
 
@@ -31,6 +31,6 @@ function clone() {
 
 function onEditorViewReady()
 {
-    sceelibs.editorEngine.injectJS("editor.addAction({ id: 'save_button', label: 'Save', contextMenuGroupId: 'sce', keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S ], contextMenuOrder: 1.5, run: function(ed) { sceelibs.editorEngine.saveCurrentSelectedTab(); var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID()); tab.saveContentToFile(); if (tab.pathContent !== '') { sceelibs.consoleManager.sendConsoleInformationNotification('\"' + tab.tabName + '\" has been saved at ' + tab.pathContent + ' !'); } return null; } });");
+    sceelibs.editorEngine.injectJS("editor.addAction({ id: 'save_button', label: 'Save', contextMenuGroupId: 'sce', keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S ], contextMenuOrder: 1.5, run: function(ed) { sceelibs.editorEngine.saveCurrentSelectedTab(); var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID()); tab.saveContentToFile(); if (tab.pathContent !== '') { sceelibs.consoleManager.sendConsoleInformationNotification('\"' + tab.tabName + '\" has been saved at ' + tab.pathContent + ' (' + tab.encoding + ') !'); } return null; } });");
     sceelibs.editorEngine.injectJS("editor.addAction({ id: 'saveas_button', label: 'Save as', contextMenuGroupId: 'sce', keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_S ], contextMenuOrder: 1.5, run: function(ed) { var tab = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID()); var id = sceelibs.tabsManager.createNewTabInTheCurrentList('Copy_' + tab.tabName, editor.getValue()); var tab_b = sceelibs.tabsManager.getTabViaID(sceelibs.tabsManager.createTabIDs(id, sceelibs.tabsManager.getCurrentSelectedTabAndTabsListID().listID)); tab_b.saveContentToFile(); return null; } });");
 }

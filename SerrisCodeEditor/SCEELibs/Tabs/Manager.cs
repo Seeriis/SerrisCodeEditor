@@ -46,6 +46,7 @@ namespace SCEELibs.Tabs
             newTab.tabName = tab.TabName;
             newTab.tabNewModifications = tab.TabNewModifications;
             newTab.tabType = tab.TabType;
+            newTab.encoding = EncodingsHelper.EncodingName(tab.TabEncoding, tab.TabEncodingWithBOM);
 
             return newTab;
         }
@@ -99,7 +100,7 @@ namespace SCEELibs.Tabs
         => await TabsWriteManager.CreateTabsListAsync(listName);
 
         public int createNewTabInTheCurrentList(string fileName, string content)
-        { return TabsCreatorAssistant.CreateNewTabReturn(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content); }
+        { return TabsCreatorAssistant.CreateNewTabReturn(getCurrentSelectedTabAndTabsListID().listID, fileName, Encoding.UTF8, false, SerrisTabsServer.Storage.StorageListTypes.LocalStorage, content); }
 
         public void focusTabViaPosition(int tabNumber)
         {

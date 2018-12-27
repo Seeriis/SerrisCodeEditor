@@ -22,13 +22,15 @@ namespace SerrisTabsServer.Manager
     public static class TabsCreatorAssistant
     {
 
-        public static void CreateNewTab(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
+        public static void CreateNewTab(int IDList, string FileName, Encoding encoding, bool encodingbom, StorageListTypes type, string content)
         {
             var newtab = new InfosTab
             {
                 TabName = FileName,
                 TabStorageMode = type,
                 TabEncoding = encoding.CodePage,
+                TabEncodingWithBOM = encodingbom,
+                TabEncodingReplacingRequest = EncodingReplacingRequest.NotRequested,
                 TabContentType = ContentType.File,
                 CanBeDeleted = true,
                 CanBeModified = true,
@@ -47,13 +49,15 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public static int CreateNewTabReturn(int IDList, string FileName, Encoding encoding, StorageListTypes type, string content)
+        public static int CreateNewTabReturn(int IDList, string FileName, Encoding encoding, bool encodingbom, StorageListTypes type, string content)
         {
             var newtab = new InfosTab
             {
                 TabName = FileName,
                 TabStorageMode = type,
                 TabEncoding = encoding.CodePage,
+                TabEncodingWithBOM = encodingbom,
+                TabEncodingReplacingRequest = EncodingReplacingRequest.NotRequested,
                 TabContentType = ContentType.File,
                 CanBeDeleted = true,
                 CanBeModified = true,
@@ -74,13 +78,15 @@ namespace SerrisTabsServer.Manager
 
         }
 
-        public static void CreateNewTabInFolder(int IDList, TabID FolderIDs, string FileName, Encoding encoding, StorageListTypes type, string content)
+        public static void CreateNewTabInFolder(int IDList, TabID FolderIDs, string FileName, Encoding encoding, bool encodingbom, StorageListTypes type, string content)
         {
             var newtab = new InfosTab
             {
                 TabName = FileName,
                 TabStorageMode = type,
                 TabEncoding = encoding.CodePage,
+                TabEncodingWithBOM = encodingbom,
+                TabEncodingReplacingRequest = EncodingReplacingRequest.NotRequested,
                 TabContentType = ContentType.File,
                 CanBeDeleted = true,
                 CanBeModified = true,

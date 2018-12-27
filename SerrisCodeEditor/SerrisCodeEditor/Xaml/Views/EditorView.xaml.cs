@@ -797,6 +797,9 @@ namespace SerrisCodeEditor.Xaml.Views
                     NewsNotification.ShowBadge = true;
                 }
                 NewsHelper.CheckNewsUpdate();
+
+                //Deploy UI when the editor is ready !
+                UpdateUI(true, false);
             }
         }
 

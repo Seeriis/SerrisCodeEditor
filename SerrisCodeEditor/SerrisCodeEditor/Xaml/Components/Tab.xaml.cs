@@ -79,6 +79,11 @@ namespace SerrisCodeEditor.Xaml.Components
                     list_types.Items.Add(Language);
                 }
 
+                foreach(EncodingType Encoding in EncodingsHelper.EncodingsAvailable)
+                {
+                    list_encodings.Items.Add(Encoding);
+                }
+
                 loaded = true;
             }
 
@@ -213,8 +218,6 @@ namespace SerrisCodeEditor.Xaml.Components
                         string ModuleIDIcon = LanguagesHelper.GetModuleIDOfLangageType(current_tab.TabType);
                         TabIcon.Source = await ModulesAccessManager.GetModuleIconViaIDAsync(ModuleIDIcon, ModulesAccessManager.GetModuleViaID(ModuleIDIcon).ModuleSystem);
 
-                        encoding_file.Text = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName;
-
                         if (!string.IsNullOrEmpty(current_tab.TabOriginalPathContent))
                         {
                             switch(current_tab.TabStorageMode)
@@ -342,6 +345,21 @@ namespace SerrisCodeEditor.Xaml.Components
             }
         }
 
+        private async void List_encodings_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (list_encodings.SelectedIndex != -1)
+            {
+                EncodingType EncodingType = ((EncodingType)list_encodings.SelectedItem);
+
+                if (EncodingType.EncodingCodepage != current_tab.TabEncoding || EncodingType.EncodingBOM != current_tab.TabEncodingWithBOM)
+                {
+                    current_tab.TabEncoding = EncodingType.EncodingCodepage;
+                    current_tab.TabEncodingWithBOM = EncodingType.EncodingBOM;
+                    await TabsWriteManager.PushUpdateTabAsync(current_tab, current_list, false);
+                }
+            }
+        }
+
         private void Rename_Tab_Click(object sender, RoutedEventArgs e)
         {
             if(RenameGrid.Visibility == Visibility.Collapsed)
@@ -434,6 +452,23 @@ namespace SerrisCodeEditor.Xaml.Components
                         try
                         {
                             list_types.SelectedItem = LanguagesHelper.GetLanguageNameViaType(current_tab.TabType);
+
+                            bool ItemFound = false; int EncodingCodepage = Encoding.GetEncoding(current_tab.TabEncoding).CodePage;
+                            for (int i = 0; i < (list_encodings.Items.Count - 1); i++)
+                            {
+                                if(((EncodingType)list_encodings.Items[i]).EncodingCodepage == EncodingCodepage && ((EncodingType)list_encodings.Items[i]).EncodingBOM == current_tab.TabEncodingWithBOM)
+                                {
+                                    list_encodings.SelectedIndex = i;
+                                    ItemFound = true;
+                                    break;
+                                }
+                            }
+
+                            if(!ItemFound)
+                            {
+                                list_encodings.Items.Insert(0, new EncodingType { EncodingName = Encoding.GetEncoding(current_tab.TabEncoding).EncodingName, EncodingCodepage = Encoding.GetEncoding(current_tab.TabEncoding).CodePage });
+                                list_encodings.SelectedIndex = 0;
+                            }
 
                             switch (current_tab.TabStorageMode)
                             {

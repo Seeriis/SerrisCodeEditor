@@ -30,6 +30,7 @@ namespace SCEELibs.Tabs.Items
 
         public TabIDs id { get; set; }
         public string pathContent { get; set; }
+        public string encoding { get; set; }
         public ContentTypeInfos tabContentType { get; set; }
 
 

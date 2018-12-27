@@ -150,6 +150,12 @@
   <data name="console-warningstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Advertencia(s)</value>
   </data>
+  <data name="encodings-utf8bom" xml:space="preserve">
+    <value>UTF-8 con BOM/Signature</value>
+  </data>
+  <data name="encodings-utf8nobom" xml:space="preserve">
+    <value>UTF-8 sin BOM/Signature (por defecto)</value>
+  </data>
   <data name="modulesmanager-addons.ToolTipService.ToolTip" xml:space="preserve">
     <value>Addons</value>
   </data>
@@ -188,6 +194,24 @@
   </data>
   <data name="news-titleflyout" xml:space="preserve">
     <value>Noticias</value>
+  </data>
+  <data name="popup-changeencodingaccept" xml:space="preserve">
+    <value>Sí, actualizar la codificación!</value>
+  </data>
+  <data name="popup-changeencodingcontent" xml:space="preserve">
+    <value>Serris Code Editor ha detectado un mejor tipo de codificación para su archivo. Si decide actualizar la codificación, deberá volver a guardar el archivo para utilizar la nueva codificación.</value>
+  </data>
+  <data name="popup-changeencodinglater" xml:space="preserve">
+    <value>Quizás más tarde</value>
+  </data>
+  <data name="popup-changeencodingno" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="popup-changeencodingtitle" xml:space="preserve">
+    <value>Cambiar la codificación {0} a codificación {1} ?</value>
+  </data>
+  <data name="popup-errorreadingfile" xml:space="preserve">
+    <value>Error al leer el archivo :(</value>
   </data>
   <data name="settings-buttonlicense" xml:space="preserve">
     <value>Ver el GitHub (y la licencia)</value>

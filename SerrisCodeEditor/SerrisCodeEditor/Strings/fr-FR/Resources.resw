@@ -150,6 +150,12 @@
   <data name="console-warningstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Avertissement(s)</value>
   </data>
+  <data name="encodings-utf8bom" xml:space="preserve">
+    <value>UTF-8 avec BOM/Signature</value>
+  </data>
+  <data name="encodings-utf8nobom" xml:space="preserve">
+    <value>UTF-8 sans BOM/Signature (par défaut)</value>
+  </data>
   <data name="modulesmanager-addons.ToolTipService.ToolTip" xml:space="preserve">
     <value>Addons</value>
   </data>
@@ -188,6 +194,24 @@
   </data>
   <data name="news-titleflyout" xml:space="preserve">
     <value>Actualités</value>
+  </data>
+  <data name="popup-changeencodingaccept" xml:space="preserve">
+    <value>Oui, mettre à jour l'encodage !</value>
+  </data>
+  <data name="popup-changeencodingcontent" xml:space="preserve">
+    <value>Serris Code Editor a peut-être détecté un meilleur type d'encodage pour votre fichier. Si vous choisissez de mettre à jour l'encodage, vous devrez à nouveau enregistrer votre fichier pour utiliser le nouvel encodage.</value>
+  </data>
+  <data name="popup-changeencodinglater" xml:space="preserve">
+    <value>Peut-être plus tard</value>
+  </data>
+  <data name="popup-changeencodingno" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="popup-changeencodingtitle" xml:space="preserve">
+    <value>Changer l'encodage {0} en encodage {1} ?</value>
+  </data>
+  <data name="popup-errorreadingfile" xml:space="preserve">
+    <value>Erreur lors de la lecture du fichier :(</value>
   </data>
   <data name="settings-buttonlicense" xml:space="preserve">
     <value>Voir le GitHub (et la licence)</value>
