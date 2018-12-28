@@ -232,6 +232,22 @@ namespace SerrisCodeEditor.Functions.Settings
 
                         Parameter = new Tuple<string, string>("by Konpa (with MIT license)", "https://github.com/konpa/devicon/")
                     },
+
+                    new Setting
+                    {
+                        Description = "Win2D",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Microsoft", "https://www.microsoft.com/web/webpi/eula/eula_win2d_10012014.htm")
+                    },
+
+                    new Setting
+                    {
+                        Description = "UDE",
+                        Type = SettingType.License,
+
+                        Parameter = new Tuple<string, string>("by Rudi Pettazzi (with MPL 1.1 license)", "https://raw.githubusercontent.com/linquize/ude/master/license/MPL-1.1.txt")
+                    },
                 }
 
             }
