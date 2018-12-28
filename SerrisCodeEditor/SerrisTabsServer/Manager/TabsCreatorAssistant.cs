@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -241,7 +242,9 @@ namespace SerrisTabsServer.Manager
                             if (file != null)
                             {
                                 StorageApplicationPermissions.FutureAccessList.Add(file);
-                                var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                                BasicProperties properties = Task.Run(async () => { return await file.GetBasicPropertiesAsync(); }).Result;
+
+                                var tab = new InfosTab { TabName = file.Name, TabStorageMode = type, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name), TabDateModified = properties.DateModified.ToString() };
 
                                 int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
                                 if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)
@@ -310,8 +313,9 @@ namespace SerrisTabsServer.Manager
                         if(!FileAlreadyAvailable)
                         {
                             StorageApplicationPermissions.FutureAccessList.Add(file);
+                            BasicProperties properties = Task.Run(async () => { return await file.GetBasicPropertiesAsync(); }).Result;
 
-                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = StorageListTypes.LocalStorage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name) };
+                            var tab = new InfosTab { TabName = file.Name, TabStorageMode = StorageListTypes.LocalStorage, TabContentType = ContentType.File, CanBeDeleted = true, CanBeModified = true, TabOriginalPathContent = file.Path, TabInvisibleByDefault = false, TabType = LanguagesHelper.GetLanguageType(file.Name), TabDateModified = properties.DateModified.ToString() };
 
                             int id_tab = Task.Run(async () => { return await TabsWriteManager.CreateTabAsync(tab, IDList, false); }).Result;
                             if (Task.Run(async () => { return await new StorageRouter(TabsAccessManager.GetTabViaID(new TabID { ID_Tab = id_tab, ID_TabsList = IDList }), IDList).ReadFile(true); }).Result)

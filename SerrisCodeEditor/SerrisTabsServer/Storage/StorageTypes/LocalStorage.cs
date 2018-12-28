@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 
@@ -127,6 +128,7 @@ namespace SerrisTabsServer.Storage.StorageTypes
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
                     await new MessageDialog(e.Message, new ResourceLoader().GetString("popup-errorreadingfile")).ShowAsync();
+                    await TabsWriteManager.DeleteTabAsync(new TabID { ID_Tab = Tab.ID, ID_TabsList = ListTabsID });
                 });
                 return false;
             }
@@ -188,8 +190,11 @@ namespace SerrisTabsServer.Storage.StorageTypes
                             rd.Flush(); rd.Dispose();
                         }
 
+                        //Update DateModified (updated push with "PushUpdateTabAsync" in StorageRouter.WriteFile())
+                        BasicProperties properties = await file.GetBasicPropertiesAsync();
+                        Tab.TabDateModified = properties.DateModified.ToString();
 
-                        if(TempEncoding.CodePage == Encoding.ASCII.CodePage && Tab.TabEncodingReplacingRequest != EncodingReplacingRequest.Never)
+                        if (TempEncoding.CodePage == Encoding.ASCII.CodePage && Tab.TabEncodingReplacingRequest != EncodingReplacingRequest.Never)
                         {
                             var stream = new MemoryStream();
                             var writer = new StreamWriter(stream);
@@ -205,14 +210,14 @@ namespace SerrisTabsServer.Storage.StorageTypes
                                 cdet.DataEnd();
                                 if (cdet.Charset != null)
                                 {
-                                    if (Encoding.GetEncoding(cdet.Charset).CodePage != TempEncoding.CodePage && Encoding.GetEncoding(cdet.Charset).CodePage == Encoding.UTF8.CodePage)
+                                    if (Encoding.GetEncoding(cdet.Charset).CodePage == Encoding.UTF8.CodePage)
                                     {
                                         await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                                         {
-                                            MessageDialog Dialog = new MessageDialog(new ResourceLoader().GetString("popup-changeencodingcontent"), String.Format(new ResourceLoader().GetString("popup-changeencodingtitle"), TempEncoding.EncodingName, cdet.Charset));
-                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodingaccept"), Invoked = async (e) => { Tab.TabEncoding = Encoding.GetEncoding(cdet.Charset).CodePage; Tab.TabEncodingWithBOM = false; Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.NotRequested; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true); } });
-                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodinglater"), Invoked = async (e) => { Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.MaybeLater; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true); } });
-                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodingno"), Invoked = async (e) => { Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.Never; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, true); } });
+                                            MessageDialog Dialog = new MessageDialog(new ResourceLoader().GetString("popup-changeencodingcontent"), string.Format(new ResourceLoader().GetString("popup-changeencodingtitle"), TempEncoding.EncodingName, cdet.Charset));
+                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodingaccept"), Invoked = async (e) => { Tab.TabEncoding = Encoding.GetEncoding(cdet.Charset).CodePage; Tab.TabEncodingWithBOM = false; Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.NotRequested; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, false); } });
+                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodinglater"), Invoked = async (e) => { Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.MaybeLater; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, false); } });
+                                            Dialog.Commands.Add(new UICommand { Label = new ResourceLoader().GetString("popup-changeencodingno"), Invoked = async (e) => { Tab.TabEncodingReplacingRequest = EncodingReplacingRequest.Never; await TabsWriteManager.PushUpdateTabAsync(Tab, ListTabsID, false); } });
                                             await Dialog.ShowAsync();
                                         });
                                     }

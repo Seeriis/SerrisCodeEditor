@@ -213,6 +213,18 @@
   <data name="popup-errorreadingfile" xml:space="preserve">
     <value>Error al leer el archivo :(</value>
   </data>
+  <data name="popup-updatedfileaccept" xml:space="preserve">
+    <value>Actualizar el contenido en el editor</value>
+  </data>
+  <data name="popup-updatedfilecontent" xml:space="preserve">
+    <value>The file has been modified at {0} but the last time you have saved the modifications on this file on the editor was at {1}</value>
+  </data>
+  <data name="popup-updatedfilerefuse" xml:space="preserve">
+    <value>No actualizar</value>
+  </data>
+  <data name="popup-updatedfiletitle" xml:space="preserve">
+    <value>{0} ha sido modificado fuera del editor. Actualizar el contenido?</value>
+  </data>
   <data name="settings-buttonlicense" xml:space="preserve">
     <value>Ver el GitHub (y la licencia)</value>
   </data>

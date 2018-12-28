@@ -18,6 +18,12 @@ namespace SerrisTabsServer.Items
         Never
     }
 
+    public enum OutsideContentUpdatedRequest
+    {
+        NotRequested,
+        Requested
+    }
+
     public struct CursorPosition
     {
         public int row { get; set; }
@@ -43,12 +49,16 @@ namespace SerrisTabsServer.Items
         public bool TabEncodingWithBOM { get; set; }
         public EncodingReplacingRequest TabEncodingReplacingRequest { get; set; }
         public bool TabNewModifications { get; set; }
-        public DateTimeOffset DateTabContentUpdated { get; set; }
+        public DateTimeOffset DateTabContentUpdated { get; set; } //ONEDRIVE
         public string TabDateModified { get; set; }
+
         public CursorPosition TabCursorPosition { get; set; }
 
         [JsonIgnore]
         public string TabContentTemporary { get; set; }
+
+        [JsonIgnore]
+        public OutsideContentUpdatedRequest TabOutsideContentUpdatedRequestTemp { get; set; }
 
         public string TabMonacoModelID { get; set; }
 
