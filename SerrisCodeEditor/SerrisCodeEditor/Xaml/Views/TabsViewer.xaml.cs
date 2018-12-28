@@ -89,31 +89,38 @@ namespace SerrisCodeEditor.Xaml.Views
 
         private async void CheckIfTabHaveNewOutsideUpdate(InfosTab tab)
         {
-            if (!string.IsNullOrEmpty(tab.TabOriginalPathContent) && tab.TabStorageMode == StorageListTypes.LocalStorage && !string.IsNullOrEmpty(tab.TabDateModified) && tab.TabOutsideContentUpdatedRequestTemp == OutsideContentUpdatedRequest.NotRequested)
+            try
             {
-                StorageFile file = await StorageFile.GetFileFromPathAsync(tab.TabOriginalPathContent);
-                BasicProperties properties = await file.GetBasicPropertiesAsync();
-                DateTimeOffset LastUpdate = DateTimeOffset.Parse(tab.TabDateModified);
-                if (properties.DateModified.Second != LastUpdate.Second || properties.DateModified.Hour != LastUpdate.Hour || properties.DateModified.Minute != LastUpdate.Minute)
+                if (!string.IsNullOrEmpty(tab.TabOriginalPathContent) && tab.TabStorageMode == StorageListTypes.LocalStorage && !string.IsNullOrEmpty(tab.TabDateModified) && tab.TabOutsideContentUpdatedRequestTemp == OutsideContentUpdatedRequest.NotRequested)
                 {
-                    await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(tab.TabOriginalPathContent);
+                    BasicProperties properties = await file.GetBasicPropertiesAsync();
+                    DateTimeOffset LastUpdate = DateTimeOffset.Parse(tab.TabDateModified);
+                    if (properties.DateModified.Second != LastUpdate.Second || properties.DateModified.Hour != LastUpdate.Hour || properties.DateModified.Minute != LastUpdate.Minute)
                     {
-                        MessageDialog Dialog = new MessageDialog(string.Format(GlobalVariables.GlobalizationRessources.GetString("popup-updatedfilecontent"), properties.DateModified.ToString("G"), LastUpdate.ToString("G")), string.Format(GlobalVariables.GlobalizationRessources.GetString("popup-updatedfiletitle"), tab.TabName));
-                        Dialog.Commands.Add(new UICommand { Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfileaccept"), Invoked = async (e) => 
+                        await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                         {
-                            tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.NotRequested;
-                            tab.TabDateModified = properties.DateModified.ToString();
-                            string FileContent = await new StorageRouter(tab, GlobalVariables.CurrentIDs.ID_TabsList).ReadFileAndGetContent();
-                            new SCEELibs.Editor.EditorEngine().injectJS($"editor.setValue('{EditorEngine.javaScriptEncode(FileContent)}', -1)"); 
-                            //Update DateModified & TabOutsideContentUpdatedRequestTemp (updated push with "PushUpdateTabAsync" in Tab.SetMessenger() => TypeUpdateTab.TabNewModifications)
-                        } });
-                        Dialog.Commands.Add(new UICommand { Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfilerefuse"), Invoked = async (e) => { tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.Requested; await TabsWriteManager.PushUpdateTabAsync(tab, GlobalVariables.CurrentIDs.ID_TabsList, false); } });
-                        await Dialog.ShowAsync();
-                    });
-                }
+                            MessageDialog Dialog = new MessageDialog(string.Format(GlobalVariables.GlobalizationRessources.GetString("popup-updatedfilecontent"), properties.DateModified.ToString("G"), LastUpdate.ToString("G")), string.Format(GlobalVariables.GlobalizationRessources.GetString("popup-updatedfiletitle"), tab.TabName));
+                            Dialog.Commands.Add(new UICommand
+                            {
+                                Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfileaccept"),
+                                Invoked = async (e) =>
+                                {
+                                    tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.NotRequested;
+                                    tab.TabDateModified = properties.DateModified.ToString();
+                                    string FileContent = await new StorageRouter(tab, GlobalVariables.CurrentIDs.ID_TabsList).ReadFileAndGetContent();
+                                    new SCEELibs.Editor.EditorEngine().injectJS($"editor.setValue('{EditorEngine.javaScriptEncode(FileContent)}', -1)");
+                                    //Update DateModified & TabOutsideContentUpdatedRequestTemp (updated push with "PushUpdateTabAsync" in Tab.SetMessenger() => TypeUpdateTab.TabNewModifications)
+                                }
+                            });
+                            Dialog.Commands.Add(new UICommand { Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfilerefuse"), Invoked = async (e) => { tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.Requested; await TabsWriteManager.PushUpdateTabAsync(tab, GlobalVariables.CurrentIDs.ID_TabsList, false); } });
+                            await Dialog.ShowAsync();
+                        });
+                    }
 
+                }
             }
-            
+            catch { }
         }
 
         private void CreateDefaultTab()
