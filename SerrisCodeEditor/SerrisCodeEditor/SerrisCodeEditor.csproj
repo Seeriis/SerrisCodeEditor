@@ -143,6 +143,9 @@
     <Compile Include="Xaml\Views\BonjourView.xaml.cs">
       <DependentUpon>BonjourView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Xaml\Views\LicenseView.xaml.cs">
+      <DependentUpon>LicenseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\Views\NewsReader.xaml.cs">
       <DependentUpon>NewsReader.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,15 @@
     <Content Include="Assets\Icons\news.png" />
     <Content Include="Assets\Icons\modules_installer.png" />
     <Content Include="Assets\Icons\tabs.png" />
+    <Content Include="Assets\Licenses\apache.txt" />
+    <Content Include="Assets\Licenses\mit_devicon.txt" />
+    <Content Include="Assets\Licenses\mit_json.txt" />
+    <Content Include="Assets\Licenses\mit_monaco.txt" />
+    <Content Include="Assets\Licenses\mit_mvvm.txt" />
+    <Content Include="Assets\Licenses\mit_serialqueue.txt" />
+    <Content Include="Assets\Licenses\mit_toolkit.txt" />
+    <Content Include="Assets\Licenses\MPL.txt" />
+    <Content Include="Assets\Licenses\win2d.htm" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-200.png" />
     <Content Include="Assets\SmallTile.scale-400.png" />
@@ -248,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Xaml\Views\BonjourView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\Views\LicenseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

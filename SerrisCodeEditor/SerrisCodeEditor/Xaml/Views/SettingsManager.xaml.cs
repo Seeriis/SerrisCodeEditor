@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Text;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -385,7 +387,29 @@ namespace SerrisCodeEditor.Xaml.Views
                                 LicenseButton.FontSize = 14;
                                 LicenseButton.Foreground = GlobalVariables.CurrentTheme.MainColorFont;
                                 LicenseButton.Background = GlobalVariables.CurrentTheme.MainColor;
-                                LicenseButton.Click += (async (e, f) => await Windows.System.Launcher.LaunchUriAsync(new Uri(((Tuple<string, string>)SettingControl.Parameter).Item2)));
+                                LicenseButton.Click += (async (e, f) => {
+                                    var currentAV = ApplicationView.GetForCurrentView(); var newAV = CoreApplication.CreateNewView();
+
+                                    await newAV.Dispatcher.RunAsync(
+                                                    CoreDispatcherPriority.Normal,
+                                                    async () =>
+                                                    {
+                                                        var newWindow = Window.Current;
+                                                        var newAppView = ApplicationView.GetForCurrentView();
+                                                        newAppView.Title = SettingControl.Description + " " + ((Tuple<string, string>)SettingControl.Parameter).Item1;
+
+                                                        var frame = new Frame();
+                                                        frame.Navigate(typeof(LicenseView), ((Tuple<string, string>)SettingControl.Parameter).Item2);
+                                                        newWindow.Content = frame;
+                                                        newWindow.Activate();
+
+                                                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                                                            newAppView.Id,
+                                                            ViewSizePreference.UseHalf,
+                                                            currentAV.Id,
+                                                            ViewSizePreference.UseHalf);
+                                                    });
+                                });
                                 LicenseControl.Children.Add(LicenseButton);
 
                                 MenuControls.Children.Add(LicenseControl);

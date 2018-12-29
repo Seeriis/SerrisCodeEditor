@@ -182,7 +182,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "JsBridge",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by deltakosh (with Apache License 2.0)", "https://github.com/deltakosh/JsBridge")
+                        Parameter = new Tuple<string, string>("by deltakosh (with Apache License 2.0)", "apache.txt")
                     },
 
                     new Setting
@@ -190,7 +190,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "MVVMLight",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Laurent Bugnion (GalaSoft) (with MIT license)", "https://github.com/lbugnion/mvvmlight")
+                        Parameter = new Tuple<string, string>("by Laurent Bugnion (GalaSoft) (with MIT license)", "mit_mvvm.txt")
                     },
 
                     new Setting
@@ -198,7 +198,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Newtonsoft.Json",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by James Newton-King (with MIT license)", "https://github.com/JamesNK/Newtonsoft.Json")
+                        Parameter = new Tuple<string, string>("by James Newton-King (with MIT license)", "mit_json.txt")
                     },
 
                     new Setting
@@ -206,7 +206,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "UWP Community Toolkit",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "https://github.com/Microsoft/UWPCommunityToolkit")
+                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "mit_toolkit.txt")
                     },
 
                     new Setting
@@ -214,7 +214,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Monaco Editor",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "https://github.com/Microsoft/monaco-editor")
+                        Parameter = new Tuple<string, string>("by Microsoft (with MIT license)", "mit_monaco.txt")
                     },
 
                     new Setting
@@ -222,7 +222,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "SerialQueue",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Orion Edwards (with MIT license)", "https://github.com/borland/SerialQueue")
+                        Parameter = new Tuple<string, string>("by Orion Edwards (with MIT license)", "mit_serialqueue.txt")
                     },
 
                     new Setting
@@ -230,7 +230,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Devicon",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Konpa (with MIT license)", "https://github.com/konpa/devicon/")
+                        Parameter = new Tuple<string, string>("by Konpa (with MIT license)", "mit_devicon.txt")
                     },
 
                     new Setting
@@ -238,7 +238,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "Win2D",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Microsoft", "https://www.microsoft.com/web/webpi/eula/eula_win2d_10012014.htm")
+                        Parameter = new Tuple<string, string>("by Microsoft", "win2d.htm")
                     },
 
                     new Setting
@@ -246,7 +246,7 @@ namespace SerrisCodeEditor.Functions.Settings
                         Description = "UDE",
                         Type = SettingType.License,
 
-                        Parameter = new Tuple<string, string>("by Rudi Pettazzi (with MPL 1.1 license)", "https://raw.githubusercontent.com/linquize/ude/master/license/MPL-1.1.txt")
+                        Parameter = new Tuple<string, string>("by Rudi Pettazzi (with MPL 1.1 license)", "MPL.txt")
                     },
                 }
 

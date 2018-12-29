@@ -226,7 +226,7 @@
     <value>{0} a été modifié en dehors de l'éditeur. Mettre à jour le contenu ?</value>
   </data>
   <data name="settings-buttonlicense" xml:space="preserve">
-    <value>Voir le GitHub (et la licence)</value>
+    <value>Voir la licence</value>
   </data>
   <data name="settings-buttontooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Paramètres</value>
