@@ -106,11 +106,14 @@ namespace SerrisCodeEditor.Xaml.Views
                                 Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfileaccept"),
                                 Invoked = async (e) =>
                                 {
-                                    tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.NotRequested;
-                                    tab.TabDateModified = properties.DateModified.ToString();
-                                    string FileContent = await new StorageRouter(tab, GlobalVariables.CurrentIDs.ID_TabsList).ReadFileAndGetContent();
-                                    new SCEELibs.Editor.EditorEngine().injectJS($"editor.setValue('{EditorEngine.javaScriptEncode(FileContent)}', -1)");
-                                    //Update DateModified & TabOutsideContentUpdatedRequestTemp (updated push with "PushUpdateTabAsync" in Tab.SetMessenger() => TypeUpdateTab.TabNewModifications)
+                                    if(tab.ID == GlobalVariables.CurrentIDs.ID_Tab)
+                                    {
+                                        tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.NotRequested;
+                                        tab.TabDateModified = properties.DateModified.ToString();
+                                        string FileContent = await new StorageRouter(tab, GlobalVariables.CurrentIDs.ID_TabsList).ReadFileAndGetContent();
+                                        new SCEELibs.Editor.EditorEngine().injectJS($"editor.setValue('{EditorEngine.javaScriptEncode(FileContent)}', -1)");
+                                        //Update DateModified & TabOutsideContentUpdatedRequestTemp (updated push with "PushUpdateTabAsync" in Tab.SetMessenger() => TypeUpdateTab.TabNewModifications)
+                                    }
                                 }
                             });
                             Dialog.Commands.Add(new UICommand { Label = GlobalVariables.GlobalizationRessources.GetString("popup-updatedfilerefuse"), Invoked = async (e) => { tab.TabOutsideContentUpdatedRequestTemp = OutsideContentUpdatedRequest.Requested; await TabsWriteManager.PushUpdateTabAsync(tab, GlobalVariables.CurrentIDs.ID_TabsList, false); } });
