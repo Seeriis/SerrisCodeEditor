@@ -405,7 +405,7 @@ namespace SerrisCodeEditor.Xaml.Components
 
         private void TabComponent_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (e.KeyModifiers == Windows.System.VirtualKeyModifiers.Control && e.GetCurrentPoint(TabComponent).Properties.IsMiddleButtonPressed)
+            if (e.GetCurrentPoint(TabComponent).Properties.IsMiddleButtonPressed)
             {
                 try
                 {
