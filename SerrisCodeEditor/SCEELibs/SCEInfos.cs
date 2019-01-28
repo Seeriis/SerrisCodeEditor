@@ -7,7 +7,7 @@ namespace SCEELibs
     public static class SCEInfos
     {
         //SCE Version information
-        public static string versionName { get => "Deauville"; }
+        public static string versionName { get => "Deauville build"; }
         public static string versionNumber { get => "2.1"; }
         public static bool preReleaseVersion { get => true; }
 
