@@ -136,7 +136,7 @@
     <value>Despejar la consola</value>
   </data>
   <data name="console-commandboxplaceholder.PlaceholderText" xml:space="preserve">
-    <value>Ejecutar un comando de JavaScript (ejemplo: Console.log( "1 + 1 = " + (1 + 1) ); )</value>
+    <value>Ejecutar un comando de JavaScript (ejemplo: console.log( "1 + 1 = " + (1 + 1) ); )</value>
   </data>
   <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Error(es)</value>
