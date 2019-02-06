@@ -153,7 +153,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="12">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="19">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -204,7 +204,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="10" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentPresenter" CornerRadius="15" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -214,7 +214,7 @@
 
     <ScrollViewer x:Name="ScrollMaster" MinHeight="30" Background="Transparent" ScrollViewer.IsHorizontalScrollChainingEnabled="True" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" PointerWheelChanged="ScrollViewer_PointerWheelChanged" Style="{StaticResource Scroller}">
         <StackPanel x:Name="ToolbarContent" VerticalAlignment="Center" Orientation="Horizontal" Loaded="ToolbarContent_Loaded" HorizontalAlignment="Left">
-            <Button x:Name="ButtonListModules" x:Uid="modulesmanager-openingmanagertooltip" BorderThickness="3" ToolTipService.ToolTip="Show modules manager" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" Foreground="Black" Click="ButtonListModules_Click" Visibility="Visible" Grid.Column="1" Background="White" Height="25" FontSize="15" Margin="25,0,10,0" Style="{StaticResource AddonsButtonStyle}" BorderBrush="Black">
+            <Button x:Name="ButtonListModules" x:Uid="modulesmanager-openingmanagertooltip" BorderThickness="3" ToolTipService.ToolTip="Show modules manager" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" Foreground="Black" Click="ButtonListModules_Click" Visibility="Visible" Grid.Column="1" Background="White" Height="30" FontSize="15" Margin="25,0,10,0" Style="{StaticResource AddonsButtonStyle}" BorderBrush="Black">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="" FontSize="16"/>
