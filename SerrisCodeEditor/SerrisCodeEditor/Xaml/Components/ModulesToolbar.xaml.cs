@@ -210,6 +210,7 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             ButtonListModules.Background = GlobalVariables.CurrentTheme.ToolbarRoundButtonColor;
             ButtonListModules.Foreground = GlobalVariables.CurrentTheme.ToolbarRoundButtonColorFont;
+            ButtonListModules.BorderBrush = GlobalVariables.CurrentTheme.ToolbarRoundButtonColorFont;
         }
 
         private async Task AddModule(string ID)
