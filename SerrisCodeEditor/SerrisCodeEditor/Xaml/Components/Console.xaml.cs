@@ -31,7 +31,7 @@ namespace SerrisCodeEditor.Xaml.Components
         public string notifDate { get { return notifContent.date.ToString("HH:mm:ss"); } }
         public ConsoleNotification notifContent { get; set; }
         public SolidColorBrush foreground { get => GlobalVariables.CurrentTheme.SecondaryColorFont; }
-        }
+    }
 
     public sealed partial class Console : UserControl
     {
@@ -43,6 +43,7 @@ namespace SerrisCodeEditor.Xaml.Components
         List<ConsoleNotificationContent> errors_list = new List<ConsoleNotificationContent>(), informations_list = new List<ConsoleNotificationContent>(), results_list = new List<ConsoleNotificationContent>(), warnings_list = new List<ConsoleNotificationContent>();
         public ObservableCollection<ConsoleNotificationContent> CurrentNotifications = new ObservableCollection<ConsoleNotificationContent>();
         List<string> commands_list = new List<string>();
+        private ChakraSMS executor;
 
         int commands_list_index = -1;
         bool isFlyoutOpened = false, disableOpening = false;
@@ -54,6 +55,14 @@ namespace SerrisCodeEditor.Xaml.Components
         {
             this.InitializeComponent();
             CurrentNotifications.CollectionChanged += CurrentNotifications_CollectionChanged;
+            InitializeChakra();
+        }
+
+        private void InitializeChakra()
+        {
+            executor = new ChakraSMS();
+            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "console");
+            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.SCEELibs(), "sceelibs");
         }
 
         private void ConsoleUI_Loaded(object sender, RoutedEventArgs e)
@@ -235,15 +244,7 @@ namespace SerrisCodeEditor.Xaml.Components
                 case VirtualKey.Enter:
                     try
                     {
-                        string CommandContent = Command_box.Text;
-
-                        Task.Run(() => 
-                        {
-                            ChakraSMS executor = new ChakraSMS();
-                            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.Editor.ConsoleManager(), "Console");
-                            executor.Chakra.ProjectObjectToGlobal(new SCEELibs.SCEELibs(), "sceelibs");
-                            executor.Chakra.RunScript(CommandContent);
-                        });
+                        executor.Chakra.RunScript(Command_box.Text);
                     }
                     catch { }
 

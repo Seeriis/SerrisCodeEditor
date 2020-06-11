@@ -136,7 +136,7 @@
     <value>Clear console</value>
   </data>
   <data name="console-commandboxplaceholder.PlaceholderText" xml:space="preserve">
-    <value>Execute a JavaScript command (example: Console.log( "1 + 1 = " + (1 + 1) ); )</value>
+    <value>Execute a JavaScript command (example: console.log( "1 + 1 = " + (1 + 1) ); )</value>
   </data>
   <data name="console-errorstooltip.ToolTipService.ToolTip" xml:space="preserve">
     <value>Error(s)</value>

@@ -7,9 +7,9 @@ namespace SCEELibs
     public static class SCEInfos
     {
         //SCE Version information
-        public static string versionName { get => "Marne-la-Vallée (1.0)"; }
-        public static string versionNumber { get => "2.0"; }
-        public static bool preReleaseVersion { get => false; }
+        public static string versionName { get => "Deauville build"; }
+        public static string versionNumber { get => "2.1"; }
+        public static bool preReleaseVersion { get => true; }
 
         //https://stackoverflow.com/questions/28635208/retrieve-the-current-app-version-from-package
         public static string getBuildVersion()
@@ -20,6 +20,7 @@ namespace SCEELibs
 
 
         /*History: 
+         * Deauville ("2.1")
          * Marne-la-Vallée ("2.0")
          * 
          * Marne-la-Vallée build ("1.6")

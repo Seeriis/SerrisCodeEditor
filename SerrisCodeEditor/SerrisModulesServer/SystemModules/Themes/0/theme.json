@@ -38,16 +38,16 @@
     "A": 230
   },
   "ToolbarRoundButtonColor": {
-    "R": 255,
-    "G": 255,
-    "B": 255,
-    "A": 230
-  },
-  "ToolbarRoundButtonColorFont": {
     "R": 62,
     "G": 33,
     "B": 89,
-    "A": 250
+    "A": 230
+  },
+  "ToolbarRoundButtonColorFont": {
+    "R": 255,
+    "G": 255,
+    "B": 255,
+    "A": 255
   },
   "AddonDefaultColor": {
     "R": 255,
