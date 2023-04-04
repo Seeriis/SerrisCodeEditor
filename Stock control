@@ -1,0 +1,71 @@
+# Import necessary libraries
+import csv
+
+# Define a function to scan the unit into stores
+def scan_in():
+    imei = input("Please enter the IMEI number of the unit: ")
+    with open("stock.csv", mode='a', newline='') as stock_file:
+        stock_writer = csv.writer(stock_file, delimiter=',')
+        stock_writer.writerow([imei, "in", "stores", ""])
+
+# Define a function to scan the stock to the technician
+def scan_out():
+    imei = input("Please enter the IMEI number of the unit: ")
+    technician = input("Please enter the name of the technician: ")
+    with open("stock.csv", mode='r', newline='') as stock_file:
+        stock_reader = csv.reader(stock_file, delimiter=',')
+        for row in stock_reader:
+            if row[0] == imei and row[1] == "in" and row[2] == "stores":
+                row[1] = "out"
+                row[2] = technician
+                row[3] = ""
+                with open("stock.csv", mode='w', newline='') as stock_file:
+                    stock_writer = csv.writer(stock_file, delimiter=',')
+                    for r in stock_reader:
+                        stock_writer.writerow(r)
+                print("Stock scanned to", technician)
+                break
+        else:
+            print("Unit not found in stores")
+
+# Define a function to accept the stock by the technician
+def accept_stock():
+    imei = input("Please enter the IMEI number of the unit: ")
+    technician = input("Please enter your name: ")
+    with open("stock.csv", mode='r', newline='') as stock_file:
+        stock_reader = csv.reader(stock_file, delimiter=',')
+        for row in stock_reader:
+            if row[0] == imei and row[1] == "out" and row[2] == technician:
+                row[3] = "accepted"
+                with open("stock.csv", mode='w', newline='') as stock_file:
+                    stock_writer = csv.writer(stock_file, delimiter=',')
+                    for r in stock_reader:
+                        stock_writer.writerow(r)
+                print("Stock accepted by", technician)
+                break
+        else:
+            print("Unit not found or not assigned to you")
+
+# Define a function to indicate that the stock is with the technician
+def stock_with_technician():
+    technician = input("Please enter your name: ")
+    with open("stock.csv", mode='r', newline='') as stock_file:
+        stock_reader = csv.reader(stock_file, delimiter=',')
+        for row in stock_reader:
+            if row[1] == "out" and row[2] == technician and row[3] == "accepted":
+                print(row[0], "is with", technician)
+        else:
+            print("You don't have any stock with you")
+
+# Define a function to scan the old unit back to the technician
+def scan_back():
+    imei = input("Please enter the IMEI number of the old unit: ")
+    technician = input("Please enter your name: ")
+    with open("stock.csv", mode='r', newline='') as stock_file:
+        stock_reader = csv.reader(stock_file, delimiter=',')
+        for row in stock_reader:
+            if row[0] == imei and row[1] == "out" and row[2] == technician and row[3] == "accepted":
+                row[1] = "in"
+                row[2] = "stores"
+                row[3] = ""
+                with open
