@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposit Slip</title>
+    <style>
+        /* CSS for table formatting */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* CSS for form formatting */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container label, .form-container input, .form-container select {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Deposit Slip</h2>
+        <form id="depositForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="congregation">Congregation:</label>
+            <input type="text" id="congregation" name="congregation" required>
+
+            <label for="congregationNumber">Congregation Number:</label>
+            <input type="text" id="congregationNumber" name="congregationNumber" required>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Members">Members</option>
+                <option value="Officers">Officers</option>
+                <option value="Burial">Burial Contributions</option>
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+
+            <label for="amountInWords">Amount in Words:</label>
+            <input type="text" id="amountInWords" name="amountInWords" required>
+
+            <button type="button" onclick="submitDeposit()">Submit</button>
+        </form>
+    </div>
+
+    <table id="depositTable">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Week 1</th>
+                <th>Week 2</th>
+                <th>Week 3</th>
+                <th>Week 4</th>
+                <th>Week 5</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Members</td>
+                <td id="membersWeek1">0</td>
+                <td id="membersWeek2">0</td>
+                <td id="membersWeek3">0</td>
+                <td id="membersWeek4">0</td>
+                <td id="membersWeek5">0</td>
+                <td id="membersTotal">0</td>
+            </tr>
+            <tr>
+                <td>Officers</td>
+                <td id="officersWeek1">0</td>
+                <td id="officersWeek2">0</>0</td>
+                <td id="officersWeek3">0</td>
+                <td id="officersWeek4">0</td>
+                <td id="officersWeek5">0</td>
+                <td id="officersTotal">0</td>
+            </tr>
+            <tr>
+                <td>Burial Contributions</td>
+                <td id="burialWeek1">0</td>
+                <td id="burialWeek2">0</td>
+                <td id="burialWeek3">0</td>
+                <td id="burialWeek4">0</td>
+                <td id="burialWeek5">0</td>
+                <td id="burialTotal">0</td>
+            </tr>
+            <tr>
+                <td>Expenditure</td>
+                <td id="expenditureWeek1">0</td>
+                <td id="expenditureWeek2">0</td>
+                <td id="expenditureWeek3">0</td>
+                <td id="expenditureWeek4">0</td>
+                <td id="expenditureWeek5">0</td>
+                <td id="expenditureTotal">0</td>
+            </tr>
+            <tr>
+                <td>Grand Total</td>
+                <td id="grandTotalWeek1">0</td>
+                <td id="grandTotalWeek2">0</td>
+                <td id="grandTotalWeek3">0</td>
+                <td id="grandTotalWeek4">0</td>
+                <td id="grandTotalWeek5">0</td>
+                <td id="grandTotal">0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function submitDeposit() {
+            // Retrieve form values
+            var date = document.getElementById("date").value;
+            var congregation = document.getElementById("congregation").value;
+            var congregationNumber = document.getElementById("congregationNumber").value;
+            var category = document.getElementById("category").value;
+            var amount = document.getElementById("amount").value;
+            var amountInWords = document.getElementById("amountInWords").value;
+
+            // Update table values based on category and week
+            switch (category) {
+                case "Members":
+                    updateTableValue("members", date, amount);
+                    break;
+                case "Officers":
+                    updateTableValue("officers", date, amount);
+                    break;
+                case "Burial":
+                    updateTableValue("burial", date, amount);
+                    break;
+                case "Expenditure":
+                    updateTableValue("expenditure", date, amount);
+                    break;
+                default:
+                    break;
+            }
+
+            // Clear form values
+            document.getElementById("date").value = "";
+            document.getElementById("congregation").value = "";
+            document.getElementById("congregationNumber").value = "";
+            document.getElementById("category").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("amountInWords").value = "";
+        }
+
+        function updateTableValue(category, date, amount) {
+            // Get the week number for the given date
+            var week = getWeekNumber(new Date(date));
+
+            // Update the corresponding table cell with the amount
+            var cellId = category + "Week" + week;
+            var cell = document.getElementById(cellId);
+            cell.textContent = Number(cell.textContent) + Number(amount);
+
+            // Update the total for the category
+            var totalId = category + "Total";
+            var totalCell = document.getElementById(totalId);
+            totalCell.textContent
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Tracker</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Financial Tracker</h1>
+    <form>
+        <label for="date">Date:</label>
+        <input type="date" id="date" required>
+        <br>
+        <label for="congregation">Congregation:</label>
+        <input type="text" id="congregation" required>
+        <br>
+        <label for="congregationNumber">Congregation Number:</label>
+        <input type="text" id="congregationNumber" required>
+        <br>
+        <label for="category">Category:</label>
+        <select id="category" required>
+            <option value="">Select category</option>
+            <option value="Members">Members</option>
+            <option value="Officers">Officers</option>
+            <option value="Burial">Burial</option>
+            <option value="Expenditure">Expenditure</option>
+        </select>
+        <br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" required>
+        <br>
+        <label for="amountInWords">Amount in Words:</label>
+        <input type="text" id="amountInWords" required>
+        <br>
+        <input type="button" value="Submit" onclick="submitDeposit()">
+    </form>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Week 1</th>
+                <th>Week 2</th>
+                <th>Week 3</th>
+                <th>Week 4</th>
+                <th>Week 5</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Members Contributions</td>
+                <td id="membersWeek1">0</td>
+                <td id="membersWeek2">0</td>
+                <td id="membersWeek3">0</td>
+                <td id="membersWeek4">0</td>
+                <td id="membersWeek5">0</td>
+                <td id="membersTotal">0</td>
+            </tr>
+            <tr>
+                <td>Officers Contributions</td>
+                <td id="officersWeek1">0</td>
+                <td id="officersWeek2">0</td>
+                <td id="officersWeek3">0</td>
+                <td id="officersWeek4">0</td>
+                <td id="officersWeek5">0</td>
+                <td id="officersTotal">0</td>
+            </tr>
+            <tr>
+                <td>Burial Contributions</td>
+                <td id="burialWeek1">0</td>
+                <td id="burialWeek2">0</td>
+                <td id="burialWeek3">0</td>
+                <td id="burialWeek4">0</td>
+                <td id="burialWeek5">0</td>
+                <td id="burialTotal">0</td>
+</tr>
+<tr>
+<td>Expenditure</td>
+<td id="expenditureWeek1">0</td>
+<td id="expenditureWeek2">0</td>
+<td id="expenditureWeek3">0</td>
+<td id="expenditureWeek4">0</td>
+<td id="expenditureWeek5">0</td>
+<td id="expenditureTotal">0</td>
+</tr>
+</tbody>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tableit/dist/tableit.min.js"></script>
+<script>
+function submitDeposit() {
+// Get input values
+var date = document.getElementById("date").value;
+var congregation = document.getElementById("congregation").value;
+var congregationNumber = document.getElementById("congregationNumber").value;
+var category = document.getElementById("category").value;
+var amount = document.getElementById("amount").value;
+var amountInWords = document.getElementById("amountInWords").value;
+
+        // Update table with input values
+        var table = document.getElementById("table");
+        var row = table.insertRow();
+        row.innerHTML = "<td>" + category + "</td><td>" + date + "</td><td>" + congregation + "</td><td>" + congregationNumber + "</td><td>" + amount + "</td><td>" + amountInWords + "</td>";
+
+        // Update category total
+        var categoryTotal = parseInt(document.getElementById(category + "Total").textContent) + parseInt(amount);
+        document.getElementById(category + "Total").textContent = categoryTotal;
+
+        // Update week total
+        var weekNumber = getWeekNumber(new Date(date));
+        var weekTotal = parseInt(document.getElementById(category + "Week" + weekNumber).textContent) + parseInt(amount);
+        document.getElementById(category + "Week" + weekNumber).textContent = weekTotal;
+
+        // Reset input values
+        document.getElementById("date").value = "";
+        document.getElementById("congregation").value = "";
+        document.getElementById("congregationNumber").value = "";
+        document.getElementById("category").value = "";
+        document.getElementById("amount").value = "";
+        document.getElementById("amountInWords").value = "";
+    }
+
+    function getWeekNumber(date) {
+        var d = new Date(+date);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    }
+</script>
